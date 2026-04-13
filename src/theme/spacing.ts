@@ -13,3 +13,7 @@ export const spacing = {
   xxxl: 40,
   xxxxl: 56,
 } as const;
+
+/** Portrait TMDB poster / content cards — use in StyleSheet instead of numeric literals. */
+export const radiusCardOuter = 16 as const;
+export const radiusCardInner = 12 as const;

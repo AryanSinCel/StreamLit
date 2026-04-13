@@ -19,6 +19,7 @@ alwaysApply: false
 ## Spacing and layout
 
 - Spacing **only** from **`src/theme/spacing.ts`**.
+- **Portrait content cards:** **`radiusCardOuter`** / **`radiusCardInner`** and **`contentCard.aspectRatio`** (**2:3**) — reference tokens only; no raw radii or aspect literals in components.
 - **No 1px** decorative layout borders. **No pure `#FFFFFF`** for text — use semantic text colours from theme.
 
 ## Implementation

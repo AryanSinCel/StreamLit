@@ -18,6 +18,16 @@ alwaysApply: false
 
 - **`StyleSheet.create`**, colours/spacing from **`src/theme/`**. Reuse shared pieces under **`components/common/`** when it reduces duplication.
 
+## Portrait content cards (shared pattern)
+
+- **Aspect ratio:** portrait **2:3** for standard TMDB poster / content cards.
+- **Border radius:** **outer** card container **`radiusCardOuter`**; **inner** image masks / nested surfaces **`radiusCardInner`** — from **`src/theme/spacing.ts`** only (no literals in `StyleSheet`).
+- **No card-edge border or stroke** — separation via **background/surface** and **spacing** only (no-line rule).
+- **Title:** **`title-lg`**, **`on_surface`**, below the image.
+- **Subtitle (year • genre):** **`label-sm`**, **`on_surface_variant`**.
+- **Rating badge (when shown):** **top-right** overlay on the poster/card area; background **`surface_container_highest`**; star **`primary_container`**; value **`label-sm`**.
+- Shared implementations live under **`src/components/common/`** (e.g. **`ContentCard`**) so Home / Search / Watchlist stay consistent.
+
 ## Data
 
 - If a component needs TMDB data, the **screen** (or a dedicated hook used only from screens) fetches; pass results as props.

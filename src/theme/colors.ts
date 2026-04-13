@@ -5,6 +5,8 @@
  * Never `#FFFFFF` for body text — use `on_surface` / `on_surface_variant`.
  */
 
+import { radiusCardInner, radiusCardOuter } from './spacing';
+
 export const colors = {
   surface: '#131313',
   surface_container_lowest: '#0E0E0E',
@@ -41,8 +43,8 @@ export const tabBarGlass = {
 export const contentCard = {
   /** Portrait aspect width : height = 2 : 3 */
   aspectRatio: 2 / 3,
-  radiusOuter: 16,
-  radiusInner: 12,
+  radiusOuter: radiusCardOuter,
+  radiusInner: radiusCardInner,
 } as const;
 
 /**
