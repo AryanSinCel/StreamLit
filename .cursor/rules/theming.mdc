@@ -1,0 +1,26 @@
+---
+description: MovieList theme and component styling — Cinematic Curator palette, typography tokens, no raw values in UI.
+globs:
+  - src/theme/**/*
+  - src/components/**/*
+alwaysApply: false
+---
+
+# MovieList — theme and component styling
+
+## Cinematic Curator
+
+- Colours follow the **Cinematic Curator** palette — centralize in **`src/theme/colors.ts`** (and related theme files). Do not scatter one-off hex values in components.
+
+## Typography
+
+- Use **`src/theme/typography.ts`** (and font loading via theme) for **Manrope** / **Inter** tokens — font sizes, weights, line heights from tokens.
+
+## Spacing and layout
+
+- Spacing **only** from **`src/theme/spacing.ts`**.
+- **No 1px** decorative layout borders. **No pure `#FFFFFF`** for text — use semantic text colours from theme.
+
+## Implementation
+
+- **`StyleSheet.create`** only. No NativeWind, Styled Components, or CSS-in-JS.

@@ -1,0 +1,23 @@
+---
+description: MovieList performance — memoization where lists and callbacks matter.
+globs:
+  - src/components/**/*
+  - src/screens/**/*
+alwaysApply: false
+---
+
+# MovieList — performance (screens and components)
+
+## When to optimize
+
+- Apply **`React.memo`** to **pure** list items or heavy subtrees that re-render often from parent state.
+- Use **`useCallback`** for handlers passed to **memoized** children or **`FlatList`** props like **`renderItem`**, **`keyExtractor`**, **`onEndReached`** when profiling shows churn.
+- Use **`useMemo`** for **expensive** derived data or filtered lists — avoid preemptive micro-memoization everywhere.
+
+## Lists
+
+- Stable **`keyExtractor`**. Avoid inline **object/array literals** in **`extraData`** and similar props when they cause needless list rerenders.
+
+## Images
+
+- Prefer TMDB sizes appropriate to layout (centralize in **`image.ts`** / theme). Avoid oversized decode work on tiny thumbnails.

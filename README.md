@@ -4,6 +4,12 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 > **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
 
+## Environment variables (TMDB)
+
+Copy `.env.example` to `.env` at the project root and replace the placeholder values with your real TMDB settings. **`.env` is gitignored** and must not be committed; **`.env.example`** stays in the repo as a safe template.
+
+Use `import { TMDB_BASE_URL, TMDB_IMAGE_BASE_URL, TMDB_ACCESS_TOKEN } from '@env'` in application code. TypeScript declarations for `@env` are in `dotenv.d.ts`. After changing Babel or env files, restart Metro with cache reset if needed: `npm start -- --reset-cache`.
+
 ## Step 1: Start Metro
 
 First, you will need to run **Metro**, the JavaScript build tool for React Native.

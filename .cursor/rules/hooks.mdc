@@ -1,0 +1,25 @@
+---
+description: MovieList data hooks — UseQueryResult, debounced search, cancellation, no navigation side effects.
+globs: src/hooks/**/*.ts
+alwaysApply: false
+---
+
+# MovieList — `src/hooks`
+
+## Shape
+
+- Prefer **`UseQueryResult<T>`**: **`data`**, **`loading`**, **`error`**, **`refetch`** for data hooks.
+- Hooks call **`api/movies.ts`** (via **`client`** indirectly) — not raw axios.
+
+## Search
+
+- Debounce user input **400ms** using **`useRef`** + **`clearTimeout`** (stable cleanup).
+- **Cancel or ignore stale** search responses when query/order changes (abort controller or explicit request id / “latest wins”).
+
+## Boundaries
+
+- **No navigation** (`navigation.navigate`, etc.) inside hooks — screens/nav handlers own routing.
+
+## Detail and parallel loads
+
+- For independent parallel sections (e.g. detail), orchestrate with **`Promise.allSettled`** and surface per-section loading/errors as specified in PSDs.

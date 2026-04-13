@@ -1,0 +1,55 @@
+---
+description: MovieList global stack, layering, env, and project conventions (Phase 2 RN CLI).
+alwaysApply: true
+---
+
+# MovieList — project baseline
+
+## Prescribed stack
+
+- **React Native CLI** (not Expo). TypeScript **`strict`**.
+- **React Navigation v6** only — bottom tabs + nested stack per tab.
+- **Zustand** for global state only; **AsyncStorage** for persisted watchlist.
+- **Axios** only via **`src/api/client.ts`**. Never `import axios` outside `src/api/`.
+- **`StyleSheet.create` only** for styles.
+- **Manrope + Inter** via theme / `react-native-google-fonts` — no ad-hoc font families in screens.
+- Remote TMDB data only through **`src/hooks/`**. **`src/screens/**`** must not call TMDB or wire HTTP directly.
+
+## Prohibited
+
+- NativeWind, Styled Components, CSS-in-JS.
+- Redux, MobX, or any global state library other than Zustand.
+- UI kits (Paper, Elements, etc.).
+- Nav libraries other than React Navigation v6.
+- **Hardcoded API keys or tokens** in source, tests, or docs.
+
+## Environment
+
+- **`react-native-dotenv`**. **`.env`** is gitignored; **`.env.example`** holds placeholders only.
+- Bearer token for TMDB only from env, consumed in **`src/api/client.ts`** (typed `@env` declarations).
+
+## Hooks contract
+
+- Data hooks expose **`{ data, loading, error, refetch }`** (align with `UseQueryResult`).
+
+## Parallel async
+
+- Independent parallel sections (e.g. detail) use **`Promise.allSettled`**, with per-section handling of success/failure.
+
+## Null-safety (UI + data)
+
+- Defensively handle **poster, backdrop, runtime, rating**, and **empty arrays** — no assumed non-null media metadata.
+
+## Theme
+
+- Colours and spacing **only** from **`src/theme/colors.ts`** and **`src/theme/spacing.ts`**.
+- **No 1px layout borders** (“no-line” rule).
+- **No pure `#FFFFFF`** for text — use theme text colours.
+
+## TypeScript
+
+- No **`any`**. API/TMDB shapes in **`src/api/types.ts`**. Navigation params in **`src/navigation/types.ts`**.
+
+## Folder layout
+
+- Standard **`src/`** tree: **`api/`**, **`components/`**, **`hooks/`**, **`navigation/`**, **`screens/`**, **`store/`**, **`theme/`**, **`utils/`**. Do not invent a parallel or duplicate structure.

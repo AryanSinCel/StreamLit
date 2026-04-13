@@ -1,0 +1,26 @@
+---
+description: MovieList loading UX — error boundaries, refetch, skeletons and shimmer timing.
+globs:
+  - src/screens/**/*
+  - src/components/**/*
+alwaysApply: false
+---
+
+# MovieList — loading and errors
+
+## Error boundaries
+
+- Use **error boundaries** on main screen areas where appropriate. **Retry** actions should call the hook’s **`refetch`** — not duplicate fetch logic.
+
+## Skeletons
+
+- Prefer **skeleton placeholders** over bare spinners for primary async regions.
+- **Shimmer** duration ~**1.5s** (or theme-driven), using tokens from theme — avoid magic one-off animation constants scattered in files.
+
+## Shape-matched skeletons
+
+- Skeleton layout should **match** the final content structure (image aspect, text lines, spacing) to avoid layout jump.
+
+## Errors from hooks
+
+- Surface **`error`** from **`UseQueryResult`**-style hooks with a clear message and **Try again** → **`refetch`**.

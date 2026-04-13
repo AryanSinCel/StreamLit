@@ -1,0 +1,27 @@
+---
+description: MovieList API layer — single Axios client, env auth, retries, and null-safe helpers.
+globs: src/api/**/*.ts
+alwaysApply: false
+---
+
+# MovieList — `src/api`
+
+## Single client
+
+- All app HTTP traffic goes through **`client.ts`** — one `axios.create`, base URL from env.
+- **`import axios`** only inside **`src/api/`** (typically `client.ts`).
+
+## Auth and errors
+
+- **Request interceptor:** `Authorization: Bearer <token>` from env (typed `@env`), not inline secrets.
+- **Response interceptor:** normalize errors to a **stable shape** (e.g. `{ message, status }`).
+
+## Retry
+
+- At most **one** retry on **network** failure only — **not** on HTTP **4xx** or **5xx**.
+
+## Modules
+
+- **`movies.ts`:** TMDB calls only via shared **`client`**; one function per endpoint/area as features grow.
+- **`types.ts`:** shared errors, pagination helpers, TMDB DTOs — grow with endpoints.
+- **`src/utils/image.ts`:** null-safe poster/backdrop URL builder (base + size + path). If **`path`** is **`null`** or empty, return **`null`** — never a broken URL string. Pair with **`movies.ts`** data: API returns paths; **`image.ts`** turns paths into displayable URLs.

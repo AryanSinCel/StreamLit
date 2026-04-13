@@ -1,0 +1,25 @@
+---
+description: MovieList navigation — typed routes, stack-per-tab Detail, params by id.
+globs:
+  - src/navigation/**/*
+  - src/screens/**/*
+alwaysApply: false
+---
+
+# MovieList — navigation and screens
+
+## Types
+
+- All route params and navigator param lists live in **`src/navigation/types.ts`**. Import param types from there — no stringly-typed routes.
+
+## Stack per tab
+
+- **Nested stack per tab** so **Detail** pushes **inside** the tab of origin (back returns to the correct tab stack).
+
+## Params
+
+- Pass **ids** (e.g. **`movieId: number`**) — **not** full movie objects — through navigation params. Hydrate detail via hooks using the id.
+
+## Screens vs data
+
+- **`src/screens/**`** compose layout and wire hooks. **No** direct TMDB or **`movies.ts`** calls from screen files — only hooks under **`src/hooks/`**.

@@ -1,0 +1,23 @@
+---
+description: MovieList presentational components — no fetching, lists via FlatList, approval for new list libs.
+globs: src/components/**/*
+alwaysApply: false
+---
+
+# MovieList — `src/components`
+
+## Role
+
+- **Presentational** by default: props in, UI out. **No remote fetching** in dumb/presentational components — parents or hooks supply data.
+
+## Lists
+
+- Use **`FlatList`** (or **`SectionList`** when needed) for long lists. **Do not add** new list libraries (e.g. FlashList) without explicit approval.
+
+## Styling
+
+- **`StyleSheet.create`**, colours/spacing from **`src/theme/`**. Reuse shared pieces under **`components/common/`** when it reduces duplication.
+
+## Data
+
+- If a component needs TMDB data, the **screen** (or a dedicated hook used only from screens) fetches; pass results as props.

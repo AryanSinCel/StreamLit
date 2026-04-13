@@ -1,0 +1,32 @@
+---
+description: MovieList Zustand watchlist — persist, hydration gate, and item contract.
+globs: src/store/**/*.ts
+alwaysApply: false
+---
+
+# MovieList — `src/store`
+
+## Zustand + persist
+
+- **Zustand** with **`persist`** middleware and **AsyncStorage**.
+- Expose **`hydrated: boolean`**. Set **`hydrated === true`** only after rehydration completes.
+
+## UI gate
+
+- Watchlist **button state**, **tab badge**, and any count-driven UI must respect **`hydrated`** — do not show misleading filled/empty state before hydration.
+
+## Watchlist item fields (normative)
+
+```typescript
+interface WatchlistItem {
+  id: number;
+  title: string;
+  posterPath: string | null;
+  voteAverage: number;
+  releaseDate: string;
+  genreIds: number[];
+  mediaType: 'movie' | 'tv';
+}
+```
+
+- Store actions: **`addItem`**, **`removeItem`**, **`isInWatchlist`**, derived **`count`** — keep signatures aligned with **`WatchlistStore`** in architecture docs.

@@ -1,0 +1,24 @@
+---
+description: MovieList code quality — null-safe UI, imports, and file size discipline.
+globs: src/**/*
+alwaysApply: false
+---
+
+# MovieList — code quality (`src/`)
+
+## Defensive UI
+
+- Treat **poster, backdrop, runtime, rating**, and **empty lists** as possibly missing. Branch on **null/undefined** and empty collections before rendering.
+
+## TypeScript
+
+- **`strict`**. No **`any`**. Prefer explicit unions and narrowing.
+
+## Imports
+
+- **Axios** only from **`src/api/client.ts`** (consumers use **`movies.ts`** / hooks). **TMDB** access only through hooks → **`movies.ts`** → **`client.ts`**.
+- API types from **`src/api/types.ts`**; navigation types from **`src/navigation/types.ts`**.
+
+## File size
+
+- Keep files focused. If a screen or module grows unwieldy, split **presentational** pieces into **`src/components/`** rather than inline mega-components — without inventing new top-level folders.

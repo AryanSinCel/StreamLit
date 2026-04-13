@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#3a3939",
+              "on-primary": "#68000b",
+              "surface": "#131313",
+              "on-secondary-fixed": "#410004",
+              "primary-container": "#ff5351",
+              "inverse-surface": "#e5e2e1",
+              "tertiary": "#71d5e0",
+              "primary": "#ffb3ae",
+              "on-secondary-container": "#ff9992",
+              "primary-fixed": "#ffdad7",
+              "on-tertiary": "#00363b",
+              "on-background": "#e5e2e1",
+              "tertiary-container": "#319ea9",
+              "on-primary-container": "#5c0008",
+              "outline": "#ab8886",
+              "on-error-container": "#ffdad6",
+              "surface-container-low": "#1c1b1b",
+              "surface-container-highest": "#353534",
+              "surface-container": "#201f1f",
+              "tertiary-fixed": "#8ef2fd",
+              "secondary-fixed": "#ffdad7",
+              "on-surface-variant": "#e4bdba",
+              "surface-tint": "#ffb3ae",
+              "primary-fixed-dim": "#ffb3ae",
+              "on-tertiary-container": "#002f33",
+              "secondary": "#ffb3ae",
+              "on-tertiary-fixed": "#002023",
+              "on-secondary": "#630e11",
+              "surface-variant": "#353534",
+              "background": "#131313",
+              "on-tertiary-fixed-variant": "#004f55",
+              "inverse-on-surface": "#313030",
+              "on-error": "#690005",
+              "error": "#ffb4ab",
+              "outline-variant": "#5b403e",
+              "on-surface": "#e5e2e1",
+              "surface-dim": "#131313",
+              "secondary-container": "#822625",
+              "inverse-primary": "#bb1522",
+              "error-container": "#93000a",
+              "on-primary-fixed": "#410004",
+              "on-secondary-fixed-variant": "#822625",
+              "on-primary-fixed-variant": "#930014",
+              "surface-container-lowest": "#0e0e0e",
+              "tertiary-fixed-dim": "#71d5e0",
+              "secondary-fixed-dim": "#ffb3ae",
+              "surface-container-high": "#2a2a2a"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-empty-glow {
+            background: radial-gradient(circle at center, rgba(130, 38, 37, 0.15) 0%, transparent 70%);
+        }
+        body {
+            min-height: max(884px, 100dvh);
+            background-color: #131313;
+            color: #e5e2e1;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-secondary-container">
+<!-- TopAppBar -->
+<header class="bg-[#131313] flex justify-between items-center px-8 py-6 w-full fixed top-0 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#E5383B] text-3xl">movie_filter</span>
+<h1 class="font-['Manrope'] font-bold tracking-tight text-[#E5383B] text-2xl font-black tracking-tighter">StreamList</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#E4BDBA] hover:bg-[#353534] transition-colors p-2 rounded-full">search</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-high border-2 border-outline-variant overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqsy5FHRldFdz0KOmreqazvuFUfvfneZ-_n43-xxFJ6OEUFdUJelz-pWnX4pV7DwgpqgfFRWx6KJATpnKtn13pGKknNpbJU8DWVqQ6tcbaHFPuO_PbylPPLFT3HO69bSWzOXjjUAMl2HKoslNpLfkCFs2hkkvfNdheXcUwOm7EWsxZVLn5SyuuEPwTO0gLBQcDYCjM-q_oTrjzNjDbTwT2BbKhu4J8AGBgVV-Zl0bPhuHwEO14v0NXvjT7Z-qqB5qGselOdBlblUJh"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="min-h-screen pt-24 pb-32 px-6 flex flex-col max-w-7xl mx-auto">
+<!-- Editorial Header Section -->
+<section class="mb-10">
+<span class="text-primary font-headline font-bold tracking-widest uppercase text-xs mb-2 block">Your Collection</span>
+<h2 class="font-headline text-4xl md:text-5xl font-extrabold tracking-tighter text-on-surface">My Watchlist</h2>
+<p class="text-on-surface-variant font-medium mt-1">0 titles</p>
+</section>
+<!-- Empty State Container -->
+<div class="flex-grow flex flex-col items-center justify-center text-center max-w-md mx-auto relative">
+<!-- Decorative Subtle Glow -->
+<div class="absolute inset-0 bg-empty-glow -z-10 rounded-full blur-3xl"></div>
+<!-- Large Elegant Icon -->
+<div class="mb-8 p-8 rounded-full bg-surface-container-low/30 ring-1 ring-outline-variant/10">
+<span class="material-symbols-outlined text-8xl text-[#822625] opacity-50 block" data-icon="bookmark">bookmark</span>
+</div>
+<!-- Messages -->
+<h3 class="font-headline font-bold text-2xl text-on-surface mb-3">Your watchlist is empty</h3>
+<p class="text-on-surface-variant leading-relaxed mb-10 text-sm md:text-base">
+                Save movies and shows you want to watch later and they'll appear here
+            </p>
+<!-- CTA -->
+<button class="w-full py-4 px-8 bg-[#E5383B] text-on-surface font-headline font-bold text-lg rounded-xl shadow-lg shadow-[#822625]/20 hover:bg-[#ff5351] transition-all active:scale-95 duration-150">
+                Browse Trending Now
+            </button>
+</div>
+<!-- Content Recommendation Ghost -->
+<div class="mt-20 opacity-20 pointer-events-none">
+<h4 class="font-headline text-xs uppercase tracking-[0.2em] text-on-surface-variant mb-6">Popular Recommendations</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="aspect-[2/3] bg-surface-container-highest rounded-lg"></div>
+<div class="aspect-[2/3] bg-surface-container-highest rounded-lg"></div>
+<div class="aspect-[2/3] hidden md:block bg-surface-container-highest rounded-lg"></div>
+<div class="aspect-[2/3] hidden md:block bg-surface-container-highest rounded-lg"></div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-6 pb-8 pt-4 bg-[#131313]/70 backdrop-blur-xl z-50 rounded-t-lg shadow-[0_-4px_20px_rgba(14,14,14,0.6)]">
+<a class="flex flex-col items-center justify-center text-[#E4BDBA] opacity-60 transition-all duration-300 ease-in-out hover:text-[#FFB3AE]" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#E4BDBA] opacity-60 transition-all duration-300 ease-in-out hover:text-[#FFB3AE]" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#E5383B] font-bold scale-110 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Watchlist</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#E4BDBA] opacity-60 transition-all duration-300 ease-in-out hover:text-[#FFB3AE]" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

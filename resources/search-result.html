@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>StreamList - Search Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-background": "#e5e2e1",
+              "primary-container": "#ff5351",
+              "on-secondary-container": "#ff9992",
+              "surface-dim": "#131313",
+              "secondary-container": "#822625",
+              "on-surface-variant": "#e4bdba",
+              "surface-container-high": "#2a2a2a",
+              "on-primary-fixed": "#410004",
+              "surface-bright": "#3a3939",
+              "on-tertiary-fixed-variant": "#004f55",
+              "inverse-surface": "#e5e2e1",
+              "error": "#ffb4ab",
+              "on-error-container": "#ffdad6",
+              "surface-container-low": "#1c1b1b",
+              "on-primary-fixed-variant": "#930014",
+              "tertiary-fixed": "#8ef2fd",
+              "tertiary": "#71d5e0",
+              "primary-fixed": "#ffdad7",
+              "tertiary-container": "#319ea9",
+              "inverse-primary": "#bb1522",
+              "on-tertiary-container": "#002f33",
+              "on-secondary-fixed-variant": "#822625",
+              "error-container": "#93000a",
+              "on-primary-container": "#5c0008",
+              "surface-container-highest": "#353534",
+              "on-primary": "#68000b",
+              "secondary-fixed": "#ffdad7",
+              "on-tertiary-fixed": "#002023",
+              "secondary-fixed-dim": "#ffb3ae",
+              "surface-variant": "#353534",
+              "surface-tint": "#ffb3ae",
+              "on-error": "#690005",
+              "outline": "#ab8886",
+              "surface-container-lowest": "#0e0e0e",
+              "outline-variant": "#5b403e",
+              "secondary": "#ffb3ae",
+              "on-secondary-fixed": "#410004",
+              "background": "#131313",
+              "surface": "#131313",
+              "on-surface": "#e5e2e1",
+              "on-tertiary": "#00363b",
+              "primary-fixed-dim": "#ffb3ae",
+              "inverse-on-surface": "#313030",
+              "surface-container": "#201f1f",
+              "on-secondary": "#630e11",
+              "tertiary-fixed-dim": "#71d5e0",
+              "primary": "#ffb3ae"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #131313;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .poster-aspect {
+        aspect-ratio: 2 / 3;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar (Matches SCREEN_4) -->
+<header class="bg-[#131313] dark:bg-[#131313] flex items-center justify-between px-8 py-6 w-full fixed top-0 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#E5383B] text-2xl">movie_filter</span>
+<h1 class="font-['Manrope'] font-bold tracking-tight text-[#E5E2E1] text-2xl font-black text-[#E5383B] tracking-tighter">StreamList</h1>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border-2 border-outline-variant/20">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="close-up portrait of a friendly man with a slight smile and professional attire against a neutral soft studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTeGvS_jcuJ7iy6UGYBwTdGWK23sx_-canmSGsd2_Odci9j-xc1YxOoR2f1h_rsc5hDZ-pqajZewz06Se6Pg6g2Xmkp8LX4_jRfVAD2cjjJyKQoWVzcmrUwkiMXWsl7acBuekMylo7VntV0C6siZ7pF54wUNKyol8rdJuerdd67euwFI281b9uFuyvBuEGOV74mvoFR02EhiwMXQ72kkPdokMvakSUrkx7fHzWRb9fj-szCf_GNHRM3aIkva-aqxQbBB1OaUbWg4mA"/>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-5xl mx-auto">
+<!-- Search Input Area (Matches Style of SCREEN_4) -->
+<div class="mb-10">
+<div class="relative">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</div>
+<input class="w-full bg-surface-container-low border-none rounded-xl py-4 pl-12 pr-4 text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary-container/30 transition-all font-body text-lg font-medium" readonly="" type="text" value="Sci-Fi"/>
+</div>
+<p class="mt-6 font-body text-on-surface-variant font-medium tracking-wide">18 results for 'Sci-Fi'</p>
+</div>
+<!-- Bento/Grid Content -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+<!-- Result 1 -->
+<div class="flex flex-col gap-3 group">
+<div class="poster-aspect overflow-hidden rounded-xl bg-surface-container-highest shadow-xl">
+<img alt="Neon Drift" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Cinematic shot of a sleek futuristic sports car driving through a rain-slicked neon-lit city street at night, cyberpunk aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVy1pLMdtQHS5zANcEh0MaLh030WlQRpnUATywKCNsoZW0Vh4GG1pSNqx6e7HWwNKOBg1HXIT2CGuibb3B_VV6jM6eOfVQNk67Y4nyHuHv-ZFGrjQfxRkuXFN5ZpEv94K2IbwqNMGzagkpH_5m9an36I2R010lbTRkEwRVtqjSVFCvijTYW8gmbYz5wwpTsYN9_WY7CGcQYdXMANOkmWKVyHRxzRs0l3crs2Tu3odfOPSAnxy1SZGC-Li7FGvixuEsSGPKM3foSFJZ"/>
+</div>
+<div>
+<h3 class="text-on-surface font-headline font-bold text-base leading-tight">Neon Drift</h3>
+<p class="text-[#9A9A9A] font-body text-sm mt-1">2024</p>
+</div>
+</div>
+<!-- Result 2 -->
+<div class="flex flex-col gap-3 group">
+<div class="poster-aspect overflow-hidden rounded-xl bg-surface-container-highest shadow-xl">
+<img alt="Star Bound" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Wide angle shot of a massive ring-shaped space station orbiting a vibrant blue planet, cinematic lighting with lens flares" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbKQmmcKypr19SN0nmJ-9D4XtGi8CDjS8otd0lPGSqe4NxiJhETd3PyyFoOWGoxZAwFha1sIyaHUkYf9fTYEUUymoqlbT40rCPj-6XSzYxTo44usIIO2weqT_pvnGRkpm5pxkngBFO4vza5DQ3oEoQsaigtTIsVBQJLi3oIL8LKC4a9JigIQPYbtT0-7MPpwMEjb-HkqrtXddnQ0jdwDK5GMC3AVeTI8pGC6XVd971O3pia2AqrTP7GWQaLRzD7t4WftogPM2Z-qtC"/>
+</div>
+<div>
+<h3 class="text-on-surface font-headline font-bold text-base leading-tight">Star Bound</h3>
+<p class="text-[#9A9A9A] font-body text-sm mt-1">2024</p>
+</div>
+</div>
+<!-- Result 3 -->
+<div class="flex flex-col gap-3 group">
+<div class="poster-aspect overflow-hidden rounded-xl bg-surface-container-highest shadow-xl">
+<img alt="Digital Ghost" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Abstract visualization of a human silhouette made of glowing blue data particles and binary code in a dark digital void" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcKn53clgjEHspGHekjXrnQwv_7jXScq5MQ5y9lBSPuTRyWF61XbqB_zW3_tKuXzsugQWDKwnKjZcdhOKZqwpK25R6YpWUBb-Vp--Wd7T0qE9--xmNoUp25EneY1XajjkxX7ut_GWAYzrAX_yimfKDu6EmHSBu7SmpMvHGg9Y4c81yEM3lv8Bn-5UN7yMEVG9n74yOfCqXYoNdfqtgF-V2W7r67EfOH8NjzSVKHIrEhM7vLRAJq_ulZ932YyePBNmlHES6fw830rA_"/>
+</div>
+<div>
+<h3 class="text-on-surface font-headline font-bold text-base leading-tight">Digital Ghost</h3>
+<p class="text-[#9A9A9A] font-body text-sm mt-1">2023</p>
+</div>
+</div>
+<!-- Result 4 -->
+<div class="flex flex-col gap-3 group">
+<div class="poster-aspect overflow-hidden rounded-xl bg-surface-container-highest shadow-xl">
+<img alt="Synth City" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A sprawling futuristic metropolis with high-density skyscrapers and flying vehicles under a dark atmospheric purple sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABvUOlFIKGWM0iq9TpvRKeZe15Oboi8vXS6ZfBxoZ0gH_ap_yBCYAipb4zAARPDbCvN55rtKnuSvu6I7BbLXZFsYaEho0bIliOEqCQ9f-dj0EZngB5eS15q0A2yqc4Qzj2qZsi31aEzI5TDeyaR6t1mNduODn5A0UZg_TO2qCKAvLsOwklQ6jwdvj6f8kycISt7p4v5oZB8xclGsmOcMYu0uGtASV963cd_vBPqgfQMMFXiTse4eY3PV_xRPi1IPw3jrin-7pQ6z1h"/>
+</div>
+<div>
+<h3 class="text-on-surface font-headline font-bold text-base leading-tight">Synth City</h3>
+<p class="text-[#9A9A9A] font-body text-sm mt-1">2024</p>
+</div>
+</div>
+<!-- Result 5 -->
+<div class="flex flex-col gap-3 group">
+<div class="poster-aspect overflow-hidden rounded-xl bg-surface-container-highest shadow-xl">
+<img alt="Cyber Pulse" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close-up of a high-tech robotic hand with glowing red circuits touching a digital interface screen in a dark laboratory" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCndNgQcc7hT4PANw-d-sbtI1i6rLZne2X_ZPhI3-9OvUk6foBxRwSRv10MGjiesp278P8P-yk3VNrGe6BXT9um1hb96Sd7nrjiAH5gGB3f5HskFxcxuylZ7ANGKkDGY-PjHH6ii1XQWb-zG3NN4O8j3bLb-vXacreW2O_sQ83SWJcFiH-_uQLoRJjOA6GXWDA6eehoy7q5xxESf_n0uHNUlAp7cjC1Y_Wwc8187JZ6-okHfDixdHSi4izpBugXSFk9KAzkkaHipHwe"/>
+</div>
+<div>
+<h3 class="text-on-surface font-headline font-bold text-base leading-tight">Cyber Pulse</h3>
+<p class="text-[#9A9A9A] font-body text-sm mt-1">2023</p>
+</div>
+</div>
+<!-- Result 6 -->
+<div class="flex flex-col gap-3 group">
+<div class="poster-aspect overflow-hidden rounded-xl bg-surface-container-highest shadow-xl">
+<img alt="The Last Empire" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Monumental futuristic throne room with grand architecture and statues, bathed in dramatic shafts of cold white light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYREmBraIasvsPGbu3Bo6h2kky7PHZwBIGNOvxfXkWBxNq4YAsphebXrX6wPzp8CuFFHj095tde1sLlD1vb6c6FL6Ske5JN3FMYkl4JfAdEVaO0yzkbpuhXH9H98lOvDHF-BaBevQs8-ZILjA0fUyAK7zrn7BMVgow0NBRpYNA3wmWB0vloIs0cDysr-24nJY6-FvdevJAHxbwuFPb4nXX3698yj0-lcCZ4B7ZesWwVVwNyYzk8viy7Ec06roMDbDb7SfxtaGaMjfo"/>
+</div>
+<div>
+<h3 class="text-on-surface font-headline font-bold text-base leading-tight">The Last Empire</h3>
+<p class="text-[#9A9A9A] font-body text-sm mt-1">2024</p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Matches SCREEN_4) -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-lg bg-[#131313]/70 dark:bg-[#131313]/70 backdrop-blur-xl shadow-[0_-4px_20px_rgba(14,14,14,0.6)]">
+<div class="flex justify-around items-center px-6 pb-8 pt-4">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-[#E4BDBA] opacity-60 hover:text-[#FFB3AE] transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Home</span>
+</a>
+<!-- Search (Active) -->
+<a class="flex flex-col items-center justify-center text-[#E5383B] font-bold scale-110 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">search</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Search</span>
+</a>
+<!-- Watchlist -->
+<a class="flex flex-col items-center justify-center text-[#E4BDBA] opacity-60 hover:text-[#FFB3AE] transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined mb-1">bookmark</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Watchlist</span>
+</a>
+<!-- Profile (Greyed out) -->
+<a class="flex flex-col items-center justify-center text-[#E4BDBA] opacity-40 transition-all duration-300 ease-in-out cursor-not-allowed" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Profile</span>
+</a>
+</div>
+</nav>
+</body></html>
