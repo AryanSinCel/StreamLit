@@ -1698,14 +1698,27 @@ I’m in **Ask mode** — I can’t edit the project here. If you want this wire
 
 _**User**_
 
-fix it 
+fix it with Stack Above Tabs such that the detail page is stacked on top of Tabs so the tab bar automatically hides  
 
 ---
 
 _**Agent (composer-2-fast)**_
 
+<think><details><summary>Thought Process</summary>
+**Refactoring navigation**
 
-Hiding the tab bar when a tab's nested stack shows `Detail`, preserving the nested-stack-per-tab structure.
+I'm updating the root navigator to use a stack-above-tabs pattern with a new param list type. I'm implementing a root navigator with a stack-above-tabs pattern using native stack and tabs. 
+
+**Handling nested navigation**
+
+I'm using composite navigation to access the parent stack's navigation from HomeScreen. I'll use `navigation.navigate` directly for sibling tab navigation instead of composite navigation. I'll simplify tab navigation by using single screens without nested stacks for now, keeping flexibility for future nesting. 
+
+I'm adjusting the navigation structure to stack detail pages above tabs using a root stack with tab navigator and detail screen. I'm simplifying the navigation by moving Detail screens to root level and keeping only one screen per tab stack for consistency. I'm updating the root stack types to properly handle nested tab navigators with `NavigatorScreenParams`. I'm adjusting the navigation types to ensure proper integration between nested tab navigators and root stack parameters. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+Refactoring navigation to a root stack with tabs plus a global `Detail` screen. Reading the current implementation.
 
 
 
@@ -1724,21 +1737,107 @@ _**Agent (composer-2-fast)**_
 
 _**Agent (composer-2-fast)**_
 
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
 <think><details><summary>Thought Process</summary>
-**Setting tab bar style**
+**Implementing navigation types**
 
-I'm using `getFocusedRouteNameFromRoute` to hide the tab bar when the Detail screen is focused. I'm adjusting the tab bar style logic to properly hide it on the Detail screen using `screenOptions`. 
+I'm adding `RootStackParamList` types and removing `Detail` from other stack param lists. 
 
-**Adjusting tab bar style**
+**Adding composite screen props**
 
-The screenOptions on Tab.Navigator applies to all tabs, so I need to implement per-tab logic using the route parameter to conditionally hide the tab bar on the Detail screen. </details></think>
+I'm implementing CompositeScreenProps for proper typing when navigating from tab stacks to root Detail screen. I'm verifying the correct usage of CompositeScreenProps for Tab > Stack navigation typing. 
+
+**Checking React Navigation types**
+
+I'm verifying the correct usage of CompositeScreenProps for nested Tab > Stack navigation typing. I need to verify the correct usage of CompositeScreenProps for nested Tab > Stack navigation typing. I need to implement `CompositeScreenProps` to properly type nested navigation routes. I'm importing `CompositeScreenProps` from `@react-navigation/native` to type nested navigation routes. 
+
+I'm verifying the CompositeScreenProps hierarchy for nested navigation types. I'm analyzing the CompositeScreenProps hierarchy for nested navigation types. </details></think>
 
 _**Agent (composer-2-fast)**_
 
 
-Using `getFocusedRouteNameFromRoute` to hide the tab bar when the nested stack's focused route is `Detail`.
+Implementing a root native stack wrapping the tab navigator and updating types and screens to use `CompositeScreenProps` so `navigate('Detail')` is typed correctly.
 
 
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
 
 _**Agent (composer-2-fast)**_
 
@@ -1757,9 +1856,61 @@ _**Agent (composer-2-fast)**_
 
 _**Agent (composer-2-fast)**_
 
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
 <tool-use data-tool-type="write" data-tool-name="edit_file_v2">
 
-<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx</summary>
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
 
 </details>
 
@@ -1802,12 +1953,12 @@ To clear this warning, run:
 &#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
 
 PASS __tests__/App.test.tsx
-  ✓ renders correctly (14 ms)
+  ✓ renders correctly (16 ms)
 
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        0.919 s, estimated 3 s
+Time:        0.997 s, estimated 1 s
 Ran all test suites.
 
 ```
@@ -1822,17 +1973,189 @@ Ran all test suites.
 _**Agent (composer-2-fast)**_
 
 
-Here’s what changed.
 
-### Cause
-`Detail` lives **inside** each tab’s stack, but the **bottom tab navigator** still wraps that stack, so the tab bar stayed visible on `Detail` unless we hide it for that nested route.
 
-### Fix (nested stacks unchanged)
-In `RootNavigator.tsx`, `screenOptions` is now a function that uses **`getFocusedRouteNameFromRoute`** from `@react-navigation/native`. When the focused nested screen is **`Detail`**, **`tabBarStyle`** is set to **`{ display: 'none' }`**; otherwise it uses the usual **`defaultTabBarStyle`** (`backgroundColor` from theme).
 
-Back still pops within the **same tab’s stack** (Home / Search / Watchlist), and the tab bar shows again on the main screens.
 
-### File touched
-- **`src/navigation/RootNavigator.tsx`** — import `getFocusedRouteNameFromRoute`; dynamic `tabBarStyle` as above.
+_**Agent (composer-2-fast)**_
 
-`npx tsc --noEmit`, `npm run lint`, and `npm test` all pass.
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{ts,tsx}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "HomeStackParamList|Detail.*movieId|navigate\\('Detail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "HomeStackParamList|Detail.*movieId|navigate\\('Detail",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "src/navigation/types.ts"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/screens/HomeScreen.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/navigation/RootNavigator.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/screens/SearchScreen.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    }
+  ],
+  "totalFiles": 5,
+  "totalMatches": 13
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+Here is what changed:
+
+### Behaviour
+- **`RootStack`** wraps everything: **`MainTabs`** (bottom tabs + per-tab stacks) and **`Detail`**.
+- **`Detail`** is only registered on the **root** stack, so it sits **above** the tab UI and the **tab bar is hidden** while Detail is shown.
+- **Back** pops to **`MainTabs`**, restoring the tab you were on.
+
+### Files updated
+- **`src/navigation/types.ts`** — Added **`RootStackParamList`** (`MainTabs`, `Detail`). Removed **`Detail`** from **`HomeStackParamList`**, **`SearchStackParamList`**, and **`WatchlistStackParamList`**.
+- **`src/navigation/RootNavigator.tsx`** — **`RootStack`** → **`MainTabs`** (`MainTabNavigator`) + **`Detail`**; inner stacks no longer register **`Detail`**.
+- **`src/screens/HomeScreen.tsx`**, **`SearchScreen.tsx`**, **`WatchlistScreen.tsx`** — **`CompositeScreenProps`** (tab stack + tab + root stack) so **`navigation.navigate('Detail', { movieId })`** is correctly typed to the root **`Detail`** route.
+- **`src/screens/DetailScreen.tsx`** — **`NativeStackScreenProps<RootStackParamList, 'Detail'>`**.
+
+`npx tsc --noEmit`, **`npm run lint`**, and **`npm test`** all pass.
+
+**Manual check:** Open Detail from Home or Search → tab bar should disappear → back → previous tab main screen with tab bar again.
+
+---
+
+_**User**_
+
+## Session — 2026-04-14
+
+Goal: Complete PSD-Architecture §16 Task 7 — implement src/store/watchlistStore.ts with Zustand persist + AsyncStorage, and a correct hydrated gate (no misleading watchlist UI before rehydration). Store-only; no full screens or TMDB wiring in this task.
+
+Attach: docs/PSD-Architecture.md (§8 watchlistStore, §16 Task 7), rules/store.mdc, rules/movielist-project.mdc
+
+---
+
+Requirements
+
+1. Store contract (match §8 exactly)
+   - WatchlistItem: id, title, posterPath, voteAverage, releaseDate, genreIds, mediaType: 'movie' | 'tv'.
+   - WatchlistStore: items, addItem, removeItem, isInWatchlist, count (derived from items.length or equivalent), hydrated: boolean.
+
+2. Persistence
+   - Zustand persist middleware with AsyncStorage (e.g. createJSONStorage(() => AsyncStorage)).
+   - Stable persist name (e.g. movielist-watchlist).
+
+3. Hydration
+   - hydrated stays false until rehydration finishes, then true.
+   - If rehydration fails, end in a defined state (e.g. items: [], hydrated: true) — one-line comment if needed.
+
+4. Behaviour
+   - addItem: ignore duplicate id (no duplicate entries).
+   - removeItem: by id; no-op if missing.
+   - isInWatchlist: boolean from items.
+
+5. Scope
+   - Store only — do not build full Home/Detail/Watchlist UI. No new TMDB hooks or movies.ts endpoints unless already required elsewhere.
+
+Out of scope: Full watchlist UI, tab badge styling, optimistic Detail polish — later PSD tasks.
+
+Verify: Reload app — persisted items reappear; hydrated becomes true after load. Strict TypeScript; no any.
+
+Output: List files changed and how you tested (add / remove / relaunch). 
+
+---
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/docs/PSD-Architecture.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/.cursor/rules/store.mdc</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/store/watchlistStore.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/package.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
