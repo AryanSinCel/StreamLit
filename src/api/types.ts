@@ -20,6 +20,8 @@ export interface TmdbMovieListItem {
   vote_average: number;
   release_date: string;
   genre_ids: number[];
+  /** Present on most list responses; optional for defensive parsing. */
+  overview?: string | null;
 }
 
 /** Paginated list responses from TMDB (`trending`, `top_rated`, `discover`, `search`, …). */

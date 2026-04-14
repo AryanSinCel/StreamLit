@@ -150,27 +150,1329 @@ Status: **completed**
 
 _**Agent (composer-2)**_
 
-<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
-<details>
+Error fetching URL, status code: 404 Not Found
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
 <summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Error fetching URL, status code: 404 Not Found
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: curl -sL "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications" 2>/dev/null | head -c 4000</summary>
+
+```bash
+curl -sL "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications" 2>/dev/null | head -c 4000
+```
+
+```
+[
+  {
+    "name": "materialsymbolsoutlined",
+    "path": "symbols/web/notifications/materialsymbolsoutlined",
+    "sha": "02c0401c96c7d18b045a4b991d9dabf6eed51c68",
+    "size": 0,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsoutlined?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/tree/master/symbols/web/notifications/materialsymbolsoutlined",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/trees/02c0401c96c7d18b045a4b991d9dabf6eed51c68",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsoutlined?ref=master",
+      "git": "https://api.github.com/repos/google/material-design-icons/git/trees/02c0401c96c7d18b045a4b991d9dabf6eed51c68",
+      "html": "https://github.com/google/material-design-icons/tree/master/symbols/web/notifications/materialsymbolsoutlined"
+    }
+  },
+  {
+    "name": "materialsymbolsrounded",
+    "path": "symbols/web/notifications/materialsymbolsrounded",
+    "sha": "4ae3c783623410069eec9b10b1a2a34c3367a059",
+    "size": 0,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/tree/master/symbols/web/notifications/materialsymbolsrounded",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/trees/4ae3c783623410069eec9b10b1a2a34c3367a059",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded?ref=master",
+      "git": "https://api.github.com/repos/google/material-design-icons/git/trees/4ae3c783623410069eec9b10b1a2a34c3367a059",
+      "html": "https://github.com/google/material-design-icons/tree/master/symbols/web/notifications/materialsymbolsrounded"
+    }
+  },
+  {
+    "name": "materialsymbolssharp",
+    "path": "symbols/web/notifications/materialsymbolssharp",
+    "sha": "345012044f2edf674350f88ceb463e2c32f41c43",
+    "size": 0,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolssharp?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/tree/master/symbols/web/notifications/materialsymbolssharp",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/trees/345012044f2edf674350f88ceb463e2c32f41c43",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolssharp?ref=master",
+      "git": "https://api.github.com/repos/google/material-design-icons/git/trees/345012044f2edf674350f88ceb463e2c32f41c43",
+      "html": "https://github.com/google/material-design-icons/tree/master/symbols/web/notifications/materialsymbolssharp"
+    }
+  }
+]
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: curl -sL "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded?ref=master" | head -c 6000</summary>
+
+```bash
+curl -sL "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded?ref=master" | head -c 6000
+```
+
+```
+[
+  {
+    "name": "notifications_20px.svg",
+    "path": "symbols/web/notifications/materialsymbolsrounded/notifications_20px.svg",
+    "sha": "e3239bba892be06adc6b4c295962672839b4562e",
+    "size": 495,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded/notifications_20px.svg?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/blob/master/symbols/web/notifications/materialsymbolsrounded/notifications_20px.svg",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/blobs/e3239bba892be06adc6b4c295962672839b4562e",
+    "download_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/notifications/materialsymbolsrounded/notifications_20px.svg",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded/notifications_20px.svg?ref=master",
+      "git": "https://api.github.com/repos/google/material-design-icons/git/blobs/e3239bba892be06adc6b4c295962672839b4562e",
+      "html": "https://github.com/google/material-design-icons/blob/master/symbols/web/notifications/materialsymbolsrounded/notifications_20px.svg"
+    }
+  },
+  {
+    "name": "notifications_24px.svg",
+    "path": "symbols/web/notifications/materialsymbolsrounded/notifications_24px.svg",
+    "sha": "59dfa315d7647a73674a33b97e6f31321002360a",
+    "size": 454,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded/notifications_24px.svg?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/blob/master/symbols/web/notifications/materialsymbolsrounded/notifications_24px.svg",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/blobs/59dfa315d7647a73674a33b97e6f31321002360a",
+    "download_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/notifications/materialsymbolsrounded/notifications_24px.svg",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded/notifications_24px.svg?ref=master",
+      "git": "https://api.github.com/repos/google/material-design-icons/git/blobs/59dfa315d7647a73674a33b97e6f31321002360a",
+      "html": "https://github.com/google/material-design-icons/blob/master/symbols/web/notifications/materialsymbolsrounded/notifications_24px.svg"
+    }
+  },
+  {
+    "name": "notifications_40px.svg",
+    "path": "symbols/web/notifications/materialsymbolsrounded/notifications_40px.svg",
+    "sha": "239b1e9cde70af55c63f5a30c0a083a4a33f6df2",
+    "size": 612,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded/notifications_40px.svg?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/blob/master/symbols/web/notifications/materialsymbolsrounded/notifications_40px.svg",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/blobs/239b1e9cde70af55c63f5a30c0a083a4a33f6df2",
+    "download_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/notifications/materialsymbolsrounded/notifications_40px.svg",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded/notifications_40px.svg?ref=master",
+      "git": "https://api.github.com/repos/google/material-design-icons/git/blobs/239b1e9cde70af55c63f5a30c0a083a4a33f6df2",
+      "html": "https://github.com/google/material-design-icons/blob/master/symbols/web/notifications/materialsymbolsrounded/notifications_40px.svg"
+    }
+  },
+  {
+    "name": "notifications_48px.svg",
+    "path": "symbols/web/notifications/materialsymbolsrounded/notifications_48px.svg",
+    "sha": "0bb23cbf436e48dec10a5409da3f68304fbcfb7c",
+    "size": 528,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded/notifications_48px.svg?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/blob/master/symbols/web/notifications/materialsymbolsrounded/notifications_48px.svg",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/blobs/0bb23cbf436e48dec10a5409da3f68304fbcfb7c",
+    "download_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/notifications/materialsymbolsrounded/notifications_48px.svg",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded/notifications_48px.svg?ref=master",
+      "git": "https://api.github.com/repos/google/material-design-icons/git/blobs/0bb23cbf436e48dec10a5409da3f68304fbcfb7c",
+      "html": "https://github.com/google/material-design-icons/blob/master/symbols/web/notifications/materialsymbolsrounded/notifications_48px.svg"
+    }
+  },
+  {
+    "name": "notifications_fill1_20px.svg",
+    "path": "symbols/web/notifications/materialsymbolsrounded/notifications_fill1_20px.svg",
+    "sha": "6435b25effd63ca1b99ce01c00206265404f1184",
+    "size": 424,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/notifications/materialsymbolsrounded/notifications_fill1_20px.svg?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/blob/master/symbols/web/notifications/materialsymbolsrounded/notifications_fill1_20px.svg",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/blobs/6435b25effd63ca1b99ce01c00206265404f1184",
+    "download_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/notifications/materialsymbolsrounded/notificatio
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: curl -sL "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/notifications/materialsymbolsrounded/notifications_fill1_24px.svg"</summary>
+
+```bash
+curl -sL "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/notifications/materialsymbolsrounded/notifications_fill1_24px.svg"
+```
+
+```
+&lt;svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"&gt;&lt;path d="M200-200q-17 0-28.5-11.5T160-240q0-17 11.5-28.5T200-280h40v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h40q17 0 28.5 11.5T800-240q0 17-11.5 28.5T760-200H200ZM480-80q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80Z"/&gt;&lt;/svg&gt;
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Analyzing path data**
+
+The path data consists of two distinct subpaths within a single path element. The path data contains multiple subpaths with distinct coordinates and transformations. 
+
+**Correcting path data**
+
+I'm fixing the incorrect middle section of the path data that was drawing a rectangle instead of the intended arc shape. I'm adjusting the path winding order to create proper holes in the SVG, ensuring the inner rectangle cuts correctly through the outer shape. I'm replacing the filled notification path with the outlined version from Google's official SVG. </details></think>
+
+_**Agent (composer-2)**_
+
+Replacing the notifications path: the current path includes an extra inner rectangle (`M320-280h320...`) that was carving out the bell body. Google's official `notifications_fill1_24px.svg` uses only the outer bell plus the small base subpath.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/SimpleIcons.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
 
 
 Parameters:
 
 ```json
 {
-  "url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/android/notifications-fill.rounded.xml"
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/common/SimpleIcons.tsx"
+  ]
 }
 ```
-User decision: **accepted**
+Result:
 
-Status: **loading**
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/common/SimpleIcons.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
 
 
 </details>
 </tool-use>
 
-<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
-<summary>Tool use: **web_fetch**</summary>
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Here is what was wrong and what we changed.
+
+**Cause:** `PATH_NOTIFICATIONS_FILLED` was not the real Material **fill1** glyph. It ended with an extra inner loop (`M320-280h320v-280…`) that behaved like a cutout, so the bell read as **outline / not solid**.
+
+**Fix:** Use the exact `d` from Google’s  
+`symbols/web/notifications/materialsymbolsrounded/notifications_fill1_24px.svg`: one closed bell body, then a second small subpath for the base (`ZM480-80…`), with no inner rectangle.
+
+**File updated:** `src/components/common/SimpleIcons.tsx` — only `PATH_NOTIFICATIONS_FILLED` (and its comment).
+
+Rebuild the app and the header bell should render as a solid filled icon.
+
+---
+
+_**User**_
+
+## Session — 2026-04-14
+
+Goal: Wire **real TMDB data** into the existing **Home UI** — replace placeholders/mock state with **`useHome`** (`@src/hooks/useHome.ts`) so header/hero/chips/three rows show live data from **`@src/api/movies.ts`**. **`HomeScreen`** only composes UI + navigation; **no** `useEffect` + fetch, **no** `movies.ts` / `client` / `axios` imports in the screen.
+
+Attach: @docs/PSD-Home.md (§2.2, §4–5) @src/screens/HomeScreen.tsx @src/hooks/useHome.ts @src/api/movies.ts @src/api/types.ts @src/utils/image.ts @rules/hooks.mdc @rules/movielist-project.mdc
+
+Requirements:
+- Map **hero** from trending (first item or PSD rule in hook).
+- **Three rows**: Trending, Top Rated, Genre/discover — each uses hook state (`data`, `loading`, `error`); show simple inline error/retry if hook exposes `refetch`.
+- **Genre chips** drive row 3 only via existing chip state in `useHome` (add/fix if missing).
+- **Detail**: `movieId` from tapped card/hero Details. **See All**: pass `title`, `mode`, optional `genreId` per your stack types.
+- **Null-safe** posters (`image.ts`), empty lists don’t crash.
+
+Out of scope: H5 infinite scroll, H6 skeleton polish, new endpoints beyond Home PSD, redesigning layout.
+
+Verify: iOS + Android — Home shows real TMDB content; chips change row 3; Detail + See All work; typecheck.
+
+Deliverable: files changed + short smoke test notes.
+
+---
+
+_**Agent (composer-2)**_
+
+Wiring Home to `useHome` and TMDB: reading the referenced files and current implementation.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/docs/PSD-Home.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/movies.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeGenreStrip.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/homeStatic.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating home components**
+
+I'm updating HomeGenreStrip to use `HomeChipKey` from api/types and aligning the sci_fi key with scifi. I'm reviewing the `heroLoading` logic in `useHome` to ensure proper loading states after trending API calls. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/ContentCard.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/image.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Checking header title**
+
+I'm checking if SeeAllScreen passes title to header and grepping for HomeGenreChipKey usage. 
+
+**Updating genre strip**
+
+I'm refactoring HomeGenreStrip to use HomeChipKey from api/types and derive chip list from chips prop. I'm updating HomeGenreStrip to use HomeChipKey type and map chips from hook. I'm passing `items`, `loading`, `error`, and `onRetry` to HomeGenreStrip and mapping TmdbMovieListItem to ContentCard. I'm aligning the hook to use `items` instead of `data` in HomeFeedRowState. I noticed the TMDB list item interface is missing the `overview` field, which is needed for the placeholder text. 
+
+I'm implementing fallback text for list items without overview, using vote_average and release_date as secondary info. I'm using `overview` from TMDB API for list items, extending `TmdbMovieListItem` type to include missing fields. I'm adding optional `overview: string | null` to `TmdbMovieListItem` type to match TMDB API response. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "homeStatic|HomeGenreChipKey|MOCK_"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "homeStatic|HomeGenreChipKey|MOCK_",
+  "topFiles": [
+    {
+      "matchCount": 10,
+      "uri": "src/components/home/homeStatic.ts"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/components/home/HomeGenreStrip.tsx"
+    },
+    {
+      "matchCount": 10,
+      "uri": ".specstory/history/2026-04-14_01-32-43Z-home-ui-content-card-implementation.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/home/HomeContentRow.tsx"
+    },
+    {
+      "matchCount": 9,
+      "uri": "src/screens/HomeScreen.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/home/HomeHero.tsx"
+    }
+  ],
+  "totalFiles": 6,
+  "totalMatches": 35
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing hero loading**
+
+I'm adjusting the hero loading logic to correctly handle page state changes after the first response. 
+
+**Handling edge cases**
+
+I'm adding a utility function to format movie subtitles with year and rating. 
+
+**Updating types**
+
+I'm adding `overview?: string | null` to TmdbMovieListItem for backward compatibility. I'm updating HomeContentRow and HomeHero props to use TmdbMovieListItem type and adding loading/error handling. 
+
+I'm refactoring HomeHero to receive movie data and compute image URLs internally, keeping it dumb and avoiding TMDB types in the component file. I'm updating HomeHero to accept `TmdbMovieListItem | null` and `loading` props while letting it import `buildImageUrl` from utils for image URL construction. I'm removing unused `homeStatic` file and `HOME_HERO_BACKDROP_URI` import from HomeHero. I'm deleting the homeStatic.ts file and removing unused constants to shrink the codebase. 
+
+I'm using top-level `refetch` for bootstrap failures and row errors to avoid changing the hook significantly. I'm deriving genreId from chips for Row3 See All and handling 'all' case with undefined genreId. 
+
+I'm handling the 'all' case for genreId by setting it to undefined in See All screens. I'm adding a helper function to format movie subtitles in the display utils. I'm moving the subtitle formatting logic into HomeContentRow as a local function. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList** (0 files)
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "TmdbMovieListItem"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "TmdbMovieListItem",
+  "topFiles": [
+    {
+      "matchCount": 4,
+      "uri": "src/api/types.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-14_02-38-48Z-notification-icon-fill-issue.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".specstory/history/2026-04-13_21-56-13Z-movielist-portrait-content-card-design-rules.md"
+    },
+    {
+      "matchCount": 4,
+      "uri": ".specstory/history/2026-04-14_00-03-56Z-api-and-types-for-home-feature.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/hooks/useSeeAll.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/hooks/useHome.ts"
+    }
+  ],
+  "totalFiles": 6,
+  "totalMatches": 16
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating home components**
+
+I'm removing homeStatic dependencies and updating related components to use direct props instead. I'm deleting homeStatic.ts and updating HomeContentRow with props. 
+
+I'm implementing conditional rendering for loading, error, and empty states in HomeContentRow. 
+
+**Handling row errors**
+
+I'm implementing row-specific error handling with conditional retries using the top-level refetch function. I'm clarifying that bootstrap loading and error states are separate from row-specific errors, particularly noting that `error` maps to `genresError` only, not row-level failures. When genres fail, bootstrap stays false but discover still runs with empty loadedGenres, causing chips to become empty. I'm implementing row-level error handling by showing banners for genres errors and skipping action chips when discoverInput fails. I'm adding a 'genre Action not found' error banner when genres are empty. 
+
+**Updating chip state**
+
+I'm replacing useState with selectedChipKey from hook. I'm adding per-row refetch functionality to support row-level retry logic. I'm implementing a fix for the double spinner issue by ensuring HomeScreen shows nothing until bootstrap completes. I'm handling partial bootstrap failures where genres fail but trending/topRated still load, causing empty chips without IDs. I'm implementing HomeHero component with placeholder shells and conditional CTAs based on loading state. 
+
+I'm implementing the hero background image logic to prioritize backdrop over poster as the fallback pattern. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **2** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList** (2 files)
+
+| File |
+|------|
+| `__tests__/App.test.tsx` |
+| `__tests__/watchlistStore.test.ts` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Running typecheck**
+
+I'm running `tsc` to check for TypeScript errors after the recent changes. 
+
+**Fixing genre chips**
+
+I found that `buildResolvedChips` returns entries with null genreIds when genres are empty, causing chips to render incorrectly. 
+
+**Formatting movie list items**
+
+I'm creating `formatListMovieSubtitle` as a local function in HomeContentRow and moving synopsis logic to HomeHero. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing: updating types and components, rewiring `HomeScreen`, removing `homeStatic.ts`, and running the typecheck.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/formatMovieListItem.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeGenreStrip.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Using chip labels**
+
+I'm updating the row 3 title function to use chip labels directly from the chips array. 
+
+**Updating row titles**
+
+I'm setting the row 3 title to 'Discover' for the 'all' chip key, using the chip label as fallback. I'm seeing 'll -> undefined' which suggests a missing prop or variable in the HomeScreen component. I'm fixing the row titles to use the correct genre ID and label based on the selected chip. I'm fixing the HomeHero loading state to show 'Loading' instead of a blank synopsis or 'Featured' title. 
+
+I'm setting the title to 'Loading' when loading and no movie exists, and using the movie title or 'Featured' otherwise. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing auth middleware**
+
+I'm replacing inline imports with proper imports from api/types for HomeChipKey and HomeChipResolved. I'm addressing UI flickering issues during refetch where hero data temporarily becomes undefined. I'm fixing the synopsis display logic in HomeHero to handle loading states properly. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Checking JSX imports**
+
+I'm verifying the JSX import in SeeAllScreen since it's a .tsx file but might be missing JSX.Element type annotation. 
+
+**Checking hero loading**
+
+I found a potential bug in heroLoading logic during bootstrap before trending resolves. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="delete_file">
+<details><summary>Tool use: **delete_file**</summary>
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="delete_file"><details>
+<summary>Tool use: **delete_file**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+
+```
+src/components/home/HomeHero.tsx(126,19): error TS2551: Property 'absoluteFillObject' does not exist on type 'typeof StyleSheet'. Did you mean 'absoluteFill'?
+src/components/home/HomeHero.tsx(129,19): error TS2551: Property 'absoluteFillObject' does not exist on type 'typeof StyleSheet'. Did you mean 'absoluteFill'?
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1 && npm test -- --passWithNoTests 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1 && npm test -- --passWithNoTests 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest --passWithNoTests
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        1.457 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeGenreStrip.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/utils/formatMovieListItem.ts"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeGenreStrip.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/utils/formatMovieListItem.ts"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx eslint "src/screens/HomeScreen.tsx" "src/components/home/HomeHero.tsx" "src/components/home/HomeContentRow.tsx" "src/components/home/HomeGenreStrip.tsx" "src/hooks/useHome.ts" --max-warnings 0 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx eslint "src/screens/HomeScreen.tsx" "src/components/home/HomeHero.tsx" "src/components/home/HomeContentRow.tsx" "src/components/home/HomeGenreStrip.tsx" "src/hooks/useHome.ts" --max-warnings 0 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing outline**
+
+I confirmed that SeeAllScreen needs a JSX return type. I'll adjust `heroLoading` logic to handle cases where genres fail but trending succeeds, ensuring proper loading states. 
+
+**Handling edge cases**
+
+I'm adjusting the hero loading logic to ensure proper display when trending fails but other data loads successfully. I'm verifying movie genre row SeeAll behavior and ensuring proper display of rating 0 in ContentCard. </details></think>
+
+_**Agent (composer-2)**_
+
+Here is a concise summary of what was implemented.
+
+### What changed
+
+- **`HomeScreen.tsx`** — Composes **`useHome()`** only: no mocks, no `useEffect`/fetch, no `movies`/`client`/`axios`. Wires **hero** (`hero` + `heroLoading`), **genre strip** (`chips`, `selectedChipKey`, `setSelectedChipKey`), **three rows** from `trending` / `topRated` / `genre`, **Detail** from `hero?.id` and row cards, **See All** with `title`, `mode`, and optional **`genreId`** from the resolved chip. **Genres** bootstrap failure shows a banner + **Try again** → `refetch`. Removed the static “loading more” footer (H5 out of scope).
+- **`HomeGenreStrip.tsx`** — Takes **`chips: readonly HomeChipResolved[]`** and **`HomeChipKey`** from **`src/api/types.ts`** so labels/order match **`HOME_CHIP_DEFINITIONS`** / TMDB resolution.
+- **`HomeContentRow.tsx`** — Takes **`items: readonly TmdbMovieListItem[]`**, **`loading`**, **`error`**, optional **`onRetry`**; maps **`posterPath`** + **`formatListMovieSubtitle`** for **`ContentCard`** (null-safe posters via existing **`buildImageUrl`**); inline error + retry; empty list message; initial load spinner when there are no items yet.
+- **`HomeHero.tsx`** — **`movie`** + **`loading`**; backdrop via **`buildImageUrl`** (backdrop, then poster fallback); synopsis from **`overview`** when present, else a short meta line; CTAs disabled until a movie exists.
+- **`SeeAllScreen.tsx`** — Shows **`route.params.title`**; safer **`release_date`** handling.
+- **`src/api/types.ts`** — Optional **`overview`** on **`TmdbMovieListItem`** (TMDB list payloads).
+- **`src/utils/formatMovieListItem.ts`** — **`formatListMovieSubtitle`** for row subtitles.
+- **Removed** **`src/components/home/homeStatic.ts`** (mocks no longer used).
+
+### Why
+
+Home should follow the PSD: **one hook** owns TMDB; the screen only composes UI and navigation. Row/chip types align with **`useHome`** / **`HOME_CHIP_DEFINITIONS`** (`sci_fi` vs old `scifi`). Cards use **`ContentCard`**’s **`posterPath`** so **`image.ts`** stays the single place for safe URLs.
+
+### Verification (local)
+
+- **`npx tsc --noEmit`** — pass  
+- **`npm test`** — pass (2 suites)  
+- **ESLint** on the touched home/screen files — pass  
+
+**Smoke on device (you):** With a valid **`.env`** TMDB token, open **Home** on **iOS** and **Android** — confirm trending hero + three rows load, chips change row 3 + title/See All, **Details** / card → **Detail**, **See All** → list + **Detail** from a row. Chips **All** → discover without `genreId`; other chips pass **`genreId`** when TMDB resolves the name.
+
+I did not run simulators here (no device UI in this environment).
+
+---
+
+_**User**_
+
+why is header getting scrolled up, it should stay at top like @resources/home.html and @resources/home.png 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Restructuring layout**
+
+I'm moving HomeHeader outside the ScrollView to fix the sticky header behavior. </details></think>
+
+_**Agent (composer-2)**_
+
+Inspecting layout structure: the header is inside `ScrollView`, so it scrolls with the content. Fixing by keeping the header outside the scrollable area (matching the reference).
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeader.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/resources/home.html</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing mobile layout**
+
+I'm wrapping the screen in a View with flex: 1 and adding background color. I'm structuring the mobile layout with a root View and nested header with proper padding. 
+
+I'm implementing the mobile layout with a root View and nested header using SafeAreaProvider for proper padding. 
+
+**Adjusting safe area**
+
+I'm moving safe area padding from ScrollView content to the fixed header wrapper. I'm adding `backgroundColor: colors.surface` to the fixed header wrapper to ensure opaque background. I'm reordering the layout to place the header before ScrollView and updating styles to use `backgroundColor: colors.surface` for the header. </details></think>
+
+_**Agent (composer-2)**_
+
+Moving the header out of `ScrollView` and applying safe-area + surface background so it matches the reference `fixed top-0` top app bar.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npx eslint "src/screens/HomeScreen.tsx" --max-warnings 0</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npx eslint "src/screens/HomeScreen.tsx" --max-warnings 0
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
 
 </details></tool-use>

@@ -4,18 +4,18 @@
 
 import type { JSX } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import type { HomeChipKey, HomeChipResolved } from '../../api/types';
 import { colors } from '../../theme/colors';
 import { radiusFullPill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
-import type { HomeGenreChipKey } from './homeStatic';
-import { HOME_GENRE_CHIPS } from './homeStatic';
 
 export type HomeGenreStripProps = {
-  selectedKey: HomeGenreChipKey;
-  onSelect: (key: HomeGenreChipKey) => void;
+  chips: readonly HomeChipResolved[];
+  selectedKey: HomeChipKey;
+  onSelect: (key: HomeChipKey) => void;
 };
 
-export function HomeGenreStrip({ selectedKey, onSelect }: HomeGenreStripProps): JSX.Element {
+export function HomeGenreStrip({ chips, selectedKey, onSelect }: HomeGenreStripProps): JSX.Element {
   return (
     <View style={styles.wrap}>
       <ScrollView
@@ -23,7 +23,7 @@ export function HomeGenreStrip({ selectedKey, onSelect }: HomeGenreStripProps): 
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {HOME_GENRE_CHIPS.map((chip) => {
+        {chips.map((chip) => {
           const active = chip.key === selectedKey;
           return (
             <Pressable

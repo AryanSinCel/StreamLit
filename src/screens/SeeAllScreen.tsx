@@ -28,12 +28,13 @@ type Props = CompositeScreenProps<
 >;
 
 export function SeeAllScreen({ navigation, route }: Props) {
-  const { mode, genreId } = route.params;
+  const { title, mode, genreId } = route.params;
   const { items, page, hasMore, loading, loadingMore, error, refetch, loadMore } =
     useSeeAll({ mode, genreId });
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
       <Text style={styles.subtitle}>
         {mode}
         {genreId != null ? ` · genre ${String(genreId)}` : ''}
@@ -101,7 +102,7 @@ export function SeeAllScreen({ navigation, route }: Props) {
                 {item.title}
               </Text>
               <Text style={styles.rowMeta}>
-                {item.release_date.length > 0 ? item.release_date : '—'} ·{' '}
+                {item.release_date != null && item.release_date.length > 0 ? item.release_date : '—'} ·{' '}
                 {String(item.vote_average)}
               </Text>
             </Pressable>
@@ -116,6 +117,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.surface,
+  },
+  title: {
+    ...typography['headline-md'],
+    color: colors.on_surface,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.md,
   },
   subtitle: {
     ...typography['label-sm'],

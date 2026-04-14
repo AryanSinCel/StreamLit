@@ -2,28 +2,14 @@ import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { JSX } from 'react';
-import { useState } from 'react';
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HomeContentRow } from '../components/home/HomeContentRow';
 import { HomeGenreStrip } from '../components/home/HomeGenreStrip';
 import { HomeHeader } from '../components/home/HomeHeader';
 import { HomeHero } from '../components/home/HomeHero';
-import type { HomeGenreChipKey } from '../components/home/homeStatic';
-import {
-  HOME_HERO_MOVIE_ID,
-  MOCK_ROW3_BY_CHIP,
-  MOCK_TOP_RATED_ROW,
-  MOCK_TRENDING_ROW,
-  homeRow3GenreId,
-  homeRow3SectionTitle,
-} from '../components/home/homeStatic';
+import type { HomeChipKey, HomeChipResolved } from '../api/types';
+import { useHome } from '../hooks/useHome';
 import type {
   HomeStackParamList,
   RootStackParamList,
@@ -41,13 +27,30 @@ type Props = CompositeScreenProps<
   >
 >;
 
+function row3SectionTitle(selectedChipKey: HomeChipKey, chips: readonly HomeChipResolved[]): string {
+  if (selectedChipKey === 'all') {
+    return 'Discover';
+  }
+  return chips.find((c) => c.key === selectedChipKey)?.label ?? 'Discover';
+}
+
 export function HomeScreen({ navigation }: Props): JSX.Element {
   const insets = useSafeAreaInsets();
-  const [row3Chip, setRow3Chip] = useState<HomeGenreChipKey>('all');
+  const {
+    error: genresError,
+    refetch,
+    hero,
+    heroLoading,
+    chips,
+    selectedChipKey,
+    setSelectedChipKey,
+    trending,
+    topRated,
+    genre,
+  } = useHome();
 
-  const row3Cards = MOCK_ROW3_BY_CHIP[row3Chip];
-  const row3Title = homeRow3SectionTitle(row3Chip);
-  const row3GenreId = homeRow3GenreId(row3Chip);
+  const row3Title = row3SectionTitle(selectedChipKey, chips);
+  const row3GenreId = chips.find((c) => c.key === selectedChipKey)?.genreId ?? undefined;
 
   const openDetail = (movieId: number): void => {
     navigation.navigate('Detail', { movieId });
@@ -62,87 +65,133 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
   };
 
   const seeAllRow3 = (): void => {
-    if (row3GenreId != null) {
-      navigation.navigate('SeeAll', {
-        title: row3Title,
-        mode: 'discover',
-        genreId: row3GenreId,
-      });
-    } else {
-      navigation.navigate('SeeAll', {
-        title: row3Title,
-        mode: 'discover',
-      });
-    }
+    navigation.navigate('SeeAll', {
+      title: row3Title,
+      mode: 'discover',
+      ...(row3GenreId != null ? { genreId: row3GenreId } : {}),
+    });
   };
 
+  const heroMovieId = hero?.id;
+
   return (
-    <ScrollView
-      contentContainerStyle={[
-        styles.scrollContent,
-        {
-          paddingTop: insets.top + spacing.sm,
-          paddingBottom: insets.bottom + spacing.xxxxl,
-        },
-      ]}
-      nestedScrollEnabled
-      style={styles.container}
-    >
-      <HomeHeader />
-      <HomeGenreStrip onSelect={setRow3Chip} selectedKey={row3Chip} />
+    <View style={styles.screen}>
+      <View
+        style={[
+          styles.headerDock,
+          {
+            paddingTop: insets.top + spacing.sm,
+          },
+        ]}
+      >
+        <HomeHeader />
+      </View>
+      <ScrollView
+        contentContainerStyle={[
+          styles.scrollContent,
+          {
+            paddingBottom: insets.bottom + spacing.xxxxl,
+          },
+        ]}
+        nestedScrollEnabled
+        style={styles.scroll}
+      >
+      {genresError != null ? (
+        <View style={styles.banner}>
+          <Text style={styles.bannerText}>{genresError}</Text>
+          <Pressable
+            accessibilityLabel="Retry loading home data"
+            accessibilityRole="button"
+            onPress={refetch}
+            style={({ pressed }) => [styles.bannerBtn, pressed && styles.bannerBtnPressed]}
+          >
+            <Text style={styles.bannerBtnLabel}>Try again</Text>
+          </Pressable>
+        </View>
+      ) : null}
+      <HomeGenreStrip chips={chips} onSelect={setSelectedChipKey} selectedKey={selectedChipKey} />
       <HomeHero
+        loading={heroLoading}
+        movie={hero}
         onDetails={() => {
-          openDetail(HOME_HERO_MOVIE_ID);
+          if (heroMovieId != null) {
+            openDetail(heroMovieId);
+          }
         }}
         onWatchNow={() => {
-          openDetail(HOME_HERO_MOVIE_ID);
+          if (heroMovieId != null) {
+            openDetail(heroMovieId);
+          }
         }}
       />
       <HomeContentRow
-        cards={MOCK_TRENDING_ROW}
+        error={trending.error}
+        items={trending.items}
+        loading={trending.loading}
         onOpenDetail={openDetail}
+        onRetry={refetch}
         onSeeAll={seeAllTrending}
         sectionTitle="Trending Now"
       />
       <HomeContentRow
-        cards={MOCK_TOP_RATED_ROW}
+        error={topRated.error}
+        items={topRated.items}
+        loading={topRated.loading}
         onOpenDetail={openDetail}
+        onRetry={refetch}
         onSeeAll={seeAllTopRated}
         sectionTitle="Top Rated"
       />
       <HomeContentRow
-        cards={row3Cards}
+        error={genre.error}
+        items={genre.items}
+        loading={genre.loading}
         onOpenDetail={openDetail}
+        onRetry={refetch}
         onSeeAll={seeAllRow3}
         sectionTitle={row3Title}
       />
-      <View style={styles.loadMore}>
-        <ActivityIndicator color={colors.primary} size="small" />
-        <Text style={styles.loadMoreText}>Loading more content</Text>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  banner: {
+    marginBottom: spacing.md,
+    marginHorizontal: spacing.xxl,
+    padding: spacing.md,
+    rowGap: spacing.sm,
+  },
+  bannerBtn: {
+    alignSelf: 'flex-start',
+    backgroundColor: colors.surface_container_highest,
+    borderRadius: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  bannerBtnLabel: {
+    ...typography['title-sm'],
+    color: colors.on_surface,
+    fontWeight: '600',
+  },
+  bannerBtnPressed: {
+    opacity: 0.88,
+  },
+  bannerText: {
+    ...typography['body-md'],
+    color: colors.primary_container,
+  },
+  headerDock: {
+    backgroundColor: colors.surface,
+    zIndex: 1,
+  },
+  screen: {
     backgroundColor: colors.surface,
     flex: 1,
   },
-  loadMore: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: spacing.md,
-    justifyContent: 'center',
-    opacity: 0.85,
-    paddingVertical: spacing.xl,
-  },
-  loadMoreText: {
-    ...typography['label-sm'],
-    color: colors.on_surface_variant,
-    fontWeight: '700',
-    letterSpacing: 2,
-    textTransform: 'uppercase',
+  scroll: {
+    flex: 1,
   },
   scrollContent: {
     flexGrow: 1,

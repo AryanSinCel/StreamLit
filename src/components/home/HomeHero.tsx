@@ -1,48 +1,97 @@
 /**
- * Featured hero — static backdrop + CTAs (PSD-Home §5; `resources/home.html`).
+ * Featured hero — TMDB backdrop + CTAs (PSD-Home §5; `resources/home.html`).
  */
 
 import type { JSX } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import type { TmdbMovieListItem } from '../../api/types';
 import { IconPlay } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
 import { homeHeroHeight, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
-import { HOME_HERO_BACKDROP_URI } from './homeStatic';
+import { buildImageUrl, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
 
 export type HomeHeroProps = {
+  movie: TmdbMovieListItem | null;
+  loading: boolean;
   onWatchNow: () => void;
   onDetails: () => void;
 };
 
-const SYNOPSIS =
-  'In a city that never sleeps, one driver must outrun the shadows of his past to secure a future he never thought possible.';
+function synopsisForHero(movie: TmdbMovieListItem | null): string {
+  if (movie == null) {
+    return '';
+  }
+  const trimmed = movie.overview?.trim();
+  if (trimmed != null && trimmed.length > 0) {
+    return trimmed;
+  }
+  const year =
+    movie.release_date != null && movie.release_date.length >= 4
+      ? movie.release_date.slice(0, 4)
+      : '—';
+  const rating =
+    typeof movie.vote_average === 'number' &&
+    !Number.isNaN(movie.vote_average) &&
+    Number.isFinite(movie.vote_average)
+      ? movie.vote_average.toFixed(1)
+      : '—';
+  return `Trending pick · ${year} · ${rating}`;
+}
 
-export function HomeHero({ onWatchNow, onDetails }: HomeHeroProps): JSX.Element {
+function heroBackdropUri(movie: TmdbMovieListItem | null): string | null {
+  if (movie == null) {
+    return null;
+  }
+  return (
+    buildImageUrl(movie.backdrop_path, TMDB_IMAGE_SIZE_W780) ??
+    buildImageUrl(movie.poster_path, TMDB_IMAGE_SIZE_W780)
+  );
+}
+
+export function HomeHero({ movie, loading, onWatchNow, onDetails }: HomeHeroProps): JSX.Element {
+  const backdropUri = heroBackdropUri(movie);
+  const canAct = movie != null && !loading;
+
   return (
     <View style={styles.wrap}>
       <View style={styles.shell}>
-        <Image
-          accessibilityIgnoresInvertColors
-          accessibilityLabel="Featured title backdrop"
-          resizeMode="cover"
-          source={{ uri: HOME_HERO_BACKDROP_URI }}
-          style={styles.backdrop}
-        />
+        {backdropUri != null ? (
+          <Image
+            accessibilityIgnoresInvertColors
+            accessibilityLabel="Featured title backdrop"
+            resizeMode="cover"
+            source={{ uri: backdropUri }}
+            style={styles.backdrop}
+          />
+        ) : (
+          <View style={styles.backdropPlaceholder} accessibilityLabel="Featured backdrop placeholder" />
+        )}
         <View style={styles.content}>
+          {loading ? (
+            <View style={styles.heroLoading}>
+              <ActivityIndicator accessibilityLabel="Loading hero" color={colors.primary_container} />
+            </View>
+          ) : null}
           <View style={styles.badge}>
             <Text style={styles.badgeText}>New Release</Text>
           </View>
-          <Text style={styles.title}>Neon Drift</Text>
+          <Text style={styles.title}>
+            {loading && movie == null ? 'Loading…' : (movie?.title ?? 'Featured')}
+          </Text>
           <Text numberOfLines={2} style={styles.synopsis}>
-            {SYNOPSIS}
+            {loading && movie == null ? '' : synopsisForHero(movie)}
           </Text>
           <View style={styles.actions}>
             <Pressable
               accessibilityLabel="Watch now"
               accessibilityRole="button"
+              disabled={!canAct}
               onPress={onWatchNow}
-              style={({ pressed }) => [styles.watchBtn, pressed && styles.pressed]}
+              style={({ pressed }) => [
+                styles.watchBtn,
+                (!canAct || pressed) && styles.pressedDisabled,
+              ]}
             >
               <IconPlay color={colors.on_primary} size={20} />
               <Text style={styles.watchLabel}>Watch Now</Text>
@@ -50,8 +99,12 @@ export function HomeHero({ onWatchNow, onDetails }: HomeHeroProps): JSX.Element 
             <Pressable
               accessibilityLabel="Details"
               accessibilityRole="button"
+              disabled={!canAct}
               onPress={onDetails}
-              style={({ pressed }) => [styles.detailsBtn, pressed && styles.pressed]}
+              style={({ pressed }) => [
+                styles.detailsBtn,
+                (!canAct || pressed) && styles.pressedDisabled,
+              ]}
             >
               <Text style={styles.detailsLabel}>Details</Text>
             </Pressable>
@@ -71,6 +124,10 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     ...StyleSheet.absoluteFill,
+  },
+  backdropPlaceholder: {
+    ...StyleSheet.absoluteFill,
+    backgroundColor: colors.surface_container_low,
   },
   badge: {
     alignSelf: 'flex-start',
@@ -111,8 +168,11 @@ const styles = StyleSheet.create({
     color: colors.on_surface,
     fontWeight: '700',
   },
-  pressed: {
-    opacity: 0.88,
+  heroLoading: {
+    marginBottom: spacing.md,
+  },
+  pressedDisabled: {
+    opacity: 0.5,
   },
   shell: {
     borderRadius: radiusCardInner,
@@ -124,6 +184,7 @@ const styles = StyleSheet.create({
     ...typography['body-md'],
     color: colors.on_surface_variant,
     maxWidth: 320,
+    minHeight: 40,
     textShadowColor: colors.hero_text_shadow,
     textShadowOffset: { height: spacing.xs, width: 0 },
     textShadowRadius: spacing.md,
