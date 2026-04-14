@@ -25,3 +25,4 @@ alwaysApply: false
 - **`movies.ts`:** TMDB calls only via shared **`client`**; one function per endpoint/area as features grow.
 - **`types.ts`:** shared errors, pagination helpers, TMDB DTOs — grow with endpoints.
 - **`src/utils/image.ts`:** null-safe poster/backdrop URL builder (base + size + path). If **`path`** is **`null`** or empty, return **`null`** — never a broken URL string. Pair with **`movies.ts`** data: API returns paths; **`image.ts`** turns paths into displayable URLs.
+- Endpoint list and field notes: **`docs/API-Reference.md`** — implement calls in **`movies.ts`** only via **`client`**.

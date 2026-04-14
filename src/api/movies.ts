@@ -4,6 +4,7 @@
 
 import { client } from './client';
 import type {
+  DiscoverMoviesParams,
   HomeData,
   PaginationParams,
   TmdbConfigurationResponse,
@@ -47,6 +48,22 @@ export async function getMovieGenres(
 ): Promise<TmdbGenresListResponse> {
   const { data } = await client.get<TmdbGenresListResponse>('/genre/movie/list', {
     signal: opts?.signal,
+  });
+  return data;
+}
+
+export async function getDiscoverMovies(
+  params?: DiscoverMoviesParams & RequestOpts,
+): Promise<TmdbPagedMoviesResponse> {
+  const page = params?.page ?? 1;
+  const withGenres = params?.with_genres;
+  const queryParams: { page: number; with_genres?: number } = { page };
+  if (withGenres !== undefined) {
+    queryParams.with_genres = withGenres;
+  }
+  const { data } = await client.get<TmdbPagedMoviesResponse>('/discover/movie', {
+    params: queryParams,
+    signal: params?.signal,
   });
   return data;
 }

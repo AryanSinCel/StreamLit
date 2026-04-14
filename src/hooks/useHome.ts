@@ -1,53 +1,467 @@
-import { useCallback, useEffect, useState } from 'react';
-import { getHomeData } from '../api/movies';
-import type { HomeData, UseQueryResult } from '../api/types';
+/**
+ * Home data hook — returns `UseHomeResult` (structured), not `UseQueryResult<T>`:
+ * top-level `loading` / `error` / `refetch` cover the initial bootstrap; each row has
+ * its own `loading`, `loadingMore`, `error`, `page`, `hasMore`, and `items` with append-on-load-more.
+ */
+
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  getDiscoverMovies,
+  getMovieGenres,
+  getTopRatedMovies,
+  getTrendingMoviesWeek,
+} from '../api/movies';
+import type {
+  HomeChipKey,
+  HomeChipResolved,
+  HomeFeedRowState,
+  TmdbGenre,
+  TmdbMovieListItem,
+  TmdbPagedMoviesResponse,
+  UseHomeResult,
+} from '../api/types';
+import {
+  HOME_CHIP_DEFINITIONS,
+  createInitialHomeFeedRowState,
+} from '../api/types';
 import { mapUnknownError } from '../utils/mapUnknownError';
 
-/** Home: trending + top rated + genres via `movies.ts`. */
-export function useHome(): UseQueryResult<HomeData> {
-  const [data, setData] = useState<HomeData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [reloadKey, setReloadKey] = useState(0);
+function findGenreIdByName(genres: readonly TmdbGenre[], tmdbName: string): number | null {
+  const target = tmdbName.trim().toLowerCase();
+  for (const g of genres) {
+    if (g.name.trim().toLowerCase() === target) {
+      return g.id;
+    }
+  }
+  return null;
+}
 
+function buildResolvedChips(genres: readonly TmdbGenre[]): readonly HomeChipResolved[] {
+  return HOME_CHIP_DEFINITIONS.map((def) => ({
+    key: def.key,
+    label: def.label,
+    genreId:
+      def.tmdbGenreName === null
+        ? null
+        : findGenreIdByName(genres, def.tmdbGenreName),
+  }));
+}
+
+function discoverParamsForChip(
+  chipKey: HomeChipKey,
+  genres: readonly TmdbGenre[],
+): { page: number; with_genres?: number } | { error: string } {
+  if (chipKey === 'all') {
+    return { page: 1 };
+  }
+  const def = HOME_CHIP_DEFINITIONS.find((d) => d.key === chipKey);
+  const name = def?.tmdbGenreName;
+  if (!name) {
+    return { page: 1 };
+  }
+  const id = findGenreIdByName(genres, name);
+  if (id === null) {
+    return {
+      error: `Genre "${name}" not found in TMDB genre list`,
+    };
+  }
+  return { page: 1, with_genres: id };
+}
+
+function applyPageResponse(
+  prev: HomeFeedRowState,
+  response: TmdbPagedMoviesResponse,
+  append: boolean,
+): HomeFeedRowState {
+  const items = append ? [...prev.items, ...response.results] : [...response.results];
+  return {
+    items,
+    loading: false,
+    loadingMore: false,
+    error: null,
+    page: response.page,
+    hasMore: response.page < response.total_pages,
+  };
+}
+
+export function useHome(): UseHomeResult {
+  const [genres, setGenres] = useState<readonly TmdbGenre[]>([]);
+  const [genresError, setGenresError] = useState<string | null>(null);
+  const [trending, setTrending] = useState<HomeFeedRowState>(() => ({
+    ...createInitialHomeFeedRowState(),
+    loading: true,
+  }));
+  const [topRated, setTopRated] = useState<HomeFeedRowState>(() => ({
+    ...createInitialHomeFeedRowState(),
+    loading: true,
+  }));
+  const [genre, setGenre] = useState<HomeFeedRowState>(() => ({
+    ...createInitialHomeFeedRowState(),
+    loading: true,
+  }));
+  const [selectedChipKey, setSelectedChipKey] = useState<HomeChipKey>('all');
+  const [bootstrapLoading, setBootstrapLoading] = useState(true);
+  const [reloadToken, setReloadToken] = useState(0);
+
+  const dataGenerationRef = useRef(0);
+  const genreDiscoverGenRef = useRef(0);
+
+  const chipKeyRef = useRef<HomeChipKey>(selectedChipKey);
+  chipKeyRef.current = selectedChipKey;
+
+  const genresRef = useRef<readonly TmdbGenre[]>(genres);
+  genresRef.current = genres;
+
+  const trendingRef = useRef(trending);
+  trendingRef.current = trending;
+  const topRatedRef = useRef(topRated);
+  topRatedRef.current = topRated;
+  const genreRef = useRef(genre);
+  genreRef.current = genre;
+
+  const skipChipDiscoverOnMount = useRef(true);
+
+  /** Full refetch: genres + page 1 for all three rows (discover uses current chip via ref). */
   useEffect(() => {
     const controller = new AbortController();
     let cancelled = false;
+    dataGenerationRef.current += 1;
+    const generation = dataGenerationRef.current;
+    genreDiscoverGenRef.current += 1;
+    const discoverGenAtBootstrapStart = genreDiscoverGenRef.current;
 
-    async function load() {
-      setLoading(true);
-      setError(null);
+    setBootstrapLoading(true);
+    setGenresError(null);
+    setTrending({ ...createInitialHomeFeedRowState(), loading: true });
+    setTopRated({ ...createInitialHomeFeedRowState(), loading: true });
+    setGenre({ ...createInitialHomeFeedRowState(), loading: true });
+
+    (async () => {
+      let loadedGenres: readonly TmdbGenre[] = [];
       try {
-        const result = await getHomeData({ signal: controller.signal });
-        if (!cancelled) {
-          setData(result);
-        }
-      } catch (e) {
-        if (cancelled || controller.signal.aborted) {
+        const genresRes = await getMovieGenres({ signal: controller.signal });
+        if (cancelled || generation !== dataGenerationRef.current) {
           return;
         }
-        setData(null);
-        setError(mapUnknownError(e));
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
+        loadedGenres = genresRes.genres;
+        setGenres(loadedGenres);
+      } catch (e) {
+        if (cancelled || generation !== dataGenerationRef.current) {
+          return;
         }
+        setGenres([]);
+        setGenresError(mapUnknownError(e));
       }
-    }
 
-    load().catch(() => {
-      /* errors surfaced via setError inside load */
+      const chip = chipKeyRef.current;
+      const discoverInput = discoverParamsForChip(chip, loadedGenres);
+      const discoverPromise =
+        'error' in discoverInput
+          ? Promise.reject(new Error(discoverInput.error))
+          : getDiscoverMovies({
+              ...discoverInput,
+              signal: controller.signal,
+            });
+
+      const settled = await Promise.allSettled([
+        getTrendingMoviesWeek({ page: 1, signal: controller.signal }),
+        getTopRatedMovies({ page: 1, signal: controller.signal }),
+        discoverPromise,
+      ]);
+
+      if (cancelled || generation !== dataGenerationRef.current) {
+        return;
+      }
+
+      const [trendingRes, topRatedRes, discoverRes] = settled;
+
+      if (trendingRes.status === 'fulfilled') {
+        setTrending((prev) =>
+          applyPageResponse(
+            { ...prev, loading: true, loadingMore: false },
+            trendingRes.value,
+            false,
+          ),
+        );
+      } else {
+        setTrending({
+          ...createInitialHomeFeedRowState(),
+          loading: false,
+          error: mapUnknownError(trendingRes.reason),
+        });
+      }
+
+      if (topRatedRes.status === 'fulfilled') {
+        setTopRated((prev) =>
+          applyPageResponse(
+            { ...prev, loading: true, loadingMore: false },
+            topRatedRes.value,
+            false,
+          ),
+        );
+      } else {
+        setTopRated({
+          ...createInitialHomeFeedRowState(),
+          loading: false,
+          error: mapUnknownError(topRatedRes.reason),
+        });
+      }
+
+      if (discoverGenAtBootstrapStart !== genreDiscoverGenRef.current) {
+        /* Chip-driven discover took over; do not overwrite row 3. */
+      } else if (discoverRes.status === 'fulfilled') {
+        setGenre((prev) =>
+          applyPageResponse(
+            { ...prev, loading: true, loadingMore: false },
+            discoverRes.value,
+            false,
+          ),
+        );
+      } else {
+        setGenre({
+          ...createInitialHomeFeedRowState(),
+          loading: false,
+          error: mapUnknownError(discoverRes.reason),
+        });
+      }
+
+      setBootstrapLoading(false);
+    })().catch(() => {
+      /* failures surfaced via row / genresError state */
     });
 
     return () => {
       cancelled = true;
       controller.abort();
     };
-  }, [reloadKey]);
+  }, [reloadToken]);
 
-  const refetch = useCallback(() => {
-    setReloadKey((k) => k + 1);
+  /** Chip change: reset third row only and refetch discover (skipped on first mount). */
+  useEffect(() => {
+    if (skipChipDiscoverOnMount.current) {
+      skipChipDiscoverOnMount.current = false;
+      return;
+    }
+
+    const controller = new AbortController();
+    let cancelled = false;
+    genreDiscoverGenRef.current += 1;
+    const discoverGen = genreDiscoverGenRef.current;
+
+    setGenre({ ...createInitialHomeFeedRowState(), loading: true });
+
+    (async () => {
+      const g = genresRef.current;
+      const chip = chipKeyRef.current;
+      const discoverInput = discoverParamsForChip(chip, g);
+
+      try {
+        if ('error' in discoverInput) {
+          throw new Error(discoverInput.error);
+        }
+        const data = await getDiscoverMovies({
+          ...discoverInput,
+          signal: controller.signal,
+        });
+        if (cancelled || discoverGen !== genreDiscoverGenRef.current) {
+          return;
+        }
+        setGenre((prev) =>
+          applyPageResponse(
+            { ...prev, loading: true, loadingMore: false },
+            data,
+            false,
+          ),
+        );
+      } catch (e) {
+        if (cancelled || discoverGen !== genreDiscoverGenRef.current) {
+          return;
+        }
+        setGenre({
+          ...createInitialHomeFeedRowState(),
+          loading: false,
+          error: mapUnknownError(e),
+        });
+      }
+    })().catch(() => {
+      /* surfaced via genre.error */
+    });
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [selectedChipKey]);
+
+  const loadMoreTrending = useCallback(() => {
+    const prev = trendingRef.current;
+    const genAtStart = dataGenerationRef.current;
+    if (prev.loading || prev.loadingMore || !prev.hasMore || prev.error) {
+      return;
+    }
+    const nextPage = prev.page + 1;
+    setTrending({ ...prev, loadingMore: true });
+
+    (async () => {
+      try {
+        const data = await getTrendingMoviesWeek({ page: nextPage });
+        if (genAtStart !== dataGenerationRef.current) {
+          setTrending((curr) =>
+            curr.loadingMore ? { ...curr, loadingMore: false } : curr,
+          );
+          return;
+        }
+        setTrending((curr) => {
+          if (!curr.loadingMore) {
+            return curr;
+          }
+          return applyPageResponse(curr, data, true);
+        });
+      } catch (e) {
+        if (genAtStart !== dataGenerationRef.current) {
+          setTrending((curr) =>
+            curr.loadingMore ? { ...curr, loadingMore: false } : curr,
+          );
+          return;
+        }
+        setTrending((curr) => ({
+          ...curr,
+          loadingMore: false,
+          error: mapUnknownError(e),
+        }));
+      }
+    })().catch(() => {
+      /* surfaced via trending.error */
+    });
   }, []);
 
-  return { data, loading, error, refetch };
+  const loadMoreTopRated = useCallback(() => {
+    const prev = topRatedRef.current;
+    const genAtStart = dataGenerationRef.current;
+    if (prev.loading || prev.loadingMore || !prev.hasMore || prev.error) {
+      return;
+    }
+    const nextPage = prev.page + 1;
+    setTopRated({ ...prev, loadingMore: true });
+
+    (async () => {
+      try {
+        const data = await getTopRatedMovies({ page: nextPage });
+        if (genAtStart !== dataGenerationRef.current) {
+          setTopRated((curr) =>
+            curr.loadingMore ? { ...curr, loadingMore: false } : curr,
+          );
+          return;
+        }
+        setTopRated((curr) => {
+          if (!curr.loadingMore) {
+            return curr;
+          }
+          return applyPageResponse(curr, data, true);
+        });
+      } catch (e) {
+        if (genAtStart !== dataGenerationRef.current) {
+          setTopRated((curr) =>
+            curr.loadingMore ? { ...curr, loadingMore: false } : curr,
+          );
+          return;
+        }
+        setTopRated((curr) => ({
+          ...curr,
+          loadingMore: false,
+          error: mapUnknownError(e),
+        }));
+      }
+    })().catch(() => {
+      /* surfaced via topRated.error */
+    });
+  }, []);
+
+  const loadMoreGenre = useCallback(() => {
+    const prev = genreRef.current;
+    const genAtStart = dataGenerationRef.current;
+    const discoverGenAtStart = genreDiscoverGenRef.current;
+    if (prev.loading || prev.loadingMore || !prev.hasMore || prev.error) {
+      return;
+    }
+    const nextPage = prev.page + 1;
+    setGenre({ ...prev, loadingMore: true });
+
+    (async () => {
+      try {
+        const chip = chipKeyRef.current;
+        const discoverInput = discoverParamsForChip(chip, genresRef.current);
+        if ('error' in discoverInput) {
+          throw new Error(discoverInput.error);
+        }
+        const data = await getDiscoverMovies({
+          ...discoverInput,
+          page: nextPage,
+        });
+        if (
+          genAtStart !== dataGenerationRef.current ||
+          discoverGenAtStart !== genreDiscoverGenRef.current
+        ) {
+          setGenre((curr) =>
+            curr.loadingMore ? { ...curr, loadingMore: false } : curr,
+          );
+          return;
+        }
+        setGenre((curr) => {
+          if (!curr.loadingMore) {
+            return curr;
+          }
+          return applyPageResponse(curr, data, true);
+        });
+      } catch (e) {
+        if (
+          genAtStart !== dataGenerationRef.current ||
+          discoverGenAtStart !== genreDiscoverGenRef.current
+        ) {
+          setGenre((curr) =>
+            curr.loadingMore ? { ...curr, loadingMore: false } : curr,
+          );
+          return;
+        }
+        setGenre((curr) => ({
+          ...curr,
+          loadingMore: false,
+          error: mapUnknownError(e),
+        }));
+      }
+    })().catch(() => {
+      /* surfaced via genre.error */
+    });
+  }, []);
+
+  const refetch = useCallback(() => {
+    setReloadToken((t) => t + 1);
+  }, []);
+
+  const chips = useMemo(() => buildResolvedChips(genres), [genres]);
+
+  const hero: TmdbMovieListItem | null = trending.items[0] ?? null;
+  const heroLoading = trending.page === 0 && (trending.loading || trending.loadingMore);
+
+  const loading = bootstrapLoading;
+  const error = genresError;
+
+  return {
+    loading,
+    error,
+    refetch,
+    hero,
+    heroLoading,
+    genres: [...genres],
+    genresError,
+    chips,
+    selectedChipKey,
+    setSelectedChipKey,
+    trending,
+    topRated,
+    genre,
+    loadMoreTrending,
+    loadMoreTopRated,
+    loadMoreGenre,
+  };
 }

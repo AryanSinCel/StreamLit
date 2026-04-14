@@ -17,8 +17,16 @@ export type RootTabParamList = {
   Profile: NavigatorScreenParams<ProfileStackParamList>;
 };
 
+/** Home “See All” list — maps to `getTrendingMoviesWeek` | `getTopRatedMovies` | `getDiscoverMovies`. */
+export type SeeAllMode = 'trending' | 'top_rated' | 'discover';
+
 export type HomeStackParamList = {
   HomeMain: undefined;
+  SeeAll: {
+    title: string;
+    mode: SeeAllMode;
+    genreId?: number;
+  };
 };
 
 export type SearchStackParamList = {

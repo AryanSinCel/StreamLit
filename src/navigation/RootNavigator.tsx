@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DetailScreen } from '../screens/DetailScreen';
 import { HomeScreen } from '../screens/HomeScreen';
+import { SeeAllScreen } from '../screens/SeeAllScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { SearchScreen } from '../screens/SearchScreen';
 import { WatchlistScreen } from '../screens/WatchlistScreen';
@@ -36,6 +37,11 @@ function HomeStackNavigator() {
         name="HomeMain"
         component={HomeScreen}
         options={{ title: 'Home' }}
+      />
+      <HomeStack.Screen
+        name="SeeAll"
+        component={SeeAllScreen}
+        options={({ route }) => ({ title: route.params.title })}
       />
     </HomeStack.Navigator>
   );

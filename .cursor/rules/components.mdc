@@ -10,6 +10,19 @@ alwaysApply: false
 
 - **Presentational** by default: props in, UI out. **No remote fetching** in dumb/presentational components — parents or hooks supply data.
 
+## Folder layout
+
+- **`src/components/common/`** — components used in **2+ screens** or clearly shared (e.g. `ContentCard`, badges, shared list rows).
+- **`src/components/<screen-name>/`** — components **only** for one screen or feature; name the folder after that area (`home`, `detail`, `search`, …).
+- **`src/screens/*.tsx`** — compose hooks + components; avoid giant inline JSX; split into **`components/`** when a block grows or could be reused.
+
+## Reusability
+
+- **Extract** to **`common/`** when the same UI pattern appears twice or is likely to (cards, chips, section headers, rating badge).
+- **Keep** in **`<screen-name>/`** when behaviour or props are **specific** and unlikely to repeat — do not force abstraction prematurely.
+- **Props in, UI out** — presentational; **no TMDB fetching** inside dumb components (parents or hooks pass data).
+- Prefer **composition** (small building blocks) over one mega-component file.
+
 ## Lists
 
 - Use **`FlatList`** (or **`SectionList`** when needed) for long lists. **Do not add** new list libraries (e.g. FlashList) without explicit approval.

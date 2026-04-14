@@ -22,9 +22,11 @@ export interface TmdbMovieListItem {
   genre_ids: number[];
 }
 
+/** Paginated list responses from TMDB (`trending`, `top_rated`, `discover`, `search`, …). */
 export interface TmdbPagedMoviesResponse {
   page: number;
   total_pages: number;
+  total_results: number;
   results: TmdbMovieListItem[];
 }
 
@@ -59,6 +61,88 @@ export interface HomeData {
   trending: TmdbPagedMoviesResponse;
   topRated: TmdbPagedMoviesResponse;
   genres: TmdbGenre[];
+}
+
+/** PSD Home chip keys — order matches `HOME_CHIP_DEFINITIONS`. */
+export type HomeChipKey =
+  | 'all'
+  | 'action'
+  | 'drama'
+  | 'comedy'
+  | 'sci_fi'
+  | 'horror'
+  | 'documentary';
+
+/** Chip label + TMDB list `name` to resolve id (null name = All). */
+export interface HomeChipDefinition {
+  key: HomeChipKey;
+  label: string;
+  tmdbGenreName: string | null;
+}
+
+/** Programme copy + TMDB genre name mapping (`Sci-Fi` → `Science Fiction`). */
+export const HOME_CHIP_DEFINITIONS: readonly HomeChipDefinition[] = [
+  { key: 'all', label: 'All', tmdbGenreName: null },
+  { key: 'action', label: 'Action', tmdbGenreName: 'Action' },
+  { key: 'drama', label: 'Drama', tmdbGenreName: 'Drama' },
+  { key: 'comedy', label: 'Comedy', tmdbGenreName: 'Comedy' },
+  { key: 'sci_fi', label: 'Sci-Fi', tmdbGenreName: 'Science Fiction' },
+  { key: 'horror', label: 'Horror', tmdbGenreName: 'Horror' },
+  { key: 'documentary', label: 'Documentary', tmdbGenreName: 'Documentary' },
+] as const;
+
+/** One horizontal row on Home: accumulated pages + pagination flags. */
+export interface HomeFeedRowState {
+  items: TmdbMovieListItem[];
+  loading: boolean;
+  loadingMore: boolean;
+  error: string | null;
+  /** Last successfully loaded TMDB page (0 before first success). */
+  page: number;
+  hasMore: boolean;
+}
+
+export function createInitialHomeFeedRowState(): HomeFeedRowState {
+  return {
+    items: [],
+    loading: false,
+    loadingMore: false,
+    error: null,
+    page: 0,
+    hasMore: false,
+  };
+}
+
+/** Resolved chip + TMDB id after `/genre/movie/list` (null id = All or missing name). */
+export interface HomeChipResolved {
+  key: HomeChipKey;
+  label: string;
+  genreId: number | null;
+}
+
+/**
+ * `useHome` return shape: structured feeds + top-level `loading` / `error` / `refetch`
+ * (not `UseQueryResult<T>` — see comment on `useHome`).
+ */
+export interface UseHomeResult {
+  loading: boolean;
+  error: string | null;
+  refetch: () => void;
+  /** First trending movie when present (PSD: hero = `results[0]`). */
+  hero: TmdbMovieListItem | null;
+  /** True until first trending request settles (success or error). */
+  heroLoading: boolean;
+  genres: TmdbGenre[];
+  genresError: string | null;
+  chips: readonly HomeChipResolved[];
+  selectedChipKey: HomeChipKey;
+  setSelectedChipKey: (key: HomeChipKey) => void;
+  trending: HomeFeedRowState;
+  topRated: HomeFeedRowState;
+  genre: HomeFeedRowState;
+  loadMoreTrending: () => void;
+  loadMoreTopRated: () => void;
+  loadMoreGenre: () => void;
 }
 
 /** Search tab: paginated movie list for the current query. */
@@ -98,9 +182,15 @@ export interface PaginationParams {
   page?: number;
 }
 
+/** Query params for `GET /discover/movie`. Omit `with_genres` for no genre filter (e.g. “All” chip). */
+export interface DiscoverMoviesParams extends PaginationParams {
+  with_genres?: number;
+}
+
 export interface PageMeta {
   page: number;
   total_pages: number;
+  total_results: number;
 }
 
 /** Minimal `/configuration` smoke response — expand when needed. */
