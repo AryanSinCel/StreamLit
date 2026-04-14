@@ -1,10 +1,20 @@
 /**
- * Search tab default (idle) body — `resources/search.html` / PSD-Search §3 (S4a, no API).
+ * Search tab default (idle) body — PSD-Search §3; wired to `useSearch` data in S4b (no results grid).
  */
 
 import type { JSX } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { useWindowDimensions } from 'react-native';
+import type { SearchScreenMode, TmdbMovieListItem } from '../../api/types';
 import { IconHistory, IconMovie, IconSearch, IconStar } from '../common/SimpleIcons';
 import { colors, contentCard } from '../../theme/colors';
 import {
@@ -15,12 +25,9 @@ import {
   searchFeaturedHeroAspectRatio,
 } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
-import {
-  MOCK_GENRE_LABELS,
-  MOCK_TRENDING_FEATURED,
-  MOCK_TRENDING_GRID,
-  SEARCH_INPUT_PLACEHOLDER,
-} from './searchDefaultMocks';
+import { formatListMovieSubtitle } from '../../utils/formatMovieListItem';
+import { buildImageUrl, TMDB_IMAGE_SIZE_W342, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
+import { SEARCH_INPUT_PLACEHOLDER } from './searchDefaultMocks';
 
 export type SearchDefaultViewProps = {
   query: string;
@@ -28,12 +35,37 @@ export type SearchDefaultViewProps = {
   inputFocused: boolean;
   onFocusInput: () => void;
   onBlurInput: () => void;
-  selectedGenreIndex: number;
-  onSelectGenreIndex: (index: number) => void;
-  recentItems: readonly string[];
+  genreChipLabels: readonly string[];
+  selectedGenreIndex: number | null;
+  onGenreChipPress: (label: string) => void;
+  recentSearches: readonly string[];
   onClearRecents: () => void;
+  onRecentTermPress: (term: string) => void;
   showRecentsBlock: boolean;
+  mode: SearchScreenMode;
+  featuredMovie: TmdbMovieListItem | null;
+  gridMovies: readonly TmdbMovieListItem[];
+  trendingLoading: boolean;
+  trendingError: string | null;
+  onRetryTrending: () => void;
 };
+
+function featuredBackdropUri(movie: TmdbMovieListItem | null): string | null {
+  if (movie == null) {
+    return null;
+  }
+  return (
+    buildImageUrl(movie.backdrop_path, TMDB_IMAGE_SIZE_W780) ??
+    buildImageUrl(movie.poster_path, TMDB_IMAGE_SIZE_W780)
+  );
+}
+
+function ratingShort(vote: number): string {
+  if (typeof vote !== 'number' || Number.isNaN(vote) || !Number.isFinite(vote)) {
+    return '—';
+  }
+  return vote.toFixed(1);
+}
 
 export function SearchDefaultView({
   query,
@@ -41,16 +73,29 @@ export function SearchDefaultView({
   inputFocused,
   onFocusInput,
   onBlurInput,
+  genreChipLabels,
   selectedGenreIndex,
-  onSelectGenreIndex,
-  recentItems,
+  onGenreChipPress,
+  recentSearches,
   onClearRecents,
+  onRecentTermPress,
   showRecentsBlock,
+  mode,
+  featuredMovie,
+  gridMovies,
+  trendingLoading,
+  trendingError,
+  onRetryTrending,
 }: SearchDefaultViewProps): JSX.Element {
   const { width: windowWidth } = useWindowDimensions();
   const horizontalPad = spacing.xl;
   const gridGutter = spacing.md;
   const gridColWidth = (windowWidth - horizontalPad * 2 - gridGutter) / 2;
+
+  const showTrending = mode === 'default';
+  const featuredUri = featuredBackdropUri(featuredMovie);
+  const row1 = gridMovies.slice(0, 2);
+  const row2 = gridMovies.slice(2, 3);
 
   return (
     <View style={styles.body}>
@@ -78,14 +123,14 @@ export function SearchDefaultView({
           horizontal
           showsHorizontalScrollIndicator={false}
         >
-          {MOCK_GENRE_LABELS.map((label, index) => {
-            const selected = index === selectedGenreIndex;
+          {genreChipLabels.map((label, index) => {
+            const selected = selectedGenreIndex !== null && index === selectedGenreIndex;
             return (
               <Pressable
                 accessibilityRole="button"
                 accessibilityState={{ selected }}
                 key={label}
-                onPress={() => onSelectGenreIndex(index)}
+                onPress={() => onGenreChipPress(label)}
                 style={({ pressed }) => [
                   styles.chip,
                   selected ? styles.chipSelected : styles.chipIdle,
@@ -115,77 +160,136 @@ export function SearchDefaultView({
             </Pressable>
           </View>
           <View style={styles.recentList}>
-            {recentItems.map((term) => (
-              <View key={term} style={styles.recentRow}>
+            {recentSearches.map((term, index) => (
+              <Pressable
+                accessibilityRole="button"
+                key={`${term}-${String(index)}`}
+                onPress={() => onRecentTermPress(term)}
+                style={({ pressed }) => [styles.recentRow, pressed && styles.recentRowPressed]}
+              >
                 <View style={styles.recentLeft}>
                   <IconHistory color={colors.on_surface_variant} size={22} />
                   <Text style={styles.recentTerm}>{term}</Text>
                 </View>
-              </View>
+              </Pressable>
             ))}
           </View>
         </View>
       ) : null}
 
-      <View style={styles.sectionLast}>
-        <Text style={styles.sectionTitle}>Trending Now</Text>
+      {showTrending ? (
+        <View style={styles.sectionLast}>
+          <Text style={styles.sectionTitle}>Trending Now</Text>
 
-        <View style={styles.featuredWrap}>
-          <View style={styles.featuredCard}>
-            <View style={styles.featuredPosterPlaceholder}>
-              <IconMovie color={colors.on_surface_variant} size={56} />
+          {trendingError != null ? (
+            <View style={styles.trendingErrorBlock}>
+              <Text style={styles.trendingErrorText}>{trendingError}</Text>
+              <Pressable
+                accessibilityLabel="Retry loading trending"
+                accessibilityRole="button"
+                onPress={onRetryTrending}
+                style={({ pressed }) => [styles.retryBtn, pressed && styles.chipPressed]}
+              >
+                <Text style={styles.retryBtnLabel}>Try again</Text>
+              </Pressable>
             </View>
-            <View style={styles.featuredScrim} pointerEvents="none" />
-            <View style={styles.featuredTextBlock}>
-              <View style={styles.featuredBadge}>
-                <Text style={styles.featuredBadgeLabel}>Featured</Text>
+          ) : null}
+
+          {trendingError == null && trendingLoading && featuredMovie == null ? (
+            <View style={styles.trendingLoadingBlock}>
+              <ActivityIndicator accessibilityLabel="Loading trending" color={colors.on_surface_variant} />
+              <Text style={styles.trendingLoadingText}>Loading trending…</Text>
+            </View>
+          ) : null}
+
+          {trendingError == null && !(trendingLoading && featuredMovie == null) ? (
+            <>
+              <View style={styles.featuredWrap}>
+                <View style={styles.featuredCard}>
+                  {featuredUri != null ? (
+                    <Image
+                      accessibilityIgnoresInvertColors
+                      accessibilityLabel={featuredMovie?.title ?? 'Featured movie'}
+                      resizeMode="cover"
+                      source={{ uri: featuredUri }}
+                      style={styles.featuredImage}
+                    />
+                  ) : (
+                    <View style={styles.featuredPosterPlaceholder}>
+                      <IconMovie color={colors.on_surface_variant} size={56} />
+                    </View>
+                  )}
+                  <View style={styles.featuredScrim} pointerEvents="none" />
+                  <View style={styles.featuredTextBlock}>
+                    <View style={styles.featuredBadge}>
+                      <Text style={styles.featuredBadgeLabel}>Featured</Text>
+                    </View>
+                    <Text style={styles.featuredTitle}>
+                      {featuredMovie?.title != null && featuredMovie.title.length > 0
+                        ? featuredMovie.title
+                        : '—'}
+                    </Text>
+                    <Text style={styles.featuredMeta}>
+                      {featuredMovie != null ? formatListMovieSubtitle(featuredMovie) : ''}
+                    </Text>
+                  </View>
+                </View>
               </View>
-              <Text style={styles.featuredTitle}>{MOCK_TRENDING_FEATURED.title}</Text>
-              <Text style={styles.featuredMeta}>{MOCK_TRENDING_FEATURED.metadataLine}</Text>
-            </View>
-          </View>
-        </View>
 
-        <View style={styles.gridRow}>
-          {MOCK_TRENDING_GRID.slice(0, 2).map((item) => (
-            <View key={item.id} style={[styles.gridCell, { width: gridColWidth }]}>
-              <TrendingMiniCard item={item} />
-            </View>
-          ))}
+              {row1.length > 0 ? (
+                <View style={styles.gridRow}>
+                  {row1.map((movie) => (
+                    <View key={movie.id} style={[styles.gridCell, { width: gridColWidth }]}>
+                      <TrendingMiniCard movie={movie} />
+                    </View>
+                  ))}
+                </View>
+              ) : null}
+              {row2.length > 0 ? (
+                <View style={styles.gridRow}>
+                  {row2.map((movie) => (
+                    <View key={movie.id} style={[styles.gridCell, { width: gridColWidth }]}>
+                      <TrendingMiniCard movie={movie} />
+                    </View>
+                  ))}
+                </View>
+              ) : null}
+            </>
+          ) : null}
         </View>
-        {MOCK_TRENDING_GRID.length > 2 ? (
-          <View style={styles.gridRow}>
-            <View style={[styles.gridCell, { width: gridColWidth }]}>
-              <TrendingMiniCard item={MOCK_TRENDING_GRID[2]} />
-            </View>
-          </View>
-        ) : null}
-      </View>
+      ) : null}
     </View>
   );
 }
 
-function TrendingMiniCard({
-  item,
-}: {
-  item: (typeof MOCK_TRENDING_GRID)[number];
-}): JSX.Element {
+function TrendingMiniCard({ movie }: { movie: TmdbMovieListItem }): JSX.Element {
+  const uri = buildImageUrl(movie.poster_path, TMDB_IMAGE_SIZE_W342);
   return (
     <View style={styles.miniCard}>
       <View style={styles.miniPoster}>
-        <View style={styles.miniPosterInner}>
-          <IconMovie color={colors.on_surface_variant} size={40} />
-        </View>
+        {uri != null ? (
+          <Image
+            accessibilityIgnoresInvertColors
+            accessibilityLabel={movie.title}
+            resizeMode="cover"
+            source={{ uri }}
+            style={styles.miniPosterImage}
+          />
+        ) : (
+          <View style={styles.miniPosterInner}>
+            <IconMovie color={colors.on_surface_variant} size={40} />
+          </View>
+        )}
         <View style={styles.ratingBadge}>
-          <Text style={styles.ratingValue}>{item.ratingLabel}</Text>
+          <Text style={styles.ratingValue}>{ratingShort(movie.vote_average)}</Text>
           <IconStar color={colors.primary_container} size={12} />
         </View>
       </View>
       <Text numberOfLines={1} style={styles.miniTitle}>
-        {item.title}
+        {movie.title.length > 0 ? movie.title : '—'}
       </Text>
       <Text numberOfLines={1} style={styles.miniSubtitle}>
-        {item.genreLabel}
+        {formatListMovieSubtitle(movie)}
       </Text>
     </View>
   );
@@ -254,6 +358,10 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '100%',
   },
+  featuredImage: {
+    ...StyleSheet.absoluteFill,
+    borderRadius: radiusCardOuter,
+  },
   featuredMeta: {
     ...typography['label-sm'],
     color: colors.on_surface_variant,
@@ -266,13 +374,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   featuredScrim: {
+    backgroundColor: colors.surface_container_lowest,
     bottom: 0,
     left: 0,
+    opacity: 0.88,
     position: 'absolute',
     right: 0,
     top: '40%',
-    backgroundColor: colors.surface_container_lowest,
-    opacity: 0.88,
   },
   featuredTextBlock: {
     bottom: 0,
@@ -312,6 +420,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     position: 'relative',
     width: '100%',
+  },
+  miniPosterImage: {
+    ...StyleSheet.absoluteFill,
+    borderRadius: radiusCardOuter,
   },
   miniPosterInner: {
     ...StyleSheet.absoluteFill,
@@ -354,10 +466,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: spacing.md,
   },
-  recentTitle: {
-    ...typography['headline-md'],
-    color: colors.on_surface,
-  },
   recentLeft: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -373,9 +481,29 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.md,
   },
+  recentRowPressed: {
+    opacity: 0.88,
+  },
   recentTerm: {
     ...typography['body-md'],
     color: colors.on_surface,
+  },
+  recentTitle: {
+    ...typography['headline-md'],
+    color: colors.on_surface,
+  },
+  retryBtn: {
+    alignSelf: 'flex-start',
+    backgroundColor: colors.surface_container_highest,
+    borderRadius: spacing.sm,
+    marginTop: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  retryBtnLabel: {
+    ...typography['title-sm'],
+    color: colors.on_surface,
+    fontWeight: '600',
   },
   searchIconWrap: {
     alignItems: 'center',
@@ -418,5 +546,23 @@ const styles = StyleSheet.create({
     ...typography['headline-md'],
     color: colors.on_surface,
     marginBottom: spacing.xl,
+  },
+  trendingErrorBlock: {
+    gap: spacing.sm,
+    marginBottom: spacing.lg,
+  },
+  trendingErrorText: {
+    ...typography['body-md'],
+    color: colors.primary_container,
+  },
+  trendingLoadingBlock: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: spacing.md,
+    marginBottom: spacing.lg,
+  },
+  trendingLoadingText: {
+    ...typography['body-md'],
+    color: colors.on_surface_variant,
   },
 });
