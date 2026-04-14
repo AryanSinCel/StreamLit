@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
+import type { StoreApi } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import type { WatchlistItem } from '../api/types';
 
@@ -13,7 +14,61 @@ export interface WatchlistStore {
   isInWatchlist: (id: number) => boolean;
   count: number;
   hydrated: boolean;
+  /** Set when AsyncStorage persist write fails after an optimistic change; cleared from UI. */
+  persistWriteError: string | null;
+  clearPersistWriteError: () => void;
 }
+
+type WatchlistStoreApi = StoreApi<WatchlistStore> & {
+  persist: { rehydrate: () => Promise<void> };
+};
+
+/** Avoid TDZ: `setItem` runs after `create`, but must reference the store for rollback + rehydrate. */
+const watchlistStoreRef: { current: WatchlistStoreApi | null } = { current: null };
+
+const watchlistPersistStorage = createJSONStorage(() => ({
+  getItem: (name) => AsyncStorage.getItem(name),
+  setItem: async (name, value) => {
+    try {
+      await AsyncStorage.setItem(name, value);
+    } catch {
+      const api = watchlistStoreRef.current;
+      if (api == null) {
+        return;
+      }
+      let restored = false;
+      try {
+        const raw = await AsyncStorage.getItem(name);
+        if (raw != null) {
+          const parsed = JSON.parse(raw) as { state?: { items?: unknown } };
+          const restoredItems = parsed.state?.items;
+          if (Array.isArray(restoredItems)) {
+            const items = restoredItems as WatchlistItem[];
+            api.setState({
+              items,
+              count: items.length,
+              persistWriteError: 'Could not save your watchlist. Restored the previous list.',
+            });
+            restored = true;
+          }
+        }
+      } catch {
+        /* ignore parse errors */
+      }
+      if (!restored) {
+        api.setState({
+          persistWriteError: 'Could not save your watchlist. Restored the previous list.',
+        });
+        try {
+          await api.persist.rehydrate();
+        } catch {
+          /* rehydrate failure — surface error only */
+        }
+      }
+    }
+  },
+  removeItem: (name) => AsyncStorage.removeItem(name),
+}));
 
 const useWatchlistStore = create<WatchlistStore>()(
   persist(
@@ -21,6 +76,10 @@ const useWatchlistStore = create<WatchlistStore>()(
       items: [],
       count: 0,
       hydrated: false,
+      persistWriteError: null,
+      clearPersistWriteError: () => {
+        set({ persistWriteError: null });
+      },
       addItem: (item) => {
         set((state) => {
           if (state.items.some((i) => i.id === item.id)) {
@@ -43,12 +102,12 @@ const useWatchlistStore = create<WatchlistStore>()(
     }),
     {
       name: 'movielist-watchlist',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: watchlistPersistStorage,
       partialize: (state) => ({ items: state.items }),
       onRehydrateStorage: () => (state, error) => {
         if (error) {
           // Rehydration failed — empty list and lift gate so UI is not stuck.
-          useWatchlistStore.setState({ items: [], count: 0, hydrated: true });
+          useWatchlistStore.setState({ items: [], count: 0, hydrated: true, persistWriteError: null });
         } else {
           useWatchlistStore.setState((s) => ({
             count: s.items.length,
@@ -59,5 +118,7 @@ const useWatchlistStore = create<WatchlistStore>()(
     },
   ),
 );
+
+watchlistStoreRef.current = useWatchlistStore as WatchlistStoreApi;
 
 export { useWatchlistStore };

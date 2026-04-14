@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   getDiscoverMovies,
+  getSimilarMovies,
   getTopRatedMovies,
   getTrendingMoviesWeek,
 } from '../api/movies';
@@ -11,6 +12,8 @@ import { mapUnknownError } from '../utils/mapUnknownError';
 export interface UseSeeAllInput {
   mode: SeeAllMode;
   genreId?: number;
+  /** When `mode === 'similar'`, anchor movie id for paginated similar. */
+  similarSourceMovieId?: number;
 }
 
 /** Paginated list for See All — page 1 on mount / refetch; `loadMore` appends. */
@@ -28,6 +31,7 @@ export interface UseSeeAllResult {
 async function fetchSeeAllPage(
   mode: SeeAllMode,
   genreId: number | undefined,
+  similarSourceMovieId: number | undefined,
   page: number,
   signal: AbortSignal,
 ): Promise<TmdbPagedMoviesResponse> {
@@ -41,6 +45,12 @@ async function fetchSeeAllPage(
         return getDiscoverMovies({ page, with_genres: genreId, signal });
       }
       return getDiscoverMovies({ page, signal });
+    case 'similar': {
+      if (similarSourceMovieId === undefined || !Number.isFinite(similarSourceMovieId)) {
+        throw new Error('similarSourceMovieId is required when mode is similar');
+      }
+      return getSimilarMovies(similarSourceMovieId, { page, signal });
+    }
     default: {
       const _exhaustive: never = mode;
       return _exhaustive;
@@ -49,7 +59,7 @@ async function fetchSeeAllPage(
 }
 
 export function useSeeAll(input: UseSeeAllInput): UseSeeAllResult {
-  const { mode, genreId } = input;
+  const { mode, genreId, similarSourceMovieId } = input;
   const [items, setItems] = useState<TmdbMovieListItem[]>([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(false);
@@ -71,7 +81,7 @@ export function useSeeAll(input: UseSeeAllInput): UseSeeAllResult {
 
     (async () => {
       try {
-        const data = await fetchSeeAllPage(mode, genreId, 1, controller.signal);
+        const data = await fetchSeeAllPage(mode, genreId, similarSourceMovieId, 1, controller.signal);
         if (cancelled || generation !== fetchGenerationRef.current) {
           return;
         }
@@ -99,7 +109,7 @@ export function useSeeAll(input: UseSeeAllInput): UseSeeAllResult {
       cancelled = true;
       controller.abort();
     };
-  }, [mode, genreId, reloadKey]);
+  }, [mode, genreId, similarSourceMovieId, reloadKey]);
 
   const refetch = useCallback(() => {
     setReloadKey((k) => k + 1);
@@ -115,7 +125,13 @@ export function useSeeAll(input: UseSeeAllInput): UseSeeAllResult {
     setLoadingMore(true);
     (async () => {
       try {
-        const data = await fetchSeeAllPage(mode, genreId, nextPage, controller.signal);
+        const data = await fetchSeeAllPage(
+          mode,
+          genreId,
+          similarSourceMovieId,
+          nextPage,
+          controller.signal,
+        );
         if (generationAtStart !== fetchGenerationRef.current) {
           return;
         }
@@ -138,7 +154,7 @@ export function useSeeAll(input: UseSeeAllInput): UseSeeAllResult {
         setLoadingMore(false);
       }
     });
-  }, [genreId, hasMore, loading, loadingMore, mode, page]);
+  }, [genreId, hasMore, loading, loadingMore, mode, page, similarSourceMovieId]);
 
   return {
     items,

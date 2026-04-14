@@ -250,6 +250,30 @@ export interface WatchlistItem {
   mediaType: 'movie' | 'tv';
 }
 
+/** Watchlist tab chips — client-side only; maps to `WatchlistItem.mediaType`. */
+export type WatchlistMediaFilter = 'all' | 'movie' | 'tv';
+
+/**
+ * Watchlist screen hook (PSD-Watchlist §7 W1): local list + filter, TMDB similar
+ * for the tail movie anchor, store hydration gate.
+ */
+export interface UseWatchlistResult {
+  hydrated: boolean;
+  count: number;
+  /** Full persisted list (same order as the store). */
+  items: WatchlistItem[];
+  filter: WatchlistMediaFilter;
+  setFilter: (filter: WatchlistMediaFilter) => void;
+  filteredItems: WatchlistItem[];
+  /** `GET /movie/{id}/similar` for the anchor id; idle when no anchor. */
+  similar: UseQueryResult<TmdbPagedMoviesResponse>;
+  /**
+   * `GET /trending/movie/week` page 1 for empty-state “Popular recommendations” (PSD-Watchlist §5).
+   * No request while the watchlist has items or before hydration.
+   */
+  popularRecommendations: UseQueryResult<TmdbPagedMoviesResponse>;
+}
+
 /**
  * Normalized failure shape from `client` interceptors (hooks map `message` to UI).
  */

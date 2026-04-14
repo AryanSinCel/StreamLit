@@ -1,12 +1,19 @@
 import type { RouteProp } from '@react-navigation/native';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useMovieDetail } from '../hooks/useMovieDetail';
-import type { RootStackParamList, SearchStackParamList } from '../navigation/types';
+import type {
+  RootStackParamList,
+  SearchStackParamList,
+  WatchlistStackParamList,
+} from '../navigation/types';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 
-type DetailScreenRouteProp = RouteProp<RootStackParamList, 'Detail'> | RouteProp<SearchStackParamList, 'Detail'>;
+type DetailScreenRouteProp =
+  | RouteProp<RootStackParamList, 'Detail'>
+  | RouteProp<SearchStackParamList, 'Detail'>
+  | RouteProp<WatchlistStackParamList, 'Detail'>;
 
 type Props = {
   route: DetailScreenRouteProp;

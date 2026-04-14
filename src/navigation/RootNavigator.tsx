@@ -1,6 +1,8 @@
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet } from 'react-native';
+import { useShallow } from 'zustand/react/shallow';
 import {
   IconBookmark,
   IconHome,
@@ -15,6 +17,7 @@ import { SearchScreen } from '../screens/SearchScreen';
 import { WatchlistScreen } from '../screens/WatchlistScreen';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
+import { useWatchlistStore } from '../store/watchlistStore';
 import { typography } from '../theme/typography';
 import type {
   HomeStackParamList,
@@ -79,7 +82,12 @@ function WatchlistStackNavigator() {
       <WatchlistStack.Screen
         name="WatchlistMain"
         component={WatchlistScreen}
-        options={{ title: 'Watchlist' }}
+        options={{ headerShown: false, title: 'Watchlist' }}
+      />
+      <WatchlistStack.Screen
+        name="Detail"
+        component={DetailScreen}
+        options={{ title: 'Detail' }}
       />
     </WatchlistStack.Navigator>
   );
@@ -124,7 +132,29 @@ const mainTabBarIconPerson: NonNullable<BottomTabNavigationOptions['tabBarIcon']
   size,
 }) => <IconPerson color={tabBarIconColor(focused)} size={size} />;
 
+/** Watchlist tab count badge — PSD-Watchlist §6 / §7 W3 (`primary_container` fill). */
+const watchlistTabBadgeStyles = StyleSheet.create({
+  badge: {
+    backgroundColor: colors.primary_container,
+    color: colors.on_primary_container,
+    ...typography['label-sm'],
+    fontWeight: '700',
+    lineHeight: 16,
+    minWidth: 18,
+    overflow: 'hidden',
+    paddingHorizontal: spacing.xs,
+    textAlign: 'center',
+  },
+});
+
 function MainTabNavigator() {
+  const { count, hydrated } = useWatchlistStore(
+    useShallow((s) => ({ count: s.count, hydrated: s.hydrated })),
+  );
+
+  const watchlistBadge =
+    hydrated && count > 0 ? (count > 99 ? '99+' : String(count)) : undefined;
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -165,6 +195,8 @@ function MainTabNavigator() {
         options={{
           tabBarIcon: mainTabBarIconBookmark,
           tabBarLabel: 'Watchlist',
+          tabBarBadge: watchlistBadge,
+          tabBarBadgeStyle: watchlistTabBadgeStyles.badge,
         }}
       />
       <Tab.Screen

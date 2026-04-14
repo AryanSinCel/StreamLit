@@ -17,8 +17,11 @@ export type RootTabParamList = {
   Profile: NavigatorScreenParams<ProfileStackParamList>;
 };
 
-/** Home “See All” list — maps to `getTrendingMoviesWeek` | `getTopRatedMovies` | `getDiscoverMovies`. */
-export type SeeAllMode = 'trending' | 'top_rated' | 'discover';
+/**
+ * Home “See All” list — `getTrendingMoviesWeek` | `getTopRatedMovies` | `getDiscoverMovies` |
+ * `getSimilarMovies` (Watchlist “Because you saved” full list).
+ */
+export type SeeAllMode = 'trending' | 'top_rated' | 'discover' | 'similar';
 
 export type HomeStackParamList = {
   HomeMain: undefined;
@@ -26,6 +29,8 @@ export type HomeStackParamList = {
     title: string;
     mode: SeeAllMode;
     genreId?: number;
+    /** Required when `mode === 'similar'` — `GET /movie/{id}/similar` anchor. */
+    similarSourceMovieId?: number;
   };
 };
 
@@ -36,6 +41,7 @@ export type SearchStackParamList = {
 
 export type WatchlistStackParamList = {
   WatchlistMain: undefined;
+  Detail: { movieId: number };
 };
 
 /** Profile: placeholder only — single main route until a real flow exists. */

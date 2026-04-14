@@ -28,9 +28,12 @@ type Props = CompositeScreenProps<
 >;
 
 export function SeeAllScreen({ navigation, route }: Props) {
-  const { title, mode, genreId } = route.params;
-  const { items, page, hasMore, loading, loadingMore, error, refetch, loadMore } =
-    useSeeAll({ mode, genreId });
+  const { title, mode, genreId, similarSourceMovieId } = route.params;
+  const { items, page, hasMore, loading, loadingMore, error, refetch, loadMore } = useSeeAll({
+    mode,
+    genreId,
+    similarSourceMovieId,
+  });
 
   return (
     <View style={styles.container}>

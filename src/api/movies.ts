@@ -115,3 +115,15 @@ export async function getMovieDetail(
   });
   return data;
 }
+
+/** `GET /movie/{movie_id}/similar` — Watchlist “Because you saved” row (PSD-Watchlist §2). */
+export async function getSimilarMovies(
+  movieId: number,
+  params?: PaginationParams & RequestOpts,
+): Promise<TmdbPagedMoviesResponse> {
+  const { data } = await client.get<TmdbPagedMoviesResponse>(`/movie/${movieId}/similar`, {
+    params: { page: params?.page ?? 1 },
+    signal: params?.signal,
+  });
+  return data;
+}

@@ -36,7 +36,7 @@ const sampleItem = {
 
 beforeEach(async () => {
   await AsyncStorage.clear();
-  useWatchlistStore.setState({ items: [], count: 0, hydrated: false });
+  useWatchlistStore.setState({ items: [], count: 0, hydrated: false, persistWriteError: null });
   await useWatchlistStore.persist.rehydrate();
 });
 
@@ -76,4 +76,5 @@ describe('watchlistStore', () => {
   it('sets hydrated true after rehydrate', async () => {
     expect(useWatchlistStore.getState().hydrated).toBe(true);
   });
+
 });
