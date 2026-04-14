@@ -14,8 +14,8 @@ export function normalizeSearchTerm(raw: string): string {
 }
 
 /**
- * Loads persisted recent search strings, newest-first.
- * Returns an empty array when the key is missing, corrupt, or not a string array (never throws).
+ * Loads persisted recent search strings, newest-first, at most {@link MAX_RECENT_SEARCHES}.
+ * Trims longer legacy arrays on read. Returns [] when the key is missing, corrupt, or not a string array (never throws).
  */
 export async function getRecentSearches(): Promise<string[]> {
   try {
@@ -33,7 +33,7 @@ export async function getRecentSearches(): Promise<string[]> {
         out.push(entry);
       }
     }
-    return out;
+    return out.slice(0, MAX_RECENT_SEARCHES);
   } catch {
     return [];
   }

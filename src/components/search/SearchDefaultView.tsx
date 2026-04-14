@@ -1,21 +1,12 @@
 /**
- * Search tab default (idle) body — PSD-Search §3; wired to `useSearch` data in S4b (no results grid).
+ * Search tab default (idle) body — PSD-Search §3; trending skeleton on first load (§7 S6).
  */
 
 import type { JSX } from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useWindowDimensions } from 'react-native';
 import type { SearchScreenMode, TmdbMovieListItem } from '../../api/types';
-import { IconHistory, IconMovie, IconSearch, IconStar } from '../common/SimpleIcons';
+import { IconMovie, IconSearch, IconStar } from '../common/SimpleIcons';
 import { colors, contentCard } from '../../theme/colors';
 import {
   radiusCardInner,
@@ -28,6 +19,8 @@ import { typography } from '../../theme/typography';
 import { formatListMovieSubtitle } from '../../utils/formatMovieListItem';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W342, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
 import { SEARCH_INPUT_PLACEHOLDER } from './searchDefaultMocks';
+import { SearchRecentSearchesSection } from './SearchRecentSearchesSection';
+import { SearchTrendingSkeleton } from './SearchTrendingSkeleton';
 
 export type SearchDefaultViewProps = {
   query: string;
@@ -146,36 +139,12 @@ export function SearchDefaultView({
         </ScrollView>
       </View>
 
-      {showRecentsBlock ? (
-        <View style={styles.section}>
-          <View style={styles.recentHeaderRow}>
-            <Text style={styles.recentTitle}>Recent Searches</Text>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="Clear all recent searches"
-              hitSlop={spacing.sm}
-              onPress={onClearRecents}
-            >
-              <Text style={styles.clearAll}>Clear All</Text>
-            </Pressable>
-          </View>
-          <View style={styles.recentList}>
-            {recentSearches.map((term, index) => (
-              <Pressable
-                accessibilityRole="button"
-                key={`${term}-${String(index)}`}
-                onPress={() => onRecentTermPress(term)}
-                style={({ pressed }) => [styles.recentRow, pressed && styles.recentRowPressed]}
-              >
-                <View style={styles.recentLeft}>
-                  <IconHistory color={colors.on_surface_variant} size={22} />
-                  <Text style={styles.recentTerm}>{term}</Text>
-                </View>
-              </Pressable>
-            ))}
-          </View>
-        </View>
-      ) : null}
+      <SearchRecentSearchesSection
+        onClearRecents={onClearRecents}
+        onRecentTermPress={onRecentTermPress}
+        recentSearches={recentSearches}
+        visible={showRecentsBlock}
+      />
 
       {showTrending ? (
         <View style={styles.sectionLast}>
@@ -196,10 +165,7 @@ export function SearchDefaultView({
           ) : null}
 
           {trendingError == null && trendingLoading && featuredMovie == null ? (
-            <View style={styles.trendingLoadingBlock}>
-              <ActivityIndicator accessibilityLabel="Loading trending" color={colors.on_surface_variant} />
-              <Text style={styles.trendingLoadingText}>Loading trending…</Text>
-            </View>
+            <SearchTrendingSkeleton />
           ) : null}
 
           {trendingError == null && !(trendingLoading && featuredMovie == null) ? (
@@ -332,12 +298,6 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.sm,
     paddingRight: spacing.xl,
   },
-  clearAll: {
-    ...typography['title-sm'],
-    color: colors.primary_container,
-    letterSpacing: 1.5,
-    textTransform: 'uppercase',
-  },
   featuredBadge: {
     alignSelf: 'flex-start',
     backgroundColor: colors.secondary_container,
@@ -460,38 +420,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     textTransform: 'none',
   },
-  recentHeaderRow: {
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: spacing.md,
-  },
-  recentLeft: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: spacing.md,
-  },
-  recentList: {
-    gap: spacing.xs,
-  },
-  recentRow: {
-    borderRadius: spacing.md,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.md,
-  },
-  recentRowPressed: {
-    opacity: 0.88,
-  },
-  recentTerm: {
-    ...typography['body-md'],
-    color: colors.on_surface,
-  },
-  recentTitle: {
-    ...typography['headline-md'],
-    color: colors.on_surface,
-  },
   retryBtn: {
     alignSelf: 'flex-start',
     backgroundColor: colors.surface_container_highest,
@@ -554,15 +482,5 @@ const styles = StyleSheet.create({
   trendingErrorText: {
     ...typography['body-md'],
     color: colors.primary_container,
-  },
-  trendingLoadingBlock: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: spacing.md,
-    marginBottom: spacing.lg,
-  },
-  trendingLoadingText: {
-    ...typography['body-md'],
-    color: colors.on_surface_variant,
   },
 });

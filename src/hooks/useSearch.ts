@@ -1,6 +1,10 @@
 /**
- * Search tab orchestration (PSD-Search §1–2.2, §7 S3): debounced TMDB search, abortable requests,
+ * Search tab orchestration (PSD-Search §1–2.2, §6–7): debounced TMDB search, abortable requests,
  * default-mode trending, recent searches persistence. Screens stay thin — no TMDB calls here beyond `movies.ts`.
+ *
+ * §6 quality bar (hook-owned): **400ms** debounce (`SEARCH_DEBOUNCE_MS`); **AbortController** per search;
+ * recents via `addRecentSearch` only after a **completed** search; **genre chip** path bypasses debounce
+ * (`genreBypassDebounceRef` + immediate `debouncedQuery` update).
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -123,6 +127,7 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
     (async () => {
       setLoading(true);
       setError(null);
+      setData(null);
       try {
         const result = await searchMovies(termAtStart, {
           page: 1,

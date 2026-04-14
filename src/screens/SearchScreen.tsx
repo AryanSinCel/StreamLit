@@ -2,12 +2,13 @@ import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { JSX } from 'react';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HOME_CHIP_DEFINITIONS, HOME_GENRE_RAIL_KEYS } from '../api/types';
 import { SearchAppBar } from '../components/search/SearchAppBar';
 import { SearchDefaultView } from '../components/search/SearchDefaultView';
+import { SearchResultsStateView } from '../components/search/SearchResultsStateView';
 import { useSearch } from '../hooks/useSearch';
 import type {
   RootStackParamList,
@@ -26,8 +27,8 @@ type Props = CompositeScreenProps<
   >
 >;
 
-/** Search default UI + `useSearch` (S4b). Results grid / zero-state = S5. */
-export function SearchScreen(_props: Props): JSX.Element {
+/** Search tab: default (`useSearch` + S4) vs results State 2 (S5b) + Detail on Search stack. */
+export function SearchScreen({ navigation }: Props): JSX.Element {
   const insets = useSafeAreaInsets();
   const [query, setQuery] = useState('');
   const [inputFocused, setInputFocused] = useState(false);
@@ -56,7 +57,17 @@ export function SearchScreen(_props: Props): JSX.Element {
   const featuredMovie = trendingResults[0] ?? null;
   const gridMovies = trendingResults.slice(1, 4);
 
-  const showRecentsBlock = query.trim().length === 0 && !inputFocused;
+  /** Empty query and at least one stored recent — hide section when list is empty (hook returns []). */
+  const showRecentsBlock = query.trim().length === 0 && search.recentSearches.length > 0;
+
+  const openSearchDetail = useCallback(
+    (movieId: number) => {
+      navigation.navigate('Detail', { movieId });
+    },
+    [navigation],
+  );
+
+  const totalResults = search.data?.total_results ?? 0;
 
   return (
     <View style={styles.screen}>
@@ -81,30 +92,58 @@ export function SearchScreen(_props: Props): JSX.Element {
         nestedScrollEnabled
         style={styles.scroll}
       >
-        <SearchDefaultView
-          featuredMovie={featuredMovie}
-          genreChipLabels={genreChipLabels}
-          gridMovies={gridMovies}
-          inputFocused={inputFocused}
-          mode={search.mode}
-          onBlurInput={() => setInputFocused(false)}
-          onChangeQuery={setQuery}
-          onClearRecents={() => {
-            search.clearRecentSearches().catch(() => {
-              /* errors surfaced via hook state in a later pass if needed */
-            });
-          }}
-          onFocusInput={() => setInputFocused(true)}
-          onGenreChipPress={search.applyGenreChip}
-          onRecentTermPress={(term) => setQuery(term)}
-          onRetryTrending={search.refetchTrending}
-          query={query}
-          recentSearches={search.recentSearches}
-          selectedGenreIndex={selectedGenreIndex}
-          showRecentsBlock={showRecentsBlock}
-          trendingError={search.trendingError}
-          trendingLoading={search.trendingLoading}
-        />
+        {search.mode === 'results' ? (
+          <SearchResultsStateView
+            debouncedQuery={search.debouncedQuery}
+            error={search.error}
+            genreChipLabels={genreChipLabels}
+            inputFocused={inputFocused}
+            loading={search.loading}
+            onBlurInput={() => setInputFocused(false)}
+            onChangeQuery={setQuery}
+            onClearRecents={() => {
+              search.clearRecentSearches().catch(() => {
+                /* errors surfaced via hook state in a later pass if needed */
+              });
+            }}
+            onFocusInput={() => setInputFocused(true)}
+            onGenreChipPress={search.applyGenreChip}
+            onOpenResult={openSearchDetail}
+            onRecentTermPress={(term) => setQuery(term)}
+            onRetrySearch={search.refetch}
+            query={query}
+            recentSearches={search.recentSearches}
+            results={search.results}
+            selectedGenreIndex={selectedGenreIndex}
+            showRecentsBlock={showRecentsBlock}
+            totalResults={totalResults}
+          />
+        ) : (
+          <SearchDefaultView
+            featuredMovie={featuredMovie}
+            genreChipLabels={genreChipLabels}
+            gridMovies={gridMovies}
+            inputFocused={inputFocused}
+            mode={search.mode}
+            onBlurInput={() => setInputFocused(false)}
+            onChangeQuery={setQuery}
+            onClearRecents={() => {
+              search.clearRecentSearches().catch(() => {
+                /* errors surfaced via hook state in a later pass if needed */
+              });
+            }}
+            onFocusInput={() => setInputFocused(true)}
+            onGenreChipPress={search.applyGenreChip}
+            onRecentTermPress={(term) => setQuery(term)}
+            onRetryTrending={search.refetchTrending}
+            query={query}
+            recentSearches={search.recentSearches}
+            selectedGenreIndex={selectedGenreIndex}
+            showRecentsBlock={showRecentsBlock}
+            trendingError={search.trendingError}
+            trendingLoading={search.trendingLoading}
+          />
+        )}
       </ScrollView>
     </View>
   );

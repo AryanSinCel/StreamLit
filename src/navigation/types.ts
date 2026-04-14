@@ -1,8 +1,8 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
 /**
- * Root stack — Detail sits above tabs so the tab bar is hidden on detail.
- * Tab stacks hold only each tab’s main routes; push Detail via `RootStackParamList`.
+ * Root stack — `Detail` from Home / SeeAll hides the tab bar (global push).
+ * Search tab pushes `Detail` on `SearchStackParamList` so back returns to Search (PSD-Search §5).
  */
 export type RootStackParamList = {
   MainTabs: NavigatorScreenParams<RootTabParamList> | undefined;
@@ -31,6 +31,7 @@ export type HomeStackParamList = {
 
 export type SearchStackParamList = {
   SearchMain: undefined;
+  Detail: { movieId: number };
 };
 
 export type WatchlistStackParamList = {

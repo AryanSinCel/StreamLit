@@ -64,6 +64,11 @@ function SearchStackNavigator() {
         component={SearchScreen}
         options={{ headerShown: false, title: 'Search' }}
       />
+      <SearchStack.Screen
+        name="Detail"
+        component={DetailScreen}
+        options={{ title: 'Detail' }}
+      />
     </SearchStack.Navigator>
   );
 }

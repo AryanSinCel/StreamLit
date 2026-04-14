@@ -1,12 +1,16 @@
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { RouteProp } from '@react-navigation/native';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useMovieDetail } from '../hooks/useMovieDetail';
-import type { RootStackParamList } from '../navigation/types';
+import type { RootStackParamList, SearchStackParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Detail'>;
+type DetailScreenRouteProp = RouteProp<RootStackParamList, 'Detail'> | RouteProp<SearchStackParamList, 'Detail'>;
+
+type Props = {
+  route: DetailScreenRouteProp;
+};
 
 export function DetailScreen({ route }: Props) {
   const { movieId } = route.params;

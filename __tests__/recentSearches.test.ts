@@ -58,7 +58,7 @@ describe('recentSearches', () => {
     await expect(getRecentSearches()).resolves.toEqual(['a', 'c', 'b']);
   });
 
-  it('caps at 5 entries', async () => {
+  it('caps at 5 entries; newest first', async () => {
     await addRecentSearch('1');
     await addRecentSearch('2');
     await addRecentSearch('3');
@@ -66,6 +66,14 @@ describe('recentSearches', () => {
     await addRecentSearch('5');
     await addRecentSearch('6');
     await expect(getRecentSearches()).resolves.toEqual(['6', '5', '4', '3', '2']);
+  });
+
+  it('getRecentSearches trims legacy lists longer than cap', async () => {
+    await AsyncStorage.setItem(
+      RECENT_SEARCHES_STORAGE_KEY,
+      JSON.stringify(['a', 'b', 'c', 'd', 'e', 'f', 'g']),
+    );
+    await expect(getRecentSearches()).resolves.toEqual(['a', 'b', 'c', 'd', 'e']);
   });
 
   it('clearRecentSearches removes persisted list', async () => {
