@@ -36,6 +36,13 @@ export const typography = {
     fontWeight: '600',
     letterSpacing: 0,
   },
+  /** App bar wordmark — `resources/home.html` (Manrope ~text-2xl / black). */
+  'brand-wordmark': {
+    fontFamily: fontManrope,
+    fontSize: 24,
+    fontWeight: '800',
+    letterSpacing: lsEm(-0.03, 24),
+  },
   'title-sm': {
     fontFamily: fontInter,
     fontSize: 14,
@@ -53,6 +60,14 @@ export const typography = {
     fontSize: 12,
     fontWeight: '400',
     letterSpacing: 0,
+  },
+  /** Bottom tab labels — `resources/home.html` nav (10px, wide tracking, uppercase). */
+  'tab-label': {
+    fontFamily: fontInter,
+    fontSize: 10,
+    fontWeight: '500',
+    letterSpacing: 2,
+    textTransform: 'uppercase',
   },
 } as const satisfies Record<string, TextStyle>;
 

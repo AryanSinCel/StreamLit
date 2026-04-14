@@ -44,3 +44,7 @@ alwaysApply: false
 ## Data
 
 - If a component needs TMDB data, the **screen** (or a dedicated hook used only from screens) fetches; pass results as props.
+
+## Testing
+
+- **Do not create** Jest/unit files for presentational UI under **`src/components/**`** (e.g. no `ContentCard.test.tsx`, no co-located `*.test.tsx` next to dumb components). Verify layout in the simulator or via parent screens unless the user **explicitly** asks for component tests.

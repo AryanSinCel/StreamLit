@@ -17,3 +17,10 @@ export const spacing = {
 /** Portrait TMDB poster / content cards — use in StyleSheet instead of numeric literals. */
 export const radiusCardOuter = 16 as const;
 export const radiusCardInner = 12 as const;
+
+/** Home layout — reference `resources/home.html` / PSD-Home. */
+export const homeHeroHeight = 450 as const;
+export const homeRowCardWidth = 160 as const;
+
+/** Pill-shaped chips (genre strip) — large radius for capsule silhouette. */
+export const radiusFullPill = 100 as const;

@@ -18,9 +18,21 @@ export const colors = {
   primary: '#FFB3AE',
   primary_container: '#FF5351',
   secondary_container: '#822625',
+  /** Text / icons on `primary` surfaces (matches `resources/home.html` on-primary). */
+  on_primary: '#68000B',
+  /** Text on `primary_container` (e.g. hero “New Release” badge). */
+  on_primary_container: '#5C0008',
+  /** Header wordmark + active tab accent (matches `home.html` #E5383B). */
+  brand_coral: '#E5383B',
   on_surface: '#E5E2E1',
   on_surface_variant: '#E4BDBA',
+  /** Bottom tab icons when inactive (`home.html` ~60% opacity on variant). */
+  tab_icon_inactive: 'rgba(228, 189, 186, 0.6)',
+  /** Tab bar scrim (`home.html` #131313 @ 70%). */
+  tab_bar_scrim: 'rgba(19, 19, 19, 0.70)',
   outline_variant: 'rgba(255,255,255,0.15)',
+  /** Hero title / synopsis legibility when scrim is omitted (no solid overlay panel). */
+  hero_text_shadow: 'rgba(19, 19, 19, 0.85)',
 } as const;
 
 /** Primary CTA gradient — use with `LinearGradient` when building UI. */

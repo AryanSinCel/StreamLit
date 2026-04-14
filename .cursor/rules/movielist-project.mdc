@@ -53,3 +53,7 @@ alwaysApply: true
 ## Folder layout
 
 - Standard **`src/`** tree: **`api/`**, **`components/`**, **`hooks/`**, **`navigation/`**, **`screens/`**, **`store/`**, **`theme/`**, **`utils/`**. Do not invent a parallel or duplicate structure.
+
+## Testing (UI)
+
+- **Do not add** dedicated Jest files for presentational UI under **`src/components/**`** unless the user explicitly requests them. Use simulator or integrated screens for visual checks; keep **`__tests__/`** for logic (store, utilities, hooks) and app-level smoke tests.

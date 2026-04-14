@@ -1,5 +1,12 @@
+import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {
+  IconBookmark,
+  IconHome,
+  IconPerson,
+  IconSearch,
+} from '../components/common/SimpleIcons';
 import { DetailScreen } from '../screens/DetailScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { SeeAllScreen } from '../screens/SeeAllScreen';
@@ -7,6 +14,8 @@ import { ProfileScreen } from '../screens/ProfileScreen';
 import { SearchScreen } from '../screens/SearchScreen';
 import { WatchlistScreen } from '../screens/WatchlistScreen';
 import { colors } from '../theme/colors';
+import { spacing } from '../theme/spacing';
+import { typography } from '../theme/typography';
 import type {
   HomeStackParamList,
   ProfileStackParamList,
@@ -36,7 +45,7 @@ function HomeStackNavigator() {
       <HomeStack.Screen
         name="HomeMain"
         component={HomeScreen}
-        options={{ title: 'Home' }}
+        options={{ headerShown: false, title: 'Home' }}
       />
       <HomeStack.Screen
         name="SeeAll"
@@ -83,8 +92,32 @@ function ProfileStackNavigator() {
   );
 }
 
-const tabBarActiveTintColor = colors.primary;
-const tabBarInactiveTintColor = colors.on_surface_variant;
+const tabBarActiveTintColor = colors.brand_coral;
+const tabBarInactiveTintColor = colors.tab_icon_inactive;
+
+function tabBarIconColor(focused: boolean): string {
+  return focused ? colors.brand_coral : colors.tab_icon_inactive;
+}
+
+const mainTabBarIconHome: NonNullable<BottomTabNavigationOptions['tabBarIcon']> = ({
+  focused,
+  size,
+}) => <IconHome color={tabBarIconColor(focused)} size={size} />;
+
+const mainTabBarIconSearch: NonNullable<BottomTabNavigationOptions['tabBarIcon']> = ({
+  focused,
+  size,
+}) => <IconSearch color={tabBarIconColor(focused)} size={size} />;
+
+const mainTabBarIconBookmark: NonNullable<BottomTabNavigationOptions['tabBarIcon']> = ({
+  focused,
+  size,
+}) => <IconBookmark color={tabBarIconColor(focused)} size={size} />;
+
+const mainTabBarIconPerson: NonNullable<BottomTabNavigationOptions['tabBarIcon']> = ({
+  focused,
+  size,
+}) => <IconPerson color={tabBarIconColor(focused)} size={size} />;
 
 function MainTabNavigator() {
   return (
@@ -93,13 +126,50 @@ function MainTabNavigator() {
         headerShown: false,
         tabBarActiveTintColor,
         tabBarInactiveTintColor,
-        tabBarStyle: { backgroundColor: colors.surface_container },
+        tabBarLabelStyle: {
+          ...typography['tab-label'],
+          marginTop: spacing.xs,
+        },
+        tabBarStyle: {
+          backgroundColor: colors.tab_bar_scrim,
+          borderTopWidth: 0,
+          paddingBottom: spacing.xxl,
+          paddingTop: spacing.md,
+        },
       }}
     >
-      <Tab.Screen name="Home" component={HomeStackNavigator} />
-      <Tab.Screen name="Search" component={SearchStackNavigator} />
-      <Tab.Screen name="Watchlist" component={WatchlistStackNavigator} />
-      <Tab.Screen name="Profile" component={ProfileStackNavigator} />
+      <Tab.Screen
+        name="Home"
+        component={HomeStackNavigator}
+        options={{
+          tabBarIcon: mainTabBarIconHome,
+          tabBarLabel: 'Home',
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={SearchStackNavigator}
+        options={{
+          tabBarIcon: mainTabBarIconSearch,
+          tabBarLabel: 'Search',
+        }}
+      />
+      <Tab.Screen
+        name="Watchlist"
+        component={WatchlistStackNavigator}
+        options={{
+          tabBarIcon: mainTabBarIconBookmark,
+          tabBarLabel: 'Watchlist',
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileStackNavigator}
+        options={{
+          tabBarIcon: mainTabBarIconPerson,
+          tabBarLabel: 'Profile',
+        }}
+      />
     </Tab.Navigator>
   );
 }
