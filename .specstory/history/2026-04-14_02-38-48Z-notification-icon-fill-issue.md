@@ -1476,3 +1476,1381 @@ cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npx eslint "
 <summary>Tool use: **run_terminal_command_v2**</summary>
 
 </details></tool-use>
+
+_**Agent (composer-2)**_
+
+### Why it scrolled
+
+`HomeHeader` lived **inside** the same `ScrollView` as the hero, chips, and rows. Anything in that tree scrolls together, so the wordmark and bell moved up with the content.
+
+In `resources/home.html` the top bar is explicitly **`fixed top-0`** with the page body in `<main class="pt-24">` so only **main** scrolls.
+
+### What we changed
+
+In **`src/screens/HomeScreen.tsx`**:
+
+- Outer **`View`** (`styles.screen`) fills the tab.
+- **`HomeHeader`** sits in a **`headerDock`** block **above** the `ScrollView`, with **`paddingTop: insets.top + spacing.sm`** and **`backgroundColor: colors.surface`** so it matches the reference bar and clears the notch.
+- **`ScrollView`** (`styles.scroll`, `flex: 1`) holds everything **below** the header (banner, chips, hero, rows). **`paddingTop`** was removed from scroll content so spacing matches “fixed header + scrolling main”.
+
+After a reload, the StreamList row should stay pinned while chips/hero/rows scroll underneath, like **`home.html`** / **`home.png`**.
+
+---
+
+_**User**_
+
+## Session — 2026-04-14
+
+Goal: PSD-Home **Task H5** — pagination UX per @docs/PSD-Home.md §7 H5 + §2: when the user scrolls a horizontal row to **within 3 items of the end**, request the **next `page`** for that row only; **append** results; respect **`hasMore`** / `total_pages`. Show end-of-row **“LOADING MORE CONTENT”** (`label-sm`, `on_surface_variant`, uppercase) + small spinner **while** the **last row** (or whichever row is loading more) is fetching the next page.
+
+Attach: @docs/PSD-Home.md @src/hooks/useHome.ts @src/screens/HomeScreen.tsx @src/components/home/ (row / list components) @src/api/movies.ts @docs/API-Reference.md @rules/hooks.mdc @rules/performance.mdc @rules/movielist-project.mdc
+
+Requirements:
+- **Independent pagination** per row (Trending, Top Rated, Genre) — one row loading more must not reset others.
+- **Debounce / throttle** rapid `onEndReached`-style fires if needed to avoid duplicate page fetches.
+- **No duplicate pages** in appended lists for the same row.
+- **No** new TMDB endpoints — reuse existing `movies.ts` functions with `page` param.
+
+Out of scope: H6 skeleton polish, See All list infinite scroll (unless you reuse same pattern), tab bar, redesign.
+
+Verify: iOS + Android — scroll each row near end → next page appends; footer text/spinner appears during fetch; no axios in screens.
+
+Deliverable: files changed + which row uses which `onEndReached` / threshold logic.
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing pagination**
+
+I'm adding pagination logic to load more content for each horizontal row when user scrolls near the end. 
+
+**Adding horizontal scroll detection**
+
+I'm implementing scroll detection for horizontal rows using ScrollView's onScroll callback to trigger load more logic. I'm computing scroll thresholds for horizontal lists using content size, layout measurement, and content offset values. I'm reviewing useHome to prevent duplicate fetches and ensure loadMore doesn't double-fire. I'll show footer when any row is loading more, not just the last one. 
+
+**Showing footer during loading**
+
+I'll show the footer whenever any row has `loadingMore` and `hasMore` for cleaner UX. I'll show footer when any category is loading more data. 
+
+**Implementing scroll loading**
+
+I'll switch to FlatList for horizontal rows to enable efficient infinite scrolling with `onEndReachedThreshold`. 
+
+**Adjusting scroll thresholds**
+
+I'm adjusting the scroll thresholds to ensure onEndReached triggers exactly 3 items before the end. I'm using `onScroll` with `scrollEventThrottle` to detect when user is within 3 items of the end. I'm implementing pixel-based distance calculation with a small buffer to detect scroll threshold. I'm switching to onScroll handler for precise end-reached detection with pixel-perfect calculations. I'm calculating scroll thresholds using native event metrics for precise end detection. I'm implementing a fix for the edge case where scroll triggers incorrectly with 2 items on screen and hasMore=true, using paddingToEnd <= thresholdPixels condition. 
+
+I'm adding debouncing to prevent multiple rapid scroll triggers by using useRef to track last call time and a 800ms throttle. </details></think>
+
+_**Agent (composer-2)**_
+
+Reviewing `useHome` load-more logic and `HomeContentRow` to implement horizontal near-end detection and the loading footer.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating applyPageResponse**
+
+I'm updating `applyPageResponse` to dedupe by `id` when append is true, ensuring items with existing IDs aren't added again. I'm implementing a ticket-based system with `trendingLoadMoreTicket` to prevent stale page responses from applying, using refs to track fetch requests and rejecting outdated responses. I found a race condition in `loadMore` where both calls read `trendingRef.current` before either re-renders, potentially causing stale data application. 
+
+I'm fixing the race condition in `loadMore` by updating `trendingRef.current` synchronously before `setState`. I found that `trendingRef` is updated on every render, causing a race condition in `loadMore` where the ref isn't updated until the next render. 
+
+I'm fixing the race condition in `loadMore` by synchronously updating `trendingRef.current` before async operations. I'm implementing scroll threshold detection to trigger load-more logic. 
+
+**Throttling scroll handler**
+
+I'm implementing throttling for the scroll handler using useRef and useCallback to prevent excessive calls. I'm adding a guard to prevent firing scroll events when paddingEnd is negative. I'm implementing loading state tracking for trending rows to show spinners during fetch operations. I'm updating the trending ref to reflect loadingMore state immediately after setTrending. 
+
+**Dedupe in applyPageResponse**
+
+I'm deduplicating items in applyPageResponse by using a Set to track IDs during merge. 
+
+**Exporting dedupe function**
+
+I'm exporting dedupe merge as a pure function in utils for easier testing. I'm extracting mergeDedupe into src/utils/mergeFeedAppend.ts for easier unit testing. I'm implementing mergeUniqueById to deduplicate items by ID in append operations. I'm skipping page check in setState callback for simplicity, relying on throttle and loadingMore to prevent race conditions. 
+
+**Stabilizing scroll handler**
+
+I'm adding useCallback to the scroll handler to prevent unnecessary re-renders. I'm adding a threshold check to trigger loading more items when nearing the end of the scrollable area. I'm adding a debounce mechanism to prevent excessive calls to `onNearEnd` during rapid scrolling. I'm moving the loading footer component inline within HomeScreen to avoid creating an unnecessary file. I'm implementing the loading footer UI with consistent typography styling. I'm adding ActivityIndicator to HomeScreen and fixing ref synchronization after setState for loadMore. 
+
+**Optimizing scroll handler**
+
+I'm implementing useCallback for scroll handler and fixing ref synchronization in loadMore. 
+
+**Creating pagination utility**
+
+I'm creating a pagination utility function to deduplicate movie list items. I'm implementing `appendUniqueResults` to deduplicate movie items during pagination. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing horizontal near-end detection (within 3 cards), throttled triggers, synchronous ref updates to prevent duplicate load-more calls, deduped appends, and the loading-more footer.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/mergeUniqueMovieListById.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Adding constants**
+
+I'm adding constants for HomeContentRow using theme values: 3 * (homeRowCardWidth + spacing.xxl). 
+
+**Implementing HomeContentRow**
+
+I'm implementing HomeContentRow with throttled near-end detection and loading state guards. I'm adding loadingMore to the dependency array in handleScroll and creating a constant for the near-end threshold. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/__tests__/mergeUniqueMovieListById.test.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing test assertion**
+
+I'm correcting the test assertion to properly verify deep equality of array items in mergeUniqueMovieListById. I'm updating the test assertion to use deep equality for arrays with same objects. 
+
+**Running tests**
+
+I'm running tests to verify the merge functionality handles empty arrays correctly. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/__tests__/watchlistStore.test.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 3 passed, 3 total
+Tests:       9 passed, 9 total
+Snapshots:   0 total
+Time:        1.378 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing test assertions**
+
+I'm adjusting the test assertion to use `toEqual` for proper deep equality checking of the merged array content. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx eslint "src/hooks/useHome.ts" "src/components/home/HomeContentRow.tsx" "src/screens/HomeScreen.tsx" "src/utils/mergeUniqueMovieListById.ts" "__tests__/mergeUniqueMovieListById.test.ts" --max-warnings 0</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx eslint "src/hooks/useHome.ts" "src/components/home/HomeContentRow.tsx" "src/screens/HomeScreen.tsx" "src/utils/mergeUniqueMovieListById.ts" "__tests__/mergeUniqueMovieListById.test.ts" --max-warnings 0
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+### Cause
+
+Home rows used a horizontal `ScrollView` with **no near-end handling**, so **`loadMoreTrending` / `loadMoreTopRated` / `loadMoreGenre`** from `useHome` were never called from the UI. There was also no **“LOADING MORE CONTENT”** strip on Home.
+
+### What we implemented (H5)
+
+1. **`HomeContentRow.tsx`** (horizontal list = “end” detection)
+   - **`onScroll`** + **`scrollEventThrottle={16}`** (not `FlatList`’s `onEndReached`; RN’s horizontal `ScrollView` uses scroll metrics).
+   - **Within 3 cards of the end:**  
+     `distanceFromEnd = contentWidth - layoutWidth - offsetX`  
+     `distanceFromEnd ≤ 3 × (homeRowCardWidth + spacing.xxl)` — same stride as each `ContentCard` + `marginRight`.
+   - **Guards:** `hasMore`, `!loading`, `!loadingMore`, `!error`, `items.length > 0`, optional `onNearEnd`.
+   - **Throttle:** **450ms** between `onNearEnd` fires (`lastNearEndFireRef`) to limit duplicate triggers.
+   - New props: **`loadingMore`**, **`hasMore`**, **`onNearEnd`**.
+
+2. **`HomeScreen.tsx`**
+   - Pulls **`loadMoreTrending`**, **`loadMoreTopRated`**, **`loadMoreGenre`** from **`useHome`** and passes them as **`onNearEnd`** on the matching row.
+   - Footer when **`trending.loadingMore || topRated.loadingMore || genre.loadingMore`**: **`ActivityIndicator`** + **“Loading more content”** with **`typography['label-sm']`**, **`colors.on_surface_variant`**, **`textTransform: 'uppercase'`**, **`letterSpacing: 2`**.
+
+3. **`useHome.ts`**
+   - **Append dedupe** via **`mergeUniqueMovieListById`** so the same `id` is not added twice if a page is requested twice.
+   - **Race guard:** before `setTrending` / `setTopRated` / `setGenre` with `loadingMore: true`, **`trendingRef` / `topRatedRef` / `genreRef`** are updated **synchronously** so a second `onScroll` in the same tick still sees **`loadingMore: true`** and the hook’s guard blocks a duplicate fetch.
+
+4. **`src/utils/mergeUniqueMovieListById.ts`** + **`__tests__/mergeUniqueMovieListById.test.ts`**  
+   - Small unit test for dedupe behaviour.
+
+### Row → `onNearEnd` → hook
+
+| Row | `onNearEnd` | TMDB call (existing `movies.ts`) |
+|-----|-------------|----------------------------------|
+| Trending Now | `loadMoreTrending` | `getTrendingMoviesWeek({ page: prev.page + 1 })` |
+| Top Rated | `loadMoreTopRated` | `getTopRatedMovies({ page: prev.page + 1 })` |
+| Row 3 (Discover) | `loadMoreGenre` | `getDiscoverMovies({ page: nextPage, with_genres? })` |
+
+### Verification (local)
+
+- `npx tsc --noEmit` — pass  
+- `npm test` — pass (includes new merge test)  
+- ESLint on touched files — pass  
+
+**Device check (you):** On iOS/Android, scroll each horizontal row near the end → more posters append; footer appears while **`loadingMore`** is true; other rows keep their own lists and pagination.
+
+---
+
+_**User**_
+
+for All filter its showing Discover which i think should be all rails of different genre which should Shown at the end of the last visible row when more pages are available, fix it for All filter only one rail is showing 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating home screen filters**
+
+I'm modifying the home screen to show multiple genre-based rails when 'All' is selected, instead of a single 'Discover' rail. I'm implementing multiple genre rails for the 'All' filter instead of just the Discover rail. I'm refactoring the home screen filters to fetch discover data for each genre chip in parallel instead of using a single unfiltered Discover rail. I'm refactoring the home screen to render multiple genre rows in parallel when 'all' chip is selected. 
+
+**Refactoring home screen**
+
+I'm restructuring the home screen to handle 'all' chip differently by removing the single genre row when 'all' is selected. 
+
+**Restructuring home screen**
+
+I'm simplifying the home screen structure by separating genre rows into `allRails` for 'all' mode and keeping `genre` state for filtered views. I'm implementing a unified approach for genre rows using `genreRowMode` to avoid duplicate fetches when switching between 'all' and filtered modes. 
+
+I'm optimizing genre row loading by implementing a single fetch per genre instead of duplicate calls on home load. I'm handling the edge case where a genre name isn't in the TMDB list by showing an error or empty state for that rail. I'm implementing dynamic genre rail loading based on chip selection. I'm implementing dynamic genre rail loading based on chip selection, fetching 6 parallel discover pages when 'all' chip is selected. 
+
+**Handling chip selection**
+
+</details></think>
+
+_**Agent (composer-2)**_
+
+Implementing multiple genre rails when the "All" chip is selected. Reviewing `useHome` and `HomeScreen` to integrate it.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating type definitions**
+
+I'm defining `HomeGenreRailKey` type and extending `UseHomeResult` with genre rail state and load more function. I'm simplifying genre rails state to use a record with all keys always present. 
+
+I'm refactoring genre rails state to use a record type with all keys present. I'm updating the genre rails state to use a record type with all keys present. I'm adjusting genre rails state to handle parallel loading without overwriting single genre data. I'm adding `genreRailDiscoverGenRef` to handle race conditions during genre rail transitions. I'm updating type definitions to include `genreAllRailsGenRef` for simpler generation invalidation. I'm splitting the chip effect logic to handle 'all' and individual chip cases separately for better genre invalidation control. 
+
+I'm adjusting the genre state initialization to handle the 'all' chip case by setting idle empty state. I'm mapping ALL_RAIL_ORDER with genreRails for the 'all' chip case and updating type exports. I'm updating genreRailsRef to use the new HomeGenreRailKey type and GENRE_RAIL_KEYS constant. I'm refactoring genreRails initialization to reset loading states on chip switch. I'm implementing the bootstrap effect for genre rails with conditional promise handling. I'm mapping promise results to genre rail keys with conditional updates. 
+
+I'm optimizing state updates by batching multiple genre rail sets into a single setState call. I'm adding a guard to `discoverGenAtBootstrapStart` to prevent unnecessary genre rail updates. I'm updating genre rail states to handle chip selection changes properly. I'm resetting genre rails to initial state with `initialAllRailsIdle()` to minimize confusion. I'm adding `loadingMore` and `hasMore` properties to the genre rail type definitions. 
+
+**Handling cache invalidation**
+
+I'm implementing cache invalidation logic to handle genre rail refetches when switching between chips. I'm adding a condition to prevent updating genre rails when chip is not 'all' during loadMoreGenreRail. I'm considering lazy initialization of genre rails to avoid wasteful initial loading. I'm defaulting the bootstrap chip to 'all' and initializing genreRails with loading state false until first fetch. I'm refactoring bootstrap to branch on chip at end of genre load only to avoid fetching 6 rails when user switches chips quickly. I'm implementing the bootstrap replacement for discover third promise with careful attention to chipKeyRef usage. 
+
+I'm replacing the bootstrap logic with a more robust error handling pattern for discover promises. I'm refactoring the promise handling to use `Promise.allSettled` for better error management. I'm updating the genre rail fetch logic to use `Promise.allSettled` for better error handling. 
+
+I'm implementing genre discovery generation reference logic for cache invalidation. I'm implementing the genre discovery generation reference logic for cache invalidation by capturing `allRailsBootstrapGenRef` at the start of rail fetch batches. I found that `genreDiscoverGenRef` is incremented on both bootstrap start and chip change, so `discoverGenAtBootstrapStart` correctly captures the bootstrap generation. 
+
+I'm applying rail results after checking for chip changes during bootstrap. I'm setting genre rails to idle state to prevent stale data loading. I'm adding HOME_GENRE_RAIL_KEYS constant to types.ts for better organization. 
+
+**Adding genre rail keys**
+
+I'm defining HomeGenreRailKey type and HOME_GENRE_RAIL_KEYS array for genre filtering. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing multi-rail discover for the "All" chip: adding stable genre-rail keys to `types`, extending `useHome` to fetch and paginate six rails in parallel, and updating `HomeScreen` to render them (with loading-more footer including any rail).
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing home hook**
+
+I'm adding `emptyGenreRailsRecord` helper to initialize genre rails state with loading=false for all keys. I'm initializing all genre rails with loading=true in the default chip UX to avoid flashes of empty states during bootstrap. 
+
+**Initializing genre rails**
+
+I'm setting all genre rails to loading state during initialization to prevent flash-of-empty states. 
+
+**Setting genre rails state**
+
+I'm implementing the logic to set genre rails to loading or idle based on chip state changes. I'm ensuring genre rails show loading state only when needed, avoiding multiple spinners on initial load. 
+
+**Handling chip effects**
+
+I'm implementing chip effect replacement to abort previous requests and handle single genre requests properly. I'm setting up abort controller for chip effect cancellation and updating genre discovery generation counter. I'm populating home feed rows with initial state and starting async genre fetches. I'm processing discover parameters and fetching movies for home genre rails. I'm processing fetch results and updating home feed row states with page responses. I'm refactoring the fetch logic to process trending and top-rated movies in parallel before branching for chip-specific requests. 
+
+I'm processing chip-specific requests after fetching trending and top-rated movies in parallel. I'm using `allSettled` to fetch multiple chip-specific movie lists in parallel. I'm updating genre rails with fetched chip data using `applyPageResponse`. I'm setting genre state with initial home feed row state and marking it as not loading. I'm implementing error handling for the discover API call using try/catch. 
+
+I'm adding error handling for the discover API call using try/catch. I'm setting up the discover API call with cancellation support and loading states. 
+
+I'm adjusting the genre rails state management to idle after successful single fetches. I'm synchronizing genreRailsRef with the current genreRails state when loading more data. 
+
+I'm updating genreRailsRef and state with the new loading state for the chip. I'm adding a guard to prevent loading more when chip key is 'all' and updating bootstrap logic for initial genre state. I'm changing the bootstrap logic to set genre to idle instead of loading when chip key is 'all'. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing bootstrap issue**
+
+I'm correcting the chip reference issue by using `chipKeyRef.current` consistently after the trending settlement. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing types**
+
+I'm changing `UseHomeResult` genreRails from `Readonly<Record>` to `Record` for consistency with state. 
+
+**Fixing bootstrap loading**
+
+I'm fixing the bootstrap loading logic to ensure `setBootstrapLoading(false)` is called in all execution paths. I'm simplifying the bootstrap loading logic by duplicating `setBootstrapLoading(false)` before problematic returns. 
+
+I'm ensuring `setBootstrapLoading(false)` is called in all early return paths, including before trending checks. I'm adding a try-finally block to ensure `setBootstrapLoading(false)` is called correctly even if the component unmounts during async operations. 
+
+I'm clarifying the bootstrap loading state management to ensure `setBootstrapLoading(false)` is called correctly on generation mismatches and component unloads. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing bootstrap loading**
+
+I'm adding a finally block to ensure setBootstrapLoading(false) is called even with early returns. I'm wrapping the bootstrap logic in a try/finally block to ensure setBootstrapLoading(false) runs even with early returns. I'm ensuring setBootstrapLoading(false) runs in finally block despite early returns. I'm mapping genre rail keys to their labels using chip definitions. I'm implementing genre ID retrieval from chips for the see all functionality. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing error handling**
+
+I'm correcting the try-catch structure by moving the outer try's closing brace before the finally block. I'm correcting the misplaced closing brace that was closing the wrong block in the chip handling logic. I'm clarifying the try-catch block structure to ensure proper closure of nested try blocks. I'm correcting the brace matching to properly close the outer try block from line 172 before the finally clause. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{ts,tsx}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "useHome|UseHomeResult|genreRails"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "useHome|UseHomeResult|genreRails",
+  "topFiles": [
+    {
+      "matchCount": 12,
+      "uri": "src/hooks/useHome.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/hooks/index.ts"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/api/types.ts"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/screens/HomeScreen.tsx"
+    }
+  ],
+  "totalFiles": 4,
+  "totalMatches": 23
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1 && npx eslint "src/hooks/useHome.ts" "src/screens/HomeScreen.tsx" "src/api/types.ts" --max-warnings 0</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1 && npx eslint "src/hooks/useHome.ts" "src/screens/HomeScreen.tsx" "src/api/types.ts" --max-warnings 0
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+2026-04-14T08:43:45,142: [cli] unable to talk to your watchman on /var/folders/bj/6lzkbfr16cng4ndnfc21dlsr0000gq/T//aryansingh-state/sock! (Operation not permitted)
+
+Watchman:  watchman --no-pretty get-sockname returned with exit code=1, signal=null, stderr= 2026-04-14T08:43:45,142: [cli] unable to talk to your watchman on /var/folders/bj/6lzkbfr16cng4ndnfc21dlsr0000gq/T//aryansingh-state/sock! (Operation not permitted)
+
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: watchman --no-pretty get-sockname returned with exit code=1, signal=null, stderr= 2026-04-14T08:43:45,142: [cli] unable to talk to your watchman on /var/folders/bj/6lzkbfr16cng4ndnfc21dlsr0000gq/T//aryansingh-state/sock! (Operation not permitted)
+
+    at ChildProcess.&lt;anonymous&gt; (/Users/aryansingh/Desktop/Task2/MovieList/node_modules/fb-watchman/index.js:203:18)
+    at ChildProcess.emit (node:events:524:28)
+    at maybeClose (node:internal/child_process:1104:16)
+    at Socket.&lt;anonymous&gt; (node:internal/child_process:456:11)
+    at Socket.emit (node:events:524:28)
+    at Pipe.&lt;anonymous&gt; (node:net:343:12)
+Emitted 'error' event on Client instance at:
+    at spawnError (/Users/aryansingh/Desktop/Task2/MovieList/node_modules/fb-watchman/index.js:174:10)
+    at ChildProcess.&lt;anonymous&gt; (/Users/aryansingh/Desktop/Task2/MovieList/node_modules/fb-watchman/index.js:203:7)
+    at ChildProcess.emit (node:events:524:28)
+    [... lines matching original stack trace ...]
+    at Pipe.&lt;anonymous&gt; (node:net:343:12)
+
+Node.js v20.19.5
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 3 passed, 3 total
+Tests:       9 passed, 9 total
+Snapshots:   0 total
+Time:        1.585 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Cleaning up unused variables**
+
+I'm removing the unused `feed` variable in HomeScreen since it's actually being used for HomeContentRow props. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Here is what was going wrong and what we changed.
+
+### What was wrong
+With **All** selected, the third block was a **single** unfiltered Discover rail (`getDiscoverMovies` with no `with_genres`). That is one list, not “a rail per genre.”
+
+### What we did
+- **`All`** now means **six stacked rails** (Action, Drama, Comedy, Sci‑Fi, Horror, Documentary), each with its own **`HomeFeedRowState`**: load, error, pagination, and **`loadMoreGenreRail(key)`** calling `getDiscoverMovies({ with_genres, page })` for that genre only.
+- **A specific chip** (e.g. Drama) still uses the **one** `genre` row + **`loadMoreGenre`** as before.
+- **`HOME_GENRE_RAIL_KEYS`** and **`HomeGenreRailKey`** live in **`src/api/types.ts`** next to the chip definitions; **`UseHomeResult`** includes **`genreRails`** and **`loadMoreGenreRail`**.
+- **Bootstrap / refetch / chip change**: if the chip is **`all`**, we run **six** parallel page‑1 discovers (after `/genre/movie/list`); otherwise we keep the single discover path. **`loadMoreGenre`** returns immediately when the chip is **`all`** so it never conflicts with the rails.
+- **`HomeScreen`**: if **`selectedChipKey === 'all'`**, it maps **`HOME_GENRE_RAIL_KEYS`** → one **`HomeContentRow`** per genre (title from **`HOME_CHIP_DEFINITIONS`**); otherwise it renders the single third row. **See All** for each rail uses that rail’s **`genreId`** from **`chips`**.
+- **`anyRowLoadingMore`** includes **any** genre rail when on **All**, so the **“Loading more content”** footer still reflects pagination on those rows.
+- Bootstrap completion uses a **`try` / `finally`** so **`setBootstrapLoading(false)`** runs even when inner logic returns early.
+
+### Files touched
+- `src/api/types.ts` — `HomeGenreRailKey`, `HOME_GENRE_RAIL_KEYS`, `UseHomeResult.genreRails`, `loadMoreGenreRail`
+- `src/hooks/useHome.ts` — multi-rail fetch/append, `loadMoreGenreRail`, idle/loading rail maps, bootstrap `finally`
+- `src/screens/HomeScreen.tsx` — conditional rails vs single row, See All per rail, loading footer
+
+### Checks
+- `npx tsc --noEmit` — OK  
+- `npm test` — OK  
+
+On device: choose **All** → you should see **six** horizontal sections under Top Rated; scroll each near the end to load more for **that** genre only. Pick **Drama** (etc.) → you should see **one** third row again.
+
+---
+
+_**User**_
+
+## Session — 2026-04-14
+
+Goal: PSD-Home **Task H6** — per @docs/PSD-Home.md §6–7 H6: **initial skeletons** for hero and each row (shapes match final layout; shimmer from theme `surface_container_high` → `surface_bright`, ~1.5s loop per programme). **Genre row empty state** when discover returns **no results** — designed message (not blank), aligned with tokens; optional retry if row has `refetch`.
+
+Attach: @docs/PSD-Home.md @src/screens/HomeScreen.tsx @src/hooks/useHome.ts @src/components/home/ @src/components/common/ @src/theme/colors.ts @src/theme/spacing.ts @rules/loading-and-errors.mdc @rules/theming.mdc @rules/components.mdc @rules/movielist-project.mdc
+
+Out of scope: New features, H5 pagination changes unless a bugfix, tab bar glass, See All redesign.
+
+Verify: Cold open Home → skeletons then content; force empty genre discover → empty state shows; iOS + Android; typecheck.
+
+Deliverable: files changed + what you manually tested.
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing hero skeleton**
+
+I'm implementing the hero skeleton with shimmer animation matching the loading-and-errors.mdc design rules. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing H6 skeletons and genre empty states: reviewing theme tokens and home components.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/docs/PSD-Home.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/colors.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/.cursor/rules/loading-and-errors.mdc</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Creating skeleton components**
+
+I'm implementing `ShimmerBox` component using React Native Animated to interpolate between base and highlight colors for skeleton loading effects. 
+
+**Implementing skeleton components**
+
+I'm adding shimmer effects to `HomeRowSkeleton` with 4-5 card-shaped boxes and header row. 
+
+**Integrating skeleton**
+
+I'm integrating the skeleton into HomeHero to show it only when trending.data is empty and loading. I'm replacing the loading spinner with skeleton layout in HomeHero when loading and no movie data. 
+
+I'm adding shimmer effect to header title, see all link, and poster placeholders in HomeHero. 
+
+**Adding empty state messaging**
+
+I'm implementing empty state messages with optional overrides for different rail types. I'm adding genre-specific empty state messages with conditional shimmer rendering. 
+
+I'm implementing animated shimmer effects for empty states using React Native's Animated API. I'm implementing shimmer animation using Animated API with two overlapping views for background color transition. 
+
+I'm implementing shimmer animation using Animated API with opacity pulse and color interpolation. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Creating skeleton components**
+
+I'm creating reusable ShimmerBox component and HomeHeroSkeleton with animated background color. I'm implementing the HomeHero skeleton with shimmer blocks for badge, title, synopsis, and buttons, rendering only the skeleton subtree when loading. I'm implementing HomeRowSkeleton with configurable card count and optional header skeleton. 
+
+**Designing empty states**
+
+I'm implementing genre-specific empty states with configurable titles and messages. 
+
+**Implementing empty states**
+
+I'm adding genre-specific empty states with configurable titles and messages using `emptyStateMode` prop. I'm adding shimmer skeletons for headers and cards in the home row layout. I'm fixing the ShimmerBox import path to use skeletonShimmer from theme/colors. 
+
+I'm implementing the ShimmerBox component with animated shimmer effect using skeletonShimmer color. I'm setting up the shimmer animation loop with pulse timing using Animated API. I'm implementing the shimmer animation using Animated API with pulse timing. </details></think>

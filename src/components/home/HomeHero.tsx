@@ -3,9 +3,10 @@
  */
 
 import type { JSX } from 'react';
-import { ActivityIndicator, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { TmdbMovieListItem } from '../../api/types';
 import { IconPlay } from '../common/SimpleIcons';
+import { HomeHeroSkeleton } from './HomeHeroSkeleton';
 import { colors } from '../../theme/colors';
 import { homeHeroHeight, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
@@ -50,6 +51,10 @@ function heroBackdropUri(movie: TmdbMovieListItem | null): string | null {
 }
 
 export function HomeHero({ movie, loading, onWatchNow, onDetails }: HomeHeroProps): JSX.Element {
+  if (loading && movie == null) {
+    return <HomeHeroSkeleton />;
+  }
+
   const backdropUri = heroBackdropUri(movie);
   const canAct = movie != null && !loading;
 
@@ -68,19 +73,12 @@ export function HomeHero({ movie, loading, onWatchNow, onDetails }: HomeHeroProp
           <View style={styles.backdropPlaceholder} accessibilityLabel="Featured backdrop placeholder" />
         )}
         <View style={styles.content}>
-          {loading ? (
-            <View style={styles.heroLoading}>
-              <ActivityIndicator accessibilityLabel="Loading hero" color={colors.primary_container} />
-            </View>
-          ) : null}
           <View style={styles.badge}>
             <Text style={styles.badgeText}>New Release</Text>
           </View>
-          <Text style={styles.title}>
-            {loading && movie == null ? 'Loading…' : (movie?.title ?? 'Featured')}
-          </Text>
+          <Text style={styles.title}>{movie?.title ?? 'Featured'}</Text>
           <Text numberOfLines={2} style={styles.synopsis}>
-            {loading && movie == null ? '' : synopsisForHero(movie)}
+            {synopsisForHero(movie)}
           </Text>
           <View style={styles.actions}>
             <Pressable
@@ -167,9 +165,6 @@ const styles = StyleSheet.create({
     ...typography['title-sm'],
     color: colors.on_surface,
     fontWeight: '700',
-  },
-  heroLoading: {
-    marginBottom: spacing.md,
   },
   pressedDisabled: {
     opacity: 0.5,

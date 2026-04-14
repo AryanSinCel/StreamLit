@@ -93,6 +93,18 @@ export const HOME_CHIP_DEFINITIONS: readonly HomeChipDefinition[] = [
   { key: 'documentary', label: 'Documentary', tmdbGenreName: 'Documentary' },
 ] as const;
 
+/** Genre chips only — order for stacked “All” rails on Home (PSD: one strip per genre). */
+export type HomeGenreRailKey = Exclude<HomeChipKey, 'all'>;
+
+export const HOME_GENRE_RAIL_KEYS: readonly HomeGenreRailKey[] = [
+  'action',
+  'drama',
+  'comedy',
+  'sci_fi',
+  'horror',
+  'documentary',
+];
+
 /** One horizontal row on Home: accumulated pages + pagination flags. */
 export interface HomeFeedRowState {
   items: TmdbMovieListItem[];
@@ -141,10 +153,17 @@ export interface UseHomeResult {
   setSelectedChipKey: (key: HomeChipKey) => void;
   trending: HomeFeedRowState;
   topRated: HomeFeedRowState;
+  /** Single discover row when a specific genre chip is selected (not `all`). */
   genre: HomeFeedRowState;
+  /**
+   * When chip is `all`, Home shows one horizontal rail per genre (`HOME_GENRE_RAIL_KEYS`).
+   * Unused rows stay idle when a specific chip is selected.
+   */
+  genreRails: Record<HomeGenreRailKey, HomeFeedRowState>;
   loadMoreTrending: () => void;
   loadMoreTopRated: () => void;
   loadMoreGenre: () => void;
+  loadMoreGenreRail: (key: HomeGenreRailKey) => void;
 }
 
 /** Search tab: paginated movie list for the current query. */
