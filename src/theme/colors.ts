@@ -26,6 +26,8 @@ export const colors = {
   brand_coral: '#E5383B',
   on_surface: '#E5E2E1',
   on_surface_variant: '#E4BDBA',
+  /** TextInput placeholder — `search.html` on-surface-variant ~50% (not in body text). */
+  search_placeholder: 'rgba(229, 226, 225, 0.5)',
   /** Bottom tab icons when inactive (`home.html` ~60% opacity on variant). */
   tab_icon_inactive: 'rgba(228, 189, 186, 0.6)',
   /** Tab bar scrim (`home.html` #131313 @ 70%). */

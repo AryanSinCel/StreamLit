@@ -1,4 +1,9 @@
-export type { UseQueryResult } from '../api/types';
+export type {
+  SearchScreenMode,
+  UseQueryResult,
+  UseSearchInput,
+  UseSearchResult,
+} from '../api/types';
 export { useHome } from './useHome';
 export { useMovieDetail } from './useMovieDetail';
 export { useSearch } from './useSearch';

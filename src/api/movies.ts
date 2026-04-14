@@ -11,6 +11,7 @@ import type {
   TmdbGenresListResponse,
   TmdbMovieDetail,
   TmdbPagedMoviesResponse,
+  TmdbPagedSearchMoviesResponse,
 } from './types';
 
 /** Single smoke GET — proves Bearer auth + interceptors; not a feature endpoint. */
@@ -23,6 +24,9 @@ type RequestOpts = {
   signal?: AbortSignal;
 };
 
+/**
+ * `GET /trending/movie/week` — shared by Home (`getHomeData`) and Search default trending block (same TMDB feed; do not duplicate).
+ */
 export async function getTrendingMoviesWeek(
   params?: PaginationParams & RequestOpts,
 ): Promise<TmdbPagedMoviesResponse> {
@@ -83,11 +87,16 @@ export async function getHomeData(opts?: RequestOpts): Promise<HomeData> {
   };
 }
 
+/**
+ * `GET /search/movie` — TMDB movie search by text.
+ * @param query — required `query` query param
+ * @param params.page — optional TMDB page (defaults to `1`); `signal` for cancellation
+ */
 export async function searchMovies(
   query: string,
   params?: PaginationParams & RequestOpts,
-): Promise<TmdbPagedMoviesResponse> {
-  const { data } = await client.get<TmdbPagedMoviesResponse>('/search/movie', {
+): Promise<TmdbPagedSearchMoviesResponse> {
+  const { data } = await client.get<TmdbPagedSearchMoviesResponse>('/search/movie', {
     params: {
       query,
       page: params?.page ?? 1,

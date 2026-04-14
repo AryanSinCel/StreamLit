@@ -24,3 +24,6 @@ export const homeRowCardWidth = 160 as const;
 
 /** Pill-shaped chips (genre strip) — large radius for capsule silhouette. */
 export const radiusFullPill = 100 as const;
+
+/** Search default featured hero — `resources/search.html` 16:9 landscape tile. */
+export const searchFeaturedHeroAspectRatio = 16 / 9;

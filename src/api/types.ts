@@ -1,7 +1,7 @@
 /** Shared types — extend as TMDB endpoints are implemented (feature PSDs). */
 
 /**
- * Standard shape for data hooks (`useHome`, `useSearch`, `useMovieDetail`, …).
+ * Standard shape for data hooks (`useMovieDetail`, …); `useHome` / `useSearch` use composite types.
  * Re-exported from hooks via `../api/types` — single source of truth.
  */
 export interface UseQueryResult<T> {
@@ -24,12 +24,39 @@ export interface TmdbMovieListItem {
   overview?: string | null;
 }
 
-/** Paginated list responses from TMDB (`trending`, `top_rated`, `discover`, `search`, …). */
+/** Paginated list responses from TMDB (`trending`, `top_rated`, `discover`, …). */
 export interface TmdbPagedMoviesResponse {
   page: number;
   total_pages: number;
   total_results: number;
   results: TmdbMovieListItem[];
+}
+
+/**
+ * One row from `GET /search/movie` `results[]`.
+ * TMDB may omit or null optional media/metadata fields; callers should not assume posters or dates exist.
+ */
+export interface TmdbSearchMovieListItem {
+  id: number;
+  title: string | null;
+  original_title?: string | null;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  vote_average: number;
+  vote_count?: number;
+  release_date: string | null;
+  /** TMDB normally includes this; treat a missing key as `[]` when reading raw JSON. */
+  genre_ids?: number[];
+  overview?: string | null;
+  popularity?: number;
+}
+
+/** Paginated payload from `GET /search/movie` (PSD Search results + optional `page`). */
+export interface TmdbPagedSearchMoviesResponse {
+  page: number;
+  total_pages: number;
+  total_results: number;
+  results: TmdbSearchMovieListItem[];
 }
 
 export interface TmdbGenre {
@@ -166,8 +193,52 @@ export interface UseHomeResult {
   loadMoreGenreRail: (key: HomeGenreRailKey) => void;
 }
 
-/** Search tab: paginated movie list for the current query. */
-export type SearchMoviesData = TmdbPagedMoviesResponse;
+/** Search tab: paginated movie list for the current query (`GET /search/movie`). */
+export type SearchMoviesData = TmdbPagedSearchMoviesResponse;
+
+/** Search tab: idle (empty debounced query) vs active TMDB results session. */
+export type SearchScreenMode = 'default' | 'results';
+
+/** Controlled Search input — `setQuery` enables `applyGenreChip` to sync the text field. */
+export interface UseSearchInput {
+  query: string;
+  setQuery?: (value: string) => void;
+}
+
+/**
+ * `useSearch` composite return (PSD-Search §2.2, §7 S3).
+ * Search fetching is debounced; trending loads for default mode; recents hydrate from AsyncStorage.
+ */
+export interface UseSearchResult {
+  /** `default` when debounced query is empty; `results` when a non-empty debounced query is active. */
+  mode: SearchScreenMode;
+  /** Query string driving TMDB search after the 400ms debounce (trim + collapsed whitespace). */
+  debouncedQuery: string;
+  /** Last successful `GET /search/movie` payload for the current debounced query, or null. */
+  data: TmdbPagedSearchMoviesResponse | null;
+  results: TmdbSearchMovieListItem[];
+  totalResults: number;
+  /** True while a debounced or genre-immediate search request is in flight. */
+  loading: boolean;
+  error: string | null;
+  /** Re-runs the current debounced search (e.g. after error). */
+  refetch: () => void;
+  /** `GET /trending/movie/week` page 1 for the default-state trending block. */
+  trending: TmdbPagedMoviesResponse | null;
+  trendingLoading: boolean;
+  trendingError: string | null;
+  refetchTrending: () => void;
+  recentSearches: readonly string[];
+  refreshRecentSearches: () => Promise<void>;
+  clearRecentSearches: () => Promise<void>;
+  /** Last query that completed a successful search (for “N results for ‘…’” copy). */
+  lastSuccessfulQuery: string | null;
+  /**
+   * Genre chip path: updates controlled `query` when `setQuery` is provided, skips debounce,
+   * and runs `GET /search/movie` immediately for the label text.
+   */
+  applyGenreChip: (label: string) => void;
+}
 
 export interface WatchlistItem {
   id: number;
