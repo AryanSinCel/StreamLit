@@ -1,7 +1,8 @@
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useHome } from '../hooks/useHome';
 import type {
   HomeStackParamList,
   RootStackParamList,
@@ -19,14 +20,51 @@ type Props = CompositeScreenProps<
   >
 >;
 
-/** Dev shell: stable TMDB id for stack smoke tests. */
 const TEST_DETAIL_MOVIE_ID = 550;
 
 export function HomeScreen({ navigation }: Props) {
+  const { data, loading, error, refetch } = useHome();
+
   return (
-    <View style={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.scrollContent}
+      style={styles.container}
+    >
       <Text style={styles.title}>Home</Text>
-      <Text style={styles.subtitle}>Placeholder — Task 6 navigation shell.</Text>
+
+      {loading ? (
+        <Text style={styles.muted}>Loading…</Text>
+      ) : null}
+      {error ? (
+        <View style={styles.errorBlock}>
+          <Text style={styles.errorText}>{error}</Text>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Retry loading home data"
+            onPress={refetch}
+            style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
+          >
+            <Text style={styles.buttonLabel}>Try again</Text>
+          </Pressable>
+        </View>
+      ) : null}
+
+      {data ? (
+        <View style={styles.dataBlock}>
+          <Text style={styles.body}>
+            Trending (sample):{' '}
+            {data.trending.results[0]?.title ?? '—'}
+          </Text>
+          <Text style={styles.body}>
+            Top rated (sample):{' '}
+            {data.topRated.results[0]?.title ?? '—'}
+          </Text>
+          <Text style={styles.body}>
+            Genres: {String(data.genres.length)} loaded
+          </Text>
+        </View>
+      ) : null}
+
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="Open detail with test movie id"
@@ -39,7 +77,7 @@ export function HomeScreen({ navigation }: Props) {
           Open Detail (movieId {String(TEST_DETAIL_MOVIE_ID)})
         </Text>
       </Pressable>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -47,6 +85,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.surface,
+  },
+  scrollContent: {
     padding: spacing.lg,
     gap: spacing.md,
   },
@@ -54,9 +94,23 @@ const styles = StyleSheet.create({
     ...typography['title-lg'],
     color: colors.on_surface,
   },
-  subtitle: {
+  muted: {
     ...typography['body-md'],
     color: colors.on_surface_variant,
+  },
+  body: {
+    ...typography['body-md'],
+    color: colors.on_surface,
+  },
+  dataBlock: {
+    gap: spacing.sm,
+  },
+  errorBlock: {
+    gap: spacing.sm,
+  },
+  errorText: {
+    ...typography['body-md'],
+    color: colors.primary_container,
   },
   button: {
     alignSelf: 'flex-start',

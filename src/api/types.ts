@@ -1,11 +1,68 @@
 /** Shared types — extend as TMDB endpoints are implemented (feature PSDs). */
 
+/**
+ * Standard shape for data hooks (`useHome`, `useSearch`, `useMovieDetail`, …).
+ * Re-exported from hooks via `../api/types` — single source of truth.
+ */
 export interface UseQueryResult<T> {
   data: T | null;
   loading: boolean;
   error: string | null;
   refetch: () => void;
 }
+
+/** TMDB movie row in list endpoints (trending, top_rated, discover, search). */
+export interface TmdbMovieListItem {
+  id: number;
+  title: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  vote_average: number;
+  release_date: string;
+  genre_ids: number[];
+}
+
+export interface TmdbPagedMoviesResponse {
+  page: number;
+  total_pages: number;
+  results: TmdbMovieListItem[];
+}
+
+export interface TmdbGenre {
+  id: number;
+  name: string;
+}
+
+export interface TmdbGenresListResponse {
+  genres: TmdbGenre[];
+}
+
+export interface TmdbMovieGenre {
+  id: number;
+  name: string;
+}
+
+/** `GET /movie/{id}` — detail payload used by `useMovieDetail`. */
+export interface TmdbMovieDetail {
+  id: number;
+  title: string;
+  backdrop_path: string | null;
+  vote_average: number;
+  release_date: string;
+  genres: TmdbMovieGenre[];
+  runtime: number | null;
+  overview: string | null;
+}
+
+/** Aggregated Home tab payload (trending + top rated + genres). */
+export interface HomeData {
+  trending: TmdbPagedMoviesResponse;
+  topRated: TmdbPagedMoviesResponse;
+  genres: TmdbGenre[];
+}
+
+/** Search tab: paginated movie list for the current query. */
+export type SearchMoviesData = TmdbPagedMoviesResponse;
 
 export interface WatchlistItem {
   id: number;

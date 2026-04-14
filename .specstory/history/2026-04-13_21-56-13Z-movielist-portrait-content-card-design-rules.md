@@ -2159,3 +2159,2233 @@ _**Agent (composer-2-fast)**_
 <summary>Tool use: **read_file_v2**</summary>
 
 </details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "watchlistStore"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "watchlistStore",
+  "topFiles": [
+    {
+      "matchCount": 4,
+      "uri": ".specstory/history/2026-04-13_21-56-13Z-movielist-portrait-content-card-design-rules.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": "docs/PSD-Watchlist.md"
+    },
+    {
+      "matchCount": 7,
+      "uri": ".specstory/history/2026-04-13_20-08-14Z-cursor-rules-for-movielist.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "docs/PSD-Detail.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": "docs/PSD-Architecture.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/store/watchlistStore.ts"
+    }
+  ],
+  "totalFiles": 6,
+  "totalMatches": 19
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{ts,tsx}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "watchlistStoreStub|watchlistStore"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "watchlistStoreStub|watchlistStore",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/store/watchlistStore.ts"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Exporting store types**
+
+I'm exporting the hook as `useWatchlistStore` and type `WatchlistStore` from the store file. I'm adding the `count` property to the `WatchlistStore` type as per the contract. I'm exposing `count` as a derived value in the WatchlistStore slice. 
+
+**Implementing count getter**
+
+I'm implementing `count` as a getter on the store object using zustand's subscribe mechanism. I'm computing count directly in the store slice using Zustand's get() function. 
+
+**Checking getter implementation**
+
+I'm verifying if Zustand's plain object state supports getters for computed properties like `count`. I'm testing if Zustand supports getters in plain object state by creating a derived selector for `count`. 
+
+**Implementing getter**
+
+I'm implementing a getter for `count` on the returned object from createStore to satisfy the interface requirement. 
+
+**Handling getters**
+
+I'll use a computed selector for count instead of a getter to avoid issues with Zustand persist. I'm adding `count` as a derived field that updates with items instead of using a computed selector. I'm ensuring `count` syncs on rehydrate by deriving it from `items` in `onRehydrateStorage`. I'm switching to partialize to only persist `items` and let `merge` handle syncing `count` on rehydrate. I'm persisting only `items` and computing `count` from `items` in a getter, but Zustand persist may not support getters. 
+
+I'm switching from a computed `count` getter to an explicit `count` property maintained in sync with `items`. I'm adding `count` to the persisted state to avoid sync issues on rehydration. 
+
+I'm using the persist API's `onRehydrateStorage` to set `count` and `hydrated` flags after rehydration. I'm handling rehydration errors in Zustand persist by setting empty state and hydrated flag when errors occur. I'm implementing error handling for Zustand persist rehydration by setting empty state when errors occur. I'm fixing the rehydration logic to properly set `count` from items length after successful merge. I'm updating the merge function to sync count with items length during rehydration. I'm simplifying state persistence by deriving count from items on save and using partialize for rehydration. 
+
+I'm setting count and hydrated flag together after rehydration since items are already in store. I'm handling the case where hydration completes with empty persisted state by ensuring hydrated flag is set correctly. I'm refactoring the store to use the `set` function from the closure in the `create()` function for consistent state updates. I'm implementing rehydration logic to handle storage errors during watchlist state restoration. I'm checking the zustand persist callback signature to ensure `set` is correctly bound during rehydration. I'm adjusting the rehydration order to ensure `onRehydrateStorage` runs after merge with proper error handling. 
+
+**Adding tests**
+
+I'm adding unit tests for the watchlist store using AsyncStorage mock. I'm running npm test to verify the watchlist store tests and exporting the WatchlistStore type and useWatchlistStore hook. I'm removing the stub watchlistStoreStub and adding unit tests with jest mocking AsyncStorage. 
+
+**Updating zustand version**
+
+I'm updating the zustand version to 4.x or 5.x and using `createJSONStorage` from 'zustand/middleware' for AsyncStorage integration. I'm implementing the persist middleware with proper generic typing for the watchlist store. I'm adding the persist middleware configuration with AsyncStorage for the watchlist store. I'm fixing the `onRehydrateStorage` callback to use `useWatchlistStore.setState` instead of the persist's internal `set`. I'm using `getState` from the store instead of `useWatchlistStore` directly in the callback to avoid closure issues. I'm refactoring the storage hydration logic to properly handle state updates with error handling. 
+
+I'm implementing the new `onRehydrateStorage` callback pattern to handle hydration errors and set the hydrated state. I'm refactoring the store creation to use the new `create` API with proper `getState`/`setState` access. 
+
+I'm fixing the Zustand store initialization to properly handle `setState` within the persist middleware. I found that `onFinishHydration` from zustand's persist API is the correct callback to use instead of `onRehydrateStorage`. 
+
+I discovered that zustand v4.5+ changes the `onRehydrateStorage` signature to `(context) => (state, error) => void` where context includes `setState`. I'm refactoring the `onRehydrateStorage` callback to match zustand v4.5+ signature using `(context) => (state, error) => void`. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+Implementing the Zustand persist store and installing dependencies.
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm install zustand @react-native-async-storage/async-storage</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm install zustand @react-native-async-storage/async-storage
+```
+
+```
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'MovieList@0.0.1',
+npm warn EBADENGINE   required: { node: '&gt;= 22.11.0' },
+npm warn EBADENGINE   current: { node: 'v20.19.5', npm: '10.8.2' }
+npm warn EBADENGINE }
+
+added 4 packages, and audited 901 packages in 4s
+
+170 packages are looking for funding
+  run &#96;npm fund&#96; for details
+
+found 0 vulnerabilities
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing watchlist store**
+
+I'm implementing watchlistStore.ts with the store variable pattern for onRehydrateStorage and verifying that `persist` with `partialize` only `items` merges correctly into the full state during rehydration. I'm checking zustand 4 documentation for correct `onRehydrateStorage` syntax to ensure proper hydration handling. I'm implementing the `onRehydrateStorage` handler to manage state hydration errors by resetting to initial state when corruption occurs. I'm verifying the persist middleware setup and ensuring WatchlistStore includes the full state shape with methods for zustand 4 compatibility. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.ts",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand",
+  "pattern": "onRehydrateStorage|persist"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand",
+  "pattern": "onRehydrateStorage|persist",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand/middleware** (0 files)
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand** (0 files)
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand/package.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand/middleware.d.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand/middleware/persist.d.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling rehydration**
+
+I'm implementing the rehydration logic to handle both success and error cases in the storage callback. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand/index.d.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand/react.d.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing store**
+
+I'm implementing the store with `create<T>()(persist(...))` and using the `store` variable for `onRehydrateStorage`. 
+
+**Testing store logic**
+
+I'm adding Jest tests with AsyncStorage mock to verify store rehydration behavior. I'm simplifying tests to focus on logic using `getState()` and `persist` helpers instead of full rehydration. I'm awaiting `persist.rehydrate()` and checking `hydrated === true` in tests. I'm importing Zustand middleware and defining the watchlist store interface. I'm implementing the removeItem function for the watchlist store. 
+
+I'm adding a check to ensure items exist before removing them from the watchlist. 
+
+**Fixing TDZ issue**
+
+I'm fixing the temporal dead zone issue where useWatchlistStore was referenced before assignment in onRehydrateStorage. The `useWatchlistStore` reference in `onRehydrateStorage` is safe because it's closed over after `create` completes and the variable is fully defined. The persist middleware might run `onRehydrateStorage` callback synchronously during `create`, which could cause issues if `useWatchlistStore` isn't assigned yet. I'm using a `store` variable to avoid TDZ errors when calling rehydration synchronously. I'm implementing a two-step initialization to resolve the TDZ issue with store rehydration. I'm addressing the TDZ issue by restructuring the store initialization to ensure proper hydration order. 
+
+**Checking persist behavior**
+
+I'm investigating whether zustand persist calls `onRehydrateStorage` synchronously during `create` or asynchronously. I'm using the `set` function from `onRehydrateStorage`'s first parameter to safely update state during rehydration. I need to use `setState` from the store after creation to properly handle rehydration instead of relying on the persist middleware's `finalState`. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+Implementing the store using a `store` reference so `onRehydrateStorage` can call `setState` safely after `create` returns.
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/store/watchlistStore.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing circular reference**
+
+I'm addressing the circular reference issue where `useWatchlistStore` is accessed before `create` completes during `persist` initialization. The circular reference bug occurs because `onRehydrateStorage` closure captures `useWatchlistStore` before it's fully initialized. The closure captures `useWatchlistStore` binding correctly, as JS allows referencing uninitialized bindings in closures that execute later. 
+
+**Avoiding TDZ**
+
+I'm switching to the store pattern to avoid temporal dead zone issues with synchronous persist calls. I'm using `onRehydrateStorage` to safely access the initial state during rehydration. 
+
+**Running tests**
+
+I'm running tsc and jest to catch any TDZ issues before proceeding. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+File not found
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand/middleware** (0 files)
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.js",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand",
+  "pattern": "onRehydrateStorage"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand",
+  "pattern": "onRehydrateStorage",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand",
+  "pattern": "onRehydrateStorage"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand",
+  "pattern": "onRehydrateStorage",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand/middleware.js</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand/middleware.js",
+  "pattern": "rehydrat|onRehydrate"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand/middleware.js",
+  "pattern": "rehydrat|onRehydrate",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand** (0 files)
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/node_modules/zustand/middleware.js</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling rehydration errors**
+
+I'm implementing the rehydration callback to handle both success and error cases with the correct parameter order. I'm updating the rehydration callback to correctly handle error cases and ensure state is set after merging. 
+
+I'm fixing the bug where `api.setState` was overwritten to also call `setItem`, causing every setState to persist unnecessarily. I'm addressing the issue where partialize only saves `items` but merge retains other fields from initial state, causing `hydrated` to remain `false`. I'm handling the rehydration error by ensuring `count` and `hydrated` are set correctly in the callback regardless of whether state is merged or not. I'm ensuring `postRehydrationCallback` is called synchronously to avoid TDZ issues with `useWatchlistStore` assignment. I confirmed the microtask order ensures `useWatchlistStore` assignment completes before `postRehydrationCallback` runs. I identified that `postRehydrationCallback` is assigned but not invoked until later, confirming TDZ safety. 
+
+I confirmed that `hydrated: true` persists `items` via partialize, and `hydrated: false` behavior is preserved during persist merge. I'm adding tests for the rehydration logic to ensure proper handling of async storage operations. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/__tests__/watchlistStore.test.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+FAIL __tests__/watchlistStore.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@react-native-async-storage/async-storage/jest/async-storage-mock' from '__tests__/watchlistStore.test.ts'
+
+       8 | jest.mock('@react-native-async-storage/async-storage', () =&gt;
+       9 |   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+    &gt; 10 | );
+         |  ^
+      11 |
+      12 | const sampleItem = {
+      13 |   id: 1,
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at __tests__/watchlistStore.test.ts:10:2
+      at Object.require (__tests__/watchlistStore.test.ts:5:1)
+
+PASS __tests__/App.test.tsx
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        0.926 s, estimated 1 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/node_modules/@react-native-async-storage/async-storage/package.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+Incorrect tool arguments
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/node_modules/@react-native-async-storage/async-storage/lib/module/jest/AsyncStorageMock.js</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/node_modules/@react-native-async-storage/async-storage/lib/module/jest/AsyncStorageMock.js</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/__tests__/watchlistStore.test.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/App.test.tsx
+FAIL __tests__/watchlistStore.test.ts
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    /Users/aryansingh/Desktop/Task2/MovieList/node_modules/@react-native-async-storage/async-storage/lib/module/jest/AsyncStorageMock.js:38
+    export function createAsyncStorage(databaseName) {
+    ^^^^^^
+
+    SyntaxError: Unexpected token 'export'
+
+       8 | jest.mock('@react-native-async-storage/async-storage', () =&gt;
+       9 |   require('@react-native-async-storage/async-storage/jest').default,
+    &gt; 10 | );
+         |  ^
+      11 |
+      12 | const sampleItem = {
+      13 |   id: 1,
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1505:14)
+      at __tests__/watchlistStore.test.ts:10:2
+      at Object.require (__tests__/watchlistStore.test.ts:5:1)
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        0.779 s, estimated 1 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/__tests__/watchlistStore.test.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/__tests__/watchlistStore.test.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Removing unused import**
+
+I'm removing the unused AsyncStorage import since we now use memory.clear() in beforeEach. 
+
+**Handling mock initialization**
+
+I need to ensure `memory` is initialized before the mock factory runs, likely by declaring it at module level. I'm moving the `Map` declaration inside the mock factory to ensure proper initialization order. I'm exporting the mock memory instance to ensure consistent reference across tests. 
+
+I'm refactoring the mock storage to use `AsyncStorage` for cleaner implementation. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/__tests__/watchlistStore.test.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/__tests__/watchlistStore.test.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/App.test.tsx
+PASS __tests__/watchlistStore.test.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        0.798 s, estimated 1 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Checking persist middleware**
+
+I confirmed that `api.setState` in persist always calls `setItem`, so `setState` in `onRehydrateStorage` will persist correctly without infinite loop. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/store/watchlistStore.ts",
+    "/Users/aryansingh/Desktop/Task2/MovieList/__tests__/watchlistStore.test.ts"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/store/watchlistStore.ts"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/__tests__/watchlistStore.test.ts"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+### Files changed
+| File | Change |
+|------|--------|
+| **`package.json`** / **`package-lock.json`** | Added **`zustand`** and **`@react-native-async-storage/async-storage`**. |
+| **`src/store/watchlistStore.ts`** | Replaced stub with **`create` + `persist` + `createJSONStorage(() => AsyncStorage)`**, persist name **`movielist-watchlist`**, **`partialize`** → `{ items }`, **`onRehydrateStorage`** sets **`count`** from **`items.length`**, **`hydrated: true`**, or on error **`items: []`**, **`count: 0`**, **`hydrated: true`** (comment in file). **`addItem`** skips duplicate **`id`**; **`removeItem`** is a no-op if missing; **`isInWatchlist`** reads **`items`**. Exported **`useWatchlistStore`** and **`WatchlistStore`** / **`WatchlistItem`**. |
+| **`__tests__/watchlistStore.test.ts`** | New tests for add / duplicate / remove / **`isInWatchlist`** / **`hydrated`** after rehydrate (in-memory AsyncStorage mock). |
+
+**`WatchlistItem`** remains defined in **`src/api/types.ts`** (unchanged); the store imports it from there.
+
+### How it was tested
+- **`npx tsc --noEmit`** — pass  
+- **`npm run lint`** — pass  
+- **`npm test`** — pass (App + watchlistStore tests)  
+
+**Manual checks you can run (device/simulator):**  
+1. **Add** — call **`addItem`** (or wire a temporary button later); confirm **`count`** and **`items`**.  
+2. **Remove** — **`removeItem`**, relaunch app → items stay cleared only if you removed all (persist writes on each change).  
+3. **Relaunch** — after adding items, kill and reopen → list should reload from storage; **`hydrated`** should become **`true`** after rehydration (UI should not treat watchlist as final until then).  
+
+**iOS:** run **`cd ios && pod install`** once so **`@react-native-async-storage/async-storage`** native code is linked.
+
+---
+
+_**User**_
+
+# TMDB API reference (MovieList)
+
+**Base URL:** `https://api.themoviedb.org/3`
+
+All requests use `Authorization: Bearer {TMDB_ACCESS_TOKEN}` from the central Axios client (`src/api/client.ts`) — not per-call headers in `movies.ts` beyond the shared client.
+
+## Endpoints
+
+| Endpoint | Used In | Key Response Fields |
+|---|---|---|
+| `GET /trending/movie/week` | Home hero + Trending row | `results[].id`, `title`, `poster_path`, `backdrop_path`, `vote_average`, `release_date`, `genre_ids` |
+| `GET /movie/top_rated` | Home Top Rated row | Same as above |
+| `GET /genre/movie/list` | Genre filter chips | `genres[].id`, `genres[].name` |
+| `GET /discover/movie?with_genres={id}` | Home genre row | Same as trending |
+| `GET /search/movie?query={q}` | Search results | `results[].id`, `title`, `poster_path`, `vote_average`, `release_date`, `genre_ids` |
+| `GET /movie/{id}` | Detail main info | `title`, `backdrop_path`, `vote_average`, `release_date`, `genres[]`, `runtime`, `overview` |
+| `GET /movie/{id}/credits` | Detail cast | `cast[].name`, `cast[].character`, `cast[].profile_path` |
+| `GET /movie/{id}/similar` | Detail similar + Watchlist row | `results[].id`, `title`, `poster_path` |
+
+## Image URLs
+
+TMDB returns paths, not full URLs:
+
+`https://image.tmdb.org/t/p/{size}{path}`
+
+| Size | Use Case |
+|---|---|
+| `w185` | Cast avatars, small thumbnails |
+| `w342` | Standard portrait content cards |
+| `w780` | Detail screen backdrop |
+
+`src/utils/image.ts`: if `path` is `null` or empty, return `null` (never a broken URL).
+
+## Pagination
+
+Use `page` (default 1). Up to 20 results per page; use `total_pages`. Load the next page when the user scrolls within **3** items of the row end.
+
+## Discover on your own
+
+- Filtering `/credits` to top-billed cast  
+- Parsing `release_date` / year  
+- `genre_ids` on lists vs `genres` on detail   
+
+---
+
+_**Agent (composer-2-fast)**_
+
+
+You’ve captured a solid TMDB contract for MovieList: **one Bearer client**, **paths → `image.ts`**, **pagination** with `page` / `total_pages`, and **which endpoints** back Home / Search / Detail.
+
+What should we do with it next?
+
+- **Implement** — add DTOs in `src/api/types.ts`, functions in `src/api/movies.ts` (via `client` only), and align `src/utils/image.ts` sizes (`w185` / `w342` / `w780`).
+- **Document** — add a file under `docs/` (e.g. `docs/TMDB-API-Reference.md`) with this content (only if you want that file in the repo).
+- **Something else** — e.g. hooks only, or Home row only.
+
+Reply with the scope you want (and whether to add the markdown file), or switch to Agent mode if you want the implementation applied in the codebase.
+
+---
+
+_**User**_
+
+add this in doc as docs/API-Reference.md
+
+---
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/docs/API-Reference.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+Created **`docs/API-Reference.md`** with the TMDB base URL, endpoint table, image sizes, pagination notes, and the “discover on your own” bullets you provided.
+
+---
+
+_**User**_
+
+## Session — 2026-04-14
+
+Goal: PSD-Architecture §16 Task 8 — data layer wiring only: implement `useHome`, `useSearch`, and `useMovieDetail` under `src/hooks/` returning `{ data, loading, error, refetch }` for each; update Home, Search, and Detail screens to use those hooks for TMDB-backed data and remove any direct HTTP or `movies.ts` usage from screens.
+
+Context: docs/PSD-Architecture.md (§10, §16 Task 8); rules/hooks.mdc; rules/movielist-project.mdc; rules/code-quality.mdc
+
+---
+
+Requirements
+
+1. Export a shared `UseQueryResult<T>` type: `data: T | null`, `loading: boolean`, `error: string | null`, `refetch: () => void`.
+
+2. Implement:
+   - `useHome.ts` — `useHome()`
+   - `useSearch.ts` — `useSearch(query: string)` (debounce/cancellation out of scope)
+   - `useMovieDetail.ts` — `useMovieDetail(movieId: number)` or include `mediaType` if your types already distinguish movie vs TV
+
+   Hooks call only `src/api/movies.ts`. No axios outside `src/api/`. No navigation inside hooks. Stubbed or partial `movies.ts` is fine if endpoints are not ready.
+
+3. Loading lifecycle: start with a sensible initial state; set `loading` around async work; map failures to `error: string`; `refetch` repeats the load. Cancel or ignore updates after unmount / stale async where `query` or `movieId` changes.
+
+4. Screens `HomeScreen`, `SearchScreen`, `DetailScreen`: compose UI from hook outputs only for remote data. No imports of `axios`, `client.ts`, or `movies.ts` from screen files.
+
+5. TypeScript strict, no `any`; extend `src/api/types.ts` as needed.
+
+Out of scope: Full PSD UI, Promise.allSettled on Detail, search debounce, new dependencies, extra indirection libraries.
+
+Verify: Build passes; screens do not import API client or movies module; hooks match the four-field contract.
+
+Deliverable: List files touched and brief manual test notes.
+
+---
+
+_**Agent (composer-2-fast)**_
+
+
+Implementing Task 8: reading the codebase and wiring hooks, `movies.ts`, and screens.
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useMovieDetail.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/movies.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/client.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/docs/API-Reference.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Adding TMDB types**
+
+I'm adding TMDB DTO types for movie lists, genres, details, credits, and similar movies. 
+
+**Defining home data structure**
+
+I'm defining a `HomeData` type for the home screen with trending, top-rated, and genres data. I'm implementing movie data fetching functions including top-rated movies, genres, and search capabilities. 
+
+**Implementing movie detail fetch**
+
+I'm implementing useMovieDetail to fetch movie details with a simple GET /movie/{id} request to minimize scope. I'm using Promise.all to fetch movie detail and credits together, since the API reference indicates credits are out of scope for allSettled but detail is required. I'm implementing movie detail fetch with Promise.all for concurrent requests, but will fallback to single fetch for better error handling. 
+
+I'm simplifying the movie detail fetch to use `GET /movie/{id}` directly instead of fetching all data in parallel. I'm implementing stale cancellation with AbortController in useEffect to prevent race conditions. 
+
+I'm adding AbortController to handle stale cancellation in the movie detail fetch. 
+
+**Adding abort controller support**
+
+I'm passing AbortSignal through to the client.get call in movies.ts functions. I'm separating signal and page params in the client.get call and updating types.ts with new movie-related interfaces. I'm defining precise types for movie interfaces in types.ts. I'm adding optional fields to the movie types for flexibility. 
+
+**Exporting UseQueryResult**
+
+I'm exporting UseQueryResult from src/api/types.ts as the primary source. 
+
+**Stabilizing refetch logic**
+
+I'm stabilizing the refetch logic to ensure consistent load behavior. I'm handling errors in the refetch logic to prevent unhandled exceptions during data fetching. I'm implementing a reload key state to properly trigger refetches without duplicating logic. I'm adding error handling to the API client using a dedicated error mapping function. I'm implementing abort error handling in the API client using `axios.isCancel`. I'm updating the cancel error handling to use `CanceledError` with code `ERR_CANCELED` instead of `axios.isCancel`. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+Implementing TMDB types, `movies.ts` functions, the three hooks (with abort + stale guards), and updating the three screens.
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Writing error utilities**
+
+I'm creating src/utils/errors.ts with minimal error mapping helpers for API hooks. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/mapUnknownError.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/movies.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useMovieDetail.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing search hook**
+
+I'm fixing the useSearch hook's dependency array to handle trimmed state changes correctly. I'm adding exponential backoff to the retry logic in the search hook. 
+
+**Exporting shared types**
+
+I'm creating a barrel file to export shared types including `UseQueryResult`. 
+
+**Implementing screens**
+
+I'm implementing SearchScreen with TextInput and useSearch hook, plus DetailScreen with useMovieDetail. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/index.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling home edge cases**
+
+The edge case of `!loading && !error && !data` for Home component likely never occurs since `getHomeData` always returns an object, even if trending data is empty. I confirmed that `data` is never null after successful API calls, so the `!loading && !error && !data` edge case for Home is unreachable. I confirmed that `!loading && !error && !data` is unreachable after successful API calls. 
+
+I confirmed the 'No data' branch is unreachable under normal conditions. 
+
+**Removing dead branch**
+
+I'm removing the unreachable 'No data' branch from HomeScreen since it's redundant. I'm removing the redundant 'No detail data' branch from HomeScreen. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts
+  38:5  warning  Expected 'undefined' and instead saw 'void'  no-void
+
+/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useMovieDetail.ts
+  45:5  warning  Expected 'undefined' and instead saw 'void'  no-void
+
+/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts
+  49:5  warning  Expected 'undefined' and instead saw 'void'  no-void
+
+✖ 3 problems (0 errors, 3 warnings)
+
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/App.test.tsx
+PASS __tests__/watchlistStore.test.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        1.208 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing eslint warnings**
+
+I'm replacing `void load()` with `load().catch(() => {})` to comply with the `no-void` eslint rule. I'm using `load().catch(() => {})` to handle the floating promise and satisfy eslint's no-void rule. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useMovieDetail.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Removing exports**
+
+I'm removing duplicate type exports from movies.ts to reduce noise. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/movies.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens",
+  "pattern": "axios|from ['\\\"].*client|from ['\\\"].*movies"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens",
+  "pattern": "axios|from ['\\\"].*client|from ['\\\"].*movies",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        1.392 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling search reload**
+
+I'm ensuring `reloadKey` doesn't cause issues when clearing search queries. </details></think>
+
+_**Agent (composer-2-fast)**_
+
+
+### Files touched
+
+| File | Purpose |
+|------|--------|
+| **`src/api/types.ts`** | TMDB DTOs (`TmdbMovieListItem`, `TmdbPagedMoviesResponse`, genres, `TmdbMovieDetail`, `HomeData`, `SearchMoviesData` alias). **`UseQueryResult<T>`** documented as the shared hook contract. |
+| **`src/api/movies.ts`** | `getTrendingMoviesWeek`, `getTopRatedMovies`, `getMovieGenres`, **`getHomeData`** (parallel bundle), `searchMovies`, `getMovieDetail`; keeps **`getConfigurationSmoke`**. All use **`client`** only. |
+| **`src/utils/mapUnknownError.ts`** | Maps **`ApiError`** / unknown errors to **`string`** for hook `error`. |
+| **`src/hooks/useHome.ts`** | **`useHome()`** → `UseQueryResult<HomeData>`; **`AbortController`** + stale guard; **`refetch`** via reload key. |
+| **`src/hooks/useSearch.ts`** | **`useSearch(query: string)`** → `UseQueryResult<SearchMoviesData>`; empty query → no request, `data` null; abort + stale guard; **`refetch`**. |
+| **`src/hooks/useMovieDetail.ts`** | **`useMovieDetail(movieId)`** → `UseQueryResult<TmdbMovieDetail>`; invalid id → no fetch; abort + stale guard; **`refetch`**. |
+| **`src/hooks/index.ts`** | Re-exports **`UseQueryResult`** and the three hooks. |
+| **`src/screens/HomeScreen.tsx`** | Uses **`useHome`** only for remote data; loading / error + Try again / sample lines + existing Detail test navigation. |
+| **`src/screens/SearchScreen.tsx`** | Local **`TextInput`** query + **`useSearch(query)`**; loading / error / first titles; test Detail button. |
+| **`src/screens/DetailScreen.tsx`** | **`useMovieDetail(movieId)`**; title, rating, runtime, overview; Try again. |
+
+### Contract
+
+- **`UseQueryResult<T>`**: `data`, `loading`, `error`, `refetch` — defined in **`src/api/types.ts`**, also exported from **`src/hooks/index.ts`**.
+- Screens import **`../hooks/...`** only for TMDB data (verified: no **`axios`**, **`client`**, or **`movies`** in **`src/screens/`**).
+
+### Verify (automated)
+
+- **`npx tsc --noEmit`** — pass  
+- **`npm run lint`** — pass  
+- **`npm test`** — pass  
+
+### Manual checks (with valid **`.env`** / TMDB token)
+
+1. **Home** — Open app → “Loading…” then sample trending / top-rated titles and genre count; **Try again** after a forced error (e.g. airplane mode).  
+2. **Search** — Enter e.g. `matrix` → results count and a few titles; clear field → hint text, no search request.  
+3. **Detail** — Open a movie from Search/Home test buttons → title and overview from API; change network / **Try again** as needed.  
+4. **Stale navigation** — On Search, type quickly or switch tabs; in-flight requests should abort without overwriting newer results.
+
+---
+
+_**User**_
+
+## Session — 2026-04-14
+
+Goal: PSD-Architecture §16 Task 9 — finalize **app entry**: a single root that wraps **`NavigationContainer`**, renders **`RootNavigator`**, and integrates required providers so the shell runs cleanly on iOS and Android. Fix any duplicate containers, wrong provider order, or missing peers (safe area, gesture handler) left from earlier tasks.
+
+Context: docs/PSD-Architecture.md (§16 Task 9), rules/movielist-project.mdc, rules/navigation.mdc
+
+---
+
+Requirements
+
+1. **Single entry tree** — Typically `App.tsx` (or the file `index.js` registers): wrap the app once with:
+   - `NavigationContainer` + your existing `RootNavigator`
+   - `SafeAreaProvider` (if not already above navigation)
+   - `GestureHandlerRootView` if your React Navigation / RN template expects it at the root
+
+2. **No duplicates** — Only one `NavigationContainer`. Remove or merge any second wrapper from experiments.
+
+3. **Integration** — App launches without red screen; tab + stack navigation still works after refactors. Fonts/theme loaders: if Manrope/Inter are loaded at root, keep that order before screens that use them.
+
+4. **Strict TypeScript** — Entry file typed; no `any`.
+
+Out of scope: PSD-Home/Search/Detail/Watchlist feature UI, new TMDB endpoints, hook logic changes unless required to fix a broken import.
+
+Verify: Cold start on simulator/emulator; navigate tabs and push Detail; no navigation warnings about missing container.
+
+Deliverable: Short list of files changed + what you smoke-tested.
+
+---
+
+_**Agent (composer-2-fast)**_
+
+
+
+
+
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/App.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/index.js</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2-fast)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts,jsx,js}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "NavigationContainer|SafeAreaProvider|GestureHandlerRootView"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "NavigationContainer|SafeAreaProvider|GestureHandlerRootView",
+  "topFiles": [
+    {
+      "matchCount": 6,
+      "uri": "App.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 6
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>

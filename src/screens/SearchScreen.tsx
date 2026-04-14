@@ -1,7 +1,16 @@
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { useSearch } from '../hooks/useSearch';
 import type {
   RootStackParamList,
   RootTabParamList,
@@ -22,10 +31,65 @@ type Props = CompositeScreenProps<
 const TEST_DETAIL_MOVIE_ID = 27205;
 
 export function SearchScreen({ navigation }: Props) {
+  const [query, setQuery] = useState('');
+  const { data, loading, error, refetch } = useSearch(query);
+
+  const previewTitles = data?.results.slice(0, 5) ?? [];
+
   return (
-    <View style={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.scrollContent}
+      keyboardShouldPersistTaps="handled"
+      style={styles.container}
+    >
       <Text style={styles.title}>Search</Text>
-      <Text style={styles.subtitle}>Placeholder — Task 6 navigation shell.</Text>
+
+      <TextInput
+        accessibilityLabel="Search movies"
+        autoCapitalize="none"
+        autoCorrect={false}
+        onChangeText={setQuery}
+        placeholder="Search movies"
+        placeholderTextColor={colors.on_surface_variant}
+        style={styles.input}
+        value={query}
+      />
+
+      {query.trim().length === 0 ? (
+        <Text style={styles.muted}>Type a query to search TMDB.</Text>
+      ) : null}
+
+      {query.trim().length > 0 && loading ? (
+        <Text style={styles.muted}>Loading…</Text>
+      ) : null}
+      {error ? (
+        <View style={styles.errorBlock}>
+          <Text style={styles.errorText}>{error}</Text>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Retry search"
+            onPress={refetch}
+            style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
+          >
+            <Text style={styles.buttonLabel}>Try again</Text>
+          </Pressable>
+        </View>
+      ) : null}
+
+      {data && query.trim().length > 0 && !loading && !error ? (
+        <View style={styles.dataBlock}>
+          <Text style={styles.body}>
+            Page {String(data.page)} / {String(data.total_pages)} —{' '}
+            {String(data.results.length)} on this page
+          </Text>
+          {previewTitles.map((m) => (
+            <Text key={m.id} style={styles.body}>
+              {m.title}
+            </Text>
+          ))}
+        </View>
+      ) : null}
+
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="Open detail with test movie id"
@@ -38,7 +102,7 @@ export function SearchScreen({ navigation }: Props) {
           Open Detail (movieId {String(TEST_DETAIL_MOVIE_ID)})
         </Text>
       </Pressable>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -46,6 +110,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.surface,
+  },
+  scrollContent: {
     padding: spacing.lg,
     gap: spacing.md,
   },
@@ -53,9 +119,31 @@ const styles = StyleSheet.create({
     ...typography['title-lg'],
     color: colors.on_surface,
   },
-  subtitle: {
+  input: {
+    ...typography['body-md'],
+    color: colors.on_surface,
+    backgroundColor: colors.surface_container,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: spacing.sm,
+  },
+  muted: {
     ...typography['body-md'],
     color: colors.on_surface_variant,
+  },
+  body: {
+    ...typography['body-md'],
+    color: colors.on_surface,
+  },
+  dataBlock: {
+    gap: spacing.xs,
+  },
+  errorBlock: {
+    gap: spacing.sm,
+  },
+  errorText: {
+    ...typography['body-md'],
+    color: colors.primary_container,
   },
   button: {
     alignSelf: 'flex-start',
