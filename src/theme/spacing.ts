@@ -22,6 +22,12 @@ export const radiusCardInner = 12 as const;
 export const homeHeroHeight = 450 as const;
 export const homeRowCardWidth = 160 as const;
 
+/** Detail hero backdrop strip — `docs/PSD-Detail.md` §4 (~220px). */
+export const detailHeroHeight = 220 as const;
+
+/** Cast avatar diameter — PSD-Detail §4. */
+export const detailCastAvatarSize = 60 as const;
+
 /** Pill-shaped chips (genre strip) — large radius for capsule silhouette. */
 export const radiusFullPill = 100 as const;
 

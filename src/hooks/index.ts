@@ -1,5 +1,6 @@
 export type {
   SearchScreenMode,
+  UseMovieDetailResult,
   UseQueryResult,
   UseSearchInput,
   UseSearchResult,

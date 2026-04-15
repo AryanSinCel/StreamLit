@@ -41,6 +41,12 @@ const PATH_PLAY =
 const PATH_STAR =
   'm323-205 157-94 157 95-42-178 138-120-182-16-71-168-71 167-182 16 138 120-42 178Zm157-24L294-117q-8 5-17 4.5t-16-5.5q-7-5-10.5-13t-1.5-18l49-212-164-143q-8-7-9.5-15.5t.5-16.5q2-8 9-13.5t17-6.5l217-19 84-200q4-9 12-13.5t16-4.5q8 0 16 4.5t12 13.5l84 200 217 19q10 1 17 6.5t9 13.5q2 8 .5 16.5T826-504L662-361l49 212q2 10-1.5 18T699-118q-7 5-16 5.5t-17-4.5L480-229Zm0-206Z';
 
+const PATH_ARROW_BACK =
+  'M400-240 160-480l240-240 56 57-144 143h487v80H312l144 143-56 57Z';
+
+const PATH_SHARE =
+  'M720-80q-50 0-85-35t-35-85q0-6 3-54L322-392q-12 20-11 44t12 42l-57 56q-25-25-31-59t9-65q6-20 18-38l292-334q-11-17-11-37v-48q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-20 0-37-7L435-65q-17 11-37 11H300q-50 0-85-35t-35-85q0-50 35-85t85-35h80l240-276q7-17 7-37 0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-20 0-38-7L373-345l-53 60q-12 14-12 31v15l-53 60q-12 14-12 31v87q0 11 5 21t15 18l400 456q10 12 24 19t30 7h40v80H720Z';
+
 function iconSize(size: number | undefined): number {
   return typeof size === 'number' && !Number.isNaN(size) ? size : 24;
 }
@@ -92,6 +98,16 @@ export function IconPerson({ color, size }: IconProps): JSX.Element {
 /** Material Symbols “play arrow” rounded. */
 export function IconPlay({ color, size }: IconProps): JSX.Element {
   return <SymbolIcon color={color} d={PATH_PLAY} size={size} />;
+}
+
+/** Material Symbols “arrow_back” rounded — Detail nav (PSD-Detail §4). */
+export function IconArrowBack({ color, size }: IconProps): JSX.Element {
+  return <SymbolIcon color={color} d={PATH_ARROW_BACK} size={size} />;
+}
+
+/** Material Symbols “ios_share” rounded — Detail share placeholder (PSD-Detail §4). */
+export function IconShare({ color, size }: IconProps): JSX.Element {
+  return <SymbolIcon color={color} d={PATH_SHARE} size={size} />;
 }
 
 /** Material Symbols “star” rounded (rating badge). */

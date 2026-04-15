@@ -13,9 +13,9 @@ All requests use `Authorization: Bearer {TMDB_ACCESS_TOKEN}` from the central Ax
 | `GET /genre/movie/list` | Genre filter chips | `genres[].id`, `genres[].name` |
 | `GET /discover/movie?with_genres={id}` | Home genre row | Same as trending |
 | `GET /search/movie?query={q}` | Search results | `results[].id`, `title`, `poster_path`, `vote_average`, `release_date`, `genre_ids` |
-| `GET /movie/{id}` | Detail main info | `title`, `backdrop_path`, `vote_average`, `release_date`, `genres[]`, `runtime`, `overview` |
-| `GET /movie/{id}/credits` | Detail cast | `cast[].name`, `cast[].character`, `cast[].profile_path` |
-| `GET /movie/{id}/similar` | Detail similar + Watchlist row | `results[].id`, `title`, `poster_path` |
+| `GET /movie/{id}` | Detail main info | `title`, `poster_path`, `backdrop_path`, `vote_average`, `release_date`, `genres[]`, `runtime`, `overview` — many nullable / optional (see `TmdbMovieDetail` in `types.ts`) |
+| `GET /movie/{id}/credits` | Detail cast | `cast[]` with `name`, `character`, `profile_path` (often `null`), `order` — `getMovieCredits` in `movies.ts` |
+| `GET /movie/{id}/similar` | Detail similar + Watchlist row | `results[].id`, `title`, `poster_path` — `getSimilarMovies` in `movies.ts` |
 
 ## Image URLs
 

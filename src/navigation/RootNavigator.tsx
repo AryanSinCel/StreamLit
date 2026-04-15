@@ -70,7 +70,7 @@ function SearchStackNavigator() {
       <SearchStack.Screen
         name="Detail"
         component={DetailScreen}
-        options={{ title: 'Detail' }}
+        options={{ headerShown: false, title: 'Detail' }}
       />
     </SearchStack.Navigator>
   );
@@ -87,7 +87,7 @@ function WatchlistStackNavigator() {
       <WatchlistStack.Screen
         name="Detail"
         component={DetailScreen}
-        options={{ title: 'Detail' }}
+        options={{ headerShown: false, title: 'Detail' }}
       />
     </WatchlistStack.Navigator>
   );
@@ -222,7 +222,7 @@ export function RootNavigator() {
       <RootStack.Screen
         name="Detail"
         component={DetailScreen}
-        options={{ title: 'Detail' }}
+        options={{ headerShown: false, title: 'Detail' }}
       />
     </RootStack.Navigator>
   );

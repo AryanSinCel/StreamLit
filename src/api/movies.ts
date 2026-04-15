@@ -9,6 +9,7 @@ import type {
   PaginationParams,
   TmdbConfigurationResponse,
   TmdbGenresListResponse,
+  TmdbMovieCreditsResponse,
   TmdbMovieDetail,
   TmdbPagedMoviesResponse,
   TmdbPagedSearchMoviesResponse,
@@ -106,6 +107,10 @@ export async function searchMovies(
   return data;
 }
 
+/**
+ * `GET /movie/{movie_id}` — primary detail record (PSD-Detail §1–2.1, task **D1**).
+ * Drives hero, title, chips, synopsis; see `TmdbMovieDetail` for nullable TMDB fields.
+ */
 export async function getMovieDetail(
   movieId: number,
   opts?: RequestOpts,
@@ -116,7 +121,24 @@ export async function getMovieDetail(
   return data;
 }
 
-/** `GET /movie/{movie_id}/similar` — Watchlist “Because you saved” row (PSD-Watchlist §2). */
+/**
+ * `GET /movie/{movie_id}/credits` — cast billing (PSD-Detail §2.1 “Cast”, task **D1**).
+ * UI filters to `cast` and top-billed subset per PSD; `cast` may be empty (PSD-Detail §3).
+ */
+export async function getMovieCredits(
+  movieId: number,
+  opts?: RequestOpts,
+): Promise<TmdbMovieCreditsResponse> {
+  const { data } = await client.get<TmdbMovieCreditsResponse>(`/movie/${movieId}/credits`, {
+    signal: opts?.signal,
+  });
+  return data;
+}
+
+/**
+ * `GET /movie/{movie_id}/similar` — paginated similar titles (PSD-Detail §2.1 “Similar”; PSD-Watchlist §2).
+ * `results` may be empty — hide “More Like This” per PSD-Detail §3.
+ */
 export async function getSimilarMovies(
   movieId: number,
   params?: PaginationParams & RequestOpts,

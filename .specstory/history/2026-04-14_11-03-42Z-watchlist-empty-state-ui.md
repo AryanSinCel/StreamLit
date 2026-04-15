@@ -1493,4 +1493,2049 @@ I'm moving the radial glow to only wrap the icon disc area instead of the entire
 
 The glow now covers the full flex-grow area due to `absolute inset-0`, but the user wants it centered on the icon instead. I'll adjust the glow to be centered behind the icon as per the reference image, despite conflicting user instructions. 
 
-I'll add a dedicated small View behind just the icon row to contain the RadialGlowBackdrop, rather than spanning the full cluster. </details></think>
+I'll add a dedicated small View behind just the icon row to contain the RadialGlowBackdrop, rather than spanning the full cluster. I'm scoping the glow to an icon-only backdrop wrapper with absolute positioning. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Refactoring search app bar**
+
+I'm refactoring SearchAppBar to be reusable for Watchlist with optional right actions. I'm extending SearchAppBar to support optional right actions for Watchlist compatibility. 
+
+**Extending search app bar**
+
+I'm adding optional trailing prop to SearchAppBar to support watchlist variant. I'm adding a trailing prop to SearchAppBar to support the watchlist variant with optional search icon. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Extending search app bar**
+
+I'm adding optional leading and trailing actions to SearchAppBar to match the watchlist layout. 
+
+**Refactoring app bar component**
+
+I'm extracting a reusable `StreamListAppBar` component with optional end content for backward compatibility. I'm updating `SearchAppBar` to accept optional `beforeProfile` prop for flexible icon placement. I'm restructuring `SearchAppBar` layout with flexbox to support `beforeProfile` prop placement. I'm adjusting `SearchAppBar` to match `WatchlistScreenHeader` profile press behavior. I'm moving the profile handler to the parent component and passing it down to SearchAppBar as `onPressProfile`. 
+
+I'm removing duplicate search bar from WatchlistScreenHeader and adjusting layout for empty watchlist state. I'm simplifying WatchlistScreenHeader to show only title block for empty state, removing icon row. 
+
+**Updating watchlist layout**
+
+I'm adding SearchAppBar to empty watchlist with search icon before profile for consistency. I'm adding a `showHeaderActions` prop to control header visibility in the watchlist layout. 
+
+**Restructuring watchlist**
+
+I'm refactoring WatchlistScreen to use a consistent structure with SearchAppBar and scrollable content. I'm implementing a sticky header for WatchlistScreen using a fixed View outside ScrollView, similar to SearchAppBar. I'm adding a pressable wrapper around the avatar in WatchlistScreen for consistent profile interaction. I'm adjusting the pressable area for the search icon in WatchlistScreen to improve touch target accessibility. I'm removing emptyCluster minHeight and full-width glow, and adjusting RadialGlowBackdrop to be centered at ~200-240 square. 
+
+I'm importing the reusable header component from `../components/search/SearchAppBar` to align watchlist styling with the search tab. I'm adding a `wordmarkTone` prop to SearchAppBar with values `onSurface` or `brandCoral` to match the watchlist's coral wordmark. I'm updating SearchAppBar props to support `coralWordmark` boolean for watchlist styling. </details></think>
+
+_**Agent (composer-2)**_
+
+Fixing the glow: it's centered on a tall `emptyCluster`, so the hotspot sits on the headline. Scoping the glow to the icon and adding `SearchAppBar` (extended for HTML parity) to Watchlist like Search's layout.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenHeader.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/RadialGlowBackdrop.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing search app bar**
+
+I'm adding props to SearchAppBar including beforeProfile, onPressProfile, and brandWordmark. I'm adding conditional rendering for profile actions in SearchAppBar and WatchlistScreenHeader. I'm structuring WatchlistScreen with SearchAppBar and empty state layout. I'm navigating from Watchlist tab to Search tab using CompositeScreenProps. I'm implementing the search functionality in the app bar with onPressSearch handler. 
+
+I'm adjusting the icon glow cluster dimensions to 200x200 with proper alignment and removing marginTop from the disc. 
+
+**Adjusting icon glow**
+
+I'm setting the icon glow cluster size to 224px using spacing tokens for theme compliance. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing: extending `SearchAppBar` for the watchlist HTML lockup; scoping the radial glow to the icon cluster; restructuring `WatchlistScreen` to match `SearchScreen`'s header dock.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenHeader.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenHeader.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Checking style constants**
+
+I confirmed that ICON_RADIAL_GLOW_SIZE works correctly in StyleSheet.create since it's a module-level constant. I moved `ICON_RADIAL_GLOW_SIZE` definition before the styles object to fix the reference issue. 
+
+**Updating watchlist screen**
+
+I'm implementing major edits to the WatchlistScreen including new imports and useCallback hooks for navigation and alerts. I'm adding a search button to the watchlist screen header. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Optimizing search app bar**
+
+I'm memoizing the search app bar trailing JSX to prevent unnecessary re-renders. I removed unnecessary useMemo from search app bar trailing JSX. I added style={styles.scroll} to FlatList to ensure it fills correctly within the ScrollView. I'm refactoring SearchAppBar to conditionally wrap avatar with Pressable only when onPressProfile is defined. 
+
+**Fixing search app bar**
+
+I'm updating SearchAppBar to move accessibilityLabel to Pressable for proper accessibility when the profile avatar is tappable. I'm removing the inner View's accessibilityLabel when wrapped in Pressable to avoid duplication. I'm running tsc and lint to ensure type safety and code quality. I'm checking if the navigate function works correctly from the Watchlist tab to the Search screen. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Adding useMemo**
+
+I'm wrapping `searchAppBarTrailing` in useMemo to prevent unnecessary re-renders of SearchAppBar. 
+
+**Refactoring avatar component**
+
+I'm restructuring the avatar component to eliminate duplicate styles by removing the nested View with styles.avatar. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 6 passed, 6 total
+Tests:       31 passed, 31 total
+Snapshots:   0 total
+Time:        1.574 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Optimizing component performance**
+
+I'm using `useMemo` for `searchAppBarTrailing` to optimize performance per React best practices when passing to child components. 
+
+**Updating search app bar**
+
+I'm aligning the watchlist's SearchAppBar to use the white brand wordmark to match the Search tab's styling. I'm switching watchlist to use `brandWordmark={false}` to match Search tab's white wordmark styling. 
+
+I'm prioritizing the 'like search' requirement over the html variant and setting brandWordmark to false for consistency. I'm keeping brandWordmark true for Watchlist to match the coral color in watchlist-empty.html, despite the html variant being inconsistent. </details></think>
+
+_**Agent (composer-2)**_
+
+Matching the Search tab wordmark: removing `brandWordmark` so the StreamList lockup matches Search (coral icon + light wordmark per `SearchAppBar`).
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Restoring the coral wordmark on Watchlist to match `watchlist-empty.html`.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenHeader.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenHeader.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Here is what was going wrong and what we changed.
+
+### Why the red “light” sat on the middle text
+`RadialGlowBackdrop` was sized to the **whole empty block** (`minHeight` ≈ full column, full `ctaWidth`). The SVG gradient is centered at **50% / 50% of that large box**, so the brightest part landed around the **vertical center of icon + headline + body + CTA** — i.e. on **“Your watchlist is empty”**, not on the bookmark.
+
+**Fix:** Put the glow in a **small square** (`ICON_RADIAL_GLOW_SIZE`, from spacing tokens) that only wraps the **bookmark disc**, so the hotspot stays behind the icon, like `watchlist-empty.html` (glow behind the icon cluster, not the copy).
+
+### Why there was no “Search-style” header
+Only `WatchlistScreenHeader` was rendered (collection + title + inline icons). The **StreamList top bar** (`SearchAppBar`: logo + wordmark + profile) lives on **Search** in a **fixed dock** above the scroll area; Watchlist never used it, so it could not match Search or the HTML top bar.
+
+**Fix:**
+- **`WatchlistScreen`** now mirrors **`SearchScreen`**: `headerDock` with `paddingTop: insets.top + spacing.sm` and **`SearchAppBar`** above the scroll/list.
+- **`SearchAppBar`** extended with optional **`beforeProfile`** (Search icon) and **`onPressProfile`** so Watchlist can match `watchlist-empty.html` (search + avatar) while Search stays unchanged.
+- **`brandWordmark`** on Watchlist so the **coral “StreamList”** matches `watchlist-empty.html` / `watchlist_empty.png` (Search tab keeps the default light wordmark).
+- **`WatchlistScreenHeader`** gets **`showTopActions={false}`** when the app bar is present so search/profile are **not duplicated** (same idea as composing screens from shared pieces in `components.mdc`).
+
+### “Component rule” not applied
+The intended pattern is **one shared top bar component** + **screen-specific content below**. Watchlist was only using the **page** header. It now uses the **same** `SearchAppBar` as Search (with Watchlist-specific props), which is what those composition rules are for.
+
+### Files touched
+- `src/components/search/SearchAppBar.tsx` — optional `beforeProfile`, `onPressProfile`, `brandWordmark`.
+- `src/screens/WatchlistScreen.tsx` — header dock + `SearchAppBar`, search tab navigation, `FlatList`/`ScrollView` `flex` + content `paddingTop` aligned with Search.
+- `src/components/watchlist/WatchlistEmptyState.tsx` — glow scoped to icon-only cluster.
+- `src/components/watchlist/WatchlistScreenHeader.tsx` — `showTopActions` (default `true` for older call sites).
+
+If you want the Watchlist bar to use the **same light wordmark as Search** instead of the HTML coral lockup, drop the `brandWordmark` prop on the two `SearchAppBar` usages in `WatchlistScreen.tsx`.
+
+---
+
+_**User**_
+
+## Session — 2026-04-14 (D1)
+
+**Constraints:** Follow every attached **`@rules/*.mdc`** file as hard requirements (stack, client-only HTTP, types, no `any`). If a suggestion conflicts with those rules, **the rules win**.
+
+Goal: PSD-Detail **§7 D1** + §1–2.1 — API layer only per @docs/PSD-Detail.md: **`GET /movie/{id}`**, **`GET /movie/{id}/credits`**, **`GET /movie/{id}/similar`** in **`src/api/movies.ts`** via **`src/api/client.ts`**; shapes in **`src/api/types.ts`**; **no** `import axios` outside **`client.ts`**; **no** hooks or **`DetailScreen`** this session.
+
+Attach: @docs/PSD-Detail.md @src/api/movies.ts @src/api/types.ts @src/api/client.ts @docs/API-Reference.md @rules/movielist-project.mdc @rules/api.mdc @rules/code-quality.mdc
+
+Out of scope: D2–D6.
+
+Deliverable: files changed; new exports in `movies.ts`; nullable / optional TMDB fields called out in types.
+
+---
+
+_**Agent (composer-2)**_
+
+Implementing the movie detail API layer per PSD-Detail D1. Reading the docs and current API code.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/docs/PSD-Detail.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/movies.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/client.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/docs/API-Reference.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Expanding movie types**
+
+I'm adding fields to `TmdbMovieDetail` type for movie details endpoint, including backdrop, title, year, rating, genre, runtime, and synopsis. 
+
+**Adding movie fields**
+
+I'm adding backdrop_path, title, year, rating, genre, runtime, and synopsis fields to TmdbMovieDetail type. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "TmdbMovieDetail|getMovieDetail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "TmdbMovieDetail|getMovieDetail",
+  "topFiles": [
+    {
+      "matchCount": 4,
+      "uri": "src/api/movies.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".specstory/history/2026-04-14_00-03-56Z-api-and-types-for-home-feature.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/api/types.ts"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/hooks/useMovieDetail.ts"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".specstory/history/2026-04-13_21-56-13Z-movielist-portrait-content-card-design-rules.md"
+    }
+  ],
+  "totalFiles": 5,
+  "totalMatches": 14
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Expanding movie detail type**
+
+I'm adding optional fields to `TmdbMovieDetail` to match TMDB schema, including nullable title field. 
+
+**Adding movie credits function**
+
+I'm adding `getMovieCredits` function to match PSD requirements, keeping `getSimilarMovies` as-is. I'm adding `getMovieCredits` function and keeping `getSimilarMovies` as-is for now. 
+
+**Updating movie schema**
+
+I'm expanding TmdbMovieDetail schema to match TMDB v3 response format. I'm adding nullability notes and optional fields to the TmdbMovieDetail schema based on TMDB v3 response format. 
+
+I'm updating the TmdbMovieDetail schema to include optional fields like `vote_count` and `tagline` based on TMDB v3 response. I'm defining the `TmdbMovieCastCredit` interface with optional fields and nullable types based on TMDB v3 credits response. I'm expanding the `TmdbMovieDetail` interface to ensure backward compatibility with existing hooks. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{ts,tsx}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "TmdbMovieDetail|getMovieDetail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "TmdbMovieDetail|getMovieDetail",
+  "topFiles": [
+    {
+      "matchCount": 5,
+      "uri": "src/hooks/useMovieDetail.ts"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/api/movies.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/api/types.ts"
+    }
+  ],
+  "totalFiles": 3,
+  "totalMatches": 10
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useMovieDetail.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens",
+  "pattern": "movieDetail|getMovieDetail|TmdbMovieDetail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens",
+  "pattern": "movieDetail|getMovieDetail|TmdbMovieDetail",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating type definitions**
+
+I'm updating the type definition for title to be `string | null` and adding JSDoc to clarify that TMDB may send empty strings. I'm keeping `title: string` as required and adding `poster_path`, `vote_count`, `release_date`, and `genres` with appropriate nullability based on TMDB behavior. I'm changing `genres` to `genres?: TmdbMovieGenre[]` with default empty array and updating API-Reference.md for credits endpoint. I'm adding `TmdbMovieCreditsResponse` to TS imports and updating the export order in `movies.ts`. I'm adding `poster_path` as a required field to `TmdbMovieDetail` type. I'm updating `TmdbMovieDetail` type to make `poster_path` nullable as per TMDB API response. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{ts,tsx}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "release_date"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "release_date",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "src/utils/formatMovieListItem.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/home/HomeHero.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistBecauseYouSavedSection.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/screens/SeeAllScreen.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/api/types.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchResultsStateView.tsx"
+    }
+  ],
+  "totalFiles": 6,
+  "totalMatches": 10
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating type definitions**
+
+I'm updating TmdbMovieDetail to make release_date optional and adding defensive typing for Cast credit character field. I'm making release_date optional in TmdbMovieDetail and adding defensive typing for Cast credit character field. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing expanded `TmdbMovieDetail`, credits types, and `getMovieCredits`; aligning JSDoc with PSD D1.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/movies.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/movies.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/docs/API-Reference.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Running tsc**
+
+I'm running tsc to check for type errors after TMDB API changes. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 6 passed, 6 total
+Tests:       31 passed, 31 total
+Snapshots:   0 total
+Time:        1.581 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+### Done (PSD-Detail **§7 D1** + **§1–2.1**, API only)
+
+**Why:** Wire the three Detail endpoints through `client` only, with accurate TMDB nullability so later hooks/UI can follow PSD-Detail **§3** without guessing.
+
+### Files changed
+
+| File | Change |
+|------|--------|
+| `src/api/types.ts` | Expanded **`TmdbMovieDetail`** (`poster_path`, optional `original_title` / `vote_count` / `tagline`, **`release_date: string \| null`**, JSDoc on nullable / chip rules). New **`TmdbMovieCastCredit`**, **`TmdbMovieCreditsResponse`**. |
+| `src/api/movies.ts` | JSDoc on **`getMovieDetail`**, **`getSimilarMovies`**. New **`getMovieCredits`** → `GET /movie/{id}/credits`. |
+| `docs/API-Reference.md` | Table rows aligned with the above + pointers to `types.ts` / `movies.ts`. |
+
+### `movies.ts` exports (Detail D1)
+
+- **`getMovieDetail(movieId, opts?)`** — `GET /movie/{id}` (already present; documented).
+- **`getMovieCredits(movieId, opts?)`** — `GET /movie/{id}/credits` (**new**).
+- **`getSimilarMovies(movieId, params?)`** — `GET /movie/{id}/similar` (already present; documented for Detail + Watchlist).
+
+No `axios` outside `client.ts`; no hook or `DetailScreen` edits.
+
+### Types: nullable / optional TMDB fields (called out)
+
+- **`TmdbMovieDetail`:** `poster_path`, `backdrop_path`, `release_date`, `runtime`, `overview` nullable where TMDB allows; **`vote_average`** documented for “omit chip when 0”; optional **`original_title`**, **`vote_count`**, **`tagline`**.
+- **`TmdbMovieCastCredit`:** **`profile_path: string \| null`**; optional **`order`**, **`credit_id`**, **`cast_id`**; **`character`** may be empty.
+- **`TmdbMovieCreditsResponse`:** **`cast`** may be empty; **`crew`** not modeled until consumed (noted in type comment).
+
+`npx tsc --noEmit`, `npm run lint`, and `npm test` all pass.
+
+---
+
+_**User**_
+
+## Session — 2026-04-14 (D2)
+
+**Constraints:** Follow every attached **`@rules/*.mdc`** as hard requirements. If anything conflicts with them, **the rules win**.
+
+Goal: PSD-Detail **§7 D2** + §1–2 — implement **`useMovieDetail(movieId)`** per @docs/PSD-Detail.md: start **all three** requests together with **`Promise.allSettled`** (not sequential awaits); **independent** state per section — **`details` / `credits` / `similar`** each with **`data`**, **`loading`**, **`error`**; **`refetchDetails`**, **`refetchCredits`**, **`refetchSimilar`** (or equivalent) that **only** retry that section’s fetch; **no** TMDB or `axios` outside **`movies.ts`** / **`client.ts`**; **no** `DetailScreen` layout work (D3).
+
+Attach: @docs/PSD-Detail.md @src/hooks/useMovieDetail.ts @src/api/movies.ts @src/api/types.ts @rules/movielist-project.mdc @rules/hooks.mdc @rules/api.mdc @rules/code-quality.mdc
+
+Out of scope: D3 UI, D4 watchlist button, D5 edge-case UI wiring, D6 polish.
+
+Deliverable: files changed; hook return type; where `allSettled` runs and how each section’s refetch is isolated.
+
+---
+
+_**Agent (composer-2)**_
+
+Implementing `useMovieDetail` with parallel `Promise.allSettled` and per-section state. Reading the hook and related types.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useMovieDetail.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/movies.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/.cursor/rules/hooks.mdc</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "useMovieDetail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "useMovieDetail",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": ".specstory/history/2026-04-13_20-08-14Z-cursor-rules-for-movielist.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".specstory/history/2026-04-14_11-03-42Z-watchlist-empty-state-ui.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/api/types.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/screens/DetailScreen.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".specstory/history/2026-04-14_09-19-54Z-usewatchlist-implementation-details.md"
+    },
+    {
+      "matchCount": 11,
+      "uri": ".specstory/history/2026-04-13_21-56-13Z-movielist-portrait-content-card-design-rules.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": "docs/PSD-Detail.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/hooks/index.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "docs/PSD-Architecture.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/hooks/useMovieDetail.ts"
+    }
+  ],
+  "totalFiles": 10,
+  "totalMatches": 27
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating detail screen**
+
+I'm updating DetailScreen to handle the new hook return type, since changing the hook shape will break compilation without updating the component. I'm updating DetailScreen to use the new hook API with minimal wiring, mapping details.data, details.loading, and details.error to the existing UI. I'm refactoring DetailScreen to use the new composite hook API by destructuring `details` instead of separate `data`/`loading`/`error` fields. I'm implementing refetch logic by nesting refetch functions within each section to match UseQueryResult pattern. I'm renaming refetch functions to avoid naming collisions and align with PSD guidance. I'm adding a type alias for the movie detail query results in types.ts. 
+
+I'm consolidating the multiple state variables for movie details into a single structured state object for cleaner updates. 
+
+**Handling initial load**
+
+I'm implementing the initial load effect with parallel API calls for movie details, credits, and similar movies. I'm implementing abort controllers for batched API requests, aborting previous batches when movieId changes. I'm simplifying abort controller usage by creating a single controller per valid movieId and aborting on cleanup. 
+
+**Refactoring effects**
+
+I'm refactoring the movie details effects to use structured dependencies with dedicated keys for each data fetch. I'm implementing refs to track which specific key changed for targeted refetching. 
+
+I'm simplifying the loading logic to use a single useEffect with synchronized dependencies for better parallelism. I'm updating the effect to handle parallel loading with proper signal handling for movie details. I'm extracting the section state logic into a reusable hook for consistent loading states. I'm refactoring the movie detail fetcher to use Promise.allSettled for better error handling. I'm adding abort controller cleanup to prevent race conditions during rapid refetches. 
+
+I'm implementing abort controller pattern for refetchDetails to handle concurrent requests properly. 
+
+**refactoring effects**
+
+I'm using a request ID ref to handle stale responses in refetchDetails. I'm passing AbortController signal to refetchDetails to cancel requests on unmount. 
+
+I'm implementing AbortController pattern with a single ref per section refetch, aborting previous requests on new refetch. I'm aborting all requests on unmount to prevent memory leaks. 
+
+**aborting requests**
+
+I'm implementing full abort logic for detail, credits, and similar requests. I'm implementing parallel abort logic with shared AbortController for detail, credits, and similar requests. 
+
+**handling edge cases**
+
+I'm handling the invalid movieId edge case by making refetch functions no-op. 
+
+**Implementing hook return**
+
+I'm implementing the hook return structure with refetch functions properly mapped. 
+
+**Updating types**
+
+I'm updating types.ts to include UseMovieDetailResult type. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/package.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **6** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/__tests__** (6 files)
+
+| File |
+|------|
+| `watchlistStore.test.ts` |
+| `App.test.tsx` |
+| `mapUnknownError.test.ts` |
+| `mergeUniqueMovieListById.test.ts` |
+| `recentSearches.test.ts` |
+| `watchlistFilters.test.ts` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/mapUnknownError.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useWatchlist.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing movie detail**
+
+I'm structuring the component with separate state objects for data, loading, and error states to improve clarity. 
+
+**Handling movie details**
+
+I'm implementing independent loading states for movie details and clearing data on ID change to prevent showing wrong movie data. I'm adding refs to manage abort controllers for independent section refetches and cleanup. I'm managing abort controllers for section refetches using refs to cancel previous requests on new refetches. I'm implementing abort logic to cancel previous requests when fetching new movie details. 
+
+**Handling cancellation errors**
+
+I'm adjusting error handling to prevent setting error state when requests are canceled due to abort logic. I'm returning early on cancellation before applying results to avoid setting error state for canceled requests. I'm returning early on cancellation to prevent updating state for aborted requests. I'm implementing `latestMovieIdRef` to handle race conditions between concurrent effects and cancellations. 
+
+I'm calling `detailAbortRef.current?.abort()` in the movieId effect cleanup to handle cancellations. I'm aborting previous requests and setting up new abort controllers to handle concurrent fetches properly. I'm preserving previous data during refetch by setting loading state while keeping existing data. </details></think>
+
+_**Agent (composer-2)**_
+
+Adding `UseMovieDetailResult` to `types.ts`, implementing the hook with `Promise.allSettled`, and applying a minimal `DetailScreen` destructuring fix so the project compiles.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useMovieDetail.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing edge case**
+
+I made a minimal one-line fix to handle the detailOutcome rejection case and prevent leaving stale errors. 
+
+**Handling race conditions**
+
+I'm ensuring batch1's aborted requests don't fulfill with rejection after batch2 starts. I fixed the loading state bug where cancelled requests could leave loading true due to multiple concurrent cancellations. I identified a race condition where unmounted components with stale requests could leave loading states stuck true. I'm ensuring cancelled requests don't update state by returning early when `cancelled` is true. I'm refining cancellation logic to handle stale apply from slow network requests by checking `batchController.signal.aborted` after await. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{ts,tsx}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "useMovieDetail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "useMovieDetail",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/hooks/useMovieDetail.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/screens/DetailScreen.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/api/types.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/hooks/index.ts"
+    }
+  ],
+  "totalFiles": 4,
+  "totalMatches": 6
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 6 passed, 6 total
+Tests:       31 passed, 31 total
+Snapshots:   0 total
+Time:        1.564 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Exporting hooks**
+
+I'm considering whether to re-export UseMovieDetailResult from hooks/index for ergonomic imports, though it's optional since consumers can import directly from api/types. 
+
+**Handling abort signals**
+
+I'm ensuring loading state is properly managed during abort signal handling, particularly when requests are canceled. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/index.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/index.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+### Files changed
+- `src/hooks/useMovieDetail.ts` — full D2 implementation  
+- `src/api/types.ts` — `UseMovieDetailResult`; `UseQueryResult` doc tweak  
+- `src/hooks/index.ts` — re-export `UseMovieDetailResult`  
+- `src/screens/DetailScreen.tsx` — **only** destructuring: `details` from the hook so it still compiles (no D3 UI)
+
+### Hook return type (`UseMovieDetailResult`)
+Defined in `src/api/types.ts`:
+
+```typescript
+export interface UseMovieDetailResult {
+  details: UseQueryResult<TmdbMovieDetail>;
+  credits: UseQueryResult<TmdbMovieCreditsResponse>;
+  similar: UseQueryResult<TmdbPagedMoviesResponse>;
+}
+```
+
+Each bucket is `UseQueryResult<T>`: `{ data, loading, error, refetch }`. The three `refetch` functions are **`refetchDetails`**, **`refetchCredits`**, and **`refetchSimilar`** (exposed as `details.refetch`, `credits.refetch`, `similar.refetch`).
+
+### Where `Promise.allSettled` runs
+Inside the **`useEffect` keyed by `movieId`** (after validating `movieId > 0`): one **`await Promise.allSettled([...])`** starts **`getMovieDetail`**, **`getMovieCredits`**, and **`getSimilarMovies`** together with the **same** `AbortController` signal. Results are applied **per outcome** so one rejection does not block the others (PSD-Detail §2.1–2.2).
+
+### How each section’s refetch is isolated
+- **`refetchDetails` / `refetchCredits` / `refetchSimilar`** each: aborts **only** that section’s prior `AbortController` (ref), starts a **new** controller, sets **`loading: true`** (and clears **`error`**) on **that** slice while keeping existing **`data`** for that slice, then calls the matching **`movies.ts`** function with that signal.  
+- **`movieId`** changes abort batch + section refetches in the effect cleanup so in-flight work cannot overwrite the wrong id.
+
+### Other behavior
+- Invalid / non-finite `movieId`: all sections reset to idle empty slices; section refetches no-op.  
+- Cancel / abort: uses **`isLikelyCanceledRequest`** so cancellations are not shown as user errors.  
+- Data access only via **`getMovieDetail`**, **`getMovieCredits`**, **`getSimilarMovies`** from `movies.ts` (no `axios` in the hook).
+
+`npx tsc --noEmit`, `npm run lint`, and `npm test` all pass.
+
+---
+
+_**User**_
+
+## Session — 2026-04-14 (D3)
+
+**Constraints:** Follow every attached **`@rules/*.mdc`** as hard requirements. If anything conflicts with them, **the rules win**.
+
+Goal: PSD-Detail **§7 D3** + §4 — **`DetailScreen`** composition per @docs/PSD-Detail.md: nav row (back, share placeholder), **hero** (~220px, backdrop via `image.ts`, gradient, null backdrop → placeholder), **title**, **chips** row (omit invalid per §3 where data already allows), **synopsis** + read more / show less, **cast** horizontal row, **More Like This** row; **per-section skeletons** matching hook section boundaries; **no** new TMDB calls — **`useMovieDetail(movieId)`** only; **StyleSheet** + theme tokens.
+
+Attach: @docs/PSD-Detail.md @src/screens/DetailScreen.tsx @src/hooks/useMovieDetail.ts @src/utils/image.ts @src/theme/ @src/components/ @rules/movielist-project.mdc @rules/theming.mdc @rules/components.mdc @rules/loading-and-errors.mdc @rules/hooks.mdc
+
+Out of scope: D4 watchlist optimistic wiring (stub ok), D5 full edge-case pass, D6 polish pass — unless a small hook tweak is required for layout.
+
+Deliverable: files changed; which UI block binds to which hook section (`details` / `credits` / `similar`).
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing detail screen**
+
+I'm building the PSD-Detail D3 UI with nav row, hero section, title, chips, synopsis, cast row, and 'More Like This' section. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing DetailScreen per PSD-Detail §4 and §7 D3. Exploring navigation, image utilities, theme, and reusable components.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/image.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/docs/PSD-Detail.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useMovieDetail.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/ContentCard.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/navigation",
+  "pattern": "Detail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/navigation",
+  "pattern": "Detail",
+  "topFiles": [
+    {
+      "matchCount": 6,
+      "uri": "src/navigation/types.ts"
+    },
+    {
+      "matchCount": 10,
+      "uri": "src/navigation/RootNavigator.tsx"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 16
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/ShimmerBox.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing in-screen nav**
+
+I'm setting headerShown: false for Detail screens to use custom navigation instead of native back button. 
+
+**Updating detail screen nav**
+
+I'm switching DetailScreen to use useNavigation hook for simpler navigation access. 
+
+**Creating detail components**
+
+I'm creating separate components for the detail screen layout including nav bar, hero, chips row, synopsis, cast row, and similar section. I'm extracting reusable detail components into `src/components/detail/` including `DetailNavBar`, `DetailHero`, `DetailSynopsisSection`, and `DetailCastRow`. I'm adding `DetailSimilarRow.tsx` with horizontal ContentCards and skeleton loaders for details and cast sections. 
+
+**Adding detail components**
+
+I'm implementing skeleton loaders for the details section with conditional rendering based on loading and error states. 
+
+**Handling detail states**
+
+I'm implementing conditional rendering for detail states: skeleton on initial load, hero + chips when data loads, error block on failure. I'm updating the cast display logic to filter and sort TMDB cast data before rendering avatars, showing 'Cast information unavailable' if empty after filtering. I'm sorting cast data by order ascending and filtering out undefined orders for stability, since all TMDB cast entries have order values. I'm implementing conditional rendering for similar movies based on loading, empty, and error states. I'm implementing composite navigation to route from DetailScreen to SeeAllScreen with similar mode parameters. I'm using CommonActions to handle navigation variations between stacks for consistent routing. 
+
+I'm implementing the 'See All' navigation stub with a Pressable component for the D3 detail view. I'm implementing typed navigation from SearchStack Detail to HomeStack SeeAll using CompositeNavigationProp. I'm adjusting navigation from SearchStack Detail to HomeStack SeeAll using TabNavigator's required syntax with `screen: 'SeeAll'`. I'm implementing fallback navigation using `getParent()?.navigate('Home', { screen: 'SeeAll' })` with stubbed error handling. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "LinearGradient|react-native-svg"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "LinearGradient|react-native-svg",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "src/components/common/SimpleIcons.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/RadialGlowBackdrop.tsx"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>

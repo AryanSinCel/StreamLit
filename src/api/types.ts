@@ -1,8 +1,9 @@
 /** Shared types — extend as TMDB endpoints are implemented (feature PSDs). */
 
 /**
- * Standard shape for data hooks (`useMovieDetail`, …); `useHome` / `useSearch` use composite types.
- * Re-exported from hooks via `../api/types` — single source of truth.
+ * Standard shape for a single TMDB section (`useWatchlist.similar`, …).
+ * `useMovieDetail` exposes **three** of these on `UseMovieDetailResult` (PSD-Detail §2.2).
+ * `useHome` / `useSearch` use other composite types.
  */
 export interface UseQueryResult<T> {
   data: T | null;
@@ -70,19 +71,72 @@ export interface TmdbGenresListResponse {
 
 export interface TmdbMovieGenre {
   id: number;
+  /** TMDB normally includes this; treat missing as empty string in UI if needed. */
   name: string;
 }
 
-/** `GET /movie/{id}` — detail payload used by `useMovieDetail`. */
+/**
+ * `GET /movie/{movie_id}` — movie detail (PSD-Detail §2.1 “Details”, task **D1**).
+ * Mirrors TMDB v3; several fields are nullable or may be empty — Detail UI must follow PSD-Detail §3.
+ */
 export interface TmdbMovieDetail {
   id: number;
   title: string;
+  original_title?: string | null;
+  /** Key art path; `null` when TMDB has no poster (PSD-Detail §3 — placeholder in UI). */
+  poster_path: string | null;
+  /** Hero/backdrop path; `null` when absent (PSD-Detail §3). */
   backdrop_path: string | null;
+  /**
+   * Weighted score; **`0`** or very low values → omit rating chip per PSD-Detail §3.
+   * TMDB may omit the key on malformed payloads — normalize in hooks if needed.
+   */
   vote_average: number;
-  release_date: string;
+  vote_count?: number;
+  /** ISO `YYYY-MM-DD`; `null` or `""` when unknown — do not assume a display year exists. */
+  release_date: string | null;
+  /** Full genre objects (list endpoints use `genre_ids` instead). Often non-empty; may be `[]`. */
   genres: TmdbMovieGenre[];
+  /** Runtime in minutes; `null` or **`0`** → omit runtime chip (PSD-Detail §3). */
   runtime: number | null;
+  /** Synopsis; `null` or blank → handle empty copy in UI. */
   overview: string | null;
+  tagline?: string | null;
+}
+
+/**
+ * One billing row in `GET /movie/{movie_id}/credits` `cast[]` (PSD-Detail §2.1 “Cast”).
+ * TMDB includes `order` for cast sort; `profile_path` is often `null` (§3 — avatar placeholder).
+ */
+export interface TmdbMovieCastCredit {
+  id: number;
+  name: string;
+  /** Role as credited; may be empty string. */
+  character: string;
+  profile_path: string | null;
+  /** Lower values are more top-billed; TMDB may omit on unusual rows. */
+  order?: number;
+  credit_id?: string;
+  cast_id?: number;
+}
+
+/**
+ * `GET /movie/{movie_id}/credits` — cast (and crew) for Detail (PSD-Detail §2.1 “Cast”).
+ * `cast` may be empty; `crew` exists on TMDB but is omitted here until the app consumes it (D1 scope).
+ */
+export interface TmdbMovieCreditsResponse {
+  id: number;
+  cast: TmdbMovieCastCredit[];
+}
+
+/**
+ * `useMovieDetail(movieId)` — three parallel TMDB slices (PSD-Detail §2.1–2.2, task **D2**).
+ * Each `refetch` retries **only** that section’s `GET` via `movies.ts`.
+ */
+export interface UseMovieDetailResult {
+  details: UseQueryResult<TmdbMovieDetail>;
+  credits: UseQueryResult<TmdbMovieCreditsResponse>;
+  similar: UseQueryResult<TmdbPagedMoviesResponse>;
 }
 
 /** Aggregated Home tab payload (trending + top rated + genres). */

@@ -1,7 +1,7 @@
 ---
 description: MovieList presentational components — no fetching, lists via FlatList, approval for new list libs.
 globs: src/components/**/*
-alwaysApply: false
+alwaysApply: true
 ---
 
 # MovieList — `src/components`
