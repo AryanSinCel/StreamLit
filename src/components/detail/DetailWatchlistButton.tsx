@@ -8,8 +8,9 @@ import {
   View,
 } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import { IconBookmarkAdd, IconBookmarkAdded } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { radiusCardInner, spacing } from '../../theme/spacing';
+import { detailWatchlistCtaMinHeight, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type DetailWatchlistButtonProps = {
@@ -20,7 +21,7 @@ export type DetailWatchlistButtonProps = {
 };
 
 /**
- * PSD-Detail §4 — default gradient “Add to Watchlist” vs **`surface_container_highest`** + outline “In Watchlist”.
+ * `movie-showDetail.html` — gradient **Add to Watchlist** (`bookmark_add` + label) vs outlined **In Watchlist** (`bookmark_added`).
  */
 export function DetailWatchlistButton({
   hydrated,
@@ -29,7 +30,7 @@ export function DetailWatchlistButton({
 }: DetailWatchlistButtonProps): JSX.Element {
   const reactId = useId();
   const gradientId = useMemo(
-    () => `watchlist-grad-${reactId.replace(/[^a-zA-Z0-9_-]/g, '')}`,
+    () => `detail-watchlist-grad-${reactId.replace(/[^a-zA-Z0-9_-]/g, '')}`,
     [reactId],
   );
 
@@ -54,6 +55,7 @@ export function DetailWatchlistButton({
         onPress={onPress}
         style={({ pressed }) => [styles.inListOuter, pressed && styles.inListPressed]}
       >
+        <IconBookmarkAdded color={colors.primary} size={22} />
         <Text style={styles.inListLabel}>In Watchlist</Text>
       </Pressable>
     );
@@ -74,61 +76,74 @@ export function DetailWatchlistButton({
         style={StyleSheet.absoluteFill}
       >
         <Defs>
-          <LinearGradient id={gradientId} x1="0%" x2="100%" y1="0%" y2="0%">
+          <LinearGradient id={gradientId} x1="0%" x2="100%" y1="0%" y2="100%">
             <Stop offset="0" stopColor={colors.primary} />
             <Stop offset="1" stopColor={colors.primary_container} />
           </LinearGradient>
         </Defs>
         <Rect fill={`url(#${gradientId})`} height="100%" width="100%" />
       </Svg>
-      <Text style={styles.addLabel}>Add to Watchlist</Text>
+      <View style={styles.addInner}>
+        <IconBookmarkAdd color={colors.on_primary_container} size={22} />
+        <Text style={styles.addLabel}>Add to Watchlist</Text>
+      </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  hydratePlaceholder: {
+  addInner: {
     alignItems: 'center',
-    backgroundColor: colors.surface_container,
-    borderRadius: radiusCardInner,
+    flexDirection: 'row',
+    gap: spacing.sm,
     justifyContent: 'center',
-    marginTop: spacing.xl,
-    minHeight: spacing.xxxxl,
+    paddingHorizontal: spacing.md,
+  },
+  addLabel: {
+    ...typography['title-sm'],
+    color: colors.on_primary_container,
+    fontWeight: '600',
   },
   addOuter: {
     alignItems: 'center',
-    borderRadius: radiusCardInner,
+    borderRadius: spacing.sm,
     justifyContent: 'center',
-    marginTop: spacing.xl,
-    minHeight: spacing.xxxxl,
+    marginTop: spacing.lg,
+    minHeight: detailWatchlistCtaMinHeight,
     overflow: 'hidden',
-    paddingVertical: spacing.md,
+    paddingVertical: spacing.sm,
   },
   addPressed: {
     opacity: 0.92,
   },
-  addLabel: {
-    ...typography['title-sm'],
-    color: colors.on_primary,
-    fontWeight: '700',
-  },
-  inListOuter: {
+  hydratePlaceholder: {
     alignItems: 'center',
-    backgroundColor: colors.surface_container_highest,
-    borderColor: colors.outline_variant,
-    borderRadius: radiusCardInner,
-    borderWidth: 2,
+    backgroundColor: colors.surface_container,
+    borderRadius: spacing.sm,
     justifyContent: 'center',
-    marginTop: spacing.xl,
-    minHeight: spacing.xxxxl,
-    paddingVertical: spacing.md,
-  },
-  inListPressed: {
-    opacity: 0.92,
+    marginTop: spacing.lg,
+    minHeight: detailWatchlistCtaMinHeight,
   },
   inListLabel: {
     ...typography['title-sm'],
-    color: colors.on_surface,
+    color: colors.primary,
     fontWeight: '600',
+  },
+  inListOuter: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    borderColor: colors.primary,
+    borderRadius: spacing.sm,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: spacing.sm,
+    justifyContent: 'center',
+    marginTop: spacing.lg,
+    minHeight: detailWatchlistCtaMinHeight,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  inListPressed: {
+    opacity: 0.92,
   },
 });

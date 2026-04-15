@@ -1,5 +1,5 @@
 /**
- * Detail hero — backdrop via `image.ts`, bottom scrim, null media → placeholder + MovieList icon (PSD-Detail §3–4).
+ * Detail hero — full-bleed backdrop, bottom scrim (`movie-showDetail.html` `.hero-gradient`).
  */
 
 import type { JSX } from 'react';
@@ -9,7 +9,7 @@ import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import type { TmdbMovieDetail } from '../../api/types';
 import { IconMovie } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { detailHeroHeight, radiusCardInner } from '../../theme/spacing';
+import { detailHeroHeight } from '../../theme/spacing';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
 
 const HERO_GRADIENT_HEIGHT_RATIO = 0.4;
@@ -74,8 +74,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   shell: {
-    alignSelf: 'center',
-    borderRadius: radiusCardInner,
+    alignSelf: 'stretch',
     overflow: 'hidden',
   },
 });

@@ -1,5 +1,5 @@
 /**
- * Cast row — binds to **`credits`** hook section (PSD-Detail §2.1–2.2, §3–4).
+ * Cast row — `movie-showDetail.html` (`gap-6`, 64px avatars, ring, 11px / 10px labels).
  */
 
 import type { JSX } from 'react';
@@ -23,13 +23,14 @@ function sortTopBilled(cast: TmdbMovieCastCredit[]): TmdbMovieCastCredit[] {
   return [...cast].sort((a, b) => (a.order ?? 999) - (b.order ?? 999)).slice(0, 16);
 }
 
-/** Drops rows with no usable name so “empty” handling matches §3 “unusable” credits. */
 function usableCastEntries(cast: TmdbMovieCastCredit[] | null): TmdbMovieCastCredit[] {
   if (cast == null) {
     return [];
   }
   return cast.filter((c) => typeof c.name === 'string' && c.name.trim().length > 0);
 }
+
+const AVATAR_RING = 2;
 
 export function DetailCastSection({ loading, error, cast, onRetry }: DetailCastSectionProps): JSX.Element {
   if (loading && cast == null) {
@@ -104,15 +105,15 @@ export function DetailCastSection({ loading, error, cast, onRetry }: DetailCastS
   );
 }
 
-const AVATAR_STYLE = {
-  borderRadius: detailCastAvatarSize / 2,
-  height: detailCastAvatarSize,
-  width: detailCastAvatarSize,
-} as const;
+const AVATAR_INNER = detailCastAvatarSize - AVATAR_RING * 2;
 
 const styles = StyleSheet.create({
   avatar: {
-    ...AVATAR_STYLE,
+    borderColor: colors.detail_cast_avatar_ring,
+    borderRadius: detailCastAvatarSize / 2,
+    borderWidth: AVATAR_RING,
+    height: detailCastAvatarSize,
+    width: detailCastAvatarSize,
   },
   avatarFallback: {
     alignItems: 'center',
@@ -121,7 +122,8 @@ const styles = StyleSheet.create({
   },
   avatarRow: {
     flexDirection: 'row',
-    gap: spacing.lg,
+    gap: spacing.xl,
+    paddingBottom: spacing.sm,
     paddingVertical: spacing.sm,
   },
   avatarShim: {
@@ -130,34 +132,35 @@ const styles = StyleSheet.create({
     width: detailCastAvatarSize,
   },
   block: {
-    marginTop: spacing.xl,
+    marginTop: spacing.xxl,
   },
   castCell: {
-    maxWidth: detailCastAvatarSize + spacing.xl,
+    alignItems: 'center',
+    maxWidth: detailCastAvatarSize + spacing.md,
     width: detailCastAvatarSize + spacing.sm,
   },
   castCharacter: {
-    ...typography['label-sm'],
+    ...typography['detail-cast-role'],
     color: colors.on_surface_variant,
     marginTop: spacing.xs,
     textAlign: 'center',
   },
   castName: {
-    ...typography['label-sm'],
+    ...typography['detail-cast-name'],
     color: colors.on_surface,
-    fontWeight: '600',
     marginTop: spacing.sm,
     textAlign: 'center',
   },
   heading: {
-    ...typography['headline-md'],
+    ...typography['headline-search'],
     color: colors.on_surface,
-    marginBottom: spacing.sm,
+    fontWeight: '700',
+    marginBottom: spacing.lg,
   },
   headingShim: {
     borderRadius: spacing.xs,
-    height: 28,
-    marginBottom: spacing.sm,
+    height: 22,
+    marginBottom: spacing.lg,
     width: 120,
   },
   initials: {

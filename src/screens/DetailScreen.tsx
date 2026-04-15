@@ -36,8 +36,7 @@ type Props = {
 };
 
 /**
- * Detail tab / stack — PSD-Detail §4 layout; **`details` / `credits` / `similar`** from `useMovieDetail` only;
- * watchlist via **`watchlistStore`** (**D4**); §3 edge cases (**D5**); re-entry + nav polish (**D6**).
+ * Detail — `movie-showDetail.html` / `detail.png`: hero + pull-up body, overlay nav, chips, watchlist CTAs.
  */
 export function DetailScreen({ route }: Props): JSX.Element {
   const { movieId } = route.params;
@@ -130,7 +129,6 @@ export function DetailScreen({ route }: Props): JSX.Element {
 
   return (
     <View style={styles.screen}>
-      <DetailNavBar onBack={onBack} />
       <ScrollView
         contentContainerStyle={[
           styles.scrollContent,
@@ -157,8 +155,8 @@ export function DetailScreen({ route }: Props): JSX.Element {
         {details.data != null ? (
           <>
             <DetailHero movie={details.data} width={heroWidth} />
-            <View style={styles.padded}>
-              <Text style={styles.title}>{details.data.title}</Text>
+            <View style={[styles.mainPull, { paddingHorizontal: horizontalPad }]}>
+              <Text style={styles.title}>{details.data.title.toUpperCase()}</Text>
               <DetailChipsRow movie={details.data} />
               {watchlistControl}
               <DetailSynopsisSection key={movieId} overview={details.data.overview} />
@@ -183,11 +181,16 @@ export function DetailScreen({ route }: Props): JSX.Element {
           />
         </View>
       </ScrollView>
+      <DetailNavBar onBack={onBack} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  mainPull: {
+    marginTop: -spacing.xxl,
+    zIndex: 10,
+  },
   padded: {
     paddingHorizontal: spacing.xl,
   },
@@ -202,8 +205,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   title: {
-    ...typography['display-md'],
+    ...typography['watchlist-screen-title'],
     color: colors.on_surface,
-    marginTop: spacing.lg,
+    marginBottom: spacing.md,
   },
 });

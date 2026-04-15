@@ -24,6 +24,30 @@ export const typography = {
     fontWeight: '800',
     letterSpacing: lsEm(-0.02, 40),
   },
+  /** Detail cast actor — `movie-showDetail.html` (`text-[11px] font-semibold`). */
+  'detail-cast-name': {
+    fontFamily: fontInter,
+    fontSize: 11,
+    fontWeight: '600',
+    letterSpacing: 0,
+    lineHeight: 14,
+  },
+  /** Detail cast character — `movie-showDetail.html` (`text-[10px]`). */
+  'detail-cast-role': {
+    fontFamily: fontInter,
+    fontSize: 10,
+    fontWeight: '400',
+    letterSpacing: 0,
+    lineHeight: 13,
+  },
+  /** Detail “More Like This” poster title — `movie-showDetail.html` (`text-xs font-medium`). */
+  'detail-similar-title': {
+    fontFamily: fontInter,
+    fontSize: 12,
+    fontWeight: '500',
+    letterSpacing: 0,
+    lineHeight: 16,
+  },
   /** Watchlist grid card title — Stitch (`text-lg font-bold` / Manrope). */
   'watchlist-card-title': {
     fontFamily: fontManrope,

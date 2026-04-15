@@ -1,16 +1,16 @@
 /**
- * “More Like This” — binds to **`similar`** hook section (PSD-Detail §2.1–2.2, §3–4).
- * Hidden when `results` is empty after a successful load.
+ * “More Like This” — `movie-showDetail.html`: 120×180 posters, **title · year** only (no rating).
  */
 
 import type { JSX } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { TmdbMovieListItem } from '../../api/types';
-import { ContentCard } from '../common/ContentCard';
+import { IconMovie } from '../common/SimpleIcons';
 import { ShimmerBox } from '../common/ShimmerBox';
 import { colors, contentCard } from '../../theme/colors';
-import { homeRowCardWidth, radiusCardInner, spacing } from '../../theme/spacing';
+import { detailSimilarPosterWidth, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
+import { buildImageUrl, TMDB_IMAGE_SIZE_W185 } from '../../utils/image';
 import { DetailSectionError } from './DetailSectionError';
 
 function yearFromListItem(item: TmdbMovieListItem): string {
@@ -19,6 +19,11 @@ function yearFromListItem(item: TmdbMovieListItem): string {
     return d.slice(0, 4);
   }
   return '—';
+}
+
+function listItemTitle(item: TmdbMovieListItem): string {
+  const t = item.title?.trim() ?? '';
+  return t.length > 0 ? t : '—';
 }
 
 export type DetailSimilarSectionProps = {
@@ -30,6 +35,9 @@ export type DetailSimilarSectionProps = {
   onPressMovie: (movieId: number) => void;
 };
 
+const POSTER_W = detailSimilarPosterWidth;
+const POSTER_H = POSTER_W / contentCard.aspectRatio;
+
 export function DetailSimilarSection({
   loading,
   error,
@@ -38,8 +46,6 @@ export function DetailSimilarSection({
   onPressSeeAll,
   onPressMovie,
 }: DetailSimilarSectionProps): JSX.Element {
-  const posterH = homeRowCardWidth / contentCard.aspectRatio;
-
   if (loading && results == null) {
     return (
       <View style={styles.block}>
@@ -50,7 +56,10 @@ export function DetailSimilarSection({
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.cardRow}>
             {Array.from({ length: 4 }, (_, i) => (
-              <ShimmerBox key={i} style={[styles.cardShim, { height: posterH, width: homeRowCardWidth }]} />
+              <View key={i} style={styles.cardCell}>
+                <ShimmerBox style={[styles.cardPosterShim, { height: POSTER_H, width: POSTER_W }]} />
+                <ShimmerBox style={styles.titleShim} />
+              </View>
             ))}
           </View>
         </ScrollView>
@@ -71,7 +80,6 @@ export function DetailSimilarSection({
     );
   }
 
-  /** PSD-Detail §3 — empty `results` after success: hide header + carousel entirely. */
   const list = Array.isArray(results) ? results : [];
   if (list.length === 0) {
     return <View />;
@@ -91,19 +99,42 @@ export function DetailSimilarSection({
         </Pressable>
       </View>
       <ScrollView horizontal contentContainerStyle={styles.cardRow} showsHorizontalScrollIndicator={false}>
-        {list.map((item) => (
-          <ContentCard
-            key={item.id}
-            onPress={() => {
-              onPressMovie(item.id);
-            }}
-            posterPath={item.poster_path}
-            rating={item.vote_average}
-            style={styles.card}
-            subtitle={yearFromListItem(item)}
-            title={item.title}
-          />
-        ))}
+        {list.map((item) => {
+          const uri = buildImageUrl(item.poster_path, TMDB_IMAGE_SIZE_W185);
+          const title = listItemTitle(item);
+          const year = yearFromListItem(item);
+          const label = `${title} · ${year}`;
+          return (
+            <Pressable
+              key={item.id}
+              accessibilityLabel={label}
+              accessibilityRole="button"
+              onPress={() => {
+                onPressMovie(item.id);
+              }}
+              style={({ pressed }) => [styles.cardCell, pressed && styles.cardPressed]}
+            >
+              <View style={[styles.posterShell, { height: POSTER_H, width: POSTER_W }]}>
+                {uri != null ? (
+                  <Image
+                    accessibilityIgnoresInvertColors
+                    accessibilityLabel={title}
+                    resizeMode="cover"
+                    source={{ uri }}
+                    style={styles.posterImage}
+                  />
+                ) : (
+                  <View style={styles.posterPlaceholder}>
+                    <IconMovie color={colors.on_surface_variant} size={32} />
+                  </View>
+                )}
+              </View>
+              <Text numberOfLines={2} style={styles.cardTitle}>
+                {label}
+              </Text>
+            </Pressable>
+          );
+        })}
       </ScrollView>
     </View>
   );
@@ -111,33 +142,60 @@ export function DetailSimilarSection({
 
 const styles = StyleSheet.create({
   block: {
-    marginTop: spacing.xl,
+    marginTop: spacing.xxl,
   },
-  card: {
-    width: homeRowCardWidth,
+  cardCell: {
+    width: POSTER_W,
+  },
+  cardPosterShim: {
+    borderRadius: radiusCardInner,
+    marginBottom: spacing.sm,
+  },
+  cardPressed: {
+    opacity: 0.92,
   },
   cardRow: {
     flexDirection: 'row',
     gap: spacing.md,
+    paddingBottom: spacing.md,
     paddingVertical: spacing.sm,
   },
-  cardShim: {
-    borderRadius: radiusCardInner,
+  cardTitle: {
+    ...typography['detail-similar-title'],
+    color: colors.on_surface,
   },
   headerRow: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: spacing.sm,
+    marginBottom: spacing.lg,
   },
   heading: {
-    ...typography['headline-md'],
+    ...typography['headline-search'],
     color: colors.on_surface,
+    fontWeight: '700',
   },
   headingShim: {
     borderRadius: spacing.xs,
-    height: 28,
+    height: 22,
     width: 160,
+  },
+  posterImage: {
+    ...StyleSheet.absoluteFill,
+    borderRadius: radiusCardInner,
+  },
+  posterPlaceholder: {
+    ...StyleSheet.absoluteFill,
+    alignItems: 'center',
+    backgroundColor: colors.surface_container_highest,
+    borderRadius: radiusCardInner,
+    justifyContent: 'center',
+  },
+  posterShell: {
+    borderRadius: radiusCardInner,
+    marginBottom: spacing.sm,
+    overflow: 'hidden',
+    position: 'relative',
   },
   seeAll: {
     paddingHorizontal: spacing.sm,
@@ -145,15 +203,21 @@ const styles = StyleSheet.create({
   },
   seeAllLabel: {
     ...typography['label-sm'],
-    color: colors.primary_container,
-    fontWeight: '600',
+    color: colors.primary,
+    fontWeight: '700',
   },
   seeAllPressed: {
     opacity: 0.88,
   },
   seeAllShim: {
     borderRadius: spacing.xs,
-    height: 20,
+    height: 18,
     width: 56,
+  },
+  titleShim: {
+    alignSelf: 'flex-start',
+    borderRadius: spacing.xs,
+    height: 12,
+    width: POSTER_W * 0.72,
   },
 });

@@ -1,5 +1,5 @@
 /**
- * Synopsis + Read more / Show less — PSD-Detail §4 (`primary_container` toggle).
+ * Synopsis — `movie-showDetail.html` (`text-sm` body variant, **Read more** accent).
  */
 
 import type { JSX } from 'react';
@@ -43,16 +43,18 @@ export function DetailSynopsisSection({ overview }: DetailSynopsisSectionProps):
 
 const styles = StyleSheet.create({
   block: {
-    gap: spacing.sm,
-    marginTop: spacing.xl,
+    gap: spacing.md,
+    marginTop: spacing.xxl,
   },
   body: {
     ...typography['body-md'],
-    color: colors.on_surface,
+    color: colors.on_surface_variant,
+    lineHeight: 22,
   },
   heading: {
-    ...typography['headline-md'],
+    ...typography['headline-search'],
     color: colors.on_surface,
+    fontWeight: '700',
   },
   toggle: {
     alignSelf: 'flex-start',
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
   },
   toggleLabel: {
     ...typography['label-sm'],
-    color: colors.primary_container,
+    color: colors.primary,
     fontWeight: '600',
   },
   togglePressed: {

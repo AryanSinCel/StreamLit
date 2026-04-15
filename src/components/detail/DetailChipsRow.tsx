@@ -1,5 +1,5 @@
 /**
- * Year · rating · genres · runtime chips — PSD-Detail §3–4 (`label-sm`, omit invalid).
+ * Year · rating · genres · runtime — `movie-showDetail.html` (rounded-md chips, rating pill).
  */
 
 import type { JSX, ReactNode } from 'react';
@@ -12,7 +12,7 @@ import {
 } from '../../utils/tmdbDisplayGuards';
 import { IconStar } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { radiusFullPill, spacing } from '../../theme/spacing';
+import { spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type DetailChipsRowProps = {
@@ -33,6 +33,18 @@ function genreLabel(movie: TmdbMovieDetail): string | null {
   return movie.genres.map((g) => g.name).join(' · ');
 }
 
+function formatRuntimeLabel(minutes: number): string {
+  if (minutes >= 60) {
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    if (m === 0) {
+      return `${String(h)}h`;
+    }
+    return `${String(h)}h ${String(m)}m`;
+  }
+  return `${String(minutes)} min`;
+}
+
 export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
   const chips: { key: string; node: ReactNode }[] = [];
 
@@ -40,7 +52,7 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
   if (year != null) {
     chips.push({
       key: 'year',
-      node: <Text style={styles.chipText}>{year}</Text>,
+      node: <Text style={styles.chipTextNeutral}>{year}</Text>,
     });
   }
 
@@ -52,7 +64,10 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
       node: (
         <View style={styles.ratingChip}>
           <IconStar color={colors.primary} size={14} />
-          <Text style={styles.chipText}>{label}</Text>
+          <Text style={styles.ratingChipText}>
+            {label}
+            {' Rating'}
+          </Text>
         </View>
       ),
     });
@@ -63,7 +78,7 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
     chips.push({
       key: 'genre',
       node: (
-        <Text numberOfLines={2} style={styles.chipText}>
+        <Text numberOfLines={2} style={styles.chipTextNeutral}>
           {genres}
         </Text>
       ),
@@ -71,10 +86,10 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
   }
 
   const runtime = movie.runtime;
-  if (showTmdbRuntimeChip(runtime)) {
+  if (showTmdbRuntimeChip(runtime) && typeof runtime === 'number') {
     chips.push({
       key: 'runtime',
-      node: <Text style={styles.chipText}>{`${String(runtime)} min`}</Text>,
+      node: <Text style={styles.chipTextNeutral}>{formatRuntimeLabel(runtime)}</Text>,
     });
   }
 
@@ -85,7 +100,7 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
   return (
     <View style={styles.row}>
       {chips.map((c) => (
-        <View key={c.key} style={styles.chip}>
+        <View key={c.key} style={c.key === 'rating' ? styles.ratingChipWrap : styles.chipWrap}>
           {c.node}
         </View>
       ))}
@@ -94,25 +109,37 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  chip: {
-    backgroundColor: colors.surface_container_highest,
-    borderRadius: radiusFullPill,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xs + 2,
-  },
-  chipText: {
+  chipTextNeutral: {
     ...typography['label-sm'],
     color: colors.on_surface_variant,
+    fontWeight: '500',
+  },
+  chipWrap: {
+    backgroundColor: colors.surface_container_high,
+    borderRadius: spacing.sm,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
   },
   ratingChip: {
     alignItems: 'center',
     flexDirection: 'row',
     gap: spacing.xs,
   },
+  ratingChipText: {
+    ...typography['label-sm'],
+    color: colors.primary,
+    fontWeight: '700',
+  },
+  ratingChipWrap: {
+    backgroundColor: colors.detail_rating_chip_bg,
+    borderRadius: spacing.sm,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+  },
   row: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: spacing.sm,
-    marginTop: spacing.md,
+    gap: spacing.md,
+    marginTop: 0,
   },
 });

@@ -1783,13 +1783,293 @@ _**Agent (composer-2)**_
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
 
-Status: **loading**
-
 </details>
 
 </tool-use>
 
 <tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
 <summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="delete_file">
+<details><summary>Tool use: **delete_file**</summary>
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="delete_file"><details>
+<summary>Tool use: **delete_file**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="delete_file">
+<details><summary>Tool use: **delete_file**</summary>
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="delete_file"><details>
+<summary>Tool use: **delete_file**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="delete_file">
+<details><summary>Tool use: **delete_file**</summary>
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="delete_file"><details>
+<summary>Tool use: **delete_file**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="delete_file">
+<details><summary>Tool use: **delete_file**</summary>
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="delete_file"><details>
+<summary>Tool use: **delete_file**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "formatWatchlistGridSubtitle|formatWatchlistGridMetaParts"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "formatWatchlistGridSubtitle|formatWatchlistGridMetaParts",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "src/utils/formatWatchlistGridSubtitle.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/watchlist/WatchlistGridCard.tsx"
+    },
+    {
+      "matchCount": 22,
+      "uri": ".specstory/history/2026-04-15_08-57-49Z-watchlist-ui-implementation.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".specstory/history/2026-04-15_08-57-49Z-watchlist-empty-ui-screen.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistSimilarLandscapeCard.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".specstory/history/2026-04-15_08-13-59Z-watchlist-ui-adjustments.md"
+    }
+  ],
+  "totalFiles": 6,
+  "totalMatches": 32
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 9 passed, 9 total
+Tests:       46 passed, 46 total
+Snapshots:   0 total
+Time:        1.996 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Here is what was done.
+
+### API-backed watchlist again
+- **`src/screens/WatchlistScreen.tsx`** is restored to the full flow: **`useWatchlist()`** (filtered items, similar movies, trending for empty state, movie genres), **`useWatchlistStore`** (remove, persist error alert), **`FlatList`** + **`WatchlistGridCard`**, **`WatchlistBecauseYouSavedSection`**, **`WatchlistEmptyState`** / **`WatchlistFilterEmpty`**, and the same navigation as before (Detail, See All, Search tab, Home trending).
+
+### Removed static-only code
+- **`src/components/watchlist/WatchlistStaticGridCard.tsx`**
+- **`src/components/watchlist/WatchlistStaticBecauseSection.tsx`**
+- **`src/components/watchlist/watchlistStaticUiData.ts`**
+
+### Removed tests (as requested)
+- **`__tests__/formatWatchlistGridSubtitle.test.ts`** (entire file), including coverage for **`formatWatchlistGridSubtitle`**, **`formatWatchlistGridMetaParts`**, and **`formatWatchlistSimilarRailGenreLine`**.
+
+Production helpers **`formatWatchlistGridMetaParts`** / **`formatWatchlistGridSubtitle`** and the Stitch-style **`WatchlistGridCard`** + **`WatchlistScreenHeader`** chip tray are unchanged.
+
+### Checks
+- **`npx tsc --noEmit`** — success  
+- **`npm test`** — 9 suites, 46 tests passing  
+
+If you want formatter/rail coverage back without the static UI, we can add a small **`__tests__/formatWatchlistGridSubtitle.test.ts`** again that only targets the shared utils.
+
+---
+
+_**User**_
+
+fix the detail screen UI , make sure the font, icon , color, weight, size everything same as in @resources/detail.png and @resources/movie-showDetail.html , see all color, rating should not showing in more like this , also year after movie title , corner radius, background color, share icon , add to watchlist (icon before text) in button , and after adding watchlist button UI , every little things fix it 
+
+---
+
+_**Agent (composer-2)**_
+
+Reviewing the reference HTML and the detail screen implementation to align UI with the design.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/resources/movie-showDetail.html</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **0** directories</summary>
+
+No results found
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
 
 </details></tool-use>

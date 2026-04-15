@@ -33,6 +33,14 @@ const PATH_HISTORY =
 const PATH_BOOKMARK =
   'm480-240-168 72q-40 17-76-6.5T200-241v-519q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v519q0 43-36 66.5t-76 6.5l-168-72Z';
 
+/** Material Symbols Rounded `bookmark_add_fill1_24px.svg` — Detail CTA (`movie-showDetail.html`). */
+const PATH_BOOKMARK_ADD_FILL1 =
+  'M680-680h-40q-17 0-28.5-11.5T600-720q0-17 11.5-28.5T640-760h40v-40q0-17 11.5-28.5T720-840q17 0 28.5 11.5T760-800v40h40q17 0 28.5 11.5T840-720q0 17-11.5 28.5T800-680h-40v40q0 17-11.5 28.5T720-600q-17 0-28.5-11.5T680-640v-40ZM480-240l-168 72q-40 17-76-6.5T200-241v-519q0-33 23.5-56.5T280-840h225q18 0 27 16t1 33q-7 17-10 34t-3 37q0 72 45.5 127T680-524q12 2 21.5 2.5t18.5.5q17 0 28.5 10.5T760-484v243q0 43-36 66.5t-76 6.5l-168-72Z';
+
+/** Material Symbols Rounded `bookmark_added_fill1_24px.svg` — Detail CTA added state. */
+const PATH_BOOKMARK_ADDED_FILL1 =
+  'm713-713 113-113q12-12 28.5-12t28.5 12q12 12 12 28.5T883-769L741-628q-12 12-28 12t-28-12l-57-57q-11-11-11-27.5t11-28.5q12-12 28.5-12t28.5 12l28 28ZM480-240l-168 72q-40 17-76-6.5T200-241v-519q0-33 23.5-56.5T280-840h225q18 0 27 16t1 33q-7 17-10 34t-3 37q0 72 45.5 127T680-524q12 2 21.5 2.5t18.5.5q17 0 28.5 10.5T760-484v243q0 43-36 66.5t-76 6.5l-168-72Z';
+
 const PATH_PERSON =
   'M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-240v-32q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v32q0 33-23.5 56.5T720-160H240q-33 0-56.5-23.5T160-240Z';
 
@@ -90,6 +98,16 @@ export function IconHistory({ color, size }: IconProps): JSX.Element {
 /** Material Symbols “bookmark” rounded. */
 export function IconBookmark({ color, size }: IconProps): JSX.Element {
   return <SymbolIcon color={color} d={PATH_BOOKMARK} size={size} />;
+}
+
+/** Material Symbols “bookmark_add” rounded (fill) — Detail “Add to Watchlist”. */
+export function IconBookmarkAdd({ color, size }: IconProps): JSX.Element {
+  return <SymbolIcon color={color} d={PATH_BOOKMARK_ADD_FILL1} size={size} />;
+}
+
+/** Material Symbols “bookmark_added” rounded (fill) — Detail “In Watchlist”. */
+export function IconBookmarkAdded({ color, size }: IconProps): JSX.Element {
+  return <SymbolIcon color={color} d={PATH_BOOKMARK_ADDED_FILL1} size={size} />;
 }
 
 /** Material Symbols “person” rounded. */

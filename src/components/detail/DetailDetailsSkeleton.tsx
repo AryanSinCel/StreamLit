@@ -1,11 +1,11 @@
 /**
- * Skeleton for **`details`** section only — hero + title + chip + synopsis lines (PSD-Detail §2.2, D3).
+ * Skeleton for detail hero + pull-up block — mirrors `movie-showDetail.html` spacing.
  */
 
 import type { JSX } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ShimmerBox } from '../common/ShimmerBox';
-import { detailHeroHeight, homeRowCardWidth, radiusCardInner, spacing } from '../../theme/spacing';
+import { detailHeroHeight, detailSimilarPosterWidth, spacing } from '../../theme/spacing';
 
 export type DetailDetailsSkeletonProps = {
   /** Full-bleed hero width (typically screen width). */
@@ -20,7 +20,7 @@ export function DetailDetailsSkeleton({ heroWidth, contentWidth }: DetailDetails
   return (
     <View style={styles.block}>
       <ShimmerBox style={[styles.hero, { height: detailHeroHeight, width: hw }]} />
-      <View style={styles.inner}>
+      <View style={[styles.inner, { marginTop: -spacing.xxl }]}>
         <ShimmerBox style={[styles.titleLine, { width: cw * 0.72 }]} />
         <View style={styles.chipRow}>
           <ShimmerBox style={styles.chip} />
@@ -40,27 +40,27 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   chip: {
-    borderRadius: radiusCardInner,
+    borderRadius: spacing.sm,
     height: 28,
-    width: homeRowCardWidth * 0.35,
+    width: detailSimilarPosterWidth * 0.35,
   },
   chipRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: spacing.sm,
+    gap: spacing.md,
   },
   chipWide: {
-    borderRadius: radiusCardInner,
+    borderRadius: spacing.sm,
     height: 28,
-    width: homeRowCardWidth * 0.55,
+    width: detailSimilarPosterWidth * 0.55,
   },
   hero: {
-    alignSelf: 'center',
-    borderRadius: radiusCardInner,
+    alignSelf: 'stretch',
   },
   inner: {
     gap: spacing.md,
     paddingHorizontal: spacing.xl,
+    zIndex: 10,
   },
   line: {
     borderRadius: spacing.xs,
