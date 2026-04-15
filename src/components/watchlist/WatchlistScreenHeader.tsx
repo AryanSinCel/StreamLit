@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     opacity: 0.85,
   },
   chip: {
-    borderRadius: radiusFullPill,
+    borderRadius: 5,
     paddingHorizontal: spacing.lg + spacing.xs,
     paddingVertical: spacing.sm,
   },

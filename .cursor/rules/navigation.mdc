@@ -1,5 +1,5 @@
 ---
-description: MovieList navigation — typed routes, stack-per-tab Detail, params by id.
+description: MovieList navigation — typed routes, root Detail, params by id.
 globs:
   - src/navigation/**/*
   - src/screens/**/*
@@ -14,7 +14,7 @@ alwaysApply: false
 
 ## Stack per tab
 
-- **Nested stack per tab** so **Detail** pushes **inside** the tab of origin (back returns to the correct tab stack).
+- **Nested stack per tab** for tab-only routes (each tab’s main + light stack). **`Detail`** and **`SeeAll`** live on the **root stack only** (siblings of `MainTabs`) so the tab bar never appears on those screens; **back** returns to `MainTabs` with the active tab unchanged.
 
 ## Params
 

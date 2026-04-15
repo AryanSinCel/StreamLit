@@ -1,15 +1,30 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
 /**
- * Root stack — `Detail` from Home / SeeAll hides the tab bar (global push).
- * Search tab pushes `Detail` on `SearchStackParamList` so back returns to Search (PSD-Search §5).
+ * “See All” list modes — `getTrendingMoviesWeek` | `getTopRatedMovies` | `getDiscoverMovies` |
+ * `getSimilarMovies` (Watchlist “Because you saved” full list).
+ */
+export type SeeAllMode = 'trending' | 'top_rated' | 'discover' | 'similar';
+
+export type SeeAllParams = {
+  title: string;
+  mode: SeeAllMode;
+  genreId?: number;
+  /** Required when `mode === 'similar'` — `GET /movie/{id}/similar` anchor. */
+  similarSourceMovieId?: number;
+};
+
+/**
+ * Root stack — **`Detail`** and **`SeeAll`** live here (above tabs) so the tab bar only shows on `MainTabs`.
+ * `navigate` from a tab bubbles to this stack; **back** pops to `MainTabs` with the same tab still selected.
  */
 export type RootStackParamList = {
   MainTabs: NavigatorScreenParams<RootTabParamList> | undefined;
   Detail: { movieId: number };
+  SeeAll: SeeAllParams;
 };
 
-/** Bottom tabs — nested stack per tab (main routes only; Detail is on root stack). */
+/** Bottom tabs — nested stack per tab (tab-only routes; no `Detail` / `SeeAll` — see `RootStackParamList`). */
 export type RootTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
   Search: NavigatorScreenParams<SearchStackParamList>;
@@ -17,31 +32,16 @@ export type RootTabParamList = {
   Profile: NavigatorScreenParams<ProfileStackParamList>;
 };
 
-/**
- * Home “See All” list — `getTrendingMoviesWeek` | `getTopRatedMovies` | `getDiscoverMovies` |
- * `getSimilarMovies` (Watchlist “Because you saved” full list).
- */
-export type SeeAllMode = 'trending' | 'top_rated' | 'discover' | 'similar';
-
 export type HomeStackParamList = {
   HomeMain: undefined;
-  SeeAll: {
-    title: string;
-    mode: SeeAllMode;
-    genreId?: number;
-    /** Required when `mode === 'similar'` — `GET /movie/{id}/similar` anchor. */
-    similarSourceMovieId?: number;
-  };
 };
 
 export type SearchStackParamList = {
   SearchMain: undefined;
-  Detail: { movieId: number };
 };
 
 export type WatchlistStackParamList = {
   WatchlistMain: undefined;
-  Detail: { movieId: number };
 };
 
 /** Profile: placeholder only — single main route until a real flow exists. */

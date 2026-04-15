@@ -54,8 +54,9 @@ const PATH_STAR =
 const PATH_ARROW_BACK =
   'M400-240 160-480l240-240 56 57-144 143h487v80H312l144 143-56 57Z';
 
+/** Material Symbols Rounded `share_fill1_24px.svg` — filled **share** (FILL 1). */
 const PATH_SHARE =
-  'M720-80q-50 0-85-35t-35-85q0-6 3-54L322-392q-12 20-11 44t12 42l-57 56q-25-25-31-59t9-65q6-20 18-38l292-334q-11-17-11-37v-48q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-20 0-37-7L435-65q-17 11-37 11H300q-50 0-85-35t-35-85q0-50 35-85t85-35h80l240-276q7-17 7-37 0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-20 0-38-7L373-345l-53 60q-12 14-12 31v15l-53 60q-12 14-12 31v87q0 11 5 21t15 18l400 456q10 12 24 19t30 7h40v80H720Z';
+  'M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Z';
 
 function iconSize(size: number | undefined): number {
   return typeof size === 'number' && !Number.isNaN(size) ? size : 24;
@@ -125,7 +126,7 @@ export function IconArrowBack({ color, size }: IconProps): JSX.Element {
   return <SymbolIcon color={color} d={PATH_ARROW_BACK} size={size} />;
 }
 
-/** Material Symbols “ios_share” rounded — Detail share placeholder (PSD-Detail §4). */
+/** Material Symbols “share” rounded (**fill**) — Detail app bar. */
 export function IconShare({ color, size }: IconProps): JSX.Element {
   return <SymbolIcon color={color} d={PATH_SHARE} size={size} />;
 }

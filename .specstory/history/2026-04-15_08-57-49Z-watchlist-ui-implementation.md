@@ -2063,9 +2063,22 @@ _**Agent (composer-2)**_
 
 <tool-use data-tool-type="search" data-tool-name="glob_file_search">
 <details>
-<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **0** directories</summary>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **9** results in **1** directory</summary>
 
-No results found
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail** (9 files)
+
+| File |
+|------|
+| `DetailDetailsSkeleton.tsx` |
+| `DetailCastSection.tsx` |
+| `DetailWatchlistButton.tsx` |
+| `DetailNavBar.tsx` |
+| `DetailSectionError.tsx` |
+| `DetailHero.tsx` |
+| `DetailSynopsisSection.tsx` |
+| `DetailChipsRow.tsx` |
+| `DetailSimilarSection.tsx` |
+
 </details>
 </tool-use>
 
@@ -2073,3 +2086,1656 @@ No results found
 <summary>Tool use: **glob_file_search**</summary>
 
 </details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating detail components**
+
+I'm updating the detail components to match the movie-showDetail.html design with user image requirements. I'm implementing the user image pill styling with peach background on dark grey, using `rounded-md` px-2 py-1 bg-surface-container-high. I'm re-reading user feedback about year display placement in 'more like this' section. I'm updating the 'more like this' cards to show year after title, not rating, and adjusting DetailScreen to display year in subtitle line. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailHero.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailNavBar.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailChipsRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailWatchlistButton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSynopsisSection.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailCastSection.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Restructuring detail screen**
+
+I'm restructuring the DetailScreen to use absolute positioning for the overlay nav and implementing negative margin overlap for the title. I'm adjusting the layout to position the navigation bar absolutely over the scrollable content using a wrapper View. 
+
+**Adjusting nav positioning**
+
+I'm implementing absolute positioning with zIndex for the nav bar to keep it fixed at the top during scroll. I'm placing DetailNavBar as a sibling to ScrollView with absolute positioning and zIndex 10. I'm adding typography classes for screen title and implementing year display as `TITLE  YEAR`. 
+
+**Formatting title year**
+
+I'm implementing year display in detail screens as 'Title (Year)' format. I'm appending the year to the title text as 'THE TITLE 2024' in Manrope extrabold. I'm removing the year from the main title and placing it only in the 'More Like This' pills as per the PNG reference. 
+
+**Updating detail chips**
+
+I'm adjusting the chip styling to match the HTML reference using `spacing.sm` for border radius. I'm changing the chip border radius to `radiusDetailChip: 6` using spacing constants for consistency. I'm implementing the rating chip background with `detail_rating_chip_bg` color `rgba(130, 38, 37, 0.3)` and text color `text-secondary`. I'm using `formatTmdbVoteAverageLabel` for the rating label and appending ' Rating' to it. I'm replacing the bookmark icons with `IconBookmark` for simplicity. I'm updating the bookmark icon to use the Material bookmark_add path. 
+
+I'm adding the bookmark_add icon path to SimpleIcons by copying from material-symbols. I'm verifying the SVG path for the bookmark icon and ensuring consistent styling with other components. I'm adjusting the add button's gradient direction to `bg-gradient-to-br` and fixing the text color from `on_primary` to `on_primary_container`. I'm implementing LinearGradient with x1 y1 x2 y2 coordinates for bottom-right direction. I'm updating Read more text color to use `colors.primary` instead of text-on-surface and setting heading to `headline-search` with Manrope font. I'm changing detailCastAvatarSize from 60 to 64 to match HTML and adding borderWidth 2 with ring-outline-variant/20 on avatar. 
+
+I'm adjusting the detail chip layout to place year after title with proper spacing and truncation. 
+
+**Adjusting layout**
+
+I'm adding `marginTop: -spacing.xxl` to the first content block after the hero for better spacing. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/ContentCard.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailDetailsSkeleton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Setting detail chip styles**
+
+I'm setting detailChipRadius to spacing.sm (8px) for consistent chip corners. I'm adding bookmark icons from Material Symbols and setting the chip background color to rgba(130, 38, 37, 0.3). 
+
+**Adding bookmark icons**
+
+I'm implementing the bookmark_add icon using SVG path from Material Design Icons. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_search">
+<details>
+<summary>Tool use: **web_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "searchTerm": "Material Symbols Rounded bookmark_add svg path d 0 -960 960 960"
+}
+```
+Result:
+
+```json
+{
+  "isFinal": true,
+  "references": [
+    {
+      "chunk": "Links:\n1. [Material Bookmark Add Symbol Icon | Bookmark_add Symbol SVG, PNG, Copy Paste (CNP)](https://fontawesomeicons.com/materialsymbols/icons/bookmark_add)\n2. [Material Symbols SVG](https://material-symbols-svg.com/)\n3. [variablefont/MaterialSymbolsRounded%5BFILL%2CGRAD%2Copsz%2Cwght%5D.codepoints at master · google/material-design-icons](https://github.com/google/material-design-icons/blob/master/variablefont/MaterialSymbolsRounded%5BFILL%2CGRAD%2Copsz%2Cwght%5D.codepoints)\n4. [Bookmark add Icon | Material UI](https://materialui.co/material-icons-rounded/bookmark-add)\n5. [Bookmark add Icon | Material UI](https://materialui.co/material-icons-sharp/bookmark-add)\n\nThe search results do not contain the specific SVG path data you're looking for with the viewBox \"0 -960 960 960\" for the Material Symbols Rounded bookmark_add icon.\n\nHowever, the results indicate that:[1][2]\n\n- The **Material Symbols Rounded** style is available as part of Google's Material Design icons\n- The &#96;bookmark_add&#96; icon can be accessed through various methods including as an SVG, font icon, or web component\n- Material Symbols can be downloaded and customized from resources like [material-symbols-svg.com][2] and Google's official [material-design-icons repository][3]\n\nTo get the exact SVG path data you need, you would need to visit the Material Symbols SVG website[2] or Google's material-design-icons GitHub repository[3] directly and select the \"rounded\" style for the &#96;bookmark_add&#96; icon.",
+      "title": "Web search results for query: Material Symbols Rounded bookmark_add svg path d 0 -960 960 960"
+    }
+  ],
+  "rejected": false
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_search"><details>
+<summary>Tool use: **web_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Error fetching URL, status code: 404 Not Found
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: find /Users/aryansingh/Desktop/Task2/MovieList/node_modules -name '*bookmark_add*' 2>/dev/null | head -20</summary>
+
+```bash
+find /Users/aryansingh/Desktop/Task2/MovieList/node_modules -name '*bookmark_add*' 2>/dev/null | head -20
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Error fetching URL, status code: 500 Internal Server Error
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Error fetching URL, status code: 500 Internal Server Error
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Building icon components**
+
+I'm constructing IconBookmarkAdd using Material design's bookmark_add path in 960 coordinates. I'm creating minimal SVG paths for IconBookmarkAdd by copying from existing icons. 
+
+**Creating icon components**
+
+I'm implementing IconBookmarkAdd using a Material Symbols path with viewBox 0 0 24 24. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: curl -sL 'https://raw.githubusercontent.com/google/material-design-icons/master/src/symbols/material_symbols_rounded/24px/bookmark_add.svg' 2>/dev/null | head -30</summary>
+
+```bash
+curl -sL 'https://raw.githubusercontent.com/google/material-design-icons/master/src/symbols/material_symbols_rounded/24px/bookmark_add.svg' 2>/dev/null | head -30
+```
+
+```
+404: Not Found
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: curl -sL 'https://api.github.com/repos/google/material-design-icons/contents/symbols/web/bookmark_add/materialsymbolsrounded' 2>/dev/null | head -80</summary>
+
+```bash
+curl -sL 'https://api.github.com/repos/google/material-design-icons/contents/symbols/web/bookmark_add/materialsymbolsrounded' 2>/dev/null | head -80
+```
+
+```
+[
+  {
+    "name": "bookmark_add_20px.svg",
+    "path": "symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_20px.svg",
+    "sha": "343eb85c096302bee3d8a28b96e4d1bd5f33cea3",
+    "size": 757,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_20px.svg?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/blob/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_20px.svg",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/blobs/343eb85c096302bee3d8a28b96e4d1bd5f33cea3",
+    "download_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_20px.svg",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_20px.svg?ref=master",
+      "git": "https://api.github.com/repos/google/material-design-icons/git/blobs/343eb85c096302bee3d8a28b96e4d1bd5f33cea3",
+      "html": "https://github.com/google/material-design-icons/blob/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_20px.svg"
+    }
+  },
+  {
+    "name": "bookmark_add_24px.svg",
+    "path": "symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_24px.svg",
+    "sha": "0d004d2d3e8a98e44b7e108e2da29e023f216ddd",
+    "size": 568,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_24px.svg?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/blob/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_24px.svg",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/blobs/0d004d2d3e8a98e44b7e108e2da29e023f216ddd",
+    "download_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_24px.svg",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_24px.svg?ref=master",
+      "git": "https://api.github.com/repos/google/material-design-icons/git/blobs/0d004d2d3e8a98e44b7e108e2da29e023f216ddd",
+      "html": "https://github.com/google/material-design-icons/blob/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_24px.svg"
+    }
+  },
+  {
+    "name": "bookmark_add_40px.svg",
+    "path": "symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_40px.svg",
+    "sha": "5ecff6674e64838b2a8a6359bc1aff3fb388288b",
+    "size": 834,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_40px.svg?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/blob/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_40px.svg",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/blobs/5ecff6674e64838b2a8a6359bc1aff3fb388288b",
+    "download_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_40px.svg",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_40px.svg?ref=master",
+      "git": "https://api.github.com/repos/google/material-design-icons/git/blobs/5ecff6674e64838b2a8a6359bc1aff3fb388288b",
+      "html": "https://github.com/google/material-design-icons/blob/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_40px.svg"
+    }
+  },
+  {
+    "name": "bookmark_add_48px.svg",
+    "path": "symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_48px.svg",
+    "sha": "d23c31f6bb3b4a6efda34cf98a1483039011e5ec",
+    "size": 770,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_48px.svg?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/blob/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_48px.svg",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/blobs/d23c31f6bb3b4a6efda34cf98a1483039011e5ec",
+    "download_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_48px.svg",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_48px.svg?ref=master",
+      "git": "https://api.github.com/repos/google/material-design-icons/git/blobs/d23c31f6bb3b4a6efda34cf98a1483039011e5ec",
+      "html": "https://github.com/google/material-design-icons/blob/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_48px.svg"
+    }
+  },
+  {
+    "name": "bookmark_add_fill1_20px.svg",
+    "path": "symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_fill1_20px.svg",
+    "sha": "77041de72619fd8b827ef63225a2501e49984f05",
+    "size": 698,
+    "url": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_fill1_20px.svg?ref=master",
+    "html_url": "https://github.com/google/material-design-icons/blob/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_fill1_20px.svg",
+    "git_url": "https://api.github.com/repos/google/material-design-icons/git/blobs/77041de72619fd8b827ef63225a2501e49984f05",
+    "download_url": "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_fill1_20px.svg",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/google/material-design-icons/contents/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_fill1_20px.svg?ref=master",
+      "git": "https://api.github.com/repos/google/material-design-icons/git/blobs/77041de72619fd8b827ef63225a2501e49984f05",
+      "html": "https://github.com/google/material-design-icons/blob/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_fill1_20px.svg"
+    }
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: curl -sL 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_fill1_24px.svg' && echo '---' && curl -sL 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/bookmark_added/materialsymbolsrounded/bookmark_added_fill1_24px.svg'</summary>
+
+```bash
+curl -sL 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/bookmark_add/materialsymbolsrounded/bookmark_add_fill1_24px.svg' && echo '---' && curl -sL 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/bookmark_added/materialsymbolsrounded/bookmark_added_fill1_24px.svg'
+```
+
+```
+&lt;svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"&gt;&lt;path d="M680-680h-40q-17 0-28.5-11.5T600-720q0-17 11.5-28.5T640-760h40v-40q0-17 11.5-28.5T720-840q17 0 28.5 11.5T760-800v40h40q17 0 28.5 11.5T840-720q0 17-11.5 28.5T800-680h-40v40q0 17-11.5 28.5T720-600q-17 0-28.5-11.5T680-640v-40ZM480-240l-168 72q-40 17-76-6.5T200-241v-519q0-33 23.5-56.5T280-840h225q18 0 27 16t1 33q-7 17-10 34t-3 37q0 72 45.5 127T680-524q12 2 21.5 2.5t18.5.5q17 0 28.5 10.5T760-484v243q0 43-36 66.5t-76 6.5l-168-72Z"/&gt;&lt;/svg&gt;---
+&lt;svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"&gt;&lt;path d="m713-713 113-113q12-12 28.5-12t28.5 12q12 12 12 28.5T883-769L741-628q-12 12-28 12t-28-12l-57-57q-11-11-11-27.5t11-28.5q12-12 28.5-12t28.5 12l28 28ZM480-240l-168 72q-40 17-76-6.5T200-241v-519q0-33 23.5-56.5T280-840h225q18 0 27 16t1 33q-7 17-10 34t-3 37q0 72 45.5 127T680-524q12 2 21.5 2.5t18.5.5q17 0 28.5 10.5T760-484v243q0 43-36 66.5t-76 6.5l-168-72Z"/&gt;&lt;/svg&gt;
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Analyzing SVG paths**
+
+I'm examining the SVG path data to understand the shape being drawn. I'm analyzing the SVG path data to understand the shape being drawn. 
+
+**Adding icon constants**
+
+I'm adding fill variants of bookmark icons using SymbolIcon with new path constants. 
+
+**Updating spacing constants**
+
+I'm adding `detailCtaMinHeight = 48` to spacing.ts using explicit combination of xxxl + sm tokens. 
+
+**Adjusting layout overlap**
+
+I'm adjusting the layout overlap so content pulls up under the absolute nav overlay, using -mt-8 to slightly overlap the bottom of the hero. I'm restructuring the layout with ScrollView first, followed by an overlaid View with negative margin to position the title within the hero area. I'm adjusting the layout structure to prevent ScrollView content from scrolling under the fixed nav by reordering elements and using absolute positioning. 
+
+I'm adding detailSimilarCardWidth = 120 and setting poster height to 180, updating DetailDetailsSkeleton with hero border radius removed and chip radius set to sm, and implementing runtime formatting for HTML display. I'm implementing runtime formatting for HTML display in DetailChipsRow and adding a rating chip with background styling. I'm applying semantic color tokens for the rating chip text and adjusting typography for the read more link. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing: adding icon paths and theme tokens, then updating detail components and screen layout.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/colors.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing spacing imports**
+
+I'm fixing the circular dependency by using numeric values instead of spacing references in detailWatchlistCtaMinHeight. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating icons**
+
+I'm adding icons to SimpleIcons and updating all detail files. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/SimpleIcons.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/SimpleIcons.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating detail hero**
+
+I'm removing borderRadius from DetailHero shell. I'm skipping the blur implementation without using a library. 
+
+**Updating typography**
+
+I'm adding new typography styles for cast details and similar titles in typography.ts. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "detailCastAvatarSize"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "detailCastAvatarSize",
+  "topFiles": [
+    {
+      "matchCount": 9,
+      "uri": "src/components/detail/DetailCastSection.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/theme/spacing.ts"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".specstory/history/2026-04-15_06-18-19Z-watchlist-control-implementation-details.md"
+    }
+  ],
+  "totalFiles": 3,
+  "totalMatches": 13
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Adding detail tokens**
+
+I'm adding detail tokens in typography.ts and implementing DetailSimilarSection with Pressable poster only. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailNavBar.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Restructuring detail screen**
+
+I'm moving the navigation outside of the scroll view and handling share via an alert inside the nav component. I'm adjusting the title margin and skeleton layout to account for nav overlap. 
+
+**Adjusting header layout**
+
+I'm removing the old marginTop spacing.lg from the title and adjusting chips marginTop to 0 to fix overlap issues. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailChipsRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailWatchlistButton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSynopsisSection.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailCastSection.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing avatar styling**
+
+I'm adjusting the avatar component to use consistent border styling and removing the unused AVATAR_INNER constant. 
+
+**Updating detail screen layout**
+
+I'm adjusting the detail screen layout to use a 120x180 poster size and removing the rating display. I'm implementing the DetailSimilarSection component with formatted release years and responsive poster dimensions. I'm setting poster radius to 12px to match HTML rounded-xl styling. I'm implementing skeleton shimmer cards with specific dimensions and styling for the detail screen. I'm simplifying the avatar ring implementation with a single View wrapper and inner image. 
+
+I'm adjusting the avatar styling to use a bordered View container with absolute-fill Image inside. I'm restructuring the avatar container with a bordered View wrapper and absolute-fill Image with rounded corners. 
+
+I'm refactoring the avatar container styling to use absoluteFill and correct inner size calculation with detailCastAvatarSize token. I'm simplifying the cast avatar to a styled Image with borderWidth 2 and borderColor, removing unused AVATAR_INNER, and adding borderRadius to fix layout issues. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailDetailsSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing detail sections**
+
+I'm ensuring POSTER_W and radiusCardInner constants are properly used in StyleSheet.create and avoiding double spacing in DetailSynopsisSection. 
+
+**Adjusting spacing**
+
+I'm adjusting spacing in Detail sections to match design specs, ensuring consistent margins and padding throughout. I'm replacing marginRight with gap spacing in Detail sections for consistent layout. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailDetailsSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+
+```
+src/components/detail/DetailChipsRow.tsx(92,70): error TS2345: Argument of type 'number | null' is not assignable to parameter of type 'number'.
+  Type 'null' is not assignable to type 'number'.
+src/components/detail/DetailSimilarSection.tsx(184,19): error TS2551: Property 'absoluteFillObject' does not exist on type 'typeof StyleSheet'. Did you mean 'absoluteFill'?
+src/components/detail/DetailSimilarSection.tsx(188,19): error TS2551: Property 'absoluteFillObject' does not exist on type 'typeof StyleSheet'. Did you mean 'absoluteFill'?
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailChipsRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 9 passed, 9 total
+Tests:       46 passed, 46 total
+Snapshots:   0 total
+Time:        2.583 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailCastSection.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/common/SimpleIcons.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailCastSection.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/common/SimpleIcons.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating components**
+
+I'm updating components.mdc to document the Detail component as optional. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/__tests__",
+  "pattern": "60|detailCast|DetailHero|radiusCardInner.*Detail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/__tests__",
+  "pattern": "60|detailCast|DetailHero|radiusCardInner.*Detail",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Here is a concise summary of what was aligned with **`resources/movie-showDetail.html`** and **`detail.png`**.
+
+### Layout & screen (`DetailScreen.tsx`)
+- **Overlay top bar**: `DetailNavBar` is **absolutely positioned** over the scroll content (z-index 50), like the fixed nav in the HTML.
+- **Hero**: Full-width strip, **no rounded corners** on the hero shell (`DetailHero.tsx`).
+- **Pull-up block**: Main block uses **`marginTop: -spacing.xxl`** (`-mt-8`) and **`zIndex: 10`** so the title stack sits over the hero fade, matching the HTML canvas.
+- **Title**: **`typography['watchlist-screen-title']`** (36 / 800), **uppercase**, **`marginBottom: spacing.md`**.
+
+### Nav (`DetailNavBar.tsx`)
+- **Back** + **Share** use **`colors.on_surface`** at **24px** (Material-style).
+- **Share** is tappable again → **`Alert`** “Coming soon” (same idea as other placeholders).
+- **Hit targets** ~**40×40** (`spacing.xxxl`), horizontal **`spacing.xl`** padding.
+
+### Metadata chips (`DetailChipsRow.tsx`)
+- **`gap: spacing.md`**, chip shells **`surface_container_high`**, **`borderRadius: spacing.sm`** (md pill in the stitch).
+- **Rating** row: **`detail_rating_chip_bg`** (`secondary-container` ~30% opacity), **filled star** + **bold primary** label including **“ Rating”** (as in the HTML).
+- **Runtime**: **`1h 48m`** style when ≥ 60 minutes, otherwise **`84 min`**.
+
+### Watchlist CTAs (`DetailWatchlistButton.tsx`)
+- **Add**: **Diagonal** gradient **`primary` → `primary_container`**, **`rounded-lg`** (`spacing.sm`), **`detailWatchlistCtaMinHeight`** (48px), **`IconBookmarkAdd`** before label, text **`on_primary_container`**, **semibold**.
+- **In list**: **Transparent** fill, **`borderWidth: 1`**, **`borderColor: primary`**, **`IconBookmarkAdded`** + **primary** label (outlined state from the HTML).
+
+### Icons (`SimpleIcons.tsx`)
+- **`IconBookmarkAdd`** / **`IconBookmarkAdded`** from Material Symbols **fill1** 24px SVG paths (Google `material-design-icons`).
+
+### Synopsis (`DetailSynopsisSection.tsx`)
+- Body **`on_surface_variant`**, relaxed line height.
+- Section title **`headline-search`** bold.
+- **Read more** uses **`colors.primary`** (accent link).
+
+### Cast (`DetailCastSection.tsx`)
+- Avatars **`detailCastAvatarSize` (64)**, **`gap: spacing.xl`** (HTML `gap-6`).
+- **Ring**: **`detail_cast_avatar_ring`** + **2px** border on the avatar.
+- Names / roles: **`detail-cast-name`** (11 / 600) and **`detail-cast-role`** (10).
+
+### More like this (`DetailSimilarSection.tsx`)
+- **No `ContentCard`**, **no rating** (and no subtitle used as year-only row).
+- Posters **`120×180`**, **`radiusCardInner`**, **`surface_container_highest`** placeholder.
+- One label line: **`Title · Year`** (`detail-similar-title`).
+- **See all**: **`primary`**, **bold**, **`label-sm`**.
+
+### Theme tokens
+- **`colors.ts`**: `detail_rating_chip_bg`, `detail_cast_avatar_ring`.
+- **`spacing.ts`**: `detailCastAvatarSize` **64**, `detailSimilarPosterWidth` **120**, `detailWatchlistCtaMinHeight`.
+- **`typography.ts`**: `detail-cast-name`, `detail-cast-role`, `detail-similar-title`.
+
+### Skeleton (`DetailDetailsSkeleton.tsx`)
+- Hero **square** edges; inner block uses the same **negative top margin** as the real layout.
+
+`npx tsc --noEmit`, **`npm test`**, and lint on the touched files are clean.
+
+**Note:** The HTML shows both **Add** and **In Watchlist** as a design annotation; the app still toggles **one** button from the store, which matches real product behavior. If you want both rows visible for marketing screenshots only, that would be a separate prop-driven demo mode.
+
+---
+
+_**User**_
+
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StreamList - Movie Details</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "tertiary-fixed": "#8ef2fd",
+                "tertiary": "#71d5e0",
+                "surface-container-lowest": "#0e0e0e",
+                "on-secondary-fixed": "#410004",
+                "error": "#ffb4ab",
+                "tertiary-container": "#319ea9",
+                "primary-container": "#ff5351",
+                "outline": "#ab8886",
+                "on-tertiary-container": "#002f33",
+                "on-secondary-container": "#ff9992",
+                "on-primary-fixed-variant": "#930014",
+                "background": "#131313",
+                "surface": "#131313",
+                "secondary-fixed-dim": "#ffb3ae",
+                "on-tertiary-fixed-variant": "#004f55",
+                "on-error-container": "#ffdad6",
+                "on-background": "#e5e2e1",
+                "error-container": "#93000a",
+                "on-tertiary": "#00363b",
+                "on-secondary": "#630e11",
+                "on-surface": "#e5e2e1",
+                "on-primary-fixed": "#410004",
+                "surface-variant": "#353534",
+                "on-surface-variant": "#e4bdba",
+                "primary-fixed": "#ffdad7",
+                "on-primary-container": "#5c0008",
+                "surface-container-low": "#1c1b1b",
+                "secondary-container": "#822625",
+                "secondary": "#ffb3ae",
+                "primary-fixed-dim": "#ffb3ae",
+                "primary": "#ffb3ae",
+                "surface-bright": "#3a3939",
+                "on-primary": "#68000b",
+                "on-tertiary-fixed": "#002023",
+                "on-error": "#690005",
+                "inverse-primary": "#bb1522",
+                "surface-container-highest": "#353534",
+                "outline-variant": "#5b403e",
+                "inverse-on-surface": "#313030",
+                "surface-dim": "#131313",
+                "inverse-surface": "#e5e2e1",
+                "surface-container-high": "#2a2a2a",
+                "on-secondary-fixed-variant": "#822625",
+                "surface-container": "#201f1f",
+                "tertiary-fixed-dim": "#71d5e0",
+                "secondary-fixed": "#ffdad7",
+                "surface-tint": "#ffb3ae"
+              },
+              fontFamily: {
+                "headline": ["Manrope"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { display: none; }
+        .hero-gradient {
+            background: linear-gradient(to bottom, rgba(19,19,19,0) 0%, rgba(19,19,19,1) 100%);
+        }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopAppBar -->
+<nav class="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 bg-transparent backdrop-blur-xl bg-neutral-900/70 z-50">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-all active:scale-95">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<div class="flex gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-all active:scale-95">
+<span class="material-symbols-outlined text-on-surface">share</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="relative pb-12">
+<!-- Hero Section -->
+<section class="relative h-[220px] w-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Cinematic shot of a neon-drenched futuristic city street at night with glowing pink and blue lights reflecting on wet asphalt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDYhgFwtiup76PPRuzg7SGYDnrnnABWgOIDKSglBaqyoBy8wTlBCGVPO8Yl5hA4H7xODR0A7p0NEBOLt0iGGz2ixBdNaT7gGOm7UDW68WK9zJuCjSgOpZRBAjKNN_OSxfrzPqm2ak3uzIvJjAbB2d4c8W0nDKsYZumryk3I-eywZxrvoDfKY7g-ZfBR3IJaZBtXKuYJXr-416azyQvpV6vM01vUeyU0bvJtEMLPCPOwRsCMrXhI8NqLiJB89ZkiGV7S2Vx_0VNNyvp"/>
+<div class="absolute inset-0 hero-gradient"></div>
+</section>
+<!-- Content Details -->
+<div class="px-6 -mt-8 relative z-10">
+<!-- Title & Metadata -->
+<header class="mb-6">
+<h1 class="font-headline font-extrabold text-4xl tracking-tighter text-on-surface mb-3 uppercase">
+                    NEON DRIFT
+                </h1>
+<div class="flex flex-wrap gap-3">
+<span class="px-2 py-1 bg-surface-container-high rounded-md text-xs font-medium text-on-surface-variant">2024</span>
+<span class="px-2 py-1 bg-secondary-container/30 text-secondary flex items-center gap-1 rounded-md text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 9.2 Rating
+                    </span>
+<span class="px-2 py-1 bg-surface-container-high rounded-md text-xs font-medium text-on-surface-variant">Sci-Fi</span>
+<span class="px-2 py-1 bg-surface-container-high rounded-md text-xs font-medium text-on-surface-variant">1h 48m</span>
+</div>
+</header>
+<!-- Action Buttons (State 1: Primary) -->
+<div class="space-y-4 mb-8">
+<button class="w-full h-12 flex items-center justify-center gap-2 bg-gradient-to-br from-primary to-primary-container text-on-primary-container font-semibold rounded-lg shadow-lg active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bookmark_add</span>
+<span>Add to Watchlist</span>
+</button>
+<!-- State 2: Outlined (Annotation Style) -->
+<div class="pt-2 border-t border-outline-variant/15">
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-2 opacity-60">Watchlist state: added</p>
+<button class="w-full h-12 flex items-center justify-center gap-2 border border-primary text-primary font-semibold rounded-lg active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bookmark_added</span>
+<span>In Watchlist</span>
+</button>
+</div>
+</div>
+<!-- Synopsis -->
+<section class="mb-10">
+<h2 class="font-headline font-bold text-lg mb-3 text-on-surface">Synopsis</h2>
+<p class="font-body text-sm leading-relaxed text-on-surface-variant line-clamp-3">
+                    In a sprawling metropolis fueled by bioluminescent technology, a disgraced pilot is forced back into the high-stakes underworld of illegal street racing. As the lines between human and machine blur, he must navigate a web of corporate espionage and neon-lit danger to save the city he once called home.
+                    <span class="text-on-surface font-semibold ml-1 cursor-pointer">Read more</span>
+</p>
+</section>
+<!-- Cast Section -->
+<section class="mb-10">
+<h2 class="font-headline font-bold text-lg mb-4 text-on-surface">Cast</h2>
+<div class="flex overflow-x-auto gap-6 pb-2 scroll-smooth">
+<!-- Cast Item 1 -->
+<div class="flex-shrink-0 text-center w-16">
+<img class="w-16 h-16 rounded-full object-cover mb-2 ring-2 ring-outline-variant/20" data-alt="Portrait of a young male actor with sharp features and dark hair looking intensely at the camera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtMLmpS65biudrCdZ4sPWFtekxqILNO2i6dETVddcwSjqbh2ZDvEt2feLrSmwAf1Oe51v0w66x1nevA-wI4L21OiTPayhuOu2hA6i0ZmfVVm06J5BizMY3EPi8Rl36o8h-pk0BfcKfKCyqoBImJKq84gWabrFFrUxgEjDbZj_BZyzMKaeyFF_Gw-QXSMfxOCntnf7TIdz8w3aisd3yuPFMegmY6apCk2jz5Kjty6kW4PYpYQX7rtZqvtEzmdyydXjC7fsloCEdcWyF"/>
+<p class="text-[11px] font-semibold text-on-surface leading-tight">Alex Rivera</p>
+<p class="text-[10px] text-on-surface-variant">Kaelen</p>
+</div>
+<!-- Cast Item 2 -->
+<div class="flex-shrink-0 text-center w-16">
+<img class="w-16 h-16 rounded-full object-cover mb-2 ring-2 ring-outline-variant/20" data-alt="Portrait of a female actress with neon light reflecting on her face, soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDayKDKWh22CAQMnp532k-1O_7yGdxicDyxnXzcXgfxCslFuqNkJCiIsUqTPSIiIZeEvn8n0Oh0WeLi1Y0PxNsK7QGbgnfK8BUBoBAVEaNNq5p6IVFhJvIlDhy7hPRX3eCqnwYvn6SyFifKFbYwd0rgJXgfMm5x6K80o3pPl-Ni3VNhdiIS_W6oadvvPVLgsyzn_WlZLFDDrYFk-PUWRMNKrl8C1n9ZuNLjEJyVvFdYIRt-A8psFMhjsBgyKj7Omjqe5ZJKjSHLRvsK"/>
+<p class="text-[11px] font-semibold text-on-surface leading-tight">Mina Sato</p>
+<p class="text-[10px] text-on-surface-variant">Nyx</p>
+</div>
+<!-- Cast Item 3 -->
+<div class="flex-shrink-0 text-center w-16">
+<img class="w-16 h-16 rounded-full object-cover mb-2 ring-2 ring-outline-variant/20" data-alt="Middle-aged male actor with a weathered face and short beard, dramatic noir lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4ke2RlhwzftY4OGfhr0DjHycgzQLwWqM4OSivfB7ci7cmFDWr5KYvXiUO9ARgGUeHwb2qcMXaknNyOq9KGgJ75TCiP3g-3DuXyrTHlqKxnL3eh1aG6TMWqiGL3DIuKcC3pvuSqUqHj1nt5I6a4lfuNXaeDqgjgaO_NeavLXqYAmV41i8UNJO-OI5qqpXs_fVyJhdOxUcl8PKCobmRDONzuqg7J9-UmvtO3jJpl0B1W5OU4Y2zxU6dIg0eyTRudIiR7GovdLAnoH92"/>
+<p class="text-[11px] font-semibold text-on-surface leading-tight">Victor Vane</p>
+<p class="text-[10px] text-on-surface-variant">The Boss</p>
+</div>
+<!-- Skeleton Cast State (Annotation) -->
+<div class="flex-shrink-0 w-16 opacity-40 grayscale pointer-events-none">
+<div class="w-16 h-16 rounded-full bg-surface-container-highest mb-2 animate-pulse"></div>
+<div class="h-2 w-12 bg-surface-container-highest rounded mx-auto mb-1 animate-pulse"></div>
+<div class="h-2 w-8 bg-surface-container-highest rounded mx-auto animate-pulse"></div>
+</div>
+</div>
+</section>
+<!-- More Like This -->
+<section>
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-headline font-bold text-lg text-on-surface">More Like This</h2>
+<span class="text-xs text-primary font-bold">See All</span>
+</div>
+<div class="flex overflow-x-auto gap-4 pb-4">
+<!-- Movie Card 1 -->
+<div class="flex-shrink-0 w-[120px]">
+<div class="h-[180px] rounded-xl overflow-hidden mb-2 relative group">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Futuristic movie poster featuring a silhouette against a glowing orange sun and cybernetic towers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADIsMvs8tln25Pkb9wtBufwQ2VlsF0VpJ9OghfYkreS4zUKqkI24aOKs08Pvk1uIXK8zmEbmvrBopDC0_IGTQ1izXUts7cO_qgpuYTNDUzAXWuNemgttUMpDkUdZMiVOkjb4-sZMEIZzbu4m7y2_9NQaCjswKQTMzB4MtlATex7uApSyw_XUu2msFfcrAyposHI8392ag-PKKiwFj4ISPpau3FwG-6UU4BVhaFRDN14_dVdlJ8UcbjTIMYq5YB1SJ4MZE5lbTCH86A"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+</div>
+<p class="text-xs font-medium text-on-surface truncate">Synth City</p>
+</div>
+<!-- Movie Card 2 -->
+<div class="flex-shrink-0 w-[120px]">
+<div class="h-[180px] rounded-xl overflow-hidden mb-2 relative group">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Abstract movie poster with dark silhouettes walking towards a bright neon portal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJDfP9pQXNdWrSvGQwEGyc7-se5oGr_72djgxDpuBiL9G7S_F0iPquSUflEutCr2odjEWpCMFYtlucNwqt0zqR2q9kVhlccUzYRPKzdM2PA8elt8hjZFm9cIuYg89OgUe45pKzlNLSLbFUZX2Xvs8GLTyzB_cHRTYHB7d445zql6VFRz5v8mBi2JBtY_52kKAm7RkObq-Apwbtc75GQVCoFydYFfsUTiVqaViP421dUD77aiBuLujTW7ETgsZCQ-JQ4ID4dKNfnN49"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+</div>
+<p class="text-xs font-medium text-on-surface truncate">Digital Ghost</p>
+</div>
+<!-- Skeleton Poster (Annotation) -->
+<div class="flex-shrink-0 w-[120px] opacity-30 grayscale pointer-events-none">
+<div class="h-[180px] rounded-xl bg-surface-container-highest mb-2 animate-pulse"></div>
+<div class="h-3 w-20 bg-surface-container-highest rounded animate-pulse"></div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Visual Polish: Bottom Shadow/Safe Area -->
+<div class="fixed bottom-0 left-0 w-full h-8 bg-gradient-to-t from-surface to-transparent pointer-events-none"></div>
+</body></html> use this for share icon 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Checking IconShare implementation**
+
+I'm examining the current IconShare implementation in SimpleIcons.tsx to understand how to integrate the Material Symbols 'share' icon. </details></think>
+
+_**Agent (composer-2)**_
+
+Checking the share icon path in `SimpleIcons.tsx` and replacing it with Material Symbols `share` to match the HTML.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/SimpleIcons.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: curl -sL 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/share/materialsymbolsrounded/share_24px.svg' 2>/dev/null</summary>
+
+```bash
+curl -sL 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/share/materialsymbolsrounded/share_24px.svg' 2>/dev/null
+```
+
+```
+&lt;svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"&gt;&lt;path d="M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-640q17 0 28.5-11.5T760-760q0-17-11.5-28.5T720-800q-17 0-28.5 11.5T680-760q0 17 11.5 28.5T720-720ZM240-440q17 0 28.5-11.5T280-480q0-17-11.5-28.5T240-520q-17 0-28.5 11.5T200-480q0 17 11.5 28.5T240-440Zm480 280q17 0 28.5-11.5T760-200q0-17-11.5-28.5T720-240q-17 0-28.5 11.5T680-200q0 17 11.5 28.5T720-160Zm0-600ZM240-480Zm480 280Z"/&gt;&lt;/svg&gt;
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating share icon**
+
+I'm replacing the share icon path with the one from share_24px.svg. I'm updating the share icon path data to match the new SVG coordinates. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "IconShare"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "IconShare",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/SimpleIcons.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/detail/DetailNavBar.tsx"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating icon paths**
+
+I'm replacing PATH_SHARE with the official `share` glyph path from the rounded 24px SVG. </details></think>
+
+_**Agent (composer-2)**_
+
+Replacing `IconShare`'s path: it currently uses `ios_share`; the HTML uses Material Symbols `share` (three-node network icon). Updating `PATH_SHARE` to the official `share_24px` rounded glyph.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/SimpleIcons.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/SimpleIcons.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Here is what changed.
+
+### `IconShare` matches `movie-showDetail.html`
+The detail HTML uses **Material Symbols `share`** (the three-node “share” mark), not **`ios_share`**.
+
+In **`src/components/common/SimpleIcons.tsx`**:
+- **`PATH_SHARE`** is now the path from Google’s **`share_24px.svg`** (Material Symbols **Rounded**, same `0 -960 960 960` grid as your other icons).
+- **`IconShare`** is documented as the **“share”** glyph used on the detail top bar.
+
+**`DetailNavBar`** is unchanged: it still passes **`colors.on_surface`** and **24** size, which matches **`text-on-surface`** on the HTML’s **`<span class="material-symbols-outlined …">share</span>`**.
+
+`npx tsc --noEmit` passes.
+
+---
+
+_**User**_
+
+have share filled icon 
+
+---
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: curl -sL 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/share/materialsymbolsrounded/share_fill1_24px.svg' 2>/dev/null</summary>
+
+```bash
+curl -sL 'https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/share/materialsymbolsrounded/share_fill1_24px.svg' 2>/dev/null
+```
+
+```
+&lt;svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"&gt;&lt;path d="M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Z"/&gt;&lt;/svg&gt;
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/SimpleIcons.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/SimpleIcons.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Updated **`IconShare`** in `src/components/common/SimpleIcons.tsx` to use the official **filled** glyph: **`share_fill1_24px.svg`** from Material Symbols Rounded (same `0 -960 960 960` viewBox). The path is the solid **FILL 1** variant so the three share nodes read as filled instead of outline-only. Typecheck passes.
+
+---
+
+_**User**_
+
+fix the skeleton for detail screen UI 
+
+---
+
+_**Agent (composer-2)**_
+
+Reviewing the detail skeleton and screen layout to align the skeleton with the real UI.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailDetailsSkeleton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/ShimmerBox.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Reading detail components**
+
+I'm reviewing the DetailSynopsisSection, DetailWatchlistButton, DetailCastSection, and DetailSimilarSection loading states to understand what's missing from the skeleton. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Designing skeleton**
+
+I'm adjusting the DetailDetailsSkeleton to match the hero, pull-up, title, and chips layout specs. I'm updating the skeleton layout with precise shimmer widths and spacing for year, rating, genre, and runtime. I'm expanding the detail screen skeleton to include labeled synopsis and cast sections with precise dimensions. 
+
+I'm adjusting the skeleton layout to match DetailScreen spacing, fixing chip widths, adding missing watchlist button block, and including synopsis heading shim with proper marginBottom. I'm implementing titleShim with marginBottom spacing, chipRow with 4 chips, watchlistShim with marginTop spacing.lg, and synopsisBlock with headingShim and line x3. 
+
+I'm focusing on DetailDetailsSkeleton content with chip widths using spacing.xxxl * 2 (80px) for chipSm. I'm defining chip widths using spacing multiples: chipYear=56px, chipRating=120px, chipGenre=88px, chipRuntime=96px. I'm setting chip widths using spacing multiples: chipYear=56px, chipRating=120px, chipGenre=88px, chipRuntime=96px. I'm implementing the layout spacing for the detail page sections using consistent spacing tokens. 
+
+**Adjusting spacing**
+
+I'm removing the block gap on the outer synopsis section and using explicit margins for parity. </details></think>

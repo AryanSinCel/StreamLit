@@ -1,16 +1,12 @@
 import type { RouteProp } from '@react-navigation/native';
-import { CommonActions, useNavigation } from '@react-navigation/native';
+import { CommonActions, StackActions, useNavigation } from '@react-navigation/native';
 import type { JSX } from 'react';
 import { useCallback, useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useShallow } from 'zustand/react/shallow';
 import { useMovieDetail } from '../hooks/useMovieDetail';
-import type {
-  RootStackParamList,
-  SearchStackParamList,
-  WatchlistStackParamList,
-} from '../navigation/types';
+import type { RootStackParamList } from '../navigation/types';
 import { DetailCastSection } from '../components/detail/DetailCastSection';
 import { DetailChipsRow } from '../components/detail/DetailChipsRow';
 import { DetailDetailsSkeleton } from '../components/detail/DetailDetailsSkeleton';
@@ -26,10 +22,7 @@ import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 
-type DetailScreenRouteProp =
-  | RouteProp<RootStackParamList, 'Detail'>
-  | RouteProp<SearchStackParamList, 'Detail'>
-  | RouteProp<WatchlistStackParamList, 'Detail'>;
+type DetailScreenRouteProp = RouteProp<RootStackParamList, 'Detail'>;
 
 type Props = {
   route: DetailScreenRouteProp;
@@ -93,31 +86,7 @@ export function DetailScreen({ route }: Props): JSX.Element {
       mode: 'similar' as const,
       similarSourceMovieId: movieId,
     };
-    const tabNav = navigation.getParent();
-    if (tabNav != null) {
-      tabNav.dispatch(
-        CommonActions.navigate({
-          name: 'Home',
-          params: {
-            screen: 'SeeAll',
-            params,
-          },
-        }),
-      );
-      return;
-    }
-    navigation.dispatch(
-      CommonActions.navigate({
-        name: 'MainTabs',
-        params: {
-          screen: 'Home',
-          params: {
-            screen: 'SeeAll',
-            params,
-          },
-        },
-      }),
-    );
+    navigation.dispatch(StackActions.replace('SeeAll', params));
   }, [navigation, movieId]);
 
   const onPressSimilarMovie = useCallback(

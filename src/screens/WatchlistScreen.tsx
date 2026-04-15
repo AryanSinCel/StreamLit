@@ -225,13 +225,10 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
                   if (similarAnchorMovieId == null) {
                     return;
                   }
-                  navigation.navigate('Home', {
-                    screen: 'SeeAll',
-                    params: {
-                      title: `Because you saved ${savedTitle}`,
-                      mode: 'similar',
-                      similarSourceMovieId: similarAnchorMovieId,
-                    },
+                  navigation.navigate('SeeAll', {
+                    title: `Because you saved ${savedTitle}`,
+                    mode: 'similar',
+                    similarSourceMovieId: similarAnchorMovieId,
                   });
                 }}
                 savedTitle={savedTitle}

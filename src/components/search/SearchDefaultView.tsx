@@ -47,6 +47,7 @@ export type SearchDefaultViewProps = {
   trendingLoading: boolean;
   trendingError: string | null;
   onRetryTrending: () => void;
+  onOpenResult: (movieId: number) => void;
 };
 
 function featuredBackdropUri(movie: TmdbMovieListItem | null): string | null {
@@ -79,6 +80,7 @@ export function SearchDefaultView({
   trendingLoading,
   trendingError,
   onRetryTrending,
+  onOpenResult,
 }: SearchDefaultViewProps): JSX.Element {
   const { width: windowWidth } = useWindowDimensions();
   const horizontalPad = spacing.xl;
@@ -169,7 +171,27 @@ export function SearchDefaultView({
           {trendingError == null && !(trendingLoading && featuredMovie == null) ? (
             <>
               <View style={styles.featuredWrap}>
-                <View style={styles.featuredCard}>
+                <Pressable
+                  accessibilityHint={featuredMovie != null ? 'Opens movie details' : undefined}
+                  accessibilityLabel={
+                    featuredMovie != null
+                      ? featuredMovie.title.length > 0
+                        ? featuredMovie.title
+                        : 'Movie'
+                      : undefined
+                  }
+                  accessibilityRole={featuredMovie != null ? 'button' : undefined}
+                  disabled={featuredMovie == null}
+                  onPress={() => {
+                    if (featuredMovie != null) {
+                      onOpenResult(featuredMovie.id);
+                    }
+                  }}
+                  style={({ pressed }) => [
+                    styles.featuredCard,
+                    featuredMovie != null && pressed && styles.itemPressed,
+                  ]}
+                >
                   {featuredUri != null ? (
                     <Image
                       accessibilityIgnoresInvertColors
@@ -227,14 +249,14 @@ export function SearchDefaultView({
                       {featuredMovie != null ? formatSearchFeaturedMeta(featuredMovie, genres) : ''}
                     </Text>
                   </View>
-                </View>
+                </Pressable>
               </View>
 
               {gridMovies.length > 0 ? (
                 <View style={[styles.gridRow, { gap: gridRowGap }]}>
                   {gridMovies.map((movie) => (
                     <View key={movie.id} style={[styles.gridCell, { width: gridColWidth }]}>
-                      <TrendingMiniCard genres={genres} movie={movie} />
+                      <TrendingMiniCard genres={genres} movie={movie} onPress={() => onOpenResult(movie.id)} />
                     </View>
                   ))}
                 </View>
@@ -250,13 +272,22 @@ export function SearchDefaultView({
 function TrendingMiniCard({
   movie,
   genres,
+  onPress,
 }: {
   movie: TmdbMovieListItem;
   genres: readonly TmdbGenre[];
+  onPress: () => void;
 }): JSX.Element {
   const uri = buildImageUrl(movie.poster_path, TMDB_IMAGE_SIZE_W342);
+  const title = movie.title.length > 0 ? movie.title : '—';
   return (
-    <View style={styles.miniCard}>
+    <Pressable
+      accessibilityHint="Opens movie details"
+      accessibilityLabel={title}
+      accessibilityRole="button"
+      onPress={onPress}
+      style={({ pressed }) => [styles.miniCard, pressed && styles.itemPressed]}
+    >
       <View style={styles.miniPoster}>
         {uri != null ? (
           <Image
@@ -274,12 +305,12 @@ function TrendingMiniCard({
         <PosterRatingBadge density="sm" style={styles.ratingBadge} variant="search" voteAverage={movie.vote_average} />
       </View>
       <Text numberOfLines={1} style={styles.miniTitle}>
-        {movie.title.length > 0 ? movie.title : '—'}
+        {title}
       </Text>
       <Text numberOfLines={1} style={styles.miniSubtitle}>
         {formatSearchTrendingGenreOnly(movie, genres)}
       </Text>
-    </View>
+    </Pressable>
   );
 }
 
@@ -391,6 +422,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
+  },
+  itemPressed: {
+    opacity: 0.88,
   },
   miniCard: {
     gap: spacing.md,

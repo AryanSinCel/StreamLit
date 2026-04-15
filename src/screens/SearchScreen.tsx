@@ -27,7 +27,7 @@ type Props = CompositeScreenProps<
   >
 >;
 
-/** Search tab: default (`useSearch` + S4) vs results State 2 (S5b) + Detail on Search stack. */
+/** Search tab: default (`useSearch` + S4) vs results State 2 (S5b); Detail opens on root stack (no tab bar). */
 export function SearchScreen({ navigation }: Props): JSX.Element {
   const insets = useSafeAreaInsets();
   const [query, setQuery] = useState('');
@@ -136,6 +136,7 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
             }}
             onFocusInput={() => setInputFocused(true)}
             onGenreChipPress={search.applyGenreChip}
+            onOpenResult={openSearchDetail}
             onRecentTermPress={(term) => setQuery(term)}
             onRetryTrending={search.refetchTrending}
             query={query}

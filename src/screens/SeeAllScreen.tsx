@@ -1,5 +1,3 @@
-import type { CompositeScreenProps } from '@react-navigation/native';
-import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { JSX } from 'react';
 import { useCallback, useMemo } from 'react';
@@ -17,26 +15,16 @@ import type { TmdbMovieListItem } from '../api/types';
 import { ContentCard } from '../components/common/ContentCard';
 import { SeeAllGridSkeleton } from '../components/seeAll/SeeAllGridSkeleton';
 import { useSeeAll } from '../hooks/useSeeAll';
-import type {
-  HomeStackParamList,
-  RootStackParamList,
-  RootTabParamList,
-} from '../navigation/types';
+import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 import { formatListMovieSubtitle } from '../utils/formatMovieListItem';
 
-type Props = CompositeScreenProps<
-  NativeStackScreenProps<HomeStackParamList, 'SeeAll'>,
-  CompositeScreenProps<
-    BottomTabScreenProps<RootTabParamList, 'Home'>,
-    NativeStackScreenProps<RootStackParamList>
-  >
->;
+type Props = NativeStackScreenProps<RootStackParamList, 'SeeAll'>;
 
 /**
- * Home stack “See All” — native stack header + **`route.params.title`**; 2-column **`ContentCard`** grid (PSD-Home list intent).
+ * Full list “See All” — root stack (no tab bar), native header + **`route.params.title`**; 2-column **`ContentCard`** grid.
  */
 export function SeeAllScreen({ navigation, route }: Props): JSX.Element {
   const { mode, genreId, similarSourceMovieId } = route.params;

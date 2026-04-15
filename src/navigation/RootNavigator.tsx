@@ -50,18 +50,6 @@ function HomeStackNavigator() {
         component={HomeScreen}
         options={{ headerShown: false, title: 'Home' }}
       />
-      <HomeStack.Screen
-        name="SeeAll"
-        component={SeeAllScreen}
-        options={({ route }) => ({
-          title: route.params.title,
-          headerBackTitleVisible: false,
-          headerTitleStyle: {
-            ...typography['title-lg'],
-            color: colors.on_surface,
-          },
-        })}
-      />
     </HomeStack.Navigator>
   );
 }
@@ -74,11 +62,6 @@ function SearchStackNavigator() {
         component={SearchScreen}
         options={{ headerShown: false, title: 'Search' }}
       />
-      <SearchStack.Screen
-        name="Detail"
-        component={DetailScreen}
-        options={{ headerShown: false, title: 'Detail' }}
-      />
     </SearchStack.Navigator>
   );
 }
@@ -90,11 +73,6 @@ function WatchlistStackNavigator() {
         name="WatchlistMain"
         component={WatchlistScreen}
         options={{ headerShown: false, title: 'Watchlist' }}
-      />
-      <WatchlistStack.Screen
-        name="Detail"
-        component={DetailScreen}
-        options={{ headerShown: false, title: 'Detail' }}
       />
     </WatchlistStack.Navigator>
   );
@@ -230,6 +208,18 @@ export function RootNavigator() {
         name="Detail"
         component={DetailScreen}
         options={{ headerShown: false, title: 'Detail' }}
+      />
+      <RootStack.Screen
+        name="SeeAll"
+        component={SeeAllScreen}
+        options={({ route }) => ({
+          title: route.params.title,
+          headerBackTitleVisible: false,
+          headerTitleStyle: {
+            ...typography['title-lg'],
+            color: colors.on_surface,
+          },
+        })}
       />
     </RootStack.Navigator>
   );

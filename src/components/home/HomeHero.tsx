@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     justifyContent: 'center',
     minWidth: 0,
-    paddingHorizontal: spacing.xl,
+    paddingHorizontal: spacing.xxl,
     paddingVertical: spacing.md,
   },
   watchLabel: {
