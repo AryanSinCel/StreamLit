@@ -306,7 +306,7 @@ export interface WatchlistItem {
   mediaType: 'movie' | 'tv';
 }
 
-/** Watchlist tab chips — client-side only; maps to `WatchlistItem.mediaType`. */
+/** Watchlist tab chips — client-side only; maps to `WatchlistItem.mediaType` (`resources/watchlist.html`). */
 export type WatchlistMediaFilter = 'all' | 'movie' | 'tv';
 
 /**

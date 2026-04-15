@@ -38,7 +38,7 @@ alwaysApply: true
 - **No card-edge border or stroke** — separation via **background/surface** and **spacing** only (no-line rule).
 - **Title:** **`title-lg`**, **`on_surface`**, below the image.
 - **Subtitle (year • genre):** **`label-sm`**, **`on_surface_variant`**.
-- **Rating badge (when shown):** **top-right** overlay on the poster/card area; background **`surface_container_highest`**; star **`primary_container`**; value **`label-sm`**.
+- **Rating badge (when shown):** **top-right** overlay; background **`poster_rating_scrim`**; star **`primary`** (`text-primary`); value **`on_surface`** — shared **`PosterRatingBadge`** (`search` vs `watchlist` layout variants).
 - Shared implementations live under **`src/components/common/`** (e.g. **`ContentCard`**) so Home / Search / Watchlist stay consistent.
 
 ## Data

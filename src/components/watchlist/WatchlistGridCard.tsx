@@ -6,9 +6,10 @@ import type { JSX } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { TmdbGenre, WatchlistItem } from '../../api/types';
-import { IconMovie, IconStar } from '../common/SimpleIcons';
+import { IconMovie } from '../common/SimpleIcons';
+import { PosterRatingBadge } from '../common/PosterRatingBadge';
 import { colors, contentCard } from '../../theme/colors';
-import { radiusCardInner, radiusCardOuter, radiusFullPill, spacing } from '../../theme/spacing';
+import { radiusCardInner, radiusFullPill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { formatWatchlistGridSubtitle } from '../../utils/formatWatchlistGridSubtitle';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W342 } from '../../utils/image';
@@ -22,13 +23,6 @@ export type WatchlistGridCardProps = {
   onPressRemove: () => void;
 };
 
-function formatRating(value: number): string {
-  if (value >= 10) {
-    return '10';
-  }
-  return value.toFixed(1);
-}
-
 export function WatchlistGridCard({
   item,
   genres,
@@ -38,11 +32,6 @@ export function WatchlistGridCard({
   onPressRemove,
 }: WatchlistGridCardProps): JSX.Element {
   const uri = buildImageUrl(item.posterPath, TMDB_IMAGE_SIZE_W342);
-  const showRating =
-    typeof item.voteAverage === 'number' &&
-    !Number.isNaN(item.voteAverage) &&
-    Number.isFinite(item.voteAverage);
-
   return (
     <View style={[styles.root, style]} accessibilityLabel={item.title}>
       <View style={styles.poster}>
@@ -59,15 +48,7 @@ export function WatchlistGridCard({
             <IconMovie color={colors.on_surface_variant} size={40} />
           </View>
         )}
-        {showRating ? (
-          <View
-            style={styles.ratingBadge}
-            accessibilityLabel={`Rating ${formatRating(item.voteAverage)} out of 10`}
-          >
-            <IconStar color={colors.primary} size={12} />
-            <Text style={styles.ratingValue}>{formatRating(item.voteAverage)}</Text>
-          </View>
-        ) : null}
+        <PosterRatingBadge density="md" style={styles.ratingBadge} variant="watchlist" voteAverage={item.voteAverage} />
       </View>
       <View style={styles.titleRow}>
         <Text numberOfLines={1} style={styles.title}>
@@ -115,7 +96,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
     backgroundColor: colors.surface_container_high,
-    borderRadius: radiusCardInner,
+    /** `watchlist.html` — `rounded-lg` (0.5rem → 8). */
+    borderRadius: spacing.sm,
     paddingVertical: spacing.sm,
   },
   detailsBtnDisabled: {
@@ -124,8 +106,9 @@ const styles = StyleSheet.create({
   detailsBtnPressed: {
     opacity: 0.88,
   },
+  /** `watchlist.html` — Details `text-sm font-semibold`. */
   detailsLabel: {
-    ...typography['label-sm'],
+    ...typography['title-sm'],
     color: colors.on_surface,
     fontWeight: '600',
   },
@@ -134,14 +117,16 @@ const styles = StyleSheet.create({
   },
   poster: {
     aspectRatio: contentCard.aspectRatio,
-    borderRadius: radiusCardOuter,
+    /** `watchlist.html` poster shell — `rounded-xl` (~12) + `bg-surface-container-low`. */
+    backgroundColor: colors.surface_container_low,
+    borderRadius: radiusCardInner,
     overflow: 'hidden',
     position: 'relative',
     width: '100%',
   },
   posterImage: {
     ...StyleSheet.absoluteFill,
-    borderRadius: radiusCardOuter,
+    borderRadius: radiusCardInner,
   },
   posterPlaceholder: {
     ...StyleSheet.absoluteFill,
@@ -149,43 +134,33 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface_container_low,
     borderRadius: radiusCardInner,
     justifyContent: 'center',
-    margin: spacing.xs,
   },
   ratingBadge: {
-    alignItems: 'center',
-    backgroundColor: colors.poster_rating_scrim,
-    borderRadius: spacing.sm,
-    flexDirection: 'row',
-    gap: spacing.xs,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
     position: 'absolute',
     right: spacing.sm,
     top: spacing.sm,
     zIndex: 2,
   },
-  ratingValue: {
-    ...typography['label-sm'],
-    color: colors.on_surface,
-  },
   removeChip: {
     alignItems: 'center',
     backgroundColor: colors.surface_container_highest,
     borderRadius: radiusFullPill,
-    height: spacing.xl,
+    /** `watchlist.html` — `w-8 h-8` remove control. */
+    height: spacing.xxl,
     justifyContent: 'center',
     marginLeft: spacing.sm,
-    width: spacing.xl,
+    width: spacing.xxl,
   },
   removeChipPressed: {
     opacity: 0.88,
   },
   removeGlyph: {
-    ...typography['title-sm'],
+    ...typography['title-lg'],
     color: colors.on_surface,
-    lineHeight: 20,
+    lineHeight: 22,
     marginTop: -2,
   },
+  /** `watchlist.html` — `gap-2` between poster, title row, meta, CTA. */
   root: {
     gap: spacing.sm,
   },
@@ -193,8 +168,9 @@ const styles = StyleSheet.create({
     ...typography['label-sm'],
     color: colors.on_surface_variant,
   },
+  /** `watchlist.html` — `text-base font-bold` title (Manrope). */
   title: {
-    ...typography['title-lg'],
+    ...typography['title-search-card'],
     color: colors.on_surface,
     flex: 1,
   },

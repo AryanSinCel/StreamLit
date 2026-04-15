@@ -17,7 +17,8 @@ import { radiusFullPill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { formatListMovieSubtitle } from '../../utils/formatMovieListItem';
 
-const EMPTY_ICON_SIZE = spacing.xxxxl + spacing.lg;
+/** `watchlist-empty.html` `text-8xl` bookmark (~96px). */
+const EMPTY_ICON_SIZE = spacing.xxxxl + spacing.xxl + spacing.sm;
 /** Glow canvas behind the bookmark only — keeps highlight off the headline (`watchlist-empty.html`). */
 const ICON_RADIAL_GLOW_SIZE = spacing.xxxxl * 4;
 const POPULAR_GRID_MAX = 4;
@@ -91,7 +92,7 @@ export function WatchlistEmptyState({
         </View>
       ) : null}
 
-      <View style={styles.recommendationsSection}>
+      <View style={[styles.recommendationsSection, loading ? styles.recommendationsGhost : null]}>
         <Text style={styles.sectionLabel}>Popular Recommendations</Text>
         {loading ? (
           <GhostPosterPlaceholderGrid count={POPULAR_GRID_MAX} gap={gridRowGap} posterWidth={gridColWidth} />
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
   body: {
     ...typography['body-md'],
     color: colors.on_surface_variant,
-    lineHeight: 22,
+    lineHeight: 24,
     marginBottom: spacing.xxxl,
     paddingHorizontal: spacing.sm,
     textAlign: 'center',
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
   disc: {
     alignItems: 'center',
     backgroundColor: colors.watchlist_empty_icon_disc,
-    borderColor: colors.outline_variant,
+    borderColor: colors.outline_variant_ring,
     borderRadius: radiusFullPill,
     borderWidth: 1,
     justifyContent: 'center',
@@ -180,6 +181,10 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: ICON_RADIAL_GLOW_SIZE,
   },
+  recommendationsGhost: {
+    opacity: 0.2,
+    pointerEvents: 'none',
+  },
   recGrid: {
     alignSelf: 'center',
     flexDirection: 'row',
@@ -209,7 +214,7 @@ const styles = StyleSheet.create({
     ...typography['label-sm'],
     color: colors.on_surface_variant,
     fontFamily: typography['headline-md'].fontFamily,
-    fontWeight: '700',
+    fontWeight: '500',
     letterSpacing: POPULAR_SECTION_TRACKING,
     marginBottom: spacing.lg,
     textTransform: 'uppercase',

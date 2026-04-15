@@ -55,6 +55,7 @@ function HomeStackNavigator() {
         component={SeeAllScreen}
         options={({ route }) => ({
           title: route.params.title,
+          headerBackTitleVisible: false,
           headerTitleStyle: {
             ...typography['title-lg'],
             color: colors.on_surface,

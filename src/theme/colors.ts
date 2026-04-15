@@ -37,6 +37,8 @@ export const colors = {
   /** Tab bar scrim (`home.html` #131313 @ 70%). */
   tab_bar_scrim: 'rgba(19, 19, 19, 0.70)',
   outline_variant: 'rgba(255,255,255,0.15)',
+  /** Empty watchlist icon disc ring — `watchlist-empty.html` `ring-outline-variant/10`. */
+  outline_variant_ring: 'rgba(255, 255, 255, 0.04)',
   /** Hero title / synopsis legibility when scrim is omitted (no solid overlay panel). */
   hero_text_shadow: 'rgba(19, 19, 19, 0.85)',
   /** Watchlist empty-state radial glow (`resources/watchlist-empty.html` `.bg-empty-glow`). */

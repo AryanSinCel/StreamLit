@@ -45,8 +45,12 @@ describe('formatHomeRailSubtitle', () => {
 });
 
 describe('formatListMovieSubtitle', () => {
-  it('keeps year and vote average for grid-style rows', () => {
-    expect(formatListMovieSubtitle(sampleMovie)).toBe('2024 · 7.2');
+  it('returns release year only (rating on poster badge)', () => {
+    expect(formatListMovieSubtitle(sampleMovie)).toBe('2024');
+  });
+
+  it('uses em dash when release date is missing', () => {
+    expect(formatListMovieSubtitle({ ...sampleMovie, release_date: '' })).toBe('—');
   });
 });
 

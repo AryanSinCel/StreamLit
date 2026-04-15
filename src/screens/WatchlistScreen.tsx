@@ -241,12 +241,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
         }
         ListHeaderComponent={
           <View style={{ paddingHorizontal: horizontalPad }}>
-            <WatchlistScreenHeader
-              filter={filter}
-              setFilter={setFilter}
-              showChips
-              showTopActions={false}
-            />
+            <WatchlistScreenHeader filter={filter} setFilter={setFilter} showChips showTopActions={false} />
           </View>
         }
         numColumns={2}

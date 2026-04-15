@@ -10,7 +10,8 @@ import { radiusCardInner, radiusCardOuter, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W185 } from '../../utils/image';
 import { showTmdbVoteAverageBadge } from '../../utils/tmdbDisplayGuards';
-import { IconMovie, IconStar } from './SimpleIcons';
+import { IconMovie } from './SimpleIcons';
+import { PosterRatingBadge } from './PosterRatingBadge';
 
 export type ContentCardProps = {
   title: string;
@@ -32,13 +33,6 @@ export type ContentCardProps = {
   style?: StyleProp<ViewStyle>;
   testID?: string;
 };
-
-function formatRating(value: number): string {
-  if (value >= 10) {
-    return '10';
-  }
-  return value.toFixed(1);
-}
 
 export function ContentCard({
   title,
@@ -82,15 +76,7 @@ export function ContentCard({
             <IconMovie color={colors.on_surface_variant} size={32} />
           </View>
         )}
-        {positiveRating != null ? (
-          <View
-            style={styles.ratingBadge}
-            accessibilityLabel={`Rating ${formatRating(positiveRating)} out of 10`}
-          >
-            <IconStar color={colors.primary_container} size={12} />
-            <Text style={styles.ratingValue}>{formatRating(positiveRating)}</Text>
-          </View>
-        ) : null}
+        <PosterRatingBadge density="md" style={styles.ratingBadge} variant="search" voteAverage={positiveRating} />
         </View>
       </View>
     </View>
@@ -167,20 +153,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   ratingBadge: {
-    alignItems: 'center',
-    backgroundColor: colors.surface_container_highest,
-    borderRadius: spacing.sm,
-    flexDirection: 'row',
-    gap: spacing.xs,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
     position: 'absolute',
     right: spacing.sm,
     top: spacing.sm,
-  },
-  ratingValue: {
-    ...typography['label-sm'],
-    color: colors.on_surface,
   },
   textBlock: {
     gap: spacing.xs,

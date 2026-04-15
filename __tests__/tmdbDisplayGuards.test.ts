@@ -2,7 +2,11 @@
  * @format
  */
 
-import { showTmdbRuntimeChip, showTmdbVoteAverageBadge } from '../src/utils/tmdbDisplayGuards';
+import {
+  formatTmdbVoteAverageLabel,
+  showTmdbRuntimeChip,
+  showTmdbVoteAverageBadge,
+} from '../src/utils/tmdbDisplayGuards';
 
 describe('showTmdbVoteAverageBadge', () => {
   it('returns false for 0, non-finite, and nullish', () => {
@@ -15,6 +19,17 @@ describe('showTmdbVoteAverageBadge', () => {
   it('returns true for positive scores', () => {
     expect(showTmdbVoteAverageBadge(7.2)).toBe(true);
     expect(showTmdbVoteAverageBadge(10)).toBe(true);
+  });
+});
+
+describe('formatTmdbVoteAverageLabel', () => {
+  it('uses one decimal below 10', () => {
+    expect(formatTmdbVoteAverageLabel(7.25)).toBe('7.3');
+  });
+
+  it('shows 10 without decimals at or above 10', () => {
+    expect(formatTmdbVoteAverageLabel(10)).toBe('10');
+    expect(formatTmdbVoteAverageLabel(10.2)).toBe('10');
   });
 });
 

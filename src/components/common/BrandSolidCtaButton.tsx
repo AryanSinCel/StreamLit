@@ -60,9 +60,8 @@ const styles = StyleSheet.create({
     shadowRadius: 16,
   },
   label: {
-    ...typography['title-lg'],
+    ...typography['watchlist-cta-label'],
     color: colors.on_surface,
-    fontWeight: '700',
     textAlign: 'center',
   },
 });

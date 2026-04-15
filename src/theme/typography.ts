@@ -24,6 +24,27 @@ export const typography = {
     fontWeight: '800',
     letterSpacing: lsEm(-0.02, 40),
   },
+  /** Watchlist main title — `resources/watchlist.html` (`text-4xl font-extrabold`). */
+  'watchlist-screen-title': {
+    fontFamily: fontManrope,
+    fontSize: 36,
+    fontWeight: '800',
+    letterSpacing: lsEm(-0.02, 36),
+  },
+  /** Watchlist empty “0 titles” — `resources/watchlist-empty.html` (body, `font-medium`). */
+  'watchlist-count-line': {
+    fontFamily: fontInter,
+    fontSize: 16,
+    fontWeight: '500',
+    letterSpacing: 0,
+  },
+  /** Watchlist empty CTA label — `resources/watchlist-empty.html` (`text-lg font-bold`). */
+  'watchlist-cta-label': {
+    fontFamily: fontManrope,
+    fontSize: 18,
+    fontWeight: '700',
+    letterSpacing: 0,
+  },
   'headline-md': {
     fontFamily: fontManrope,
     fontSize: 28,

@@ -129,8 +129,8 @@ export function WatchlistScreenHeader({
 
 const styles = StyleSheet.create({
   headerBlock: {
-    gap: spacing.lg,
-    marginBottom: spacing.lg,
+    gap: 0,
+    marginBottom: spacing.xl,
   },
   headerTopRow: {
     flexDirection: 'row',
@@ -139,23 +139,22 @@ const styles = StyleSheet.create({
   },
   headerTitles: {
     flex: 1,
-    gap: spacing.xs,
   },
   collectionLabel: {
     ...typography['label-sm'],
     color: colors.primary,
     fontWeight: '700',
     letterSpacing: 1.2,
+    marginBottom: spacing.sm,
     textTransform: 'uppercase',
   },
   screenTitle: {
-    ...typography['display-md'],
+    ...typography['watchlist-screen-title'],
     color: colors.on_surface,
   },
   countLine: {
-    ...typography['label-sm'],
+    ...typography['watchlist-count-line'],
     color: colors.on_surface_variant,
-    fontWeight: '500',
     marginTop: spacing.xs,
   },
   headerActions: {
@@ -174,11 +173,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: spacing.md,
+    marginTop: spacing.lg + spacing.xs,
   },
   chip: {
     borderRadius: radiusFullPill,
-    paddingHorizontal: spacing.xl,
-    paddingVertical: spacing.sm + spacing.xs,
+    paddingHorizontal: spacing.lg + spacing.xs,
+    paddingVertical: spacing.sm,
   },
   chipIdle: {
     backgroundColor: colors.surface_container_highest,
@@ -191,12 +191,12 @@ const styles = StyleSheet.create({
   },
   chipLabel: {
     ...typography['title-sm'],
+    fontWeight: '600',
   },
   chipLabelIdle: {
     color: colors.on_surface_variant,
   },
   chipLabelSelected: {
     color: colors.on_surface,
-    fontWeight: '600',
   },
 });

@@ -5,7 +5,7 @@
 import type { JSX } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { colors, contentCard } from '../../theme/colors';
-import { radiusCardOuter, spacing } from '../../theme/spacing';
+import { spacing } from '../../theme/spacing';
 
 export type GhostPosterPlaceholderGridProps = {
   /** Portrait tile width (two tiles + `gap` should fit the content width). */
@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   tile: {
-    borderRadius: radiusCardOuter,
+    /** `watchlist-empty.html` ghost tiles (`rounded-lg` ≈ 8). */
+    borderRadius: spacing.sm,
     overflow: 'hidden',
   },
   poster: {

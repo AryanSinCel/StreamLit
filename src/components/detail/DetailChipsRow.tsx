@@ -5,7 +5,11 @@
 import type { JSX, ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import type { TmdbMovieDetail } from '../../api/types';
-import { showTmdbRuntimeChip, showTmdbVoteAverageBadge } from '../../utils/tmdbDisplayGuards';
+import {
+  formatTmdbVoteAverageLabel,
+  showTmdbRuntimeChip,
+  showTmdbVoteAverageBadge,
+} from '../../utils/tmdbDisplayGuards';
 import { IconStar } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
 import { radiusFullPill, spacing } from '../../theme/spacing';
@@ -42,12 +46,12 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
 
   const rating = movie.vote_average;
   if (showTmdbVoteAverageBadge(rating)) {
-    const label = rating >= 10 ? '10' : rating.toFixed(1);
+    const label = formatTmdbVoteAverageLabel(rating);
     chips.push({
       key: 'rating',
       node: (
         <View style={styles.ratingChip}>
-          <IconStar color={colors.primary_container} size={14} />
+          <IconStar color={colors.primary} size={14} />
           <Text style={styles.chipText}>{label}</Text>
         </View>
       ),

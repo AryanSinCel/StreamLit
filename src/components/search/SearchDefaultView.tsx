@@ -7,7 +7,8 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 
 import { useWindowDimensions } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import type { SearchScreenMode, TmdbGenre, TmdbMovieListItem } from '../../api/types';
-import { IconMovie, IconSearch, IconStar } from '../common/SimpleIcons';
+import { IconMovie, IconSearch } from '../common/SimpleIcons';
+import { PosterRatingBadge } from '../common/PosterRatingBadge';
 import { colors, contentCard } from '../../theme/colors';
 import {
   radiusCardInner,
@@ -56,13 +57,6 @@ function featuredBackdropUri(movie: TmdbMovieListItem | null): string | null {
     buildImageUrl(movie.backdrop_path, TMDB_IMAGE_SIZE_W780) ??
     buildImageUrl(movie.poster_path, TMDB_IMAGE_SIZE_W780)
   );
-}
-
-function ratingShort(vote: number): string {
-  if (typeof vote !== 'number' || Number.isNaN(vote) || !Number.isFinite(vote)) {
-    return '—';
-  }
-  return vote.toFixed(1);
 }
 
 export function SearchDefaultView({
@@ -277,10 +271,7 @@ function TrendingMiniCard({
             <IconMovie color={colors.on_surface_variant} size={40} />
           </View>
         )}
-        <View style={styles.ratingBadge}>
-          <Text style={styles.ratingValue}>{ratingShort(movie.vote_average)}</Text>
-          <IconStar color={colors.on_surface} size={10} />
-        </View>
+        <PosterRatingBadge density="sm" style={styles.ratingBadge} variant="search" voteAverage={movie.vote_average} />
       </View>
       <Text numberOfLines={1} style={styles.miniTitle}>
         {movie.title.length > 0 ? movie.title : '—'}
@@ -432,23 +423,10 @@ const styles = StyleSheet.create({
     color: colors.on_surface,
   },
   ratingBadge: {
-    alignItems: 'center',
-    backgroundColor: colors.poster_rating_scrim,
-    borderRadius: spacing.sm,
-    elevation: 0,
-    flexDirection: 'row',
-    gap: spacing.xs,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
     position: 'absolute',
     right: spacing.sm,
     top: spacing.sm,
     zIndex: 2,
-  },
-  ratingValue: {
-    ...typography['hero-badge'],
-    color: colors.on_surface,
-    textTransform: 'none',
   },
   retryBtn: {
     alignSelf: 'flex-start',
