@@ -15,6 +15,15 @@ jest.mock('react-native-gesture-handler', () => {
   };
 });
 
+jest.mock('@react-native-community/blur', () => {
+  const { View } = require('react-native');
+  return {
+    __esModule: true,
+    BlurView: View,
+    VibrancyView: View,
+  };
+});
+
 jest.mock('react-native-svg', () => {
   const React = require('react');
   const { View } = require('react-native');

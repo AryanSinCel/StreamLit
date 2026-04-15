@@ -53,6 +53,13 @@ export const colors = {
   detail_rating_chip_bg: 'rgba(130, 38, 37, 0.3)',
   /** Cast avatar ring — `ring-outline-variant/20` in `movie-showDetail.html`. */
   detail_cast_avatar_ring: 'rgba(255, 255, 255, 0.08)',
+  /**
+   * Detail top nav tint — `movie-showDetail.html` (`bg-neutral-900/70` over `backdrop-blur-xl`).
+   * Tailwind `neutral-900` #171717 @ 70%.
+   */
+  detail_nav_bar_tint: 'rgba(23, 23, 23, 0.7)',
+  /** Detail nav icon hit — `hover:bg-white/10` in `movie-showDetail.html`. */
+  detail_nav_icon_pressed: 'rgba(255, 255, 255, 0.1)',
 } as const;
 
 /**
@@ -62,6 +69,14 @@ export const colors = {
 export const tabBarGlass = {
   backgroundColor: 'rgba(35, 35, 35, 0.70)',
   blurAmount: 20,
+} as const;
+
+/** Detail top bar — `movie-showDetail.html` `backdrop-blur-xl` (Tailwind ≈ 24px). */
+export const detailNavBarBlur = {
+  /** iOS `BlurView` `blurAmount` */
+  blurAmountIos: 24,
+  /** Android `BlurView` `blurAmount` (scale differs per platform). */
+  blurAmountAndroid: 18,
 } as const;
 
 /** Poster / content cards — portrait ratio and corner radii. */

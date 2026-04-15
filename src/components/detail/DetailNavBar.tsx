@@ -1,70 +1,106 @@
 /**
- * Detail overlay bar — `movie-showDetail.html` (back + share, `text-on-surface`, circular hits).
+ * Detail overlay bar — `movie-showDetail.html`: full-width `backdrop-blur-xl` + `bg-neutral-900/70`,
+ * `px-6 py-4`, `w-10 h-10` circular hits + `hover:bg-white/10`; Material Symbols Outlined back/share.
  */
 
+import { BlurView } from '@react-native-community/blur';
 import type { JSX } from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Alert, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { IconArrowBack, IconShare } from '../common/SimpleIcons';
-import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
-
-const NAV_HIT = spacing.xxxl;
+import { IconArrowBack, IconShareOutlined } from '../common/SimpleIcons';
+import { colors, detailNavBarBlur } from '../../theme/colors';
+import { radiusFullPill, spacing } from '../../theme/spacing';
 
 export type DetailNavBarProps = {
   onBack: () => void;
 };
 
+const ICON_SIZE = 24;
+
 export function DetailNavBar({ onBack }: DetailNavBarProps): JSX.Element {
   const insets = useSafeAreaInsets();
 
+  const blurProps =
+    Platform.OS === 'android'
+      ? ({
+          blurAmount: detailNavBarBlur.blurAmountAndroid,
+          blurType: 'dark' as const,
+          overlayColor: colors.detail_nav_bar_tint,
+        } as const)
+      : ({
+          blurAmount: detailNavBarBlur.blurAmountIos,
+          blurType: 'dark' as const,
+          reducedTransparencyFallbackColor: colors.surface,
+        } as const);
+
   return (
-    <View style={[styles.bar, { paddingTop: insets.top + spacing.md }]} pointerEvents="box-none">
-      <Pressable
-        accessibilityLabel="Go back"
-        accessibilityRole="button"
-        hitSlop={spacing.sm}
-        onPress={onBack}
-        style={({ pressed }) => [styles.hitCircle, pressed && styles.hitPressed]}
-      >
-        <IconArrowBack color={colors.on_surface} size={24} />
-      </Pressable>
-      <Pressable
-        accessibilityHint="Sharing is not available yet"
-        accessibilityLabel="Share"
-        accessibilityRole="button"
-        hitSlop={spacing.sm}
-        onPress={() => {
-          Alert.alert('Share', 'Coming soon', [{ text: 'OK' }]);
-        }}
-        style={({ pressed }) => [styles.hitCircle, pressed && styles.hitPressed]}
-      >
-        <IconShare color={colors.on_surface} size={24} />
-      </Pressable>
+    <View
+      style={[
+        styles.bar,
+        {
+          paddingBottom: spacing.lg,
+          paddingHorizontal: spacing.xl,
+          paddingTop: insets.top + spacing.lg,
+        },
+      ]}
+      pointerEvents="box-none"
+    >
+      <BlurView {...blurProps} style={StyleSheet.absoluteFill} />
+      {Platform.OS === 'ios' ? (
+        <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.tintOverlay]} />
+      ) : null}
+      <View style={styles.row} pointerEvents="box-none">
+        <Pressable
+          accessibilityLabel="Go back"
+          accessibilityRole="button"
+          hitSlop={spacing.sm}
+          onPress={onBack}
+          style={({ pressed }) => [styles.iconHit, pressed && styles.iconHitPressed]}
+        >
+          <IconArrowBack color={colors.on_surface} size={ICON_SIZE} />
+        </Pressable>
+        <Pressable
+          accessibilityHint="Sharing is not available yet"
+          accessibilityLabel="Share"
+          accessibilityRole="button"
+          hitSlop={spacing.sm}
+          onPress={() => {
+            Alert.alert('Share', 'Coming soon', [{ text: 'OK' }]);
+          }}
+          style={({ pressed }) => [styles.iconHit, pressed && styles.iconHitPressed]}
+        >
+          <IconShareOutlined color={colors.on_surface} size={ICON_SIZE} />
+        </Pressable>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   bar: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     left: 0,
-    paddingBottom: spacing.md,
-    paddingHorizontal: spacing.xl,
+    overflow: 'hidden',
     position: 'absolute',
     right: 0,
     top: 0,
     zIndex: 50,
   },
-  hitCircle: {
-    alignItems: 'center',
-    height: NAV_HIT,
-    justifyContent: 'center',
-    width: NAV_HIT,
+  tintOverlay: {
+    backgroundColor: colors.detail_nav_bar_tint,
   },
-  hitPressed: {
-    opacity: 0.88,
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  iconHit: {
+    alignItems: 'center',
+    borderRadius: radiusFullPill,
+    height: spacing.xxxl,
+    justifyContent: 'center',
+    width: spacing.xxxl,
+  },
+  iconHitPressed: {
+    backgroundColor: colors.detail_nav_icon_pressed,
   },
 });

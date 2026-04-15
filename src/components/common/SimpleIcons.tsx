@@ -51,12 +51,19 @@ const PATH_PLAY =
 const PATH_STAR =
   'M480-269 314-169q-11 7-23 6t-21-8q-9-7-14-17.5t-2-23.5l44-189-147-127q-10-9-12.5-20.5T140-571q4-11 12-18t22-9l194-17 75-178q5-12 15.5-18t21.5-6q11 0 21.5 6t15.5 18l75 178 194 17q14 2 22 9t12 18q4 11 1.5 22.5T809-528L662-401l44 189q3 13-2 23.5T690-171q-9 7-21 8t-23-6L480-269Z';
 
-const PATH_ARROW_BACK =
-  'M400-240 160-480l240-240 56 57-144 143h487v80H312l144 143-56 57Z';
-
 /** Material Symbols Rounded `share_fill1_24px.svg` — filled **share** (FILL 1). */
 const PATH_SHARE =
   'M720-80q-50 0-85-35t-35-85q0-7 1-14.5t3-13.5L322-392q-17 15-38 23.5t-44 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q23 0 44 8.5t38 23.5l282-164q-2-6-3-13.5t-1-14.5q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-23 0-44-8.5T638-672L356-508q2 6 3 13.5t1 14.5q0 7-1 14.5t-3 13.5l282 164q17-15 38-23.5t44-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Z';
+
+/** Material Icons **outlined** `share` 24dp — `movie-showDetail.html` (`material-symbols-outlined` share). */
+const PATH_SHARE_OUTLINED_24 =
+  'M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z';
+
+const VIEWBOX_24 = '0 0 24 24';
+
+/** Material `arrow_back` on 24dp grid (filled chevron + stem). */
+const PATH_ARROW_BACK_24 =
+  'M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z';
 
 function iconSize(size: number | undefined): number {
   return typeof size === 'number' && !Number.isNaN(size) ? size : 24;
@@ -121,14 +128,29 @@ export function IconPlay({ color, size }: IconProps): JSX.Element {
   return <SymbolIcon color={color} d={PATH_PLAY} size={size} />;
 }
 
-/** Material Symbols “arrow_back” rounded — Detail nav (PSD-Detail §4). */
+/** Material `arrow_back` 24dp — Detail nav (`PATH_ARROW_BACK_24`). */
 export function IconArrowBack({ color, size }: IconProps): JSX.Element {
-  return <SymbolIcon color={color} d={PATH_ARROW_BACK} size={size} />;
+  const s = iconSize(size);
+  return (
+    <Svg accessibilityRole="image" height={s} viewBox={VIEWBOX_24} width={s}>
+      <Path d={PATH_ARROW_BACK_24} fill={color} fillOpacity={1} />
+    </Svg>
+  );
 }
 
 /** Material Symbols “share” rounded (**fill**) — Detail app bar. */
 export function IconShare({ color, size }: IconProps): JSX.Element {
   return <SymbolIcon color={color} d={PATH_SHARE} size={size} />;
+}
+
+/** Material Icons **outlined** share 24dp — Detail app bar (`movie-showDetail.html`). */
+export function IconShareOutlined({ color, size }: IconProps): JSX.Element {
+  const s = iconSize(size);
+  return (
+    <Svg accessibilityRole="image" height={s} viewBox={VIEWBOX_24} width={s}>
+      <Path d={PATH_SHARE_OUTLINED_24} fill={color} fillOpacity={1} />
+    </Svg>
+  );
 }
 
 /** Material Symbols “star” rounded (rating badge). */
