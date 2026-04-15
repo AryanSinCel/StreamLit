@@ -5,6 +5,7 @@
 import type { JSX, ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import type { TmdbMovieDetail } from '../../api/types';
+import { showTmdbRuntimeChip, showTmdbVoteAverageBadge } from '../../utils/tmdbDisplayGuards';
 import { IconStar } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
 import { radiusFullPill, spacing } from '../../theme/spacing';
@@ -40,7 +41,7 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
   }
 
   const rating = movie.vote_average;
-  if (typeof rating === 'number' && !Number.isNaN(rating) && rating > 0) {
+  if (showTmdbVoteAverageBadge(rating)) {
     const label = rating >= 10 ? '10' : rating.toFixed(1);
     chips.push({
       key: 'rating',
@@ -66,7 +67,7 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
   }
 
   const runtime = movie.runtime;
-  if (typeof runtime === 'number' && runtime > 0) {
+  if (showTmdbRuntimeChip(runtime)) {
     chips.push({
       key: 'runtime',
       node: <Text style={styles.chipText}>{`${String(runtime)} min`}</Text>,

@@ -71,7 +71,8 @@ export function DetailSimilarSection({
     );
   }
 
-  const list = results ?? [];
+  /** PSD-Detail §3 — empty `results` after success: hide header + carousel entirely. */
+  const list = Array.isArray(results) ? results : [];
   if (list.length === 0) {
     return <View />;
   }

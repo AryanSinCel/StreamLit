@@ -23,6 +23,14 @@ function sortTopBilled(cast: TmdbMovieCastCredit[]): TmdbMovieCastCredit[] {
   return [...cast].sort((a, b) => (a.order ?? 999) - (b.order ?? 999)).slice(0, 16);
 }
 
+/** Drops rows with no usable name so “empty” handling matches §3 “unusable” credits. */
+function usableCastEntries(cast: TmdbMovieCastCredit[] | null): TmdbMovieCastCredit[] {
+  if (cast == null) {
+    return [];
+  }
+  return cast.filter((c) => typeof c.name === 'string' && c.name.trim().length > 0);
+}
+
 export function DetailCastSection({ loading, error, cast, onRetry }: DetailCastSectionProps): JSX.Element {
   if (loading && cast == null) {
     return (
@@ -52,7 +60,7 @@ export function DetailCastSection({ loading, error, cast, onRetry }: DetailCastS
     );
   }
 
-  const list = cast != null ? sortTopBilled(cast) : [];
+  const list = sortTopBilled(usableCastEntries(cast));
   if (list.length === 0) {
     return (
       <View style={styles.block}>

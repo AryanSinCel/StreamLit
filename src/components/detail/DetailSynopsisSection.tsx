@@ -27,6 +27,7 @@ export function DetailSynopsisSection({ overview }: DetailSynopsisSectionProps):
       {overview != null && overview.trim().length > 0 ? (
         <Pressable
           accessibilityHint={expanded ? 'Collapses synopsis to three lines' : 'Expands full synopsis'}
+          accessibilityLabel={expanded ? 'Show less synopsis' : 'Read more synopsis'}
           accessibilityRole="button"
           onPress={() => {
             setExpanded((v) => !v);

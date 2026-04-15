@@ -28,8 +28,10 @@ export function DetailNavBar({ onBack }: DetailNavBarProps): JSX.Element {
         <IconArrowBack color={colors.on_surface} size={26} />
       </Pressable>
       <Pressable
+        accessibilityHint="Sharing is not available yet"
         accessibilityLabel="Share"
         accessibilityRole="button"
+        accessibilityState={{ disabled: true }}
         disabled
         hitSlop={spacing.sm}
         style={({ pressed }) => [styles.hit, styles.shareDisabled, pressed && styles.hitPressed]}

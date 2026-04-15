@@ -1,16 +1,10 @@
 import type { RouteProp } from '@react-navigation/native';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import type { JSX } from 'react';
-import { useCallback } from 'react';
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { useCallback, useMemo } from 'react';
+import { ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useShallow } from 'zustand/react/shallow';
 import { useMovieDetail } from '../hooks/useMovieDetail';
 import type {
   RootStackParamList,
@@ -25,8 +19,11 @@ import { DetailNavBar } from '../components/detail/DetailNavBar';
 import { DetailSectionError } from '../components/detail/DetailSectionError';
 import { DetailSimilarSection } from '../components/detail/DetailSimilarSection';
 import { DetailSynopsisSection } from '../components/detail/DetailSynopsisSection';
+import { DetailWatchlistButton } from '../components/detail/DetailWatchlistButton';
+import { useWatchlistStore } from '../store/watchlistStore';
+import { mapMovieDetailToWatchlistItem } from '../utils/mapMovieDetailToWatchlistItem';
 import { colors } from '../theme/colors';
-import { radiusCardInner, spacing } from '../theme/spacing';
+import { spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 
 type DetailScreenRouteProp =
@@ -39,7 +36,8 @@ type Props = {
 };
 
 /**
- * Detail tab / stack — PSD-Detail §4 layout; **`details` / `credits` / `similar`** from `useMovieDetail` only (D3).
+ * Detail tab / stack — PSD-Detail §4 layout; **`details` / `credits` / `similar`** from `useMovieDetail` only;
+ * watchlist via **`watchlistStore`** (**D4**); §3 edge cases (**D5**); re-entry + nav polish (**D6**).
  */
 export function DetailScreen({ route }: Props): JSX.Element {
   const { movieId } = route.params;
@@ -47,6 +45,40 @@ export function DetailScreen({ route }: Props): JSX.Element {
   const insets = useSafeAreaInsets();
   const { width: windowWidth } = useWindowDimensions();
   const { details, credits, similar } = useMovieDetail(movieId);
+
+  const { hydrated, storedInWatchlist, addItem, removeItem } = useWatchlistStore(
+    useShallow((s) => ({
+      hydrated: s.hydrated,
+      storedInWatchlist: s.items.some((i) => i.id === movieId),
+      addItem: s.addItem,
+      removeItem: s.removeItem,
+    })),
+  );
+
+  const onToggleWatchlist = useCallback(() => {
+    const detail = details.data;
+    if (detail == null || !hydrated) {
+      return;
+    }
+    if (storedInWatchlist) {
+      removeItem(movieId);
+      return;
+    }
+    addItem(mapMovieDetailToWatchlistItem(detail, movieId));
+  }, [addItem, details.data, hydrated, movieId, removeItem, storedInWatchlist]);
+
+  const watchlistControl = useMemo(() => {
+    if (details.data == null) {
+      return null;
+    }
+    return (
+      <DetailWatchlistButton
+        hydrated={hydrated}
+        onPress={onToggleWatchlist}
+        storedInWatchlist={storedInWatchlist}
+      />
+    );
+  }, [details.data, hydrated, onToggleWatchlist, storedInWatchlist]);
 
   const horizontalPad = spacing.xl;
   const contentWidth = Math.max(1, windowWidth - horizontalPad * 2);
@@ -128,15 +160,8 @@ export function DetailScreen({ route }: Props): JSX.Element {
             <View style={styles.padded}>
               <Text style={styles.title}>{details.data.title}</Text>
               <DetailChipsRow movie={details.data} />
-              <Pressable
-                accessibilityHint="Coming soon"
-                accessibilityLabel="Add to Watchlist"
-                accessibilityRole="button"
-                style={({ pressed }) => [styles.watchlistStub, pressed && styles.watchlistStubPressed]}
-              >
-                <Text style={styles.watchlistStubLabel}>Add to Watchlist</Text>
-              </Pressable>
-              <DetailSynopsisSection overview={details.data.overview} />
+              {watchlistControl}
+              <DetailSynopsisSection key={movieId} overview={details.data.overview} />
             </View>
           </>
         ) : null}
@@ -180,21 +205,5 @@ const styles = StyleSheet.create({
     ...typography['display-md'],
     color: colors.on_surface,
     marginTop: spacing.lg,
-  },
-  watchlistStub: {
-    alignItems: 'center',
-    backgroundColor: colors.primary,
-    borderRadius: radiusCardInner,
-    justifyContent: 'center',
-    marginTop: spacing.xl,
-    paddingVertical: spacing.md,
-  },
-  watchlistStubLabel: {
-    ...typography['title-sm'],
-    color: colors.on_primary,
-    fontWeight: '700',
-  },
-  watchlistStubPressed: {
-    opacity: 0.9,
   },
 });

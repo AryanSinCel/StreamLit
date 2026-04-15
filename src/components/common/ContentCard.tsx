@@ -9,7 +9,8 @@ import { colors, contentCard } from '../../theme/colors';
 import { radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W185 } from '../../utils/image';
-import { IconStar } from './SimpleIcons';
+import { showTmdbVoteAverageBadge } from '../../utils/tmdbDisplayGuards';
+import { IconMovie, IconStar } from './SimpleIcons';
 
 export type ContentCardProps = {
   title: string;
@@ -47,8 +48,8 @@ export function ContentCard({
   const trimmedOverride =
     posterUriProp != null && posterUriProp.trim() !== '' ? posterUriProp.trim() : null;
   const posterUri = trimmedOverride ?? buildImageUrl(posterPath, TMDB_IMAGE_SIZE_W185);
-  const showRating =
-    typeof rating === 'number' && !Number.isNaN(rating) && Number.isFinite(rating);
+  const positiveRating: number | null =
+    typeof rating === 'number' && showTmdbVoteAverageBadge(rating) ? rating : null;
 
   const posterBlock = (
     <View style={styles.posterShell}>
@@ -66,12 +67,17 @@ export function ContentCard({
             accessibilityRole="image"
             style={styles.posterPlaceholder}
             testID={testID != null ? `${testID}-placeholder` : undefined}
-          />
+          >
+            <IconMovie color={colors.on_surface_variant} size={32} />
+          </View>
         )}
-        {showRating ? (
-          <View style={styles.ratingBadge} accessibilityLabel={`Rating ${formatRating(rating)} out of 10`}>
+        {positiveRating != null ? (
+          <View
+            style={styles.ratingBadge}
+            accessibilityLabel={`Rating ${formatRating(positiveRating)} out of 10`}
+          >
             <IconStar color={colors.primary_container} size={12} />
-            <Text style={styles.ratingValue}>{formatRating(rating)}</Text>
+            <Text style={styles.ratingValue}>{formatRating(positiveRating)}</Text>
           </View>
         ) : null}
       </View>
@@ -136,8 +142,8 @@ const styles = StyleSheet.create({
   },
   posterPlaceholder: {
     alignItems: 'center',
-    /** Matches row image wrapper in `home.html` (`surface-container-low`). */
-    backgroundColor: colors.surface_container_low,
+    /** PSD-Detail §3 — align with hero null-media treatment (`surface_container_high` + icon). */
+    backgroundColor: colors.surface_container_high,
     height: '100%',
     justifyContent: 'center',
     width: '100%',
