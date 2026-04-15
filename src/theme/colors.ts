@@ -45,6 +45,10 @@ export const colors = {
   watchlist_empty_radial_glow: 'rgba(130, 38, 37, 0.15)',
   /** `surface_container_low` @ 30% — bookmark icon disc behind (`watchlist-empty.html`). */
   watchlist_empty_icon_disc: 'rgba(28, 27, 27, 0.3)',
+  /**
+   * Watchlist grid **Details** CTA — Stitch `border-outline-variant/15` on `surface-container-highest`.
+   */
+  watchlist_details_cta_border: 'rgba(255, 255, 255, 0.023)',
 } as const;
 
 /**

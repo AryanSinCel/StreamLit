@@ -24,6 +24,14 @@ export const typography = {
     fontWeight: '800',
     letterSpacing: lsEm(-0.02, 40),
   },
+  /** Watchlist grid card title — Stitch (`text-lg font-bold` / Manrope). */
+  'watchlist-card-title': {
+    fontFamily: fontManrope,
+    fontSize: 18,
+    fontWeight: '700',
+    letterSpacing: lsEm(-0.01, 18),
+    lineHeight: 22,
+  },
   /** Watchlist main title — `resources/watchlist.html` (`text-4xl font-extrabold`). */
   'watchlist-screen-title': {
     fontFamily: fontManrope,

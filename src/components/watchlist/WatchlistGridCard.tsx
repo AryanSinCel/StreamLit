@@ -1,17 +1,18 @@
 /**
- * Watchlist grid cell — poster + scrim rating, title row + remove, year · genres, Details CTA (`resources/watchlist.html`).
+ * Watchlist grid cell — Stitch layout (`watchlist.png`): unified shell, poster, `p-4` body,
+ * title + Material close, year · dot · genres, Details CTA (`surface-container-highest` + border).
  */
 
 import type { JSX } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { TmdbGenre, WatchlistItem } from '../../api/types';
-import { IconMovie } from '../common/SimpleIcons';
+import { IconClose, IconMovie } from '../common/SimpleIcons';
 import { PosterRatingBadge } from '../common/PosterRatingBadge';
 import { colors, contentCard } from '../../theme/colors';
-import { radiusCardInner, radiusFullPill, spacing } from '../../theme/spacing';
+import { radiusCardOuter, radiusFullPill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
-import { formatWatchlistGridSubtitle } from '../../utils/formatWatchlistGridSubtitle';
+import { formatWatchlistGridMetaParts } from '../../utils/formatWatchlistGridSubtitle';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W342 } from '../../utils/image';
 
 export type WatchlistGridCardProps = {
@@ -32,8 +33,10 @@ export function WatchlistGridCard({
   onPressRemove,
 }: WatchlistGridCardProps): JSX.Element {
   const uri = buildImageUrl(item.posterPath, TMDB_IMAGE_SIZE_W342);
+  const { year, genreLine } = formatWatchlistGridMetaParts(item, genres);
+
   return (
-    <View style={[styles.root, style]} accessibilityLabel={item.title}>
+    <View style={[styles.cardShell, style]} accessibilityLabel={item.title}>
       <View style={styles.poster}>
         {uri != null ? (
           <Image
@@ -50,89 +53,135 @@ export function WatchlistGridCard({
         )}
         <PosterRatingBadge density="md" style={styles.ratingBadge} variant="watchlist" voteAverage={item.voteAverage} />
       </View>
-      <View style={styles.titleRow}>
-        <Text numberOfLines={1} style={styles.title}>
-          {item.title}
-        </Text>
+      <View style={styles.cardBody}>
+        <View style={styles.titleRow}>
+          <Text numberOfLines={1} style={styles.title}>
+            {item.title}
+          </Text>
+          <Pressable
+            accessibilityHint="Removes this title from your watchlist"
+            accessibilityLabel="Remove from watchlist"
+            accessibilityRole="button"
+            hitSlop={spacing.sm}
+            onPress={onPressRemove}
+            style={({ pressed }) => [styles.closeHit, pressed && styles.closeHitPressed]}
+          >
+            <IconClose color={colors.on_surface_variant} size={20} />
+          </Pressable>
+        </View>
+        <View style={styles.metaRow}>
+          <Text style={styles.metaText}>{year}</Text>
+          <View style={styles.metaDot} />
+          <Text numberOfLines={2} style={[styles.metaText, styles.metaGenres]}>
+            {genreLine}
+          </Text>
+        </View>
         <Pressable
-          accessibilityHint="Removes this title from your watchlist"
-          accessibilityLabel="Remove from watchlist"
+          accessibilityHint={
+            detailsEnabled ? 'Opens movie details' : 'Details available for movies only'
+          }
+          accessibilityLabel="Details"
           accessibilityRole="button"
-          hitSlop={spacing.sm}
-          onPress={onPressRemove}
-          style={({ pressed }) => [styles.removeChip, pressed && styles.removeChipPressed]}
+          accessibilityState={{ disabled: !detailsEnabled }}
+          disabled={!detailsEnabled}
+          onPress={onPressDetails}
+          style={({ pressed }) => [
+            styles.detailsBtn,
+            !detailsEnabled && styles.detailsBtnDisabled,
+            pressed && detailsEnabled && styles.detailsBtnPressed,
+          ]}
         >
-          <Text style={styles.removeGlyph}>×</Text>
+          <Text style={[styles.detailsLabel, !detailsEnabled && styles.detailsLabelDisabled]}>
+            Details
+          </Text>
         </Pressable>
       </View>
-      <Text numberOfLines={2} style={styles.subtitle}>
-        {formatWatchlistGridSubtitle(item, genres)}
-      </Text>
-      <Pressable
-        accessibilityHint={
-          detailsEnabled ? 'Opens movie details' : 'Details available for movies only'
-        }
-        accessibilityLabel="Details"
-        accessibilityRole="button"
-        accessibilityState={{ disabled: !detailsEnabled }}
-        disabled={!detailsEnabled}
-        onPress={onPressDetails}
-        style={({ pressed }) => [
-          styles.detailsBtn,
-          !detailsEnabled && styles.detailsBtnDisabled,
-          pressed && detailsEnabled && styles.detailsBtnPressed,
-        ]}
-      >
-        <Text style={[styles.detailsLabel, !detailsEnabled && styles.detailsLabelDisabled]}>
-          Details
-        </Text>
-      </Pressable>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  cardBody: {
+    flexGrow: 1,
+    padding: spacing.lg,
+  },
+  cardShell: {
+    backgroundColor: colors.surface_container_high,
+    borderRadius: radiusCardOuter,
+    flexDirection: 'column',
+    overflow: 'hidden',
+  },
+  closeHit: {
+    justifyContent: 'flex-start',
+    marginLeft: spacing.sm,
+    padding: spacing.xs,
+  },
+  closeHitPressed: {
+    opacity: 0.88,
+  },
   detailsBtn: {
     alignItems: 'center',
     alignSelf: 'stretch',
-    backgroundColor: colors.surface_container_high,
-    /** `watchlist.html` — `rounded-lg` (0.5rem → 8). */
+    backgroundColor: colors.surface_container_highest,
+    borderColor: colors.watchlist_details_cta_border,
     borderRadius: spacing.sm,
+    borderWidth: 1,
+    marginTop: 'auto',
     paddingVertical: spacing.sm,
   },
   detailsBtnDisabled: {
     opacity: 0.45,
   },
   detailsBtnPressed: {
-    opacity: 0.88,
+    opacity: 0.92,
   },
-  /** `watchlist.html` — Details `text-sm font-semibold`. */
   detailsLabel: {
     ...typography['title-sm'],
     color: colors.on_surface,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   detailsLabelDisabled: {
     color: colors.on_surface_variant,
   },
+  metaDot: {
+    backgroundColor: colors.outline_variant,
+    borderRadius: radiusFullPill,
+    height: spacing.xs,
+    width: spacing.xs,
+  },
+  metaGenres: {
+    flex: 1,
+  },
+  metaRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: spacing.sm,
+    marginBottom: spacing.lg,
+  },
+  metaText: {
+    ...typography['label-sm'],
+    color: colors.on_surface_variant,
+  },
   poster: {
     aspectRatio: contentCard.aspectRatio,
-    /** `watchlist.html` poster shell — `rounded-xl` (~12) + `bg-surface-container-low`. */
     backgroundColor: colors.surface_container_low,
-    borderRadius: radiusCardInner,
+    borderTopLeftRadius: radiusCardOuter,
+    borderTopRightRadius: radiusCardOuter,
     overflow: 'hidden',
     position: 'relative',
     width: '100%',
   },
   posterImage: {
     ...StyleSheet.absoluteFill,
-    borderRadius: radiusCardInner,
+    borderTopLeftRadius: radiusCardOuter,
+    borderTopRightRadius: radiusCardOuter,
   },
   posterPlaceholder: {
     ...StyleSheet.absoluteFill,
     alignItems: 'center',
     backgroundColor: colors.surface_container_low,
-    borderRadius: radiusCardInner,
+    borderTopLeftRadius: radiusCardOuter,
+    borderTopRightRadius: radiusCardOuter,
     justifyContent: 'center',
   },
   ratingBadge: {
@@ -141,43 +190,15 @@ const styles = StyleSheet.create({
     top: spacing.sm,
     zIndex: 2,
   },
-  removeChip: {
-    alignItems: 'center',
-    backgroundColor: colors.surface_container_highest,
-    borderRadius: radiusFullPill,
-    /** `watchlist.html` — `w-8 h-8` remove control. */
-    height: spacing.xxl,
-    justifyContent: 'center',
-    marginLeft: spacing.sm,
-    width: spacing.xxl,
-  },
-  removeChipPressed: {
-    opacity: 0.88,
-  },
-  removeGlyph: {
-    ...typography['title-lg'],
-    color: colors.on_surface,
-    lineHeight: 22,
-    marginTop: -2,
-  },
-  /** `watchlist.html` — `gap-2` between poster, title row, meta, CTA. */
-  root: {
-    gap: spacing.sm,
-  },
-  subtitle: {
-    ...typography['label-sm'],
-    color: colors.on_surface_variant,
-  },
-  /** `watchlist.html` — `text-base font-bold` title (Manrope). */
   title: {
-    ...typography['title-search-card'],
+    ...typography['watchlist-card-title'],
     color: colors.on_surface,
     flex: 1,
   },
   titleRow: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     flexDirection: 'row',
-    gap: 0,
     justifyContent: 'space-between',
+    marginBottom: spacing.xs,
   },
 });

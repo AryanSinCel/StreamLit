@@ -8,7 +8,7 @@ import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { WatchlistMediaFilter } from '../../api/types';
 import { IconPerson, IconSearch } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { radiusFullPill, spacing } from '../../theme/spacing';
+import { radiusCardOuter, radiusFullPill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type WatchlistScreenHeaderProps = {
@@ -93,7 +93,7 @@ export function WatchlistScreenHeader({
         ) : null}
       </View>
       {showChips ? (
-        <View style={styles.chipsRow}>
+        <View style={styles.chipTray}>
           {FILTER_CHIPS.map((chip) => {
             const selected = filter === chip.key;
             return (
@@ -169,34 +169,40 @@ const styles = StyleSheet.create({
   iconHitPressed: {
     opacity: 0.85,
   },
-  chipsRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.md,
-    marginTop: spacing.lg + spacing.xs,
-  },
   chip: {
     borderRadius: radiusFullPill,
     paddingHorizontal: spacing.lg + spacing.xs,
     paddingVertical: spacing.sm,
   },
+  /** Inset tray — inactive chips stay transparent (`watchlist.png`). */
   chipIdle: {
-    backgroundColor: colors.surface_container_highest,
-  },
-  chipSelected: {
-    backgroundColor: colors.secondary_container,
-  },
-  chipPressed: {
-    opacity: 0.88,
+    backgroundColor: 'transparent',
   },
   chipLabel: {
     ...typography['title-sm'],
     fontWeight: '600',
   },
   chipLabelIdle: {
-    color: colors.on_surface_variant,
+    color: colors.on_surface,
   },
   chipLabelSelected: {
     color: colors.on_surface,
+  },
+  chipPressed: {
+    opacity: 0.88,
+  },
+  chipSelected: {
+    backgroundColor: colors.secondary_container,
+  },
+  chipTray: {
+    alignSelf: 'stretch',
+    backgroundColor: colors.surface_container_high,
+    borderRadius: radiusCardOuter,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+    marginTop: spacing.lg + spacing.xs,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
   },
 });

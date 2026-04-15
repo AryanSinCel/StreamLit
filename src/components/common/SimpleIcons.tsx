@@ -121,3 +121,27 @@ export function IconStar({ color, size }: IconProps): JSX.Element {
     </Svg>
   );
 }
+
+/** Material Symbols “close” — Stitch watchlist card (`text-xl` / `on-surface-variant`). */
+export function IconClose({ color, size }: IconProps): JSX.Element {
+  const s = iconSize(size);
+  const strokeW = 72;
+  return (
+    <Svg accessibilityRole="image" height={s} viewBox={VIEWBOX_SYMBOLS} width={s}>
+      <Path
+        d="M360-600L600-360"
+        fill="none"
+        stroke={color}
+        strokeLinecap="round"
+        strokeWidth={strokeW}
+      />
+      <Path
+        d="M600-600L360-360"
+        fill="none"
+        stroke={color}
+        strokeLinecap="round"
+        strokeWidth={strokeW}
+      />
+    </Svg>
+  );
+}

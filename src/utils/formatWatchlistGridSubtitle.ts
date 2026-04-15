@@ -1,10 +1,6 @@
 import type { TmdbGenre, TmdbMovieListItem, WatchlistItem } from '../api/types';
 
-/**
- * Watchlist grid metadata — `resources/watchlist.html` (`Year • Sci-Fi / Action`).
- */
-export function formatWatchlistGridSubtitle(item: WatchlistItem, genres: readonly TmdbGenre[]): string {
-  const year = item.releaseDate.length >= 4 ? item.releaseDate.slice(0, 4) : '—';
+function watchlistGridGenreLine(item: WatchlistItem, genres: readonly TmdbGenre[]): string {
   const idToName = new Map(genres.map((g) => [g.id, g.name.trim()]));
   const names: string[] = [];
   for (const id of item.genreIds ?? []) {
@@ -17,10 +13,26 @@ export function formatWatchlistGridSubtitle(item: WatchlistItem, genres: readonl
     }
   }
   if (names.length === 0) {
-    const kind = item.mediaType === 'movie' ? 'Movie' : 'Series';
-    return `${year} · ${kind}`;
+    return item.mediaType === 'movie' ? 'Movie' : 'Series';
   }
-  return `${year} · ${names.join(' / ')}`;
+  return names.join(' / ');
+}
+
+/** Year + genre line for Stitch watchlist card meta row (dot separator in UI). */
+export function formatWatchlistGridMetaParts(
+  item: WatchlistItem,
+  genres: readonly TmdbGenre[],
+): { year: string; genreLine: string } {
+  const year = item.releaseDate.length >= 4 ? item.releaseDate.slice(0, 4) : '—';
+  return { year, genreLine: watchlistGridGenreLine(item, genres) };
+}
+
+/**
+ * Watchlist grid metadata — `resources/watchlist.html` (`Year • Sci-Fi / Action`).
+ */
+export function formatWatchlistGridSubtitle(item: WatchlistItem, genres: readonly TmdbGenre[]): string {
+  const { year, genreLine } = formatWatchlistGridMetaParts(item, genres);
+  return `${year} · ${genreLine}`;
 }
 
 /** “Because you saved …” rail — uppercase genre line (`resources/watchlist.html`). */

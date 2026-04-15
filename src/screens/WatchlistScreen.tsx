@@ -38,7 +38,7 @@ function watchlistItemKey(item: WatchlistItem): string {
   return `${item.mediaType}-${String(item.id)}`;
 }
 
-/** Watchlist tab main — PSD-Watchlist §3 (populated) / §5 (empty) + `useWatchlist` only for data. */
+/** Watchlist tab main — populated grid + empty state; data from `useWatchlist` / store only. */
 export function WatchlistScreen({ navigation }: Props): JSX.Element {
   const insets = useSafeAreaInsets();
   const { width: windowWidth } = useWindowDimensions();
