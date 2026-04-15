@@ -1819,4 +1819,1754 @@ I'm passing `key={movieId}` from DetailScreen to DetailSynopsisSection to reset 
 
 **Adding accessibility support**
 
-I'm adding `accessibilityState` to handle disabled states for better accessibility across platforms. I'm implementing accessibilityState for disabled states across platforms. I'm implementing layout-based truncation with collapsible pattern for accessibility. </details></think>
+I'm adding `accessibilityState` to handle disabled states for better accessibility across platforms. I'm implementing accessibilityState for disabled states across platforms. I'm implementing layout-based truncation with collapsible pattern for accessibility. 
+
+**Checking nav types**
+
+I'm verifying navigation types for Detail params and checking DetailWatchlistButton for theme compliance. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail",
+  "pattern": "#[0-9A-Fa-f]{3,8}|rgba?\\("
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail",
+  "pattern": "#[0-9A-Fa-f]{3,8}|rgba?\\(",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailWatchlistButton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+
+```
+src/components/common/ContentCard.tsx(74,87): error TS2345: Argument of type 'number | null | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/components/common/ContentCard.tsx(76,60): error TS2345: Argument of type 'number | null | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Fixing TypeScript errors in `ContentCard` and applying D6 polish: share placeholder a11y, synopsis reset on `movieId` change, and updating the Detail screen doc comment.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/ContentCard.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing rating display**
+
+I'm using `rating ?? 0` to ensure type safety for displayRating in the conditional render. I'm simplifying the rating display logic to ensure `formatRating` only receives valid numbers and adding a null check for safer rendering. I'm using a non-null assertion after a guard to safely pass the rating to `formatRating`. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/ContentCard.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/ContentCard.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailNavBar.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSynopsisSection.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Running tests**
+
+I'm running tsc, jest, and eslint to verify the codebase. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 8 passed, 8 total
+Tests:       37 passed, 37 total
+Snapshots:   0 total
+Time:        1.629 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/common/ContentCard.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailNavBar.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSynopsisSection.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/common/ContentCard.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailNavBar.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSynopsisSection.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList/android && ./gradlew assembleDebug --no-daemon -q 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList/android && ./gradlew assembleDebug --no-daemon -q 2>&1
+```
+
+```
+xargs: sysconf(_SC_ARG_MAX) failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Gradle could not start your build.
+&gt; Could not create service of type FileLockContentionHandler using BasicGlobalScopeServices.createFileLockContentionHandler().
+   &gt; Could not determine a usable wildcard IP for this machine.
+
+* Try:
+&gt; Run with --stacktrace option to get the stack trace.
+&gt; Run with --info or --debug option to get more log output.
+&gt; Run with --scan to get full insights from a Build Scan (powered by Develocity).
+&gt; Get more help at https://help.gradle.org.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+## Files changed
+
+| File | Change |
+|------|--------|
+| `src/components/common/ContentCard.tsx` | **`positiveRating`** narrows `rating` so **`formatRating`** gets a definite `number` — fixes **`tsc`** under strict mode (D6 / code-quality). |
+| `src/components/detail/DetailNavBar.tsx` | Share control: **`accessibilityHint`**, **`accessibilityState={{ disabled: true }}`** — clearer placeholder (no action), PSD §4. |
+| `src/screens/DetailScreen.tsx` | **`DetailSynopsisSection key={movieId}`** so expand state resets when opening another title or the same id after back (re-entry / stack behaviour). Doc comment notes **D6**. |
+| `src/components/detail/DetailSynopsisSection.tsx` | **`accessibilityLabel`** on Read more / Show less **`Pressable`** for VoiceOver/TalkBack. |
+
+No new **`axios`** usage; Detail path still uses **`useMovieDetail`** → **`movies.ts`** → **`client.ts`**. Grep for **`any`** in `src/**/*.ts(x)` only hits a **comment** in `mergeUniqueMovieListById.ts`, not Detail code.
+
+---
+
+## PSD §7 “Done when” — pass / fail notes
+
+| Row | Status | Notes |
+|-----|--------|--------|
+| **`Promise.allSettled`**; three parallel requests | **Pass** | Still in `useMovieDetail` (`getMovieDetail`, `getMovieCredits`, `getSimilarMovies` in one **`Promise.allSettled`**). |
+| Independent skeletons, errors, retries per section | **Pass** | `DetailDetailsSkeleton` / cast & similar skeletons; **`DetailSectionError`** + **`details.refetch` / `credits.refetch` / `similar.refetch`** unchanged. |
+| All §3 edge cases | **Pass** | Carried from D5 (chips, placeholders, cast empty copy, similar hide, etc.). |
+| Watchlist optimistic + correct after **back + return** same **`movieId`** | **Pass** | Persisted **`items`** + **`hydrated`**; **`storedInWatchlist`** from **`items.some((i) => i.id === movieId)`**; button gated until **`hydrated`**. No code change required beyond prior D4/D5 behaviour. |
+| **Read more / Show less** works | **Pass** | Toggles **`numberOfLines`** 3 vs full; only when overview non-empty. **`key={movieId}`** avoids stale expanded state when changing film or revisiting Detail. A11y labels added. |
+
+**D6 scope extras**
+
+- **Share placeholder:** **Pass** — disabled control, hint + disabled state (PSD §4 “no action”).  
+- **No `any`:** **Pass** (project `src` scan; strict **`tsc`** clean).  
+- **Theme-only colours/spacing on touched UI:** **Pass** (no new literals in these edits).  
+- **iOS + Android smoke:** **Partial** — **`npx tsc --noEmit`** and **`npm test`** **pass** in this environment. **`./gradlew assembleDebug`** failed here with a **Gradle/sandbox host** error (`Could not determine a usable wildcard IP`), not an app compile error — run **`npx react-native run-ios`** / **`run-android`** (or Gradle) on your machine for a real device/simulator smoke check.
+
+---
+
+_**User**_
+
+## Session — See All screen UI
+
+**Constraints:** Follow **`@rules/movielist-project.mdc`**, **`@rules/theming.mdc`**, **`@rules/components.mdc`**, **`@rules/navigation.mdc`**, **`@rules/hooks.mdc`**.
+
+Goal: Polish **`SeeAllScreen`** (or the route your stack uses) so it **looks and behaves like the rest of the app**: same **header/back** pattern as other stack screens, **section title** from navigation params, **vertical list** of **portrait cards** matching **Home row cards** / **Search results** / **Watchlist grid** (2:3, theme radii, title + year line, rating badge rules, `image.ts`, placeholders for null posters). **StyleSheet + theme tokens only**; **no** `axios` in the screen — data stays in the existing hook / `movies.ts` path.
+
+Attach: @docs/PSD-Home.md (See All / list intent) @src/screens/SeeAllScreen.tsx @src/screens/HomeScreen.tsx @src/screens/SearchScreen.tsx @src/screens/WatchlistScreen.tsx @src/components/common/ @src/hooks/ (See All / home hook if present) @src/theme/ @src/navigation/types.ts
+
+Out of scope: New TMDB endpoints, tab bar, unrelated screens.
+
+Deliverable: files changed; which existing component or styles were reused vs duplicated.
+
+---
+
+_**Agent (composer-2)**_
+
+Reviewing See All, Home, Search, Watchlist, and `useSeeAll` to align UI with existing patterns.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating stack header**
+
+I'm removing the duplicate title from SeeAllScreen body and relying on the stack header for consistency. I'm removing the duplicate inline title and debug subtitle from SeeAllScreen to rely on the stack header for consistency. 
+
+**Designing vertical list**
+
+I'm implementing a single column full-width vertical list for See All screen with horizontal layout (poster left, text right) for consistent UX. I'm using ContentCard components in a vertical FlatList layout with portrait cards matching Home row and Search result styles. I'm implementing a 2-column grid layout like Search, using `gridColWidth` from window size for ContentCard widths. 
+
+**Implementing grid layout**
+
+I'm switching to FlatList with numColumns={2} for the vertical list layout. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/formatMovieListItem.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistGridCard.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Configuring see all screen**
+
+I'm removing duplicate title and debug subtitle from SeeAllScreen body. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Configuring grid layout**
+
+I'm setting up the grid layout for the See All view with 2 columns and appropriate spacing. I'm adjusting the grid layout to handle column gaps correctly in FlatList by removing gap logic since RN handles row wrapping automatically. 
+
+I'm using `columnWrapperStyle` to style row wrappers in FlatList, not `style`. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsGridSkeleton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Organizing skeleton components**
+
+I'll reuse `SearchResultsGridSkeleton` with a new prop `showCountLine` to avoid duplicating code. 
+
+**Refactoring skeleton components**
+
+I'm creating a new `SeeAllGridSkeleton` component to avoid duplicating code while keeping `SearchResultsGridSkeleton` unchanged. 
+
+**Creating skeleton component**
+
+I'm creating a new `SeeAllGridSkeleton` component by copying `ResultCardSkeleton` and removing the count line. 
+
+**Removing duplicate title**
+
+I'm removing the duplicate title from the screen and using `useSafeAreaInsets` only for bottom padding on the list. 
+
+**Adding scroll loading**
+
+I'll implement `onEndReached` with `distanceThreshold` for automatic loading when near the end. I'm implementing debounced `onEndReached` with `distanceThreshold` for infinite scroll. 
+
+**Verifying navigation**
+
+I'm verifying the navigation flow from SeeAllScreen to Detail screen, confirming the route structure and props handling. 
+
+**Updating navigation**
+
+I'm removing the screen's title Text and customizing headerTitleStyle with typography title-lg for SeeAll screen. I'm setting headerTitleStyle to use typography title-lg with color override for SeeAll screen. I'm importing necessary components and theme values for the SeeAll screen. 
+
+I'm implementing SeeAllGridSkeleton for the SeeAll screen layout. I'm implementing the loading state pattern with ActivityIndicator and SeeAllGridSkeleton for the SeeAll screen. 
+
+**Handling loading states**
+
+I'm fixing the flicker issue where stale items remain during refetch by ensuring setItems only updates on successful fresh fetches. I'm implementing infinite scroll with `onEndReached` to load more items when needed. I'm adding filler items for odd-numbered columns in FlatList to prevent stretching issues. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing See All with the native stack header (title from params), a two-column `ContentCard` grid matching Home/Search, and a grid-only skeleton.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/seeAll/SeeAllGridSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing see all screen**
+
+I'm removing dead code and fixing the list structure to show skeletons, errors, or FlatList based on state. I'm fixing the conditional logic to ensure FlatList shows correctly for empty success states. I'm simplifying the render logic to show skeleton on initial load, error screen on error, and FlatList with data otherwise. 
+
+**Handling empty state**
+
+I'm implementing conditional rendering for empty state with grid visibility based on items, loading, and error flags. I'm restructuring the rendering logic to use FlatList for empty state cases with proper error handling. I'm implementing conditional rendering for loading and error states using FlatList's ListEmptyComponent. I'm adjusting the ListEmptyComponent to prevent showing Empty component while loading, ensuring items persist during refetches. I'm removing the `key={mode}` prop to prevent unnecessary remounts on the same screen. 
+
+**Cleaning up unused props**
+
+I'm prefixing unused `title` prop with `_` to avoid lint warnings. I'm removing the unused `title` prop and addressing the list rendering logic for empty/loading states. 
+
+**Handling edge cases**
+
+I clarified the loading and empty state behavior, noting that items aren't cleared on error but are reset on first load error. </details></think>
+
+_**Agent (composer-2)**_
+
+Fixing See All screen logic: handling empty success, removing dead code, and correcting the FlatList structure.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Checking typography props**
+
+I'm verifying that typography['title-lg'] properties are valid for headerTitleStyle in RN Android. I confirmed the path for `SeeAllGridSkeleton` component is correct at `../components/seeAll/SeeAllGridSkeleton`. 
+
+**Guarding onEndReached**
+
+I'm adding guards around `onEndReached` to prevent aggressive firing. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 8 passed, 8 total
+Tests:       37 passed, 37 total
+Snapshots:   0 total
+Time:        1.799 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/seeAll/SeeAllGridSkeleton.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/seeAll/SeeAllGridSkeleton.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/seeAll/SeeAllGridSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx eslint src/screens/SeeAllScreen.tsx src/components/seeAll/SeeAllGridSkeleton.tsx src/navigation/RootNavigator.tsx 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx eslint src/screens/SeeAllScreen.tsx src/components/seeAll/SeeAllGridSkeleton.tsx src/navigation/RootNavigator.tsx 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/seeAll/SeeAllGridSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+## Files changed
+
+| File | Change |
+|------|--------|
+| `src/screens/SeeAllScreen.tsx` | Rebuilt: native stack **title only** (no duplicate heading / debug subtitle); **`useSeeAll`** unchanged; **2-column `FlatList`** + **`ContentCard`**; **`formatListMovieSubtitle`** for Home-style subtitle; grid width = Search/Watchlist formula (`spacing.xl` padding, `spacing.md` gutter); **initial** load → **`SeeAllGridSkeleton`**; **blocking** error → full-screen retry; **pagination** error with items → **`ListHeaderComponent`** banner + retry; **`onEndReached`** + footer spinner for **`loadMore`**; safe-area bottom padding. |
+| `src/components/seeAll/SeeAllGridSkeleton.tsx` | **New** — 2×4 shimmer cells, **`contentCard.aspectRatio`**, **`radiusCardInner`**, same column math as the list. |
+| `src/navigation/RootNavigator.tsx` | **See All** stack options: **`headerTitleStyle`** from **`typography['title-lg']`** + **`colors.on_surface`** so the nav title matches in-app type. |
+
+## Reused vs duplicated
+
+- **Reused:** **`ContentCard`** (posters via **`image.ts`** / **`buildImageUrl`**, 2:3 aspect, rating badge rules, null-poster placeholder + icon — same as **`HomeContentRow`**). **`formatListMovieSubtitle`** from **`src/utils/formatMovieListItem.ts`** (same year · rating line as Home rows). **Theme:** `colors`, `spacing`, `typography` only. **Data:** still only **`useSeeAll`** → **`movies.ts`**. **Back:** native stack back control (same **`stackScreenOptions`** as other Home stack routes with headers).
+- **Duplicated (intentionally, small):** **`SeeAllGridSkeleton`** mirrors the **poster + title + year lines** layout of **`SearchResultsGridSkeleton`** but **without** the search “count” shimmer, so See All doesn’t imply a result count. Retry / error copy mirrors **Home `HomeContentRow`** / **Search** patterns, not extracted to a shared component (kept local to avoid touching unrelated screens).
+
+`npx tsc --noEmit` and **`npm test`** both pass.
+
+---
+
+_**User**_
+
+## Session — Profile screen UI
+
+**Constraints:** Follow **`@rules/movielist-project.mdc`**, **`@rules/theming.mdc`**, **`@rules/components.mdc`**, **`@rules/navigation.mdc`**.
+
+Goal: Implement **`ProfileScreen`** as a **placeholder** that still **matches the app shell**: same **surface / padding rhythm** as other tabs, simple **header** (e.g. title or wordmark row), **avatar circle** (icon placeholder, no real user API), short **“Coming Soon”** copy (`headline-md` / `body-md`, theme tokens). Tap on “action” areas → **`Alert`** or **toast** “Coming Soon” **or** strict **no-op** — pick one and stay consistent with **`project-spec.md`** / **`docs/PSD-Architecture.md`**. **StyleSheet + theme tokens only**; **no** TMDB, **no** new global state.
+
+Attach: @project-spec.md (tab / Profile lines) @docs/PSD-Architecture.md @src/screens/ProfileScreen.tsx @src/screens/HomeScreen.tsx (or `SearchScreen` — layout reference only) @src/theme/ @src/navigation/
+
+Out of scope: Auth, settings, real profile API, new dependencies.
+
+Deliverable: files changed; tap behaviour (toast vs no-op) noted in one line.
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Reading profile guidance**
+
+I'm reading project-spec.md and PSD-Architecture.md for Profile tab implementation details. </details></think>
+
+_**Agent (composer-2)**_
+
+Reviewing the spec and current Profile screen to implement a shell-consistent placeholder.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList** (0 files)
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/docs/PSD-Architecture.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{md,tsx}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "Profile|Coming soon"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "Profile|Coming soon",
+  "topFiles": [
+    {
+      "matchCount": 9,
+      "uri": "src/components/watchlist/WatchlistScreenHeader.tsx"
+    },
+    {
+      "matchCount": 4,
+      "uri": "docs/PSD-Architecture.md"
+    },
+    {
+      "matchCount": 5,
+      "uri": ".specstory/history/2026-04-14_11-03-42Z-watchlist-empty-state-ui.md"
+    },
+    {
+      "matchCount": 12,
+      "uri": ".specstory/history/2026-04-13_21-56-13Z-movielist-portrait-content-card-design-rules.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": "docs/PSD-Watchlist.md"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/screens/ProfileScreen.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-13_20-08-14Z-cursor-rules-for-movielist.md"
+    },
+    {
+      "matchCount": 6,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    },
+    {
+      "matchCount": 10,
+      "uri": "src/components/search/SearchAppBar.tsx"
+    },
+    {
+      "matchCount": 6,
+      "uri": ".specstory/history/2026-04-14_09-19-54Z-usewatchlist-implementation-details.md"
+    },
+    {
+      "matchCount": 13,
+      "uri": "src/navigation/RootNavigator.tsx"
+    }
+  ],
+  "totalFiles": 11,
+  "totalMatches": 73
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeader.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Aligning layout patterns**
+
+I'm standardizing the layout spacing and insets across screens to match the Watchlist/Home rhythm. I'm implementing a custom header for Profile screen to match Watchlist's pattern, using ScrollView for simple content with consistent spacing. 
+
+**Implementing custom header**
+
+I'm hiding the native header with `headerShown: false` and implementing a custom top bar similar to Home for Profile to maintain consistent spacing and padding rhythm. I'm setting `headerShown: false` for Profile stack screen and creating a simplified in-screen header with just the wordmark 'StreamList' or 'Profile' as the title. I'm implementing a custom header with `headerShown: false` for Profile stack screens and adding a simplified header with 'Profile' text and icon. 
+
+**Updating header design**
+
+I'm replacing the default avatar with IconPerson for the profile header. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeader.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Setting profile stack**
+
+I'm setting Profile stack to headerShown: false for parity with other tabs' main screens. 
+
+**Adjusting profile spacing**
+
+I'm using spacing.xl for profile body and header dock horizontal to match rhythm of other screens. I'm creating a minimal ProfileScreenHeader component with just the wordmark row, excluding the bell icon as requested. 
+
+**Consolidating profile components**
+
+I'm moving the ProfileScreenHeader content into ProfileScreen.tsx to minimize files since only Profile uses it. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing Profile shell: hiding the stack header to match other tabs, adding a Home-style wordmark row and safe-area rhythm, and using `Alert.alert` for taps (matches Watchlist).
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Replacing magic numbers**
+
+I'm replacing literal values 48 and 96 with spacing tokens from spacing.ts to avoid magic numbers. I'm replacing magic number 96 with spacing.xxxxl + spacing.xl (80px) for the avatar circle size. </details></think>
+
+_**Agent (composer-2)**_
+
+Replacing magic avatar dimensions with `detailCastAvatarSize` from theme spacing.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Optimizing avatar size calculation**
+
+I'm replacing the dynamic calculation with a static value of 28 for consistency with spacing.lg. I'm using spacing.xl (24) for the icon size to maintain consistency with the spacing scale. I'm using size={30} as a magic number to fit the icon properly in the 60px circle. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 8 passed, 8 total
+Tests:       37 passed, 37 total
+Snapshots:   0 total
+Time:        1.65 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+## Files changed
+
+| File | Change |
+|------|--------|
+| `src/screens/ProfileScreen.tsx` | Full placeholder: **`colors.surface`** shell, **`headerDock`** + **`insets.top + spacing.sm`** like Home/Search, **wordmark row** (`IconMovie` + **`typography['brand-wordmark']`** / **`colors.brand_coral`**, same pattern as **`HomeHeader`**), **`ScrollView`** with **`paddingHorizontal: spacing.xl`** and bottom **`insets.bottom + spacing.xxxxl`**, tappable **avatar ring** (**`detailCastAvatarSize`**, **`surface_container_highest`**, **`IconPerson`**), **`headline-md`** “Coming soon”, **`body-md`** body copy, three **action rows** (`surface_container_low`, rounded) for future settings. |
+| `src/navigation/RootNavigator.tsx` | **`headerShown: false`** on **`ProfileMain`** so the tab matches Home / Search / Watchlist (in-screen header only). |
+
+No TMDB, no new store, no new packages.
+
+**Tap behaviour:** **`Alert.alert('Profile', 'Coming soon', [{ text: 'OK' }])`** on avatar and each placeholder row — same pattern as **`WatchlistScreen`** / **`WatchlistScreenHeader`** (`docs/PSD-Watchlist.md` / architecture “Profile placeholder”).
+
+---
+
+_**User**_
+
+make the profile screen UI like how it is in given screenshot 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating profile screen**
+
+I'm implementing the Profile screen layout to match the provided screenshot. </details></think>
+
+_**Agent (composer-2)**_
+
+Updating ProfileScreen to match the screenshot: inspecting the implementation and SearchAppBar patterns.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing search navigation**
+
+I'm implementing search navigation using CompositeScreenProps to link WatchlistScreen pattern and adding SearchAppBar with profile button functionality. I'm analyzing the navigation structure to properly implement SearchAppBar with profile button using CompositeScreenProps. I'm determining the correct type definitions for SearchAppBar and Profile screens using CompositeScreenProps. 
+
+I'm updating the SearchAppBar type definitions to match the composite screen props structure. 
+
+**Adjusting spacing tokens**
+
+I'm using `detailCastAvatarSize` + `spacing.xxxxl` to calculate the circle diameter as 116. I'm setting avatar diameter to `spacing.xxxxl + spacing.xxxl` (56 + 40 = 96) from theme spacing. 
+
+I'm updating the stats card layout to use flexDirection row with three equal columns and surface_container_low background. I'm standardizing the wordmark text transform to uppercase 'STREAMLIST' for consistency with the design screenshot. I'm adding `textTransform: 'uppercase'` and `letterSpacing` to match the design screenshot for the Profile header with custom bar. I'm using Text with style textTransform 'uppercase' for Profile header to match the screenshot exactly. I'm implementing optional `wordmarkTransform?: 'uppercase'` for SearchAppBar to avoid modifying the original component. 
+
+**Implementing profile bar**
+
+I'm creating a custom profile bar that mirrors SearchAppBar's layout with uppercase text transform and end icons. I'm adjusting the profile bar to remove redundant profile icon on profile screen and using SearchAppBar with brand wordmark and onPressProfile alert. 
+
+**Updating SearchAppBar**
+
+I'm adding an `uppercaseWordmark` prop to SearchAppBar to handle the all-caps STREAMLIST branding. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing the screenshot layout: adding an optional uppercase wordmark to `SearchAppBar` for parity, then rebuilding `ProfileScreen` with composite navigation for the search icon.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Removing magic numbers**
+
+I'm replacing the letterSpacing literal 1.2 with a typography token from tokens, specifically label-sm, to align with theming guidelines. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 8 passed, 8 total
+Tests:       37 passed, 37 total
+Snapshots:   0 total
+Time:        1.761 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+## What changed
+
+### `src/screens/ProfileScreen.tsx`
+- **Navigation:** `CompositeScreenProps` (same idea as Watchlist) so the header **search** icon runs `navigation.navigate('Search', { screen: 'SearchMain' })`.
+- **Top bar:** **`SearchAppBar`** with `brandWordmark`, **`uppercaseWordmark`**, **`beforeProfile`** = search control, **`onPressProfile`** = same “Coming soon” **`Alert`** as before (small header avatar).
+- **Content (aligned with your reference):**
+  - **“YOUR ACCOUNT”** style row → **`Your account`** via **`label-sm`**, **`on_surface_variant`**, **`uppercase`**.
+  - **“Profile”** → **`headline-md`**, **`on_surface`**.
+  - **Large avatar** → circle **`spacing.xxxxl + spacing.xxxl`** (~96pt), **`surface_container_highest`**, **`IconPerson`** (tap → Alert).
+  - **Alex Rivera** / **alex.rivera@email.com** → placeholder constants; **`title-lg`** bold / **`body-md`** variant.
+  - **Edit profile** → full-width pill, **`surface_container_highest`**, **`radiusCardInner`** (tap → Alert).
+  - **Stats row** → one **`surface_container_low`** card, **`radiusCardInner`**, three columns **24 / 12 / 3** with **Saved / Watched / Lists** (`title-lg` + `label-sm`).
+  - **“ACCOUNT”** kicker + **Account settings** row with chevron (tap → Alert).
+
+### `src/components/search/SearchAppBar.tsx`
+- New optional **`uppercaseWordmark`** so the bar can show **STREAMLIST**-style copy while keeping the shared app bar layout (Watchlist/Home behaviour unchanged unless they pass the flag).
+
+Still **no TMDB / no new global state**; colours, radii, and spacing come from **`colors`**, **`spacing`**, **`radiusCardInner`**, **`typography`**. Stat numbers are **static placeholders** until you add real data later.
+
+---
+
+_**User**_
+
+fix the header it should be exactly like how it is in watchlist , reuse it and also add other element in profile screen like how it would be in real app for profile section 
+
+---
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: </summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: </summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: </summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Status: **loading**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>

@@ -53,7 +53,13 @@ function HomeStackNavigator() {
       <HomeStack.Screen
         name="SeeAll"
         component={SeeAllScreen}
-        options={({ route }) => ({ title: route.params.title })}
+        options={({ route }) => ({
+          title: route.params.title,
+          headerTitleStyle: {
+            ...typography['title-lg'],
+            color: colors.on_surface,
+          },
+        })}
       />
     </HomeStack.Navigator>
   );
@@ -99,7 +105,7 @@ function ProfileStackNavigator() {
       <ProfileStack.Screen
         name="ProfileMain"
         component={ProfileScreen}
-        options={{ title: 'Profile' }}
+        options={{ headerShown: false, title: 'Profile' }}
       />
     </ProfileStack.Navigator>
   );

@@ -19,12 +19,15 @@ export type SearchAppBarProps = {
    * `false` / omitted — `on_surface` wordmark (`search_default.png`).
    */
   brandWordmark?: boolean;
+  /** Profile / marketing screens — all-caps wordmark (e.g. **STREAMLIST**). */
+  uppercaseWordmark?: boolean;
 };
 
 export function SearchAppBar({
   beforeProfile,
   onPressProfile,
   brandWordmark = false,
+  uppercaseWordmark = false,
 }: SearchAppBarProps): JSX.Element {
   const wordmarkStyle = brandWordmark ? styles.wordmarkBrand : styles.wordmarkOnSurface;
 
@@ -38,7 +41,9 @@ export function SearchAppBar({
     <View style={styles.bar}>
       <View style={styles.brand}>
         <IconMovie color={colors.brand_coral} size={26} />
-        <Text style={[styles.wordmarkBase, wordmarkStyle]}>StreamList</Text>
+        <Text style={[styles.wordmarkBase, wordmarkStyle, uppercaseWordmark && styles.wordmarkUpper]}>
+          StreamList
+        </Text>
       </View>
       <View style={styles.end}>
         {beforeProfile != null ? <View style={styles.beforeProfile}>{beforeProfile}</View> : null}
@@ -110,5 +115,8 @@ const styles = StyleSheet.create({
   },
   wordmarkOnSurface: {
     color: colors.on_surface,
+  },
+  wordmarkUpper: {
+    textTransform: 'uppercase',
   },
 });

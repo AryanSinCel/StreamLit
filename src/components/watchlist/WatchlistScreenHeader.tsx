@@ -11,13 +11,17 @@ import { radiusFullPill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type WatchlistScreenHeaderProps = {
-  /** When set, shown under “My Watchlist” in `on_surface_variant` (e.g. §5 **0 titles**). */
+  /** When set, shown under the main title in `on_surface_variant` (e.g. §5 **0 titles**). */
   countLine?: string;
   showChips: boolean;
   filter: WatchlistMediaFilter;
   setFilter: (f: WatchlistMediaFilter) => void;
   /** PSD §6 — profile control; defaults to a brief “Coming soon” alert. */
   onPressProfile?: () => void;
+  /** Default **YOUR COLLECTION** — override for other tabs (e.g. Profile **YOUR ACCOUNT**). */
+  sectionLabel?: string;
+  /** Default **My Watchlist** — override for other screens (e.g. **Profile**). */
+  mainTitle?: string;
   /**
    * When `false`, hides inline search/profile — use with `SearchAppBar` (`watchlist-empty.html` / Search tab).
    * @default true
@@ -38,6 +42,8 @@ export function WatchlistScreenHeader({
   setFilter,
   onPressProfile,
   showTopActions = true,
+  sectionLabel = 'YOUR COLLECTION',
+  mainTitle = 'My Watchlist',
 }: WatchlistScreenHeaderProps): JSX.Element {
   const handleProfile = (): void => {
     if (onPressProfile != null) {
@@ -51,8 +57,8 @@ export function WatchlistScreenHeader({
     <View style={styles.headerBlock}>
       <View style={styles.headerTopRow}>
         <View style={styles.headerTitles}>
-          <Text style={styles.collectionLabel}>YOUR COLLECTION</Text>
-          <Text style={styles.screenTitle}>My Watchlist</Text>
+          <Text style={styles.collectionLabel}>{sectionLabel}</Text>
+          <Text style={styles.screenTitle}>{mainTitle}</Text>
           {countLine != null && countLine.length > 0 ? (
             <Text style={styles.countLine}>{countLine}</Text>
           ) : null}
