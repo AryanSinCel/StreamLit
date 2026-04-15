@@ -31,9 +31,9 @@ export function HomeHeroSkeleton(): JSX.Element {
 const styles = StyleSheet.create({
   actions: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
     gap: spacing.md,
-    marginTop: spacing.lg,
+    marginTop: 0,
   },
   backdrop: {
     ...StyleSheet.absoluteFill,
@@ -43,21 +43,23 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     borderRadius: spacing.xs,
     height: 24,
-    marginBottom: spacing.md,
+    marginBottom: spacing.lg,
     width: 120,
   },
   content: {
     bottom: 0,
     justifyContent: 'flex-end',
     left: 0,
-    padding: spacing.xl,
+    paddingBottom: spacing.xxxl,
+    paddingHorizontal: spacing.xxxl,
     position: 'absolute',
     right: 0,
   },
   detailsBtn: {
     borderRadius: spacing.md,
+    flex: 1,
     height: 48,
-    width: 120,
+    minWidth: 0,
   },
   shell: {
     borderRadius: radiusCardInner,
@@ -75,6 +77,7 @@ const styles = StyleSheet.create({
   synopsisLineShort: {
     borderRadius: spacing.xs,
     height: 14,
+    marginBottom: spacing.xxl,
     marginTop: spacing.xs,
     maxWidth: 260,
     width: '82%',
@@ -88,13 +91,14 @@ const styles = StyleSheet.create({
   titleLineShort: {
     borderRadius: spacing.xs,
     height: 24,
-    marginBottom: spacing.md,
+    marginBottom: spacing.lg,
     width: '55%',
   },
   watchBtn: {
     borderRadius: spacing.md,
+    flex: 1,
     height: 48,
-    width: 160,
+    minWidth: 0,
   },
   wrap: {
     marginBottom: spacing.xxxxl,

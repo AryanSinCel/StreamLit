@@ -91,11 +91,7 @@ export function ProfileScreen({ navigation }: Props): JSX.Element {
           },
         ]}
       >
-        <SearchAppBar
-          beforeProfile={searchAppBarTrailing}
-          brandWordmark
-          onPressProfile={showComingSoon}
-        />
+        <SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={showComingSoon} />
       </View>
       <ScrollView
         contentContainerStyle={[

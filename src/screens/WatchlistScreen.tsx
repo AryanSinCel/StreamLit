@@ -151,11 +151,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
     return (
       <View style={styles.screen}>
         <View style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}>
-          <SearchAppBar
-            beforeProfile={searchAppBarTrailing}
-            brandWordmark
-            onPressProfile={onPressProfile}
-          />
+          <SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />
         </View>
         <ScrollView
           contentContainerStyle={[
@@ -190,11 +186,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
   return (
     <View style={styles.screen}>
       <View style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}>
-        <SearchAppBar
-          beforeProfile={searchAppBarTrailing}
-          brandWordmark
-          onPressProfile={onPressProfile}
-        />
+        <SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />
       </View>
       <FlatList
         style={styles.scroll}

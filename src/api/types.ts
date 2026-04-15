@@ -292,6 +292,8 @@ export interface UseSearchResult {
    * and runs `GET /search/movie` immediately for the label text.
    */
   applyGenreChip: (label: string) => void;
+  /** `/genre/movie/list` — resolves `genre_ids` on default trending / featured copy (Search tab). */
+  movieGenres: readonly TmdbGenre[];
 }
 
 export interface WatchlistItem {

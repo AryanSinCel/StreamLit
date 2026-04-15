@@ -8,8 +8,9 @@
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { getTrendingMoviesWeek, searchMovies } from '../api/movies';
+import { getMovieGenres, getTrendingMoviesWeek, searchMovies } from '../api/movies';
 import type {
+  TmdbGenre,
   TmdbPagedMoviesResponse,
   TmdbPagedSearchMoviesResponse,
   UseSearchInput,
@@ -44,8 +45,33 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
   const [trendingReloadKey, setTrendingReloadKey] = useState(0);
 
   const [recentSearches, setRecentSearches] = useState<readonly string[]>([]);
+  const [movieGenres, setMovieGenres] = useState<readonly TmdbGenre[]>([]);
 
   debouncedQueryRef.current = debouncedQuery;
+
+  /** Genre list for Search default trending (`genre_ids` → labels). */
+  useEffect(() => {
+    const controller = new AbortController();
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await getMovieGenres({ signal: controller.signal });
+        if (!cancelled) {
+          setMovieGenres(res.genres);
+        }
+      } catch {
+        if (!cancelled) {
+          setMovieGenres([]);
+        }
+      }
+    })().catch(() => {
+      /* non-fatal for Search UI */
+    });
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, []);
 
   /** 400ms trailing debounce from controlled `query` → `debouncedQuery`. */
   useEffect(() => {
@@ -240,5 +266,6 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
     clearRecentSearches,
     lastSuccessfulQuery,
     applyGenreChip,
+    movieGenres,
   };
 }

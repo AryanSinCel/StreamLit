@@ -4,6 +4,7 @@
 
 import type { JSX } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import type { TmdbMovieListItem } from '../../api/types';
 import { IconPlay } from '../common/SimpleIcons';
 import { HomeHeroSkeleton } from './HomeHeroSkeleton';
@@ -11,6 +12,8 @@ import { colors } from '../../theme/colors';
 import { homeHeroHeight, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
+
+const HERO_SCRIM_GRADIENT_ID = 'homeHeroScrim';
 
 export type HomeHeroProps = {
   movie: TmdbMovieListItem | null;
@@ -72,6 +75,26 @@ export function HomeHero({ movie, loading, onWatchNow, onDetails }: HomeHeroProp
         ) : (
           <View style={styles.backdropPlaceholder} accessibilityLabel="Featured backdrop placeholder" />
         )}
+        <View style={styles.scrimHost} pointerEvents="none">
+          <Svg height="100%" preserveAspectRatio="none" style={StyleSheet.absoluteFill} width="100%">
+            <Defs>
+              <LinearGradient
+                gradientUnits="objectBoundingBox"
+                id={HERO_SCRIM_GRADIENT_ID}
+                x1="0"
+                x2="0"
+                y1="1"
+                y2="0"
+              >
+                <Stop offset="0" stopColor={colors.surface} stopOpacity="1" />
+                <Stop offset="0.42" stopColor={colors.surface} stopOpacity="0.35" />
+                <Stop offset="0.62" stopColor={colors.surface} stopOpacity="0" />
+                <Stop offset="1" stopColor={colors.surface} stopOpacity="0" />
+              </LinearGradient>
+            </Defs>
+            <Rect fill={`url(#${HERO_SCRIM_GRADIENT_ID})`} height="100%" width="100%" x="0" y="0" />
+          </Svg>
+        </View>
         <View style={styles.content}>
           <View style={styles.badge}>
             <Text style={styles.badgeText}>New Release</Text>
@@ -116,12 +139,13 @@ export function HomeHero({ movie, loading, onWatchNow, onDetails }: HomeHeroProp
 const styles = StyleSheet.create({
   actions: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
     gap: spacing.md,
-    marginTop: spacing.lg,
+    marginTop: 0,
   },
   backdrop: {
     ...StyleSheet.absoluteFill,
+    opacity: 0.6,
   },
   backdropPlaceholder: {
     ...StyleSheet.absoluteFill,
@@ -131,22 +155,20 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     backgroundColor: colors.primary_container,
     borderRadius: spacing.xs,
-    marginBottom: spacing.md,
+    marginBottom: spacing.lg,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
   },
   badgeText: {
-    ...typography['label-sm'],
+    ...typography['hero-badge'],
     color: colors.on_primary_container,
-    fontWeight: '700',
-    letterSpacing: 1.2,
-    textTransform: 'uppercase',
   },
   content: {
     bottom: 0,
     justifyContent: 'flex-end',
     left: 0,
-    padding: spacing.xl,
+    paddingBottom: spacing.xxxl,
+    paddingHorizontal: spacing.xxxl,
     position: 'absolute',
     right: 0,
   },
@@ -154,10 +176,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.surface_container_highest,
     borderRadius: spacing.md,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    minWidth: 120,
-    opacity: 0.88,
+    minWidth: 0,
     paddingHorizontal: spacing.xl,
     paddingVertical: spacing.md,
   },
@@ -169,6 +191,9 @@ const styles = StyleSheet.create({
   pressedDisabled: {
     opacity: 0.5,
   },
+  scrimHost: {
+    ...StyleSheet.absoluteFill,
+  },
   shell: {
     borderRadius: radiusCardInner,
     height: homeHeroHeight,
@@ -178,6 +203,7 @@ const styles = StyleSheet.create({
   synopsis: {
     ...typography['body-md'],
     color: colors.on_surface_variant,
+    marginBottom: spacing.xxl,
     maxWidth: 320,
     minHeight: 40,
     textShadowColor: colors.hero_text_shadow,
@@ -187,7 +213,7 @@ const styles = StyleSheet.create({
   title: {
     ...typography['display-md'],
     color: colors.on_surface,
-    marginBottom: spacing.md,
+    marginBottom: spacing.lg,
     textShadowColor: colors.hero_text_shadow,
     textShadowOffset: { height: spacing.xs, width: 0 },
     textShadowRadius: spacing.md,
@@ -197,9 +223,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.primary,
     borderRadius: spacing.md,
+    flex: 1,
     flexDirection: 'row',
     gap: spacing.xs,
     justifyContent: 'center',
+    minWidth: 0,
     paddingHorizontal: spacing.xl,
     paddingVertical: spacing.md,
   },

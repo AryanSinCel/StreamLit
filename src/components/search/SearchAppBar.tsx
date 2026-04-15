@@ -15,8 +15,8 @@ export type SearchAppBarProps = {
   /** When set, the avatar is tappable (Watchlist / future tabs). */
   onPressProfile?: () => void;
   /**
-   * `true` — coral wordmark like `watchlist-empty.html`.
-   * `false` / omitted — `on_surface` wordmark (`search_default.png`).
+   * `true` — coral wordmark matching the clapperboard (`search.html`, `search-result.html`, Home).
+   * `false` — `on_surface` wordmark (rare alternate layouts).
    */
   brandWordmark?: boolean;
   /** Profile / marketing screens — all-caps wordmark (e.g. **STREAMLIST**). */
@@ -26,7 +26,7 @@ export type SearchAppBarProps = {
 export function SearchAppBar({
   beforeProfile,
   onPressProfile,
-  brandWordmark = false,
+  brandWordmark = true,
   uppercaseWordmark = false,
 }: SearchAppBarProps): JSX.Element {
   const wordmarkStyle = brandWordmark ? styles.wordmarkBrand : styles.wordmarkOnSurface;

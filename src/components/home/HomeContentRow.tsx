@@ -6,13 +6,13 @@ import type { JSX } from 'react';
 import { useCallback, useRef } from 'react';
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import type { TmdbMovieListItem } from '../../api/types';
+import type { TmdbGenre, TmdbMovieListItem } from '../../api/types';
 import { ContentCard } from '../common/ContentCard';
 import { ShimmerBox } from '../common/ShimmerBox';
 import { colors } from '../../theme/colors';
 import { homeRowCardWidth, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
-import { formatListMovieSubtitle } from '../../utils/formatMovieListItem';
+import { formatHomeRailSubtitle } from '../../utils/formatMovieListItem';
 import { HomeRowSkeleton } from './HomeRowSkeleton';
 
 /** PSD H5: trigger next page when viewport is within this many cards of the row end. */
@@ -28,6 +28,8 @@ export type HomeRowContentKind = 'default' | 'genre';
 
 export type HomeContentRowProps = {
   sectionTitle: string;
+  /** TMDB genre list — resolves `genre_ids` to the metadata line (`Year · Genre`). */
+  genres: readonly TmdbGenre[];
   items: readonly TmdbMovieListItem[];
   loading: boolean;
   loadingMore: boolean;
@@ -44,6 +46,7 @@ export type HomeContentRowProps = {
 
 export function HomeContentRow({
   sectionTitle,
+  genres,
   items,
   loading,
   loadingMore,
@@ -164,8 +167,9 @@ export function HomeContentRow({
               }}
               posterPath={item.poster_path}
               rating={item.vote_average}
+              showRating={false}
               style={styles.card}
-              subtitle={formatListMovieSubtitle(item)}
+              subtitle={formatHomeRailSubtitle(item, genres)}
               title={item.title}
             />
           ))}
@@ -242,7 +246,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   sectionTitle: {
-    ...typography['headline-md'],
+    ...typography['headline-rail'],
     color: colors.on_surface,
     flex: 1,
     marginRight: spacing.md,
@@ -255,7 +259,7 @@ const styles = StyleSheet.create({
   skeletonSectionTitle: {
     borderRadius: spacing.xs,
     flex: 1,
-    height: 26,
+    height: 24,
     marginRight: spacing.md,
     maxWidth: 220,
   },

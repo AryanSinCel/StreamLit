@@ -89,6 +89,15 @@
       "markdown_size_bytes": 69934,
       "provider": "cursoride",
       "last_updated": "2026-04-14T01:14:49Z"
+    },
+    "f215cf60-7487-465c-b1eb-e0a2a200acfc": {
+      "user_message_count": 4,
+      "agent_message_count": 205,
+      "start_timestamp": "2026-04-15T12:15:45+05:30",
+      "end_timestamp": "2026-04-15T12:15:45+05:30",
+      "markdown_size_bytes": 350751,
+      "provider": "cursoride",
+      "last_updated": "2026-04-15T07:32:58Z"
     }
   }
 }

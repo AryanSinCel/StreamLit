@@ -48,7 +48,7 @@ export function SearchRecentSearchesSection({
             style={({ pressed }) => [styles.recentRow, pressed && styles.recentRowPressed]}
           >
             <View style={styles.recentLeft}>
-              <IconHistory color={colors.on_surface_variant} size={22} />
+              <IconHistory color={colors.on_surface_variant} size={24} />
               <Text style={styles.recentTerm}>{term}</Text>
             </View>
           </Pressable>
@@ -60,9 +60,10 @@ export function SearchRecentSearchesSection({
 
 const styles = StyleSheet.create({
   clearAll: {
-    ...typography['title-sm'],
-    color: colors.primary_container,
-    letterSpacing: 1.5,
+    ...typography['label-sm'],
+    color: colors.primary,
+    fontWeight: '600',
+    letterSpacing: 2,
     textTransform: 'uppercase',
   },
   recentHeaderRow: {
@@ -92,9 +93,10 @@ const styles = StyleSheet.create({
   recentTerm: {
     ...typography['body-md'],
     color: colors.on_surface,
+    fontWeight: '500',
   },
   recentTitle: {
-    ...typography['headline-md'],
+    ...typography['headline-search'],
     color: colors.on_surface,
   },
   section: {

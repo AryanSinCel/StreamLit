@@ -30,6 +30,34 @@ export const typography = {
     fontWeight: '700',
     letterSpacing: lsEm(-0.01, 28),
   },
+  /** Home rail section titles — `resources/home.html` (`text-2xl` / Manrope bold). */
+  'headline-rail': {
+    fontFamily: fontManrope,
+    fontSize: 24,
+    fontWeight: '700',
+    letterSpacing: lsEm(-0.01, 24),
+  },
+  /** Search section titles — `resources/search.html` (`text-xl font-bold` / Manrope). */
+  'headline-search': {
+    fontFamily: fontManrope,
+    fontSize: 20,
+    fontWeight: '700',
+    letterSpacing: lsEm(-0.01, 20),
+  },
+  /** Search / trending grid card titles — `search.html` (`font-headline … text-base`). */
+  'title-search-card': {
+    fontFamily: fontManrope,
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: 0,
+  },
+  /** Search bar typed value — `search-result.html` (`text-lg font-medium`). */
+  'search-input-value': {
+    fontFamily: fontInter,
+    fontSize: 18,
+    fontWeight: '500',
+    letterSpacing: 0,
+  },
   'title-lg': {
     fontFamily: fontManrope,
     fontSize: 20,
@@ -60,6 +88,14 @@ export const typography = {
     fontSize: 12,
     fontWeight: '400',
     letterSpacing: 0,
+  },
+  /** Hero “New Release” pill — `resources/home.html` (10px, wide tracking, uppercase). */
+  'hero-badge': {
+    fontFamily: fontInter,
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: lsEm(0.2, 10),
+    textTransform: 'uppercase',
   },
   /** Bottom tab labels — `resources/home.html` nav (10px, wide tracking, uppercase). */
   'tab-label': {

@@ -5,7 +5,8 @@
 import type { JSX } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useWindowDimensions } from 'react-native';
-import type { SearchScreenMode, TmdbMovieListItem } from '../../api/types';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import type { SearchScreenMode, TmdbGenre, TmdbMovieListItem } from '../../api/types';
 import { IconMovie, IconSearch, IconStar } from '../common/SimpleIcons';
 import { colors, contentCard } from '../../theme/colors';
 import {
@@ -16,11 +17,13 @@ import {
   searchFeaturedHeroAspectRatio,
 } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
-import { formatListMovieSubtitle } from '../../utils/formatMovieListItem';
+import { formatSearchFeaturedMeta, formatSearchTrendingGenreOnly } from '../../utils/formatMovieListItem';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W342, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
 import { SEARCH_INPUT_PLACEHOLDER } from './searchDefaultMocks';
 import { SearchRecentSearchesSection } from './SearchRecentSearchesSection';
 import { SearchTrendingSkeleton } from './SearchTrendingSkeleton';
+
+const SEARCH_FEATURED_GRADIENT_ID = 'searchFeaturedScrim';
 
 export type SearchDefaultViewProps = {
   query: string;
@@ -37,6 +40,8 @@ export type SearchDefaultViewProps = {
   showRecentsBlock: boolean;
   mode: SearchScreenMode;
   featuredMovie: TmdbMovieListItem | null;
+  /** TMDB `/genre/movie/list` — featured + mini-card subtitles (`search.html`). */
+  genres: readonly TmdbGenre[];
   gridMovies: readonly TmdbMovieListItem[];
   trendingLoading: boolean;
   trendingError: string | null;
@@ -75,6 +80,7 @@ export function SearchDefaultView({
   showRecentsBlock,
   mode,
   featuredMovie,
+  genres,
   gridMovies,
   trendingLoading,
   trendingError,
@@ -87,14 +93,11 @@ export function SearchDefaultView({
 
   const showTrending = mode === 'default';
   const featuredUri = featuredBackdropUri(featuredMovie);
-  const row1 = gridMovies.slice(0, 2);
-  const row2 = gridMovies.slice(2, 3);
-
   return (
     <View style={styles.body}>
       <View style={styles.searchRow}>
         <View style={styles.searchIconWrap} pointerEvents="none">
-          <IconSearch color={colors.on_surface_variant} size={22} />
+          <IconSearch color={colors.on_surface_variant} size={24} />
         </View>
         <TextInput
           accessibilityLabel="Search movies, actors, directors"
@@ -185,7 +188,37 @@ export function SearchDefaultView({
                       <IconMovie color={colors.on_surface_variant} size={56} />
                     </View>
                   )}
-                  <View style={styles.featuredScrim} pointerEvents="none" />
+                  <View style={styles.featuredGradientHost} pointerEvents="none">
+                    <Svg
+                      height="100%"
+                      preserveAspectRatio="none"
+                      style={StyleSheet.absoluteFill}
+                      width="100%"
+                    >
+                      <Defs>
+                        <LinearGradient
+                          gradientUnits="objectBoundingBox"
+                          id={SEARCH_FEATURED_GRADIENT_ID}
+                          x1="0"
+                          x2="0"
+                          y1="1"
+                          y2="0"
+                        >
+                          <Stop offset="0" stopColor={colors.surface_container_lowest} stopOpacity="1" />
+                          <Stop offset="0.42" stopColor={colors.surface_container_lowest} stopOpacity="0.4" />
+                          <Stop offset="0.65" stopColor={colors.surface_container_lowest} stopOpacity="0" />
+                          <Stop offset="1" stopColor={colors.surface_container_lowest} stopOpacity="0" />
+                        </LinearGradient>
+                      </Defs>
+                      <Rect
+                        fill={`url(#${SEARCH_FEATURED_GRADIENT_ID})`}
+                        height="100%"
+                        width="100%"
+                        x="0"
+                        y="0"
+                      />
+                    </Svg>
+                  </View>
                   <View style={styles.featuredTextBlock}>
                     <View style={styles.featuredBadge}>
                       <Text style={styles.featuredBadgeLabel}>Featured</Text>
@@ -196,26 +229,17 @@ export function SearchDefaultView({
                         : '—'}
                     </Text>
                     <Text style={styles.featuredMeta}>
-                      {featuredMovie != null ? formatListMovieSubtitle(featuredMovie) : ''}
+                      {featuredMovie != null ? formatSearchFeaturedMeta(featuredMovie, genres) : ''}
                     </Text>
                   </View>
                 </View>
               </View>
 
-              {row1.length > 0 ? (
+              {gridMovies.length > 0 ? (
                 <View style={styles.gridRow}>
-                  {row1.map((movie) => (
+                  {gridMovies.map((movie) => (
                     <View key={movie.id} style={[styles.gridCell, { width: gridColWidth }]}>
-                      <TrendingMiniCard movie={movie} />
-                    </View>
-                  ))}
-                </View>
-              ) : null}
-              {row2.length > 0 ? (
-                <View style={styles.gridRow}>
-                  {row2.map((movie) => (
-                    <View key={movie.id} style={[styles.gridCell, { width: gridColWidth }]}>
-                      <TrendingMiniCard movie={movie} />
+                      <TrendingMiniCard genres={genres} movie={movie} />
                     </View>
                   ))}
                 </View>
@@ -228,7 +252,13 @@ export function SearchDefaultView({
   );
 }
 
-function TrendingMiniCard({ movie }: { movie: TmdbMovieListItem }): JSX.Element {
+function TrendingMiniCard({
+  movie,
+  genres,
+}: {
+  movie: TmdbMovieListItem;
+  genres: readonly TmdbGenre[];
+}): JSX.Element {
   const uri = buildImageUrl(movie.poster_path, TMDB_IMAGE_SIZE_W342);
   return (
     <View style={styles.miniCard}>
@@ -248,14 +278,14 @@ function TrendingMiniCard({ movie }: { movie: TmdbMovieListItem }): JSX.Element 
         )}
         <View style={styles.ratingBadge}>
           <Text style={styles.ratingValue}>{ratingShort(movie.vote_average)}</Text>
-          <IconStar color={colors.primary_container} size={12} />
+          <IconStar color={colors.on_surface} size={10} />
         </View>
       </View>
       <Text numberOfLines={1} style={styles.miniTitle}>
         {movie.title.length > 0 ? movie.title : '—'}
       </Text>
       <Text numberOfLines={1} style={styles.miniSubtitle}>
-        {formatListMovieSubtitle(movie)}
+        {formatSearchTrendingGenreOnly(movie, genres)}
       </Text>
     </View>
   );
@@ -263,9 +293,11 @@ function TrendingMiniCard({ movie }: { movie: TmdbMovieListItem }): JSX.Element 
 
 const styles = StyleSheet.create({
   body: {
+    alignSelf: 'stretch',
     paddingBottom: spacing.xxl,
     paddingHorizontal: spacing.xl,
     paddingTop: spacing.sm,
+    width: '100%',
   },
   chip: {
     borderRadius: radiusFullPill,
@@ -278,6 +310,7 @@ const styles = StyleSheet.create({
   },
   chipLabel: {
     ...typography['title-sm'],
+    fontWeight: '600',
   },
   chipLabelIdle: {
     color: colors.on_surface_variant,
@@ -300,16 +333,15 @@ const styles = StyleSheet.create({
   },
   featuredBadge: {
     alignSelf: 'flex-start',
-    backgroundColor: colors.secondary_container,
+    backgroundColor: colors.primary_container,
     borderRadius: spacing.xs,
     marginBottom: spacing.sm,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
   },
   featuredBadgeLabel: {
-    ...typography['tab-label'],
-    color: colors.on_surface,
-    letterSpacing: 2.5,
+    ...typography['hero-badge'],
+    color: colors.on_primary_container,
   },
   featuredCard: {
     aspectRatio: searchFeaturedHeroAspectRatio,
@@ -322,8 +354,12 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill,
     borderRadius: radiusCardOuter,
   },
+  featuredGradientHost: {
+    ...StyleSheet.absoluteFill,
+    zIndex: 1,
+  },
   featuredMeta: {
-    ...typography['label-sm'],
+    ...typography['body-md'],
     color: colors.on_surface_variant,
     marginTop: spacing.xs,
   },
@@ -333,15 +369,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface_container_low,
     justifyContent: 'center',
   },
-  featuredScrim: {
-    backgroundColor: colors.surface_container_lowest,
-    bottom: 0,
-    left: 0,
-    opacity: 0.88,
-    position: 'absolute',
-    right: 0,
-    top: '40%',
-  },
   featuredTextBlock: {
     bottom: 0,
     left: 0,
@@ -349,10 +376,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.xl,
     position: 'absolute',
     right: 0,
+    zIndex: 2,
   },
   featuredTitle: {
-    ...typography['headline-md'],
+    ...typography['headline-rail'],
     color: colors.on_surface,
+    fontWeight: '800',
     textShadowColor: colors.hero_text_shadow,
     textShadowOffset: { height: 1, width: 0 },
     textShadowRadius: 6,
@@ -366,9 +395,10 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xl,
   },
   gridRow: {
+    alignSelf: 'stretch',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: spacing.md,
+    gap: spacing.xl,
     justifyContent: 'flex-start',
   },
   miniCard: {
@@ -398,13 +428,14 @@ const styles = StyleSheet.create({
     color: colors.on_surface_variant,
   },
   miniTitle: {
-    ...typography['title-lg'],
+    ...typography['title-search-card'],
     color: colors.on_surface,
   },
   ratingBadge: {
     alignItems: 'center',
-    backgroundColor: colors.surface_container_highest,
+    backgroundColor: colors.poster_rating_scrim,
     borderRadius: spacing.sm,
+    elevation: 0,
     flexDirection: 'row',
     gap: spacing.xs,
     paddingHorizontal: spacing.sm,
@@ -412,12 +443,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: spacing.sm,
     top: spacing.sm,
+    zIndex: 2,
   },
   ratingValue: {
-    ...typography['tab-label'],
+    ...typography['hero-badge'],
     color: colors.on_surface,
-    fontWeight: '700',
-    letterSpacing: 0.5,
     textTransform: 'none',
   },
   retryBtn: {
@@ -437,15 +467,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     bottom: 0,
     justifyContent: 'center',
-    left: spacing.md,
+    left: spacing.lg,
     pointerEvents: 'none',
     position: 'absolute',
     top: 0,
-    width: spacing.xxl,
+    width: spacing.xxxl + spacing.sm,
     zIndex: 1,
   },
   searchInput: {
-    ...typography['body-md'],
+    ...typography['search-input-value'],
     backgroundColor: colors.surface_container_low,
     borderColor: 'transparent',
     borderRadius: spacing.md,
@@ -453,12 +483,12 @@ const styles = StyleSheet.create({
     color: colors.on_surface,
     flex: 1,
     minHeight: spacing.xxxxl,
-    paddingLeft: spacing.xxxxl + spacing.sm,
+    paddingLeft: spacing.xxxl + spacing.sm,
     paddingRight: spacing.md,
-    paddingVertical: spacing.md,
+    paddingVertical: spacing.lg,
   },
   searchInputFocused: {
-    borderColor: colors.outline_variant,
+    borderColor: colors.search_input_focus_ring,
   },
   searchRow: {
     marginBottom: spacing.xxl,
@@ -471,7 +501,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xl,
   },
   sectionTitle: {
-    ...typography['headline-md'],
+    ...typography['headline-search'],
     color: colors.on_surface,
     marginBottom: spacing.xl,
   },

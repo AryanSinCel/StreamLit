@@ -45,6 +45,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
   const insets = useSafeAreaInsets();
   const {
     error: genresError,
+    genres,
     refetch,
     hero,
     heroLoading,
@@ -149,6 +150,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
         />
         <HomeContentRow
           error={trending.error}
+          genres={genres}
           hasMore={trending.hasMore}
           items={trending.items}
           loading={trending.loading}
@@ -161,6 +163,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
         />
         <HomeContentRow
           error={topRated.error}
+          genres={genres}
           hasMore={topRated.hasMore}
           items={topRated.items}
           loading={topRated.loading}
@@ -179,6 +182,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
                 <HomeContentRow
                   key={railKey}
                   error={feed.error}
+                  genres={genres}
                   hasMore={feed.hasMore}
                   items={feed.items}
                   loading={feed.loading}
@@ -199,6 +203,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
           : (
               <HomeContentRow
                 error={genre.error}
+                genres={genres}
                 hasMore={genre.hasMore}
                 items={genre.items}
                 loading={genre.loading}
@@ -267,7 +272,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: spacing.md,
     justifyContent: 'center',
-    opacity: 0.9,
+    opacity: 0.4,
     paddingVertical: spacing.xl,
   },
   loadMoreFooterText: {

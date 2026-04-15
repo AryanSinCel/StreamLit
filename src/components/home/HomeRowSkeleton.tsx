@@ -5,8 +5,8 @@
 import type { JSX } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { ShimmerBox } from '../common/ShimmerBox';
-import { contentCard } from '../../theme/colors';
-import { homeRowCardWidth, spacing } from '../../theme/spacing';
+import { colors, contentCard } from '../../theme/colors';
+import { homeRowCardWidth, radiusCardOuter, spacing } from '../../theme/spacing';
 
 const CARD_COUNT = 5;
 const posterHeight = homeRowCardWidth / contentCard.aspectRatio;
@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
     minHeight: posterHeight + spacing.sm + 14 + spacing.xs + 12,
   },
   poster: {
-    borderRadius: contentCard.radiusInner,
+    backgroundColor: colors.surface_container_low,
+    borderRadius: radiusCardOuter,
     height: posterHeight,
     width: '100%',
   },

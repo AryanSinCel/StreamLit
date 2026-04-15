@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary_container,
   },
   chipIdle: {
-    backgroundColor: colors.surface_container_low,
+    backgroundColor: colors.surface_container_high,
   },
   chipLabel: {
     ...typography['title-sm'],
@@ -77,6 +77,6 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
   },
   wrap: {
-    marginBottom: spacing.xl,
+    marginBottom: spacing.xxxl,
   },
 });

@@ -31,11 +31,10 @@ export function SearchTrendingSkeleton(): JSX.Element {
       <View style={styles.featuredWrap}>
         <ShimmerBox style={styles.featuredCard} />
       </View>
-      <View style={[styles.gridRow, { gap: gridGutter }]}>
+      <View style={[styles.gridRow, { gap: spacing.xl }]}>
         <MiniTrendingCardSkeleton colWidth={gridColWidth} />
         <MiniTrendingCardSkeleton colWidth={gridColWidth} />
-      </View>
-      <View style={[styles.gridRow, { gap: gridGutter, marginTop: spacing.xl }]}>
+        <MiniTrendingCardSkeleton colWidth={gridColWidth} />
         <MiniTrendingCardSkeleton colWidth={gridColWidth} />
       </View>
     </View>
@@ -54,12 +53,15 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   gridRow: {
+    alignSelf: 'stretch',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
   },
   host: {
+    alignSelf: 'stretch',
     gap: 0,
+    width: '100%',
   },
   miniCard: {
     gap: spacing.md,

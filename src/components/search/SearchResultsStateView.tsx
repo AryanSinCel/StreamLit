@@ -104,7 +104,7 @@ export function SearchResultsStateView({
     <View style={styles.body}>
       <View style={styles.searchRow}>
         <View style={styles.searchIconWrap} pointerEvents="none">
-          <IconSearch color={colors.on_surface_variant} size={22} />
+          <IconSearch color={colors.on_surface_variant} size={24} />
         </View>
         <TextInput
           accessibilityLabel="Search movies, actors, directors"
@@ -195,7 +195,7 @@ export function SearchResultsStateView({
       {showEmpty ? (
         <View style={styles.emptyWrap}>
           <View style={styles.emptyIconCircle}>
-            <IconSearch color={colors.on_surface_variant} size={40} />
+            <IconSearch color={colors.on_surface_variant} size={44} />
           </View>
           <Text style={styles.emptyTitle}>
             No results for &apos;{debouncedQuery}&apos;
@@ -244,10 +244,10 @@ function SearchResultGridCard({
         )}
         <View style={styles.ratingBadge}>
           <Text style={styles.ratingValue}>{ratingShort(item.vote_average)}</Text>
-          <IconStar color={colors.primary_container} size={12} />
+          <IconStar color={colors.on_surface} size={10} />
         </View>
       </View>
-      <Text numberOfLines={2} style={styles.cardTitle}>
+      <Text numberOfLines={1} style={styles.cardTitle}>
         {title}
       </Text>
       <Text numberOfLines={1} style={styles.cardYear}>
@@ -259,10 +259,12 @@ function SearchResultGridCard({
 
 const styles = StyleSheet.create({
   body: {
+    alignSelf: 'stretch',
     flexGrow: 1,
     paddingBottom: spacing.xxl,
     paddingHorizontal: spacing.xl,
     paddingTop: spacing.sm,
+    width: '100%',
   },
   card: {
     gap: spacing.md,
@@ -271,7 +273,7 @@ const styles = StyleSheet.create({
     opacity: 0.88,
   },
   cardTitle: {
-    ...typography['title-lg'],
+    ...typography['title-search-card'],
     color: colors.on_surface,
   },
   cardYear: {
@@ -289,6 +291,7 @@ const styles = StyleSheet.create({
   },
   chipLabel: {
     ...typography['title-sm'],
+    fontWeight: '600',
   },
   chipLabelIdle: {
     color: colors.on_surface_variant,
@@ -310,10 +313,12 @@ const styles = StyleSheet.create({
     paddingRight: spacing.xl,
   },
   countLine: {
-    ...typography['label-sm'],
+    ...typography['body-md'],
     color: colors.on_surface_variant,
     fontWeight: '500',
+    letterSpacing: 0.5,
     marginBottom: spacing.xl,
+    marginTop: spacing.xl,
   },
   emptyBody: {
     ...typography['body-md'],
@@ -346,11 +351,11 @@ const styles = StyleSheet.create({
     color: colors.primary_container,
   },
   grid: {
-    gap: spacing.xl,
+    gap: spacing.xxl,
   },
   gridRow: {
     flexDirection: 'row',
-    gap: spacing.md,
+    gap: spacing.xxl,
     justifyContent: 'flex-start',
   },
   messageBlock: {
@@ -378,8 +383,9 @@ const styles = StyleSheet.create({
   },
   ratingBadge: {
     alignItems: 'center',
-    backgroundColor: colors.surface_container_highest,
+    backgroundColor: colors.poster_rating_scrim,
     borderRadius: spacing.sm,
+    elevation: 0,
     flexDirection: 'row',
     gap: spacing.xs,
     paddingHorizontal: spacing.sm,
@@ -387,12 +393,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: spacing.sm,
     top: spacing.sm,
+    zIndex: 2,
   },
   ratingValue: {
-    ...typography['tab-label'],
+    ...typography['hero-badge'],
     color: colors.on_surface,
-    fontWeight: '700',
-    letterSpacing: 0.5,
     textTransform: 'none',
   },
   retryBtn: {
@@ -412,15 +417,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     bottom: 0,
     justifyContent: 'center',
-    left: spacing.md,
+    left: spacing.lg,
     pointerEvents: 'none',
     position: 'absolute',
     top: 0,
-    width: spacing.xxl,
+    width: spacing.xxxl + spacing.sm,
     zIndex: 1,
   },
   searchInput: {
-    ...typography['body-md'],
+    ...typography['search-input-value'],
     backgroundColor: colors.surface_container_low,
     borderColor: 'transparent',
     borderRadius: spacing.md,
@@ -428,12 +433,12 @@ const styles = StyleSheet.create({
     color: colors.on_surface,
     flex: 1,
     minHeight: spacing.xxxxl,
-    paddingLeft: spacing.xxxxl + spacing.sm,
+    paddingLeft: spacing.xxxl + spacing.sm,
     paddingRight: spacing.md,
-    paddingVertical: spacing.md,
+    paddingVertical: spacing.lg,
   },
   searchInputFocused: {
-    borderColor: colors.outline_variant,
+    borderColor: colors.search_input_focus_ring,
   },
   searchRow: {
     marginBottom: spacing.xxl,

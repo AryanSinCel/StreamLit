@@ -34,6 +34,7 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
   const [inputFocused, setInputFocused] = useState(false);
 
   const search = useSearch({ query, setQuery });
+  const { movieGenres } = search;
 
   const genreChipLabels = useMemo(
     () =>
@@ -55,7 +56,7 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
 
   const trendingResults = search.trending?.results ?? [];
   const featuredMovie = trendingResults[0] ?? null;
-  const gridMovies = trendingResults.slice(1, 4);
+  const gridMovies = trendingResults.slice(1, 5);
 
   /** Empty query and at least one stored recent — hide section when list is empty (hook returns []). */
   const showRecentsBlock = query.trim().length === 0 && search.recentSearches.length > 0;
@@ -122,6 +123,7 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
           <SearchDefaultView
             featuredMovie={featuredMovie}
             genreChipLabels={genreChipLabels}
+            genres={movieGenres}
             gridMovies={gridMovies}
             inputFocused={inputFocused}
             mode={search.mode}
@@ -163,5 +165,6 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
+    width: '100%',
   },
 });
