@@ -35,13 +35,10 @@ export const colors = {
   outline_variant: 'rgba(255,255,255,0.15)',
   /** Hero title / synopsis legibility when scrim is omitted (no solid overlay panel). */
   hero_text_shadow: 'rgba(19, 19, 19, 0.85)',
-} as const;
-
-/** Primary CTA gradient — use with `LinearGradient` when building UI. */
-export const primaryGradient = {
-  colors: ['#FFB3AE', '#FF5351'] as const,
-  start: { x: 0, y: 0 },
-  end: { x: 1, y: 1 },
+  /** Watchlist empty-state radial glow (`resources/watchlist-empty.html` `.bg-empty-glow`). */
+  watchlist_empty_radial_glow: 'rgba(130, 38, 37, 0.15)',
+  /** `surface_container_low` @ 30% — bookmark icon disc behind (`watchlist-empty.html`). */
+  watchlist_empty_icon_disc: 'rgba(28, 27, 27, 0.3)',
 } as const;
 
 /**

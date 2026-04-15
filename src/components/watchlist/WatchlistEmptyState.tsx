@@ -1,58 +1,61 @@
 /**
- * Watchlist zero-items body — PSD-Watchlist §5 (bookmark, copy, CTA, popular row / skeleton / error).
+ * Watchlist zero-items body — `resources/watchlist-empty.html` (glow, disc + bookmark, copy, solid CTA, ghost row).
  */
 
 import type { JSX } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import type {
-  TmdbMovieListItem,
-  TmdbPagedMoviesResponse,
-  UseQueryResult,
-} from '../../api/types';
-import { ContentCard } from '../common/ContentCard';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import type { TmdbPagedMoviesResponse, UseQueryResult } from '../../api/types';
+import { BrandSolidCtaButton } from '../common/BrandSolidCtaButton';
+import { GhostPosterPlaceholderGrid } from '../common/GhostPosterPlaceholderGrid';
+import { RadialGlowBackdrop } from '../common/RadialGlowBackdrop';
 import { IconBookmark } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { homeRowCardWidth, radiusCardOuter, spacing } from '../../theme/spacing';
+import { radiusFullPill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
-import { WatchlistBrowseTrendingCta } from './WatchlistBrowseTrendingCta';
-import { WatchlistPopularSkeleton } from './WatchlistPopularSkeleton';
+
+const EMPTY_ICON_SIZE = spacing.xxxxl + spacing.lg;
+/** Glow canvas behind the bookmark only — keeps highlight off the headline (`watchlist-empty.html`). */
+const ICON_RADIAL_GLOW_SIZE = spacing.xxxxl * 4;
 
 export type WatchlistEmptyStateProps = {
   ctaWidth: number;
   popularRecommendations: UseQueryResult<TmdbPagedMoviesResponse>;
   onBrowseTrending: () => void;
-  onOpenTrendingMovie: (movieId: number) => void;
 };
-
-function yearFromListItem(item: TmdbMovieListItem): string {
-  const d = item.release_date;
-  if (d != null && d.length >= 4) {
-    return d.slice(0, 4);
-  }
-  return '—';
-}
 
 export function WatchlistEmptyState({
   ctaWidth,
   popularRecommendations,
   onBrowseTrending,
-  onOpenTrendingMovie,
 }: WatchlistEmptyStateProps): JSX.Element {
-  const { data, loading, error, refetch } = popularRecommendations;
-  const results = data?.results ?? [];
+  const { loading, error, refetch } = popularRecommendations;
+  const ghostGap = spacing.xl;
+  const ghostPosterWidth = Math.max(1, (ctaWidth - ghostGap) / 2);
 
   return (
     <View style={styles.block}>
-      <View style={styles.iconCircle} accessibilityRole="image" accessibilityLabel="Empty watchlist">
-        <IconBookmark color={colors.on_surface} size={56} />
+      <View style={[styles.emptyCluster, { width: ctaWidth }]}>
+        <View style={styles.iconGlowCluster}>
+          <RadialGlowBackdrop height={ICON_RADIAL_GLOW_SIZE} width={ICON_RADIAL_GLOW_SIZE} />
+          <View style={styles.disc} accessibilityRole="image" accessibilityLabel="Empty watchlist">
+            <View style={styles.discIconDim}>
+              <IconBookmark color={colors.secondary_container} size={EMPTY_ICON_SIZE} />
+            </View>
+          </View>
+        </View>
+        <Text style={styles.headline}>Your watchlist is empty</Text>
+        <Text style={styles.body}>
+          {"Save movies and shows you want to watch later and they'll appear here"}
+        </Text>
+        <BrandSolidCtaButton
+          accessibilityHint="Switches to the Home tab"
+          accessibilityLabel="Browse Trending Now"
+          label="Browse Trending Now"
+          onPress={onBrowseTrending}
+          width={ctaWidth}
+        />
       </View>
-      <Text style={styles.headline}>Your watchlist is empty</Text>
-      <Text style={styles.body}>
-        Save titles you want to watch later. Browse trending picks on Home to get started.
-      </Text>
-      <WatchlistBrowseTrendingCta onPress={onBrowseTrending} width={ctaWidth} />
-      <Text style={styles.sectionLabel}>POPULAR RECOMMENDATIONS</Text>
-      {loading && data == null ? <WatchlistPopularSkeleton /> : null}
+
       {error != null && !loading ? (
         <View style={styles.errorBlock}>
           <Text style={styles.errorText}>{error}</Text>
@@ -66,30 +69,16 @@ export function WatchlistEmptyState({
           </Pressable>
         </View>
       ) : null}
-      {!loading && error == null && results.length > 0 ? (
-        <ScrollView
-          horizontal
-          contentContainerStyle={styles.carouselContent}
-          showsHorizontalScrollIndicator={false}
-        >
-          {results.map((item) => (
-            <ContentCard
-              key={item.id}
-              onPress={() => {
-                onOpenTrendingMovie(item.id);
-              }}
-              posterPath={item.poster_path}
-              rating={item.vote_average}
-              style={styles.carouselCard}
-              subtitle={yearFromListItem(item)}
-              title={item.title}
-            />
-          ))}
-        </ScrollView>
-      ) : null}
-      {!loading && error == null && results.length === 0 && data != null ? (
-        <Text style={styles.muted}>No recommendations right now.</Text>
-      ) : null}
+
+      <View
+        accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
+        pointerEvents="none"
+        style={styles.ghostSection}
+      >
+        <Text style={styles.sectionLabel}>Popular Recommendations</Text>
+        <GhostPosterPlaceholderGrid count={2} gap={ghostGap} posterWidth={ghostPosterWidth} />
+      </View>
     </View>
   );
 }
@@ -98,47 +87,65 @@ const styles = StyleSheet.create({
   block: {
     alignItems: 'center',
     alignSelf: 'stretch',
-    gap: spacing.xl,
     paddingBottom: spacing.xxl,
   },
-  iconCircle: {
+  emptyCluster: {
     alignItems: 'center',
-    backgroundColor: colors.secondary_container,
-    borderRadius: radiusCardOuter + spacing.lg,
-    height: spacing.xxxxl + spacing.xxxl,
+    alignSelf: 'center',
+    marginBottom: spacing.md,
+    paddingVertical: spacing.lg,
+  },
+  iconGlowCluster: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    height: ICON_RADIAL_GLOW_SIZE,
     justifyContent: 'center',
+    marginBottom: spacing.xxl,
     marginTop: spacing.md,
-    width: spacing.xxxxl + spacing.xxxl,
+    position: 'relative',
+    width: ICON_RADIAL_GLOW_SIZE,
+  },
+  disc: {
+    alignItems: 'center',
+    backgroundColor: colors.watchlist_empty_icon_disc,
+    borderRadius: radiusFullPill,
+    justifyContent: 'center',
+    padding: spacing.xxl,
+  },
+  discIconDim: {
+    opacity: 0.5,
   },
   headline: {
     ...typography['headline-md'],
     color: colors.on_surface,
+    marginBottom: spacing.md,
     textAlign: 'center',
   },
   body: {
     ...typography['body-md'],
     color: colors.on_surface_variant,
-    paddingHorizontal: spacing.lg,
+    lineHeight: 22,
+    marginBottom: spacing.xxxl,
+    paddingHorizontal: spacing.sm,
     textAlign: 'center',
+  },
+  ghostSection: {
+    alignSelf: 'stretch',
+    marginTop: spacing.xxxl + spacing.xxxl,
+    opacity: 0.2,
   },
   sectionLabel: {
     ...typography['label-sm'],
-    alignSelf: 'flex-start',
     color: colors.on_surface_variant,
-    letterSpacing: 1.2,
-    marginTop: spacing.lg,
+    fontFamily: typography['headline-md'].fontFamily,
+    letterSpacing: 2,
+    marginBottom: spacing.lg,
     textTransform: 'uppercase',
-  },
-  carouselContent: {
-    gap: spacing.md,
-    paddingVertical: spacing.sm,
-  },
-  carouselCard: {
-    width: homeRowCardWidth,
   },
   errorBlock: {
     alignSelf: 'stretch',
     gap: spacing.md,
+    marginBottom: spacing.lg,
   },
   errorText: {
     ...typography['body-md'],
@@ -158,9 +165,5 @@ const styles = StyleSheet.create({
     ...typography['label-sm'],
     color: colors.on_surface,
     fontWeight: '600',
-  },
-  muted: {
-    ...typography['body-md'],
-    color: colors.on_surface_variant,
   },
 });

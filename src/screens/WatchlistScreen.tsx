@@ -3,7 +3,7 @@ import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { JSX } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
-import { Alert, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { WatchlistItem } from '../api/types';
@@ -11,6 +11,8 @@ import { WatchlistBecauseYouSavedSection } from '../components/watchlist/Watchli
 import { WatchlistEmptyState } from '../components/watchlist/WatchlistEmptyState';
 import { WatchlistFilterEmpty } from '../components/watchlist/WatchlistFilterEmpty';
 import { WatchlistGridCard } from '../components/watchlist/WatchlistGridCard';
+import { IconSearch } from '../components/common/SimpleIcons';
+import { SearchAppBar } from '../components/search/SearchAppBar';
 import { WatchlistScreenHeader } from '../components/watchlist/WatchlistScreenHeader';
 import { useWatchlist } from '../hooks/useWatchlist';
 import { useWatchlistStore } from '../store/watchlistStore';
@@ -88,6 +90,26 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
     navigation.navigate('Home', { screen: 'HomeMain' });
   }, [navigation]);
 
+  const openSearchTab = useCallback(() => {
+    navigation.navigate('Search', { screen: 'SearchMain' });
+  }, [navigation]);
+
+  const onPressProfile = useCallback(() => {
+    Alert.alert('Profile', 'Coming soon', [{ text: 'OK' }]);
+  }, []);
+
+  const searchAppBarTrailing = (
+    <Pressable
+      accessibilityLabel="Search"
+      accessibilityRole="button"
+      hitSlop={spacing.sm}
+      onPress={openSearchTab}
+      style={({ pressed }) => [styles.appBarIconHit, pressed && styles.appBarIconHitPressed]}
+    >
+      <IconSearch color={colors.on_surface_variant} size={22} />
+    </Pressable>
+  );
+
   const renderItem = useCallback(
     ({ item }: { item: WatchlistItem }) => (
       <WatchlistGridCard
@@ -127,46 +149,61 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
 
   if (count === 0) {
     return (
-      <ScrollView
-        contentContainerStyle={[
-          styles.scrollContent,
-          {
-            paddingBottom: insets.bottom + spacing.xxl,
-            paddingTop: insets.top + spacing.lg,
-          },
-        ]}
-        keyboardShouldPersistTaps="handled"
-        style={styles.screen}
-      >
-        <View style={{ paddingHorizontal: horizontalPad }}>
-          <WatchlistScreenHeader
-            countLine="0 titles"
-            filter={filter}
-            setFilter={setFilter}
-            showChips={false}
-          />
-          <WatchlistEmptyState
-            ctaWidth={ctaWidth}
-            onBrowseTrending={onBrowseTrending}
-            onOpenTrendingMovie={(movieId) => {
-              navigation.navigate('Detail', { movieId });
-            }}
-            popularRecommendations={popularRecommendations}
+      <View style={styles.screen}>
+        <View style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}>
+          <SearchAppBar
+            beforeProfile={searchAppBarTrailing}
+            brandWordmark
+            onPressProfile={onPressProfile}
           />
         </View>
-      </ScrollView>
+        <ScrollView
+          contentContainerStyle={[
+            styles.scrollContent,
+            {
+              paddingBottom: insets.bottom + spacing.xxl,
+              paddingTop: spacing.lg,
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
+          style={styles.scroll}
+        >
+          <View style={{ paddingHorizontal: horizontalPad }}>
+            <WatchlistScreenHeader
+              countLine="0 titles"
+              filter={filter}
+              setFilter={setFilter}
+              showChips={false}
+              showTopActions={false}
+            />
+            <WatchlistEmptyState
+              ctaWidth={ctaWidth}
+              onBrowseTrending={onBrowseTrending}
+              popularRecommendations={popularRecommendations}
+            />
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 
   return (
     <View style={styles.screen}>
+      <View style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}>
+        <SearchAppBar
+          beforeProfile={searchAppBarTrailing}
+          brandWordmark
+          onPressProfile={onPressProfile}
+        />
+      </View>
       <FlatList
+        style={styles.scroll}
         columnWrapperStyle={[styles.gridRow, { gap: gridGutter, paddingHorizontal: horizontalPad }]}
         contentContainerStyle={[
           styles.listContent,
           {
             paddingBottom: insets.bottom + spacing.xxl,
-            paddingTop: insets.top + spacing.lg,
+            paddingTop: spacing.lg,
           },
         ]}
         data={filteredItems}
@@ -179,7 +216,12 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
         }
         ListHeaderComponent={
           <View style={{ paddingHorizontal: horizontalPad }}>
-            <WatchlistScreenHeader filter={filter} setFilter={setFilter} showChips />
+            <WatchlistScreenHeader
+              filter={filter}
+              setFilter={setFilter}
+              showChips
+              showTopActions={false}
+            />
             {showBecauseYouSavedRow ? (
               <WatchlistBecauseYouSavedSection
                 movies={similarMovies}
@@ -212,8 +254,21 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  appBarIconHit: {
+    padding: spacing.xs,
+  },
+  appBarIconHitPressed: {
+    opacity: 0.85,
+  },
+  headerDock: {
+    backgroundColor: colors.surface,
+    zIndex: 1,
+  },
   screen: {
     backgroundColor: colors.surface,
+    flex: 1,
+  },
+  scroll: {
     flex: 1,
   },
   scrollContent: {

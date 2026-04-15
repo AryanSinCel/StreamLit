@@ -18,6 +18,11 @@ export type WatchlistScreenHeaderProps = {
   setFilter: (f: WatchlistMediaFilter) => void;
   /** PSD §6 — profile control; defaults to a brief “Coming soon” alert. */
   onPressProfile?: () => void;
+  /**
+   * When `false`, hides inline search/profile — use with `SearchAppBar` (`watchlist-empty.html` / Search tab).
+   * @default true
+   */
+  showTopActions?: boolean;
 };
 
 const FILTER_CHIPS: readonly { key: WatchlistMediaFilter; label: string }[] = [
@@ -32,6 +37,7 @@ export function WatchlistScreenHeader({
   filter,
   setFilter,
   onPressProfile,
+  showTopActions = true,
 }: WatchlistScreenHeaderProps): JSX.Element {
   const handleProfile = (): void => {
     if (onPressProfile != null) {
@@ -51,28 +57,30 @@ export function WatchlistScreenHeader({
             <Text style={styles.countLine}>{countLine}</Text>
           ) : null}
         </View>
-        <View style={styles.headerActions}>
-          <Pressable
-            accessibilityLabel="Search"
-            accessibilityRole="button"
-            hitSlop={spacing.sm}
-            onPress={() => {
-              /* placeholder — PSD §3 */
-            }}
-            style={({ pressed }) => [styles.iconHit, pressed && styles.iconHitPressed]}
-          >
-            <IconSearch color={colors.on_surface} size={22} />
-          </Pressable>
-          <Pressable
-            accessibilityLabel="Profile"
-            accessibilityRole="button"
-            hitSlop={spacing.sm}
-            onPress={handleProfile}
-            style={({ pressed }) => [styles.iconHit, pressed && styles.iconHitPressed]}
-          >
-            <IconPerson color={colors.on_surface} size={22} />
-          </Pressable>
-        </View>
+        {showTopActions ? (
+          <View style={styles.headerActions}>
+            <Pressable
+              accessibilityLabel="Search"
+              accessibilityRole="button"
+              hitSlop={spacing.sm}
+              onPress={() => {
+                /* placeholder — PSD §3 */
+              }}
+              style={({ pressed }) => [styles.iconHit, pressed && styles.iconHitPressed]}
+            >
+              <IconSearch color={colors.on_surface_variant} size={22} />
+            </Pressable>
+            <Pressable
+              accessibilityLabel="Profile"
+              accessibilityRole="button"
+              hitSlop={spacing.sm}
+              onPress={handleProfile}
+              style={({ pressed }) => [styles.iconHit, pressed && styles.iconHitPressed]}
+            >
+              <IconPerson color={colors.on_surface_variant} size={22} />
+            </Pressable>
+          </View>
+        ) : null}
       </View>
       {showChips ? (
         <View style={styles.chipsRow}>
@@ -125,7 +133,8 @@ const styles = StyleSheet.create({
   },
   collectionLabel: {
     ...typography['label-sm'],
-    color: colors.on_surface_variant,
+    color: colors.primary,
+    fontWeight: '700',
     letterSpacing: 1.2,
     textTransform: 'uppercase',
   },
@@ -136,6 +145,7 @@ const styles = StyleSheet.create({
   countLine: {
     ...typography['label-sm'],
     color: colors.on_surface_variant,
+    fontWeight: '500',
     marginTop: spacing.xs,
   },
   headerActions: {
