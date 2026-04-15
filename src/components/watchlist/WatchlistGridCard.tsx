@@ -1,19 +1,21 @@
 /**
- * Watchlist grid cell — poster, rating badge, remove (parent-controlled), Details CTA (PSD-Watchlist §3).
+ * Watchlist grid cell — poster + scrim rating, title row + remove, year · genres, Details CTA (`resources/watchlist.html`).
  */
 
 import type { JSX } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import type { WatchlistItem } from '../../api/types';
+import type { TmdbGenre, WatchlistItem } from '../../api/types';
 import { IconMovie, IconStar } from '../common/SimpleIcons';
 import { colors, contentCard } from '../../theme/colors';
-import { radiusCardInner, radiusCardOuter, spacing } from '../../theme/spacing';
+import { radiusCardInner, radiusCardOuter, radiusFullPill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
+import { formatWatchlistGridSubtitle } from '../../utils/formatWatchlistGridSubtitle';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W342 } from '../../utils/image';
 
 export type WatchlistGridCardProps = {
   item: WatchlistItem;
+  genres: readonly TmdbGenre[];
   style?: StyleProp<ViewStyle>;
   onPressDetails: () => void;
   detailsEnabled: boolean;
@@ -27,21 +29,9 @@ function formatRating(value: number): string {
   return value.toFixed(1);
 }
 
-function yearFromReleaseDate(releaseDate: string): string {
-  if (releaseDate.length >= 4) {
-    return releaseDate.slice(0, 4);
-  }
-  return '—';
-}
-
-function buildSubtitle(item: WatchlistItem): string {
-  const year = yearFromReleaseDate(item.releaseDate);
-  const kind = item.mediaType === 'movie' ? 'Movie' : 'Series';
-  return `${year} · ${kind}`;
-}
-
 export function WatchlistGridCard({
   item,
+  genres,
   style,
   onPressDetails,
   detailsEnabled,
@@ -69,31 +59,33 @@ export function WatchlistGridCard({
             <IconMovie color={colors.on_surface_variant} size={40} />
           </View>
         )}
+        {showRating ? (
+          <View
+            style={styles.ratingBadge}
+            accessibilityLabel={`Rating ${formatRating(item.voteAverage)} out of 10`}
+          >
+            <IconStar color={colors.primary} size={12} />
+            <Text style={styles.ratingValue}>{formatRating(item.voteAverage)}</Text>
+          </View>
+        ) : null}
+      </View>
+      <View style={styles.titleRow}>
+        <Text numberOfLines={1} style={styles.title}>
+          {item.title}
+        </Text>
         <Pressable
           accessibilityHint="Removes this title from your watchlist"
           accessibilityLabel="Remove from watchlist"
           accessibilityRole="button"
           hitSlop={spacing.sm}
           onPress={onPressRemove}
-          style={({ pressed }) => [styles.removeBtn, pressed && styles.removeBtnPressed]}
+          style={({ pressed }) => [styles.removeChip, pressed && styles.removeChipPressed]}
         >
           <Text style={styles.removeGlyph}>×</Text>
         </Pressable>
-        {showRating ? (
-          <View
-            style={styles.ratingBadge}
-            accessibilityLabel={`Rating ${formatRating(item.voteAverage)} out of 10`}
-          >
-            <IconStar color={colors.primary_container} size={12} />
-            <Text style={styles.ratingValue}>{formatRating(item.voteAverage)}</Text>
-          </View>
-        ) : null}
       </View>
-      <Text numberOfLines={2} style={styles.title}>
-        {item.title}
-      </Text>
       <Text numberOfLines={2} style={styles.subtitle}>
-        {buildSubtitle(item)}
+        {formatWatchlistGridSubtitle(item, genres)}
       </Text>
       <Pressable
         accessibilityHint={
@@ -119,72 +111,6 @@ export function WatchlistGridCard({
 }
 
 const styles = StyleSheet.create({
-  root: {
-    gap: spacing.sm,
-  },
-  poster: {
-    aspectRatio: contentCard.aspectRatio,
-    borderRadius: radiusCardOuter,
-    overflow: 'hidden',
-    position: 'relative',
-    width: '100%',
-  },
-  posterImage: {
-    ...StyleSheet.absoluteFill,
-    borderRadius: radiusCardOuter,
-  },
-  posterPlaceholder: {
-    ...StyleSheet.absoluteFill,
-    alignItems: 'center',
-    backgroundColor: colors.surface_container_low,
-    borderRadius: radiusCardInner,
-    justifyContent: 'center',
-    margin: spacing.xs,
-  },
-  removeBtn: {
-    alignItems: 'center',
-    backgroundColor: colors.surface_container_highest,
-    borderRadius: radiusCardInner,
-    height: spacing.xl + spacing.sm,
-    justifyContent: 'center',
-    left: spacing.sm,
-    position: 'absolute',
-    top: spacing.sm,
-    width: spacing.xl + spacing.sm,
-  },
-  removeBtnPressed: {
-    opacity: 0.88,
-  },
-  removeGlyph: {
-    ...typography['title-lg'],
-    color: colors.on_surface,
-    lineHeight: 24,
-    marginTop: -spacing.xs,
-  },
-  ratingBadge: {
-    alignItems: 'center',
-    backgroundColor: colors.surface_container_highest,
-    borderRadius: spacing.sm,
-    flexDirection: 'row',
-    gap: spacing.xs,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
-    position: 'absolute',
-    right: spacing.sm,
-    top: spacing.sm,
-  },
-  ratingValue: {
-    ...typography['label-sm'],
-    color: colors.on_surface,
-  },
-  title: {
-    ...typography['title-lg'],
-    color: colors.on_surface,
-  },
-  subtitle: {
-    ...typography['label-sm'],
-    color: colors.on_surface_variant,
-  },
   detailsBtn: {
     alignItems: 'center',
     alignSelf: 'stretch',
@@ -205,5 +131,77 @@ const styles = StyleSheet.create({
   },
   detailsLabelDisabled: {
     color: colors.on_surface_variant,
+  },
+  poster: {
+    aspectRatio: contentCard.aspectRatio,
+    borderRadius: radiusCardOuter,
+    overflow: 'hidden',
+    position: 'relative',
+    width: '100%',
+  },
+  posterImage: {
+    ...StyleSheet.absoluteFill,
+    borderRadius: radiusCardOuter,
+  },
+  posterPlaceholder: {
+    ...StyleSheet.absoluteFill,
+    alignItems: 'center',
+    backgroundColor: colors.surface_container_low,
+    borderRadius: radiusCardInner,
+    justifyContent: 'center',
+    margin: spacing.xs,
+  },
+  ratingBadge: {
+    alignItems: 'center',
+    backgroundColor: colors.poster_rating_scrim,
+    borderRadius: spacing.sm,
+    flexDirection: 'row',
+    gap: spacing.xs,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    position: 'absolute',
+    right: spacing.sm,
+    top: spacing.sm,
+    zIndex: 2,
+  },
+  ratingValue: {
+    ...typography['label-sm'],
+    color: colors.on_surface,
+  },
+  removeChip: {
+    alignItems: 'center',
+    backgroundColor: colors.surface_container_highest,
+    borderRadius: radiusFullPill,
+    height: spacing.xl,
+    justifyContent: 'center',
+    marginLeft: spacing.sm,
+    width: spacing.xl,
+  },
+  removeChipPressed: {
+    opacity: 0.88,
+  },
+  removeGlyph: {
+    ...typography['title-sm'],
+    color: colors.on_surface,
+    lineHeight: 20,
+    marginTop: -2,
+  },
+  root: {
+    gap: spacing.sm,
+  },
+  subtitle: {
+    ...typography['label-sm'],
+    color: colors.on_surface_variant,
+  },
+  title: {
+    ...typography['title-lg'],
+    color: colors.on_surface,
+    flex: 1,
+  },
+  titleRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 0,
+    justifyContent: 'space-between',
   },
 });

@@ -33,3 +33,6 @@ export const radiusFullPill = 100 as const;
 
 /** Search default featured hero — `resources/search.html` 16:9 landscape tile. */
 export const searchFeaturedHeroAspectRatio = 16 / 9;
+
+/** Watchlist “Because you saved …” horizontal rail — landscape cards (`resources/watchlist.html`). */
+export const watchlistSimilarRailCardWidth = 260 as const;

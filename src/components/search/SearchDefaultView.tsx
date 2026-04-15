@@ -88,8 +88,9 @@ export function SearchDefaultView({
 }: SearchDefaultViewProps): JSX.Element {
   const { width: windowWidth } = useWindowDimensions();
   const horizontalPad = spacing.xl;
-  const gridGutter = spacing.md;
-  const gridColWidth = (windowWidth - horizontalPad * 2 - gridGutter) / 2;
+  /** Must match `gridRow` gap so two columns + gutter fit inside padded width (flexWrap otherwise stacks one per row). */
+  const gridRowGap = spacing.xl;
+  const gridColWidth = (windowWidth - horizontalPad * 2 - gridRowGap) / 2;
 
   const showTrending = mode === 'default';
   const featuredUri = featuredBackdropUri(featuredMovie);
@@ -236,7 +237,7 @@ export function SearchDefaultView({
               </View>
 
               {gridMovies.length > 0 ? (
-                <View style={styles.gridRow}>
+                <View style={[styles.gridRow, { gap: gridRowGap }]}>
                   {gridMovies.map((movie) => (
                     <View key={movie.id} style={[styles.gridCell, { width: gridColWidth }]}>
                       <TrendingMiniCard genres={genres} movie={movie} />
@@ -398,7 +399,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: spacing.xl,
     justifyContent: 'flex-start',
   },
   miniCard: {

@@ -51,6 +51,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
     filteredItems,
     similar,
     popularRecommendations,
+    movieGenres,
   } = useWatchlist();
 
   const persistWriteError = useWatchlistStore((s) => s.persistWriteError);
@@ -114,6 +115,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
     ({ item }: { item: WatchlistItem }) => (
       <WatchlistGridCard
         detailsEnabled={item.mediaType === 'movie'}
+        genres={movieGenres}
         item={item}
         onPressDetails={() => {
           navigation.navigate('Detail', { movieId: item.id });
@@ -124,7 +126,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
         style={{ width: gridColWidth }}
       />
     ),
-    [gridColWidth, handleRemove, navigation],
+    [gridColWidth, handleRemove, movieGenres, navigation],
   );
 
   if (!hydrated) {
@@ -164,17 +166,21 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
           keyboardShouldPersistTaps="handled"
           style={styles.scroll}
         >
-          <View style={{ paddingHorizontal: horizontalPad }}>
+          <View style={[styles.emptyScrollInner, { paddingHorizontal: horizontalPad }]}>
             <WatchlistScreenHeader
               countLine="0 titles"
               filter={filter}
               setFilter={setFilter}
               showChips={false}
               showTopActions={false}
+              style={styles.emptyEditorialHeader}
             />
             <WatchlistEmptyState
               ctaWidth={ctaWidth}
               onBrowseTrending={onBrowseTrending}
+              onPressRecommendation={(movieId) => {
+                navigation.navigate('Detail', { movieId });
+              }}
               popularRecommendations={popularRecommendations}
             />
           </View>
@@ -199,23 +205,18 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
           },
         ]}
         data={filteredItems}
-        extraData={`${String(count)}-${filter}`}
+        extraData={`${String(count)}-${filter}-${String(movieGenres.length)}`}
         keyExtractor={watchlistItemKey}
         ListEmptyComponent={
           count > 0 && filteredItems.length === 0 ? (
             <WatchlistFilterEmpty filter={filter} onBrowseAll={() => setFilter('all')} />
           ) : undefined
         }
-        ListHeaderComponent={
-          <View style={{ paddingHorizontal: horizontalPad }}>
-            <WatchlistScreenHeader
-              filter={filter}
-              setFilter={setFilter}
-              showChips
-              showTopActions={false}
-            />
-            {showBecauseYouSavedRow ? (
+        ListFooterComponent={
+          showBecauseYouSavedRow ? (
+            <View style={{ paddingHorizontal: horizontalPad }}>
               <WatchlistBecauseYouSavedSection
+                genres={movieGenres}
                 movies={similarMovies}
                 onPressMovie={(movieId) => {
                   navigation.navigate('Detail', { movieId });
@@ -235,7 +236,17 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
                 }}
                 savedTitle={savedTitle}
               />
-            ) : null}
+            </View>
+          ) : null
+        }
+        ListHeaderComponent={
+          <View style={{ paddingHorizontal: horizontalPad }}>
+            <WatchlistScreenHeader
+              filter={filter}
+              setFilter={setFilter}
+              showChips
+              showTopActions={false}
+            />
           </View>
         }
         numColumns={2}
@@ -264,6 +275,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
+    flexGrow: 1,
+  },
+  emptyEditorialHeader: {
+    marginBottom: spacing.xxxl,
+  },
+  emptyScrollInner: {
     flexGrow: 1,
   },
   centered: {

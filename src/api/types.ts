@@ -328,6 +328,11 @@ export interface UseWatchlistResult {
    * No request while the watchlist has items or before hydration.
    */
   popularRecommendations: UseQueryResult<TmdbPagedMoviesResponse>;
+  /**
+   * `GET /genre/movie/list` — resolves **`WatchlistItem.genreIds`** on the populated grid
+   * (`resources/watchlist.html`). Empty until a successful fetch while the list has items.
+   */
+  movieGenres: readonly TmdbGenre[];
 }
 
 /**

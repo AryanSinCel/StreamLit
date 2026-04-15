@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
-import { getSimilarMovies, getTrendingMoviesWeek } from '../api/movies';
+import { getMovieGenres, getSimilarMovies, getTrendingMoviesWeek } from '../api/movies';
 import type {
+  TmdbGenre,
   TmdbPagedMoviesResponse,
   UseWatchlistResult,
   WatchlistMediaFilter,
@@ -39,6 +40,41 @@ export function useWatchlist(): UseWatchlistResult {
   const [popularLoading, setPopularLoading] = useState(false);
   const [popularError, setPopularError] = useState<string | null>(null);
   const [popularReloadKey, setPopularReloadKey] = useState(0);
+
+  const [movieGenres, setMovieGenres] = useState<readonly TmdbGenre[]>([]);
+
+  const shouldLoadGenres = hydrated && count > 0;
+
+  useEffect(() => {
+    if (!shouldLoadGenres) {
+      setMovieGenres([]);
+      return;
+    }
+
+    const controller = new AbortController();
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const res = await getMovieGenres({ signal: controller.signal });
+        if (!cancelled) {
+          setMovieGenres(res.genres);
+        }
+      } catch (e) {
+        if (cancelled || controller.signal.aborted || isLikelyCanceledRequest(e)) {
+          return;
+        }
+        setMovieGenres([]);
+      }
+    })().catch(() => {
+      /* non-fatal — grid falls back to year + media kind */
+    });
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [shouldLoadGenres]);
 
   useEffect(() => {
     const anchorId = similarAnchorId;
@@ -163,5 +199,6 @@ export function useWatchlist(): UseWatchlistResult {
     filteredItems,
     similar,
     popularRecommendations,
+    movieGenres,
   };
 }

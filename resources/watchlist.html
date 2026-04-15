@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface": "#131313",
+              "on-surface": "#e5e2e1",
+              "on-surface-variant": "#e4bdba",
+              "primary": "#ffb3ae",
+              "primary-container": "#ff5351",
+              "secondary-container": "#822625",
+              "surface-container-highest": "#353534",
+              "surface-container-high": "#2a2a2a",
+              "surface-container-low": "#1c1b1b",
+              "surface-container-lowest": "#0e0e0e",
+              "outline-variant": "rgba(255,255,255,0.15)"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { min-height: max(884px, 100dvh); background-color: #131313; color: #e5e2e1; }
+        .poster-2-3 { aspect-ratio: 2/3; }
+        .rail-16-9 { aspect-ratio: 16/9; }
+    </style>
+</head>
+<body class="font-body">
+<!-- Top app bar — matches SearchAppBar + StreamList -->
+<header class="bg-[#131313] flex justify-between items-center px-8 py-6 w-full fixed top-0 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#E5383B] text-3xl">movie_filter</span>
+<h1 class="font-['Manrope'] font-extrabold text-[#E5383B] text-2xl tracking-tighter">StreamList</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#E4BDBA] p-2 rounded-full">search</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-high border-2 border-outline-variant"></div>
+</div>
+</header>
+
+<main class="min-h-screen pt-24 pb-32 px-6 max-w-lg mx-auto">
+  <!-- Editorial + chips (WatchlistScreenHeader) -->
+  <section class="mb-6">
+    <span class="text-primary font-headline font-bold tracking-widest uppercase text-xs mb-2 block">Your Collection</span>
+    <h2 class="font-headline text-4xl font-extrabold tracking-tighter text-on-surface">My Watchlist</h2>
+    <div class="flex flex-wrap gap-3 mt-5">
+      <button class="px-5 py-2 rounded-full bg-secondary-container text-on-surface font-semibold text-sm">All</button>
+      <button class="px-5 py-2 rounded-full bg-surface-container-highest text-on-surface-variant font-semibold text-sm">Movies</button>
+      <button class="px-5 py-2 rounded-full bg-surface-container-highest text-on-surface-variant font-semibold text-sm">Series</button>
+    </div>
+  </section>
+
+  <!-- 2-column grid (WatchlistGridCard) — grid appears BEFORE the similar rail in app order -->
+  <section class="grid grid-cols-2 gap-3 mb-8">
+    <article class="flex flex-col gap-2">
+      <div class="relative poster-2-3 rounded-xl overflow-hidden bg-surface-container-low">
+        <div class="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 rounded-md bg-black/40 text-xs text-on-surface">
+          <span class="material-symbols-outlined text-primary text-sm">star</span>8.4
+        </div>
+      </div>
+      <div class="flex items-center justify-between gap-2">
+        <h3 class="font-headline font-bold text-on-surface truncate text-base flex-1">Neon Drift</h3>
+        <button type="button" class="shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface text-lg leading-none">×</button>
+      </div>
+      <p class="text-xs text-on-surface-variant">2024 · Sci-Fi / Action</p>
+      <button type="button" class="w-full py-2 rounded-lg bg-surface-container-high text-on-surface text-sm font-semibold">Details</button>
+    </article>
+    <article class="flex flex-col gap-2">
+      <div class="relative poster-2-3 rounded-xl overflow-hidden bg-surface-container-low">
+        <div class="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 rounded-md bg-black/40 text-xs text-on-surface">
+          <span class="material-symbols-outlined text-primary text-sm">star</span>9.1
+        </div>
+      </div>
+      <div class="flex items-center justify-between gap-2">
+        <h3 class="font-headline font-bold text-on-surface truncate text-base flex-1">The Silent Hour</h3>
+        <button type="button" class="shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface text-lg leading-none">×</button>
+      </div>
+      <p class="text-xs text-on-surface-variant">2023 · Thriller</p>
+      <button type="button" class="w-full py-2 rounded-lg bg-surface-container-high text-on-surface text-sm font-semibold">Details</button>
+    </article>
+  </section>
+
+  <!-- Because you saved — View All + landscape rail (WatchlistSimilarLandscapeCard) -->
+  <section class="mt-2">
+    <div class="flex flex-row justify-between items-start gap-3 mb-3">
+      <h4 class="font-headline font-bold text-on-surface text-lg flex-1 leading-tight">Because you saved Neon Drift</h4>
+      <button type="button" class="text-primary text-sm font-bold shrink-0">View All</button>
+    </div>
+    <div class="flex gap-3 overflow-x-auto pb-2">
+      <div class="rail-16-9 w-[260px] shrink-0 rounded-xl bg-surface-container-highest relative overflow-hidden">
+        <div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-[#0e0e0e] via-[#0e0e0e]/60 to-transparent">
+          <p class="font-headline font-bold text-on-surface text-base truncate">Chrome Rebels</p>
+          <p class="text-[10px] font-semibold tracking-wider text-on-surface-variant uppercase mt-1">Sci-Fi / Thriller</p>
+        </div>
+      </div>
+      <div class="rail-16-9 w-[260px] shrink-0 rounded-xl bg-surface-container-highest"></div>
+    </div>
+  </section>
+</main>
+
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-6 pb-8 pt-4 bg-[#131313]/90 z-50">
+<a class="flex flex-col items-center text-on-surface-variant opacity-60 text-[10px] uppercase tracking-widest" href="#"><span class="material-symbols-outlined">home</span>Home</a>
+<a class="flex flex-col items-center text-on-surface-variant opacity-60 text-[10px] uppercase tracking-widest" href="#"><span class="material-symbols-outlined">search</span>Search</a>
+<a class="flex flex-col items-center text-[#E5383B] font-bold text-[10px] uppercase tracking-widest" href="#"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1">bookmark</span>Watchlist</a>
+<a class="flex flex-col items-center text-on-surface-variant opacity-60 text-[10px] uppercase tracking-widest" href="#"><span class="material-symbols-outlined">person</span>Profile</a>
+</nav>
+</body>
+</html>

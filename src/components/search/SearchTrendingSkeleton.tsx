@@ -23,15 +23,16 @@ function MiniTrendingCardSkeleton({ colWidth }: { colWidth: number }): JSX.Eleme
 export function SearchTrendingSkeleton(): JSX.Element {
   const { width: windowWidth } = useWindowDimensions();
   const horizontalPad = spacing.xl;
-  const gridGutter = spacing.md;
-  const gridColWidth = (windowWidth - horizontalPad * 2 - gridGutter) / 2;
+  /** Must match mini-grid row gap so two columns fit (same as SearchDefaultView trending grid). */
+  const gridRowGap = spacing.xl;
+  const gridColWidth = (windowWidth - horizontalPad * 2 - gridRowGap) / 2;
 
   return (
     <View accessibilityLabel="Loading trending" style={styles.host}>
       <View style={styles.featuredWrap}>
         <ShimmerBox style={styles.featuredCard} />
       </View>
-      <View style={[styles.gridRow, { gap: spacing.xl }]}>
+      <View style={[styles.gridRow, { gap: gridRowGap }]}>
         <MiniTrendingCardSkeleton colWidth={gridColWidth} />
         <MiniTrendingCardSkeleton colWidth={gridColWidth} />
         <MiniTrendingCardSkeleton colWidth={gridColWidth} />

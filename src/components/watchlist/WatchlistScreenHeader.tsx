@@ -3,6 +3,7 @@
  */
 
 import type { JSX } from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { WatchlistMediaFilter } from '../../api/types';
 import { IconPerson, IconSearch } from '../common/SimpleIcons';
@@ -27,6 +28,8 @@ export type WatchlistScreenHeaderProps = {
    * @default true
    */
   showTopActions?: boolean;
+  /** Merged after `headerBlock` (e.g. editorial spacing on empty watchlist). */
+  style?: StyleProp<ViewStyle>;
 };
 
 const FILTER_CHIPS: readonly { key: WatchlistMediaFilter; label: string }[] = [
@@ -44,6 +47,7 @@ export function WatchlistScreenHeader({
   showTopActions = true,
   sectionLabel = 'YOUR COLLECTION',
   mainTitle = 'My Watchlist',
+  style,
 }: WatchlistScreenHeaderProps): JSX.Element {
   const handleProfile = (): void => {
     if (onPressProfile != null) {
@@ -54,7 +58,7 @@ export function WatchlistScreenHeader({
   };
 
   return (
-    <View style={styles.headerBlock}>
+    <View style={[styles.headerBlock, style]}>
       <View style={styles.headerTopRow}>
         <View style={styles.headerTitles}>
           <Text style={styles.collectionLabel}>{sectionLabel}</Text>

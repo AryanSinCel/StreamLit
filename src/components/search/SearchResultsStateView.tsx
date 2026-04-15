@@ -88,8 +88,9 @@ export function SearchResultsStateView({
 }: SearchResultsStateViewProps): JSX.Element {
   const { width: windowWidth } = useWindowDimensions();
   const horizontalPad = spacing.xl;
-  const gridGutter = spacing.md;
-  const gridColWidth = (windowWidth - horizontalPad * 2 - gridGutter) / 2;
+  /** Must match `gridRow` gap so two columns + gutter fit inside padded width. */
+  const gridRowGap = spacing.xxl;
+  const gridColWidth = (windowWidth - horizontalPad * 2 - gridRowGap) / 2;
 
   const pairs: TmdbSearchMovieListItem[][] = [];
   for (let i = 0; i < results.length; i += 2) {
@@ -181,7 +182,7 @@ export function SearchResultsStateView({
       {showGrid ? (
         <View style={styles.grid}>
           {pairs.map((row) => (
-            <View key={row.map((m) => String(m.id)).join('|')} style={styles.gridRow}>
+            <View key={row.map((m) => String(m.id)).join('|')} style={[styles.gridRow, { gap: gridRowGap }]}>
               {row.map((item) => (
                 <View key={String(item.id)} style={{ width: gridColWidth }}>
                   <SearchResultGridCard item={item} onPress={() => onOpenResult(item.id)} />
@@ -355,7 +356,6 @@ const styles = StyleSheet.create({
   },
   gridRow: {
     flexDirection: 'row',
-    gap: spacing.xxl,
     justifyContent: 'flex-start',
   },
   messageBlock: {

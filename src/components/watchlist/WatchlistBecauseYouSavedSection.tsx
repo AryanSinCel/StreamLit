@@ -1,26 +1,19 @@
 /**
- * “Because you saved …” horizontal similar row — PSD-Watchlist §3 / §7 W5.
+ * “Because you saved …” horizontal similar row — `resources/watchlist.html` (View All + landscape tiles).
  */
 
 import type { JSX } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import type { TmdbMovieListItem } from '../../api/types';
-import { ContentCard } from '../common/ContentCard';
+import type { TmdbGenre, TmdbMovieListItem } from '../../api/types';
 import { colors } from '../../theme/colors';
-import { homeRowCardWidth, spacing } from '../../theme/spacing';
+import { spacing, watchlistSimilarRailCardWidth } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
-
-function yearFromListItem(item: TmdbMovieListItem): string {
-  const d = item.release_date;
-  if (d != null && d.length >= 4) {
-    return d.slice(0, 4);
-  }
-  return '—';
-}
+import { WatchlistSimilarLandscapeCard } from './WatchlistSimilarLandscapeCard';
 
 export type WatchlistBecauseYouSavedSectionProps = {
   savedTitle: string;
   movies: readonly TmdbMovieListItem[];
+  genres: readonly TmdbGenre[];
   onPressSeeAll: () => void;
   onPressMovie: (movieId: number) => void;
 };
@@ -28,6 +21,7 @@ export type WatchlistBecauseYouSavedSectionProps = {
 export function WatchlistBecauseYouSavedSection({
   savedTitle,
   movies,
+  genres,
   onPressSeeAll,
   onPressMovie,
 }: WatchlistBecauseYouSavedSectionProps): JSX.Element {
@@ -41,13 +35,13 @@ export function WatchlistBecauseYouSavedSection({
         </Text>
         <Pressable
           accessibilityHint="Opens full similar list"
-          accessibilityLabel="See all similar titles"
+          accessibilityLabel="View all similar titles"
           accessibilityRole="button"
           hitSlop={spacing.sm}
           onPress={onPressSeeAll}
           style={({ pressed }) => [styles.seeAllHit, pressed && styles.seeAllPressed]}
         >
-          <Text style={styles.seeAllLabel}>See All</Text>
+          <Text style={styles.seeAllLabel}>View All</Text>
         </Pressable>
       </View>
       <ScrollView
@@ -56,16 +50,15 @@ export function WatchlistBecauseYouSavedSection({
         showsHorizontalScrollIndicator={false}
       >
         {movies.map((item) => (
-          <ContentCard
+          <WatchlistSimilarLandscapeCard
             key={item.id}
+            genres={genres}
+            item={item}
             onPress={() => {
               onPressMovie(item.id);
             }}
-            posterPath={item.poster_path}
-            rating={item.vote_average}
-            style={styles.card}
-            subtitle={yearFromListItem(item)}
-            title={item.title}
+            style={styles.cardSpacing}
+            width={watchlistSimilarRailCardWidth}
           />
         ))}
       </ScrollView>
@@ -74,16 +67,11 @@ export function WatchlistBecauseYouSavedSection({
 }
 
 const styles = StyleSheet.create({
-  wrap: {
-    gap: spacing.md,
-    marginBottom: spacing.xl,
-    marginTop: spacing.lg,
+  cardSpacing: {
+    marginRight: spacing.md,
   },
-  titleRow: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    gap: spacing.md,
-    justifyContent: 'space-between',
+  carousel: {
+    paddingVertical: spacing.xs,
   },
   headline: {
     ...typography['title-lg'],
@@ -93,19 +81,23 @@ const styles = StyleSheet.create({
   seeAllHit: {
     paddingVertical: spacing.xs,
   },
+  seeAllLabel: {
+    ...typography['label-sm'],
+    color: colors.primary,
+    fontWeight: '700',
+  },
   seeAllPressed: {
     opacity: 0.88,
   },
-  seeAllLabel: {
-    ...typography['label-sm'],
-    color: colors.primary_container,
-    fontWeight: '700',
-  },
-  carousel: {
+  titleRow: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
     gap: spacing.md,
-    paddingVertical: spacing.xs,
+    justifyContent: 'space-between',
   },
-  card: {
-    width: homeRowCardWidth,
+  wrap: {
+    gap: spacing.md,
+    marginBottom: spacing.xl,
+    marginTop: spacing.xxl,
   },
 });
