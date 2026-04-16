@@ -22,6 +22,7 @@ import {
   getRecentSearches,
   normalizeSearchTerm,
 } from '../utils/recentSearches';
+import { mergeUniqueSearchMovieListById } from '../utils/mergeUniqueMovieListById';
 import { isLikelyCanceledRequest, mapUnknownError } from '../utils/mapUnknownError';
 
 const SEARCH_DEBOUNCE_MS = 400;
@@ -31,10 +32,16 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
   const genreBypassDebounceRef = useRef(false);
   const debouncedQueryRef = useRef('');
   const searchAbortRef = useRef<AbortController | null>(null);
+  /** Last committed TMDB search `page` — drives `loadMore` next page. */
+  const searchPageRef = useRef(0);
+  /** Bumped when the debounced query session changes — invalidates in-flight `loadMore`. */
+  const searchSessionGenRef = useRef(0);
 
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [data, setData] = useState<TmdbPagedSearchMoviesResponse | null>(null);
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchRetryKey, setSearchRetryKey] = useState(0);
   const [lastSuccessfulQuery, setLastSuccessfulQuery] = useState<string | null>(null);
@@ -137,13 +144,18 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
     if (term.length === 0) {
       searchAbortRef.current?.abort();
       searchAbortRef.current = null;
+      searchSessionGenRef.current += 1;
+      searchPageRef.current = 0;
       setData(null);
       setLoading(false);
+      setLoadingMore(false);
+      setHasMore(false);
       setError(null);
       setLastSuccessfulQuery(null);
       return;
     }
 
+    searchSessionGenRef.current += 1;
     searchAbortRef.current?.abort();
     const controller = new AbortController();
     searchAbortRef.current = controller;
@@ -152,8 +164,11 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
 
     (async () => {
       setLoading(true);
+      setLoadingMore(false);
       setError(null);
       setData(null);
+      setHasMore(false);
+      searchPageRef.current = 0;
       try {
         const result = await searchMovies(termAtStart, {
           page: 1,
@@ -166,6 +181,8 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
           return;
         }
         setData(result);
+        searchPageRef.current = result.page;
+        setHasMore(result.page < result.total_pages);
         setLastSuccessfulQuery(termAtStart);
         await addRecentSearch(termAtStart);
         const nextRecents = await getRecentSearches();
@@ -180,6 +197,8 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
           return;
         }
         setData(null);
+        setHasMore(false);
+        searchPageRef.current = 0;
         setError(mapUnknownError(e));
       } finally {
         if (!cancelled && !controller.signal.aborted && debouncedQueryRef.current === termAtStart) {
@@ -207,6 +226,49 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
       cancelled = true;
     };
   }, []);
+
+  const loadMore = useCallback(() => {
+    const term = debouncedQueryRef.current;
+    if (term.length === 0 || loading || loadingMore || !hasMore) {
+      return;
+    }
+    const nextPage = searchPageRef.current + 1;
+    const sessionAtStart = searchSessionGenRef.current;
+    setLoadingMore(true);
+    (async () => {
+      try {
+        const result = await searchMovies(term, {
+          page: nextPage,
+        });
+        if (sessionAtStart !== searchSessionGenRef.current || debouncedQueryRef.current !== term) {
+          return;
+        }
+        setData((prev) => ({
+          ...result,
+          results: mergeUniqueSearchMovieListById(prev?.results ?? [], result.results),
+        }));
+        searchPageRef.current = result.page;
+        setHasMore(result.page < result.total_pages);
+        setError(null);
+      } catch (e) {
+        if (
+          sessionAtStart === searchSessionGenRef.current &&
+          debouncedQueryRef.current === term &&
+          !isLikelyCanceledRequest(e)
+        ) {
+          setError(mapUnknownError(e));
+        }
+      } finally {
+        if (sessionAtStart === searchSessionGenRef.current) {
+          setLoadingMore(false);
+        }
+      }
+    })().catch(() => {
+      if (sessionAtStart === searchSessionGenRef.current) {
+        setLoadingMore(false);
+      }
+    });
+  }, [hasMore, loading, loadingMore]);
 
   const refetch = useCallback(() => {
     if (debouncedQueryRef.current.length > 0) {
@@ -255,8 +317,11 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
     results,
     totalResults,
     loading,
+    loadingMore,
+    hasMore,
     error,
     refetch,
+    loadMore,
     trending,
     trendingLoading,
     trendingError,

@@ -8,6 +8,7 @@ import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { TmdbGenre, TmdbMovieListItem } from '../../api/types';
 import { ContentCard } from '../common/ContentCard';
+import { LoadMoreContentIndicator } from '../common/LoadMoreContentIndicator';
 import { ShimmerBox } from '../common/ShimmerBox';
 import { colors } from '../../theme/colors';
 import { homeRowCardWidth, radiusCardInner, spacing } from '../../theme/spacing';
@@ -42,6 +43,10 @@ export type HomeContentRowProps = {
   onNearEnd?: () => void;
   /** Discover / genre rows use dedicated empty UI (PSD-Home H6). */
   rowContent?: HomeRowContentKind;
+  /**
+   * Genre rail under **All**: not yet in viewport — show horizontal skeleton instead of empty-state copy.
+   */
+  awaitingLazyLoad?: boolean;
 };
 
 export function HomeContentRow({
@@ -57,10 +62,45 @@ export function HomeContentRow({
   onOpenDetail,
   onNearEnd,
   rowContent = 'default',
+  awaitingLazyLoad = false,
 }: HomeContentRowProps): JSX.Element {
   const showSkeleton = loading && items.length === 0;
-  const showEmpty = !loading && !error && items.length === 0;
+  const showLazyPlaceholder =
+    rowContent === 'genre' &&
+    awaitingLazyLoad &&
+    !loading &&
+    error == null &&
+    items.length === 0;
+  /** Never overlap empty copy with skeleton / lazy placeholder / pagination fetch. */
+  const showEmpty =
+    !loading &&
+    !loadingMore &&
+    !error &&
+    items.length === 0 &&
+    !(rowContent === 'genre' && awaitingLazyLoad) &&
+    !showSkeleton &&
+    !showLazyPlaceholder;
   const lastNearEndFireRef = useRef(0);
+  const scrollHostWidthRef = useRef(0);
+
+  const fireNearEndIfAllowed = useCallback(() => {
+    if (
+      error != null ||
+      !hasMore ||
+      loading ||
+      loadingMore ||
+      items.length === 0 ||
+      onNearEnd == null
+    ) {
+      return;
+    }
+    const now = Date.now();
+    if (now - lastNearEndFireRef.current < NEAR_END_THROTTLE_MS) {
+      return;
+    }
+    lastNearEndFireRef.current = now;
+    onNearEnd();
+  }, [error, hasMore, loading, loadingMore, items.length, onNearEnd]);
 
   const handleHorizontalScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -75,26 +115,33 @@ export function HomeContentRow({
         return;
       }
       const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
-      if (contentSize.width <= layoutMeasurement.width) {
-        return;
-      }
+      const scrollable = contentSize.width > layoutMeasurement.width;
       const distanceFromEnd = contentSize.width - layoutMeasurement.width - contentOffset.x;
-      if (distanceFromEnd <= nearEndThresholdPx) {
-        const now = Date.now();
-        if (now - lastNearEndFireRef.current < NEAR_END_THROTTLE_MS) {
-          return;
-        }
-        lastNearEndFireRef.current = now;
-        onNearEnd();
+      /** When the row does not overflow horizontally, treat as “at end” so pagination + indicator still run. */
+      const nearHorizontalEnd = !scrollable || distanceFromEnd <= nearEndThresholdPx;
+      if (nearHorizontalEnd) {
+        fireNearEndIfAllowed();
       }
     },
-    [error, hasMore, loading, loadingMore, items.length, onNearEnd],
+    [fireNearEndIfAllowed],
+  );
+
+  const handleRowContentSizeChange = useCallback(
+    (contentWidth: number) => {
+      if (scrollHostWidthRef.current < 32) {
+        return;
+      }
+      if (contentWidth <= scrollHostWidthRef.current + 1) {
+        fireNearEndIfAllowed();
+      }
+    },
+    [fireNearEndIfAllowed],
   );
 
   return (
     <View style={styles.block}>
       <View style={styles.header}>
-        {showSkeleton ? (
+        {showSkeleton && !showLazyPlaceholder ? (
           <>
             <ShimmerBox style={styles.skeletonSectionTitle} />
             <ShimmerBox style={styles.skeletonSeeAll} />
@@ -125,7 +172,7 @@ export function HomeContentRow({
         </View>
       ) : null}
 
-      {showSkeleton ? <HomeRowSkeleton /> : null}
+      {showSkeleton || showLazyPlaceholder ? <HomeRowSkeleton /> : null}
 
       {showEmpty ? (
         rowContent === 'genre' ? (
@@ -150,10 +197,14 @@ export function HomeContentRow({
         )
       ) : null}
 
-      {!error && !showSkeleton && items.length > 0 ? (
+      {!error && !showSkeleton && !showLazyPlaceholder && items.length > 0 ? (
         <ScrollView
           contentContainerStyle={styles.rowScroll}
           horizontal
+          onContentSizeChange={handleRowContentSizeChange}
+          onLayout={(e) => {
+            scrollHostWidthRef.current = e.nativeEvent.layout.width;
+          }}
           onScroll={handleHorizontalScroll}
           scrollEventThrottle={16}
           showsHorizontalScrollIndicator={false}
@@ -173,6 +224,7 @@ export function HomeContentRow({
               title={item.title}
             />
           ))}
+          <LoadMoreContentIndicator active={loadingMore && hasMore} style={styles.loadMoreEndCap} />
         </ScrollView>
       ) : null}
     </View>
@@ -244,6 +296,20 @@ const styles = StyleSheet.create({
   },
   rowScrollHost: {
     backgroundColor: colors.surface,
+  },
+  /**
+   * PSD `resources/home.html` — end of horizontal rail: spinner + uppercase label,
+   * `opacity-40`, `py-10`, `tracking-[0.2em]`, `text-on-surface-variant`.
+   */
+  loadMoreEndCap: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginRight: spacing.xxl,
+    opacity: 0.4,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xxxl,
   },
   sectionTitle: {
     ...typography['headline-rail'],

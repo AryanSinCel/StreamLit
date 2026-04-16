@@ -25,9 +25,10 @@ export function HomeGenreStrip({ chips, selectedKey, onSelect }: HomeGenreStripP
       >
         {chips.map((chip) => {
           const active = chip.key === selectedKey;
+          const chipListKey = typeof chip.key === 'number' ? `genre-${chip.key}` : 'all';
           return (
             <Pressable
-              key={chip.key}
+              key={chipListKey}
               accessibilityRole="button"
               accessibilityState={{ selected: active }}
               accessibilityLabel={`Filter ${chip.label}`}

@@ -7,6 +7,7 @@ import type { JSX } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useWindowDimensions } from 'react-native';
 import type { TmdbSearchMovieListItem } from '../../api/types';
+import { LoadMoreContentIndicator } from '../common/LoadMoreContentIndicator';
 import { IconMovie, IconSearch } from '../common/SimpleIcons';
 import { PosterRatingBadge } from '../common/PosterRatingBadge';
 import { colors, contentCard } from '../../theme/colors';
@@ -34,6 +35,8 @@ export type SearchResultsStateViewProps = {
   totalResults: number;
   results: readonly TmdbSearchMovieListItem[];
   loading: boolean;
+  loadingMore: boolean;
+  hasMore: boolean;
   error: string | null;
   onRetrySearch: () => void;
   onOpenResult: (movieId: number) => void;
@@ -76,6 +79,8 @@ export function SearchResultsStateView({
   totalResults,
   results,
   loading,
+  loadingMore,
+  hasMore,
   error,
   onRetrySearch,
   onOpenResult,
@@ -184,6 +189,7 @@ export function SearchResultsStateView({
               ))}
             </View>
           ))}
+          <LoadMoreContentIndicator active={hasMore && loadingMore} style={styles.searchLoadMore} />
         </View>
       ) : null}
 
@@ -344,6 +350,9 @@ const styles = StyleSheet.create({
   },
   grid: {
     gap: spacing.xxl,
+  },
+  searchLoadMore: {
+    marginTop: spacing.md,
   },
   gridRow: {
     flexDirection: 'row',

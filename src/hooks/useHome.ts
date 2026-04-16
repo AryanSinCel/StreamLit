@@ -15,39 +15,29 @@ import type {
   HomeChipKey,
   HomeChipResolved,
   HomeFeedRowState,
-  HomeGenreRailKey,
   TmdbGenre,
   TmdbMovieListItem,
   TmdbPagedMoviesResponse,
   UseHomeResult,
 } from '../api/types';
-import {
-  HOME_CHIP_DEFINITIONS,
-  HOME_GENRE_RAIL_KEYS,
-  createInitialHomeFeedRowState,
-} from '../api/types';
+import { createInitialHomeFeedRowState } from '../api/types';
 import { mergeUniqueMovieListById } from '../utils/mergeUniqueMovieListById';
-import { mapUnknownError } from '../utils/mapUnknownError';
+import { isLikelyCanceledRequest, mapUnknownError } from '../utils/mapUnknownError';
 
-function findGenreIdByName(genres: readonly TmdbGenre[], tmdbName: string): number | null {
-  const target = tmdbName.trim().toLowerCase();
-  for (const g of genres) {
-    if (g.name.trim().toLowerCase() === target) {
-      return g.id;
-    }
-  }
-  return null;
+function sortGenresByName(genres: readonly TmdbGenre[]): TmdbGenre[] {
+  return [...genres].sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function genreIdsSorted(genres: readonly TmdbGenre[]): number[] {
+  return sortGenresByName(genres).map((g) => g.id);
 }
 
 function buildResolvedChips(genres: readonly TmdbGenre[]): readonly HomeChipResolved[] {
-  return HOME_CHIP_DEFINITIONS.map((def) => ({
-    key: def.key,
-    label: def.label,
-    genreId:
-      def.tmdbGenreName === null
-        ? null
-        : findGenreIdByName(genres, def.tmdbGenreName),
-  }));
+  const sorted = sortGenresByName(genres);
+  return [
+    { key: 'all', label: 'All', genreId: null },
+    ...sorted.map((g) => ({ key: g.id, label: g.name, genreId: g.id })),
+  ];
 }
 
 function discoverParamsForChip(
@@ -57,18 +47,16 @@ function discoverParamsForChip(
   if (chipKey === 'all') {
     return { page: 1 };
   }
-  const def = HOME_CHIP_DEFINITIONS.find((d) => d.key === chipKey);
-  const name = def?.tmdbGenreName;
-  if (!name) {
-    return { page: 1 };
+  if (typeof chipKey !== 'number' || !Number.isFinite(chipKey)) {
+    return { error: 'Invalid genre filter' };
   }
-  const id = findGenreIdByName(genres, name);
-  if (id === null) {
-    return {
-      error: `Genre "${name}" not found in TMDB genre list`,
-    };
+  const exists = genres.some((g) => g.id === chipKey);
+  if (!exists) {
+    return genres.length === 0
+      ? { error: 'Genres not loaded' }
+      : { error: `Genre id ${chipKey} not in TMDB genre list` };
   }
-  return { page: 1, with_genres: id };
+  return { page: 1, with_genres: chipKey };
 }
 
 function applyPageResponse(
@@ -89,19 +77,8 @@ function applyPageResponse(
   };
 }
 
-function idleGenreRailsRecord(): Record<HomeGenreRailKey, HomeFeedRowState> {
-  return Object.fromEntries(
-    HOME_GENRE_RAIL_KEYS.map((k) => [k, createInitialHomeFeedRowState()]),
-  ) as Record<HomeGenreRailKey, HomeFeedRowState>;
-}
-
-function loadingGenreRailsRecord(): Record<HomeGenreRailKey, HomeFeedRowState> {
-  return Object.fromEntries(
-    HOME_GENRE_RAIL_KEYS.map((k) => [
-      k,
-      { ...createInitialHomeFeedRowState(), loading: true },
-    ]),
-  ) as Record<HomeGenreRailKey, HomeFeedRowState>;
+function idleGenreRailsRecord(ids: readonly number[]): Record<number, HomeFeedRowState> {
+  return Object.fromEntries(ids.map((id) => [id, createInitialHomeFeedRowState()]));
 }
 
 export function useHome(): UseHomeResult {
@@ -119,9 +96,7 @@ export function useHome(): UseHomeResult {
     ...createInitialHomeFeedRowState(),
     loading: true,
   }));
-  const [genreRails, setGenreRails] = useState<Record<HomeGenreRailKey, HomeFeedRowState>>(() =>
-    loadingGenreRailsRecord(),
-  );
+  const [genreRails, setGenreRails] = useState<Record<number, HomeFeedRowState>>(() => ({}));
   const [selectedChipKey, setSelectedChipKey] = useState<HomeChipKey>('all');
   const [bootstrapLoading, setBootstrapLoading] = useState(true);
   const [reloadToken, setReloadToken] = useState(0);
@@ -144,7 +119,17 @@ export function useHome(): UseHomeResult {
   const genreRailsRef = useRef(genreRails);
   genreRailsRef.current = genreRails;
 
+  /** Per-rail in-flight `activateGenreRail` requests — aborted on chip change / refetch cleanup. */
+  const railAbortControllersRef = useRef<Map<number, AbortController>>(new Map());
+
   const skipChipDiscoverOnMount = useRef(true);
+
+  const abortAllRailFetches = useCallback((): void => {
+    for (const c of railAbortControllersRef.current.values()) {
+      c.abort();
+    }
+    railAbortControllersRef.current.clear();
+  }, []);
 
   /** Full refetch: genres + page 1 for all three rows (discover uses current chip via ref). */
   useEffect(() => {
@@ -162,10 +147,10 @@ export function useHome(): UseHomeResult {
     const chipAtBootstrap = chipKeyRef.current;
     if (chipAtBootstrap === 'all') {
       setGenre({ ...createInitialHomeFeedRowState(), loading: false });
-      setGenreRails(loadingGenreRailsRecord());
+      setGenreRails({});
     } else {
       setGenre({ ...createInitialHomeFeedRowState(), loading: true });
-      setGenreRails(idleGenreRailsRecord());
+      setGenreRails({});
     }
 
     (async () => {
@@ -234,46 +219,14 @@ export function useHome(): UseHomeResult {
       if (discoverGenAtBootstrapStart !== genreDiscoverGenRef.current) {
         /* Chip-driven discover took over; do not overwrite row 3 / rails. */
       } else if (chip === 'all') {
-        const railSettled = await Promise.allSettled(
-          HOME_GENRE_RAIL_KEYS.map((k) => {
-            const inp = discoverParamsForChip(k, loadedGenres);
-            if ('error' in inp) {
-              return Promise.reject(new Error(inp.error));
-            }
-            return getDiscoverMovies({
-              ...inp,
-              signal: controller.signal,
-            });
-          }),
-        );
-
+        const sortedIds = genreIdsSorted(loadedGenres);
         if (cancelled || generation !== dataGenerationRef.current) {
           return;
         }
         if (discoverGenAtBootstrapStart !== genreDiscoverGenRef.current) {
           return;
         }
-
-        setGenreRails(() => {
-          const next = { ...idleGenreRailsRecord() };
-          HOME_GENRE_RAIL_KEYS.forEach((k, i) => {
-            const res = railSettled[i];
-            if (res != null && res.status === 'fulfilled') {
-              next[k] = applyPageResponse(
-                { ...createInitialHomeFeedRowState(), loading: true, loadingMore: false },
-                res.value,
-                false,
-              );
-            } else if (res != null && res.status === 'rejected') {
-              next[k] = {
-                ...createInitialHomeFeedRowState(),
-                loading: false,
-                error: mapUnknownError(res.reason),
-              };
-            }
-          });
-          return next;
-        });
+        setGenreRails(idleGenreRailsRecord(sortedIds));
         setGenre({ ...createInitialHomeFeedRowState(), loading: false });
       } else {
         const discoverInput = discoverParamsForChip(chip, loadedGenres);
@@ -316,7 +269,7 @@ export function useHome(): UseHomeResult {
             });
           }
         }
-        setGenreRails(idleGenreRailsRecord());
+        setGenreRails({});
       }
       } finally {
         if (!cancelled && generation === dataGenerationRef.current) {
@@ -330,10 +283,11 @@ export function useHome(): UseHomeResult {
     return () => {
       cancelled = true;
       controller.abort();
+      abortAllRailFetches();
     };
-  }, [reloadToken]);
+  }, [reloadToken, abortAllRailFetches]);
 
-  /** Chip change: `all` → six genre rails; specific chip → single discover row (skipped on first mount). */
+  /** Chip change: `all` → one discover rail per TMDB genre; specific chip → single discover row (skipped on first mount). */
   useEffect(() => {
     if (skipChipDiscoverOnMount.current) {
       skipChipDiscoverOnMount.current = false;
@@ -347,55 +301,23 @@ export function useHome(): UseHomeResult {
 
     const chip = chipKeyRef.current;
     if (chip === 'all') {
+      abortAllRailFetches();
       setGenre({ ...createInitialHomeFeedRowState(), loading: false });
-      setGenreRails(loadingGenreRailsRecord());
-    } else {
-      setGenre({ ...createInitialHomeFeedRowState(), loading: true });
-      setGenreRails(idleGenreRailsRecord());
+      const ids = genreIdsSorted(genresRef.current);
+      setGenreRails(idleGenreRailsRecord(ids));
+      return () => {
+        cancelled = true;
+        controller.abort();
+        abortAllRailFetches();
+      };
     }
+
+    setGenre({ ...createInitialHomeFeedRowState(), loading: true });
+    setGenreRails({});
 
     (async () => {
       const g = genresRef.current;
       const chipNow = chipKeyRef.current;
-
-      if (chipNow === 'all') {
-        const railSettled = await Promise.allSettled(
-          HOME_GENRE_RAIL_KEYS.map((k) => {
-            const inp = discoverParamsForChip(k, g);
-            if ('error' in inp) {
-              return Promise.reject(new Error(inp.error));
-            }
-            return getDiscoverMovies({
-              ...inp,
-              signal: controller.signal,
-            });
-          }),
-        );
-        if (cancelled || discoverGen !== genreDiscoverGenRef.current) {
-          return;
-        }
-        setGenreRails(() => {
-          const next = { ...idleGenreRailsRecord() };
-          HOME_GENRE_RAIL_KEYS.forEach((k, i) => {
-            const res = railSettled[i];
-            if (res != null && res.status === 'fulfilled') {
-              next[k] = applyPageResponse(
-                { ...createInitialHomeFeedRowState(), loading: true, loadingMore: false },
-                res.value,
-                false,
-              );
-            } else if (res != null && res.status === 'rejected') {
-              next[k] = {
-                ...createInitialHomeFeedRowState(),
-                loading: false,
-                error: mapUnknownError(res.reason),
-              };
-            }
-          });
-          return next;
-        });
-        return;
-      }
 
       const discoverInput = discoverParamsForChip(chipNow, g);
       try {
@@ -433,8 +355,9 @@ export function useHome(): UseHomeResult {
     return () => {
       cancelled = true;
       controller.abort();
+      abortAllRailFetches();
     };
-  }, [selectedChipKey]);
+  }, [selectedChipKey, abortAllRailFetches]);
 
   const loadMoreTrending = useCallback(() => {
     const prev = trendingRef.current;
@@ -586,11 +509,14 @@ export function useHome(): UseHomeResult {
     });
   }, []);
 
-  const loadMoreGenreRail = useCallback((key: HomeGenreRailKey) => {
+  const loadMoreGenreRail = useCallback((genreId: number) => {
     if (chipKeyRef.current !== 'all') {
       return;
     }
-    const prev = genreRailsRef.current[key];
+    const prev = genreRailsRef.current[genreId];
+    if (prev == null) {
+      return;
+    }
     const genAtStart = dataGenerationRef.current;
     const discoverGenAtStart = genreDiscoverGenRef.current;
     if (prev.loading || prev.loadingMore || !prev.hasMore || prev.error) {
@@ -598,16 +524,16 @@ export function useHome(): UseHomeResult {
     }
     const nextPage = prev.page + 1;
     const loadingState: HomeFeedRowState = { ...prev, loadingMore: true };
-    const nextRails: Record<HomeGenreRailKey, HomeFeedRowState> = {
+    const nextRails: Record<number, HomeFeedRowState> = {
       ...genreRailsRef.current,
-      [key]: loadingState,
+      [genreId]: loadingState,
     };
     genreRailsRef.current = nextRails;
     setGenreRails(nextRails);
 
     (async () => {
       try {
-        const discoverInput = discoverParamsForChip(key, genresRef.current);
+        const discoverInput = discoverParamsForChip(genreId, genresRef.current);
         if ('error' in discoverInput) {
           throw new Error(discoverInput.error);
         }
@@ -622,17 +548,21 @@ export function useHome(): UseHomeResult {
         ) {
           setGenreRails((curr) => ({
             ...curr,
-            [key]: curr[key].loadingMore ? { ...curr[key], loadingMore: false } : curr[key],
+            [genreId]:
+              curr[genreId]?.loadingMore === true
+                ? { ...curr[genreId], loadingMore: false }
+                : curr[genreId],
           }));
           return;
         }
         setGenreRails((curr) => {
-          if (!curr[key].loadingMore) {
+          const row = curr[genreId];
+          if (row == null || !row.loadingMore) {
             return curr;
           }
           return {
             ...curr,
-            [key]: applyPageResponse(curr[key], data, true),
+            [genreId]: applyPageResponse(row, data, true),
           };
         });
       } catch (e) {
@@ -643,23 +573,118 @@ export function useHome(): UseHomeResult {
         ) {
           setGenreRails((curr) => ({
             ...curr,
-            [key]: curr[key].loadingMore ? { ...curr[key], loadingMore: false } : curr[key],
+            [genreId]:
+              curr[genreId]?.loadingMore === true
+                ? { ...curr[genreId], loadingMore: false }
+                : curr[genreId],
           }));
           return;
         }
         setGenreRails((curr) => ({
           ...curr,
-          [key]: {
-            ...curr[key],
+          [genreId]: {
+            ...(curr[genreId] ?? createInitialHomeFeedRowState()),
             loadingMore: false,
             error: mapUnknownError(e),
           },
         }));
       }
     })().catch(() => {
-      /* surfaced via genreRails[key].error */
+      /* surfaced via genreRails[genreId].error */
     });
   }, []);
+
+  const activateGenreRail = useCallback(
+    (genreId: number) => {
+      if (chipKeyRef.current !== 'all') {
+        return;
+      }
+      const g = genresRef.current;
+      const row = genreRailsRef.current[genreId];
+      if (row == null) {
+        return;
+      }
+      if (row.loading) {
+        return;
+      }
+      if (row.items.length > 0 || row.page > 0) {
+        return;
+      }
+
+      const discoverInput = discoverParamsForChip(genreId, g);
+      if ('error' in discoverInput) {
+        setGenreRails((curr) => ({
+          ...curr,
+          [genreId]: {
+            ...createInitialHomeFeedRowState(),
+            loading: false,
+            error: discoverInput.error,
+          },
+        }));
+        return;
+      }
+
+      railAbortControllersRef.current.get(genreId)?.abort();
+      const ac = new AbortController();
+      railAbortControllersRef.current.set(genreId, ac);
+
+      setGenreRails((curr) => ({
+        ...curr,
+        [genreId]: {
+          ...(curr[genreId] ?? createInitialHomeFeedRowState()),
+          loading: true,
+          loadingMore: false,
+          error: null,
+        },
+      }));
+
+      (async () => {
+        try {
+          const data = await getDiscoverMovies({
+            ...discoverInput,
+            signal: ac.signal,
+          });
+          if (ac.signal.aborted || chipKeyRef.current !== 'all') {
+            return;
+          }
+          setGenreRails((curr) => {
+            const prevRow = curr[genreId];
+            if (prevRow == null) {
+              return curr;
+            }
+            return {
+              ...curr,
+              [genreId]: applyPageResponse(
+                { ...prevRow, loading: true, loadingMore: false },
+                data,
+                false,
+              ),
+            };
+          });
+        } catch (e) {
+          if (ac.signal.aborted || isLikelyCanceledRequest(e)) {
+            return;
+          }
+          if (chipKeyRef.current !== 'all') {
+            return;
+          }
+          setGenreRails((curr) => ({
+            ...curr,
+            [genreId]: {
+              ...createInitialHomeFeedRowState(),
+              loading: false,
+              error: mapUnknownError(e),
+            },
+          }));
+        } finally {
+          railAbortControllersRef.current.delete(genreId);
+        }
+      })().catch(() => {
+        /* surfaced via genreRails[genreId].error */
+      });
+    },
+    [],
+  );
 
   const refetch = useCallback(() => {
     setReloadToken((t) => t + 1);
@@ -692,5 +717,6 @@ export function useHome(): UseHomeResult {
     loadMoreTopRated,
     loadMoreGenre,
     loadMoreGenreRail,
+    activateGenreRail,
   };
 }

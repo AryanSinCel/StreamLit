@@ -2,10 +2,10 @@ import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { JSX } from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { HOME_CHIP_DEFINITIONS, HOME_GENRE_RAIL_KEYS } from '../api/types';
 import { SearchAppBar } from '../components/search/SearchAppBar';
 import { SearchDefaultView } from '../components/search/SearchDefaultView';
 import { SearchResultsStateView } from '../components/search/SearchResultsStateView';
@@ -37,12 +37,8 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
   const { movieGenres } = search;
 
   const genreChipLabels = useMemo(
-    () =>
-      HOME_GENRE_RAIL_KEYS.map((key) => {
-        const def = HOME_CHIP_DEFINITIONS.find((d) => d.key === key);
-        return def?.label ?? String(key);
-      }),
-    [],
+    () => [...movieGenres].sort((a, b) => a.name.localeCompare(b.name)).map((g) => g.name),
+    [movieGenres],
   );
 
   const selectedGenreIndex = useMemo(() => {
@@ -70,6 +66,30 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
 
   const totalResults = search.data?.total_results ?? 0;
 
+  const lastSearchNearEndRef = useRef(0);
+  const handleSearchScroll = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      if (search.mode !== 'results') {
+        return;
+      }
+      const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
+      const distanceFromBottom = contentSize.height - layoutMeasurement.height - contentOffset.y;
+      if (distanceFromBottom > spacing.xxxxl * 2) {
+        return;
+      }
+      if (!search.hasMore || search.loadingMore || search.loading) {
+        return;
+      }
+      const now = Date.now();
+      if (now - lastSearchNearEndRef.current < 550) {
+        return;
+      }
+      lastSearchNearEndRef.current = now;
+      search.loadMore();
+    },
+    [search],
+  );
+
   return (
     <View style={styles.screen}>
       <View
@@ -91,6 +111,8 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
         ]}
         keyboardShouldPersistTaps="handled"
         nestedScrollEnabled
+        onScroll={handleSearchScroll}
+        scrollEventThrottle={16}
         style={styles.scroll}
       >
         {search.mode === 'results' ? (
@@ -98,8 +120,10 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
             debouncedQuery={search.debouncedQuery}
             error={search.error}
             genreChipLabels={genreChipLabels}
+            hasMore={search.hasMore}
             inputFocused={inputFocused}
             loading={search.loading}
+            loadingMore={search.loadingMore}
             onBlurInput={() => setInputFocused(false)}
             onChangeQuery={setQuery}
             onClearRecents={() => {

@@ -1,18 +1,11 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { JSX } from 'react';
 import { useCallback, useMemo } from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { TmdbMovieListItem } from '../api/types';
 import { ContentCard } from '../components/common/ContentCard';
+import { LoadMoreContentIndicator } from '../components/common/LoadMoreContentIndicator';
 import { SeeAllGridSkeleton } from '../components/seeAll/SeeAllGridSkeleton';
 import { useSeeAll } from '../hooks/useSeeAll';
 import type { RootStackParamList } from '../navigation/types';
@@ -100,13 +93,7 @@ export function SeeAllScreen({ navigation, route }: Props): JSX.Element {
     if (!hasMore || items.length === 0) {
       return null;
     }
-    return (
-      <View style={styles.footer}>
-        {loadingMore ? (
-          <ActivityIndicator accessibilityLabel="Loading more titles" color={colors.primary_container} />
-        ) : null}
-      </View>
-    );
+    return <LoadMoreContentIndicator active={loadingMore} style={styles.listFooterIndicator} />;
   }, [hasMore, items.length, loadingMore]);
 
   const onEndReached = useCallback(() => {
@@ -195,9 +182,8 @@ const styles = StyleSheet.create({
     ...typography['body-md'],
     color: colors.primary_container,
   },
-  footer: {
-    alignItems: 'center',
-    paddingVertical: spacing.lg,
+  listFooterIndicator: {
+    marginBottom: spacing.lg,
   },
   gridRow: {
     justifyContent: 'flex-start',

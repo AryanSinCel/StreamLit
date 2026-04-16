@@ -146,45 +146,8 @@ export interface HomeData {
   genres: TmdbGenre[];
 }
 
-/** PSD Home chip keys — order matches `HOME_CHIP_DEFINITIONS`. */
-export type HomeChipKey =
-  | 'all'
-  | 'action'
-  | 'drama'
-  | 'comedy'
-  | 'sci_fi'
-  | 'horror'
-  | 'documentary';
-
-/** Chip label + TMDB list `name` to resolve id (null name = All). */
-export interface HomeChipDefinition {
-  key: HomeChipKey;
-  label: string;
-  tmdbGenreName: string | null;
-}
-
-/** Programme copy + TMDB genre name mapping (`Sci-Fi` → `Science Fiction`). */
-export const HOME_CHIP_DEFINITIONS: readonly HomeChipDefinition[] = [
-  { key: 'all', label: 'All', tmdbGenreName: null },
-  { key: 'action', label: 'Action', tmdbGenreName: 'Action' },
-  { key: 'drama', label: 'Drama', tmdbGenreName: 'Drama' },
-  { key: 'comedy', label: 'Comedy', tmdbGenreName: 'Comedy' },
-  { key: 'sci_fi', label: 'Sci-Fi', tmdbGenreName: 'Science Fiction' },
-  { key: 'horror', label: 'Horror', tmdbGenreName: 'Horror' },
-  { key: 'documentary', label: 'Documentary', tmdbGenreName: 'Documentary' },
-] as const;
-
-/** Genre chips only — order for stacked “All” rails on Home (PSD: one strip per genre). */
-export type HomeGenreRailKey = Exclude<HomeChipKey, 'all'>;
-
-export const HOME_GENRE_RAIL_KEYS: readonly HomeGenreRailKey[] = [
-  'action',
-  'drama',
-  'comedy',
-  'sci_fi',
-  'horror',
-  'documentary',
-];
+/** Home filter chip: **All** or a TMDB genre id from `GET /genre/movie/list`. */
+export type HomeChipKey = 'all' | number;
 
 /** One horizontal row on Home: accumulated pages + pagination flags. */
 export interface HomeFeedRowState {
@@ -208,12 +171,15 @@ export function createInitialHomeFeedRowState(): HomeFeedRowState {
   };
 }
 
-/** Resolved chip + TMDB id after `/genre/movie/list` (null id = All or missing name). */
+/** Resolved chip after `/genre/movie/list` (`genreId` null only for **All**). */
 export interface HomeChipResolved {
   key: HomeChipKey;
   label: string;
   genreId: number | null;
 }
+
+/** Discover rails under the **All** chip — one row per TMDB genre id. */
+export type HomeGenreRailsState = Readonly<Record<number, HomeFeedRowState>>;
 
 /**
  * `useHome` return shape: structured feeds + top-level `loading` / `error` / `refetch`
@@ -237,14 +203,16 @@ export interface UseHomeResult {
   /** Single discover row when a specific genre chip is selected (not `all`). */
   genre: HomeFeedRowState;
   /**
-   * When chip is `all`, Home shows one horizontal rail per genre (`HOME_GENRE_RAIL_KEYS`).
-   * Unused rows stay idle when a specific chip is selected.
+   * When chip is `all`, Home shows one horizontal rail per genre from TMDB’s movie list.
+   * Unused entries stay idle when a specific genre chip is selected.
    */
-  genreRails: Record<HomeGenreRailKey, HomeFeedRowState>;
+  genreRails: HomeGenreRailsState;
   loadMoreTrending: () => void;
   loadMoreTopRated: () => void;
   loadMoreGenre: () => void;
-  loadMoreGenreRail: (key: HomeGenreRailKey) => void;
+  loadMoreGenreRail: (genreId: number) => void;
+  /** When chip is **All**, fetch a genre rail’s first page once it enters (or nears) the viewport. */
+  activateGenreRail: (genreId: number) => void;
 }
 
 /** Search tab: paginated movie list for the current query (`GET /search/movie`). */
@@ -274,9 +242,15 @@ export interface UseSearchResult {
   totalResults: number;
   /** True while a debounced or genre-immediate search request is in flight. */
   loading: boolean;
+  /** True while a subsequent search page is loading (`loadMore`). */
+  loadingMore: boolean;
+  /** More TMDB pages exist for the current debounced query. */
+  hasMore: boolean;
   error: string | null;
   /** Re-runs the current debounced search (e.g. after error). */
   refetch: () => void;
+  /** Fetches the next `GET /search/movie` page and appends unique rows. */
+  loadMore: () => void;
   /** `GET /trending/movie/week` page 1 for the default-state trending block. */
   trending: TmdbPagedMoviesResponse | null;
   trendingLoading: boolean;

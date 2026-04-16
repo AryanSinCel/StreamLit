@@ -2,15 +2,11 @@ import type { CompositeScreenProps } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { JSX } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  HOME_CHIP_DEFINITIONS,
-  HOME_GENRE_RAIL_KEYS,
-  type HomeChipKey,
-  type HomeChipResolved,
-  type HomeGenreRailKey,
-} from '../api/types';
+import type { HomeChipKey, HomeChipResolved } from '../api/types';
 import { HomeContentRow } from '../components/home/HomeContentRow';
 import { HomeGenreStrip } from '../components/home/HomeGenreStrip';
 import { HomeHeader } from '../components/home/HomeHeader';
@@ -33,16 +29,16 @@ type Props = CompositeScreenProps<
   >
 >;
 
-function railSectionTitle(railKey: HomeGenreRailKey): string {
-  return HOME_CHIP_DEFINITIONS.find((d) => d.key === railKey)?.label ?? railKey;
-}
-
 function row3SectionTitle(selectedChipKey: HomeChipKey, chips: readonly HomeChipResolved[]): string {
   return chips.find((c) => c.key === selectedChipKey)?.label ?? 'Discover';
 }
 
+/** Preload genre rails slightly before they scroll into view (`resources/home.html` pacing). */
+const GENRE_RAIL_VISIBILITY_BUFFER_PX = spacing.xxl + spacing.xxxl;
+
 export function HomeScreen({ navigation }: Props): JSX.Element {
   const insets = useSafeAreaInsets();
+  const { height: windowHeight } = useWindowDimensions();
   const {
     error: genresError,
     genres,
@@ -60,14 +56,58 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
     loadMoreTopRated,
     loadMoreGenre,
     loadMoreGenreRail,
+    activateGenreRail,
   } = useHome();
 
-  const anyRowLoadingMore =
-    trending.loadingMore ||
-    topRated.loadingMore ||
-    (selectedChipKey === 'all'
-      ? HOME_GENRE_RAIL_KEYS.some((k) => genreRails[k].loadingMore)
-      : genre.loadingMore);
+  const genreRailIds = useMemo((): number[] => {
+    return chips
+      .filter((c): c is HomeChipResolved & { key: number } => typeof c.key === 'number')
+      .map((c) => c.key);
+  }, [chips]);
+
+  const genreRailLayoutRef = useRef(new Map<number, { y: number; height: number }>());
+  const scrollMetricsRef = useRef({ offsetY: 0, viewportH: windowHeight });
+
+  const runGenreRailVisibilityPass = useCallback(() => {
+    const { offsetY, viewportH } = scrollMetricsRef.current;
+    const top = offsetY - GENRE_RAIL_VISIBILITY_BUFFER_PX;
+    const bottom = offsetY + viewportH + GENRE_RAIL_VISIBILITY_BUFFER_PX;
+    for (const [genreId, { y, height }] of genreRailLayoutRef.current) {
+      const rowBottom = y + height;
+      if (rowBottom > top && y < bottom) {
+        activateGenreRail(genreId);
+      }
+    }
+  }, [activateGenreRail]);
+
+  useEffect(() => {
+    scrollMetricsRef.current.viewportH = windowHeight;
+  }, [windowHeight]);
+
+  useEffect(() => {
+    if (selectedChipKey !== 'all') {
+      genreRailLayoutRef.current.clear();
+      return;
+    }
+    const id = requestAnimationFrame(() => {
+      runGenreRailVisibilityPass();
+    });
+    return () => {
+      cancelAnimationFrame(id);
+    };
+  }, [selectedChipKey, genreRailIds, runGenreRailVisibilityPass]);
+
+  const handleHomeScroll = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const { contentOffset, layoutMeasurement } = event.nativeEvent;
+      scrollMetricsRef.current = {
+        offsetY: contentOffset.y,
+        viewportH: layoutMeasurement.height,
+      };
+      runGenreRailVisibilityPass();
+    },
+    [runGenreRailVisibilityPass],
+  );
 
   const row3Title = row3SectionTitle(selectedChipKey, chips);
 
@@ -83,8 +123,8 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
     navigation.navigate('SeeAll', { title: 'Top Rated', mode: 'top_rated' });
   };
 
-  const seeAllDiscover = (title: string, railKey: HomeChipKey): void => {
-    const gid = chips.find((c) => c.key === railKey)?.genreId;
+  const seeAllDiscover = (title: string, chipKey: HomeChipKey): void => {
+    const gid = chips.find((c) => c.key === chipKey)?.genreId;
     navigation.navigate('SeeAll', {
       title,
       mode: 'discover',
@@ -118,6 +158,9 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
           },
         ]}
         nestedScrollEnabled
+        onContentSizeChange={runGenreRailVisibilityPass}
+        onScroll={handleHomeScroll}
+        scrollEventThrottle={16}
         style={styles.scroll}
       >
         {genresError != null ? (
@@ -175,29 +218,48 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
           sectionTitle="Top Rated"
         />
         {selectedChipKey === 'all'
-          ? HOME_GENRE_RAIL_KEYS.map((railKey) => {
-              const title = railSectionTitle(railKey);
-              const feed = genreRails[railKey];
+          ? genreRailIds.map((railGenreId) => {
+              const title = chips.find((c) => c.key === railGenreId)?.label ?? 'Genre';
+              const feed = genreRails[railGenreId];
+              if (feed == null) {
+                return null;
+              }
+              const awaitingLazyLoad =
+                feed.page === 0 &&
+                !feed.loading &&
+                feed.error == null &&
+                feed.items.length === 0;
               return (
-                <HomeContentRow
-                  key={railKey}
-                  error={feed.error}
-                  genres={genres}
-                  hasMore={feed.hasMore}
-                  items={feed.items}
-                  loading={feed.loading}
-                  loadingMore={feed.loadingMore}
-                  onNearEnd={() => {
-                    loadMoreGenreRail(railKey);
+                <View
+                  key={railGenreId}
+                  onLayout={(e) => {
+                    const { y, height } = e.nativeEvent.layout;
+                    genreRailLayoutRef.current.set(railGenreId, { y, height });
+                    runGenreRailVisibilityPass();
                   }}
-                  onOpenDetail={openDetail}
-                  onRetry={refetch}
-                  onSeeAll={() => {
-                    seeAllDiscover(title, railKey);
-                  }}
-                  rowContent="genre"
-                  sectionTitle={title}
-                />
+                >
+                  <HomeContentRow
+                    awaitingLazyLoad={awaitingLazyLoad}
+                    error={feed.error}
+                    genres={genres}
+                    hasMore={feed.hasMore}
+                    items={feed.items}
+                    loading={feed.loading}
+                    loadingMore={feed.loadingMore}
+                    onNearEnd={() => {
+                      loadMoreGenreRail(railGenreId);
+                    }}
+                    onOpenDetail={openDetail}
+                    onRetry={() => {
+                      activateGenreRail(railGenreId);
+                    }}
+                    onSeeAll={() => {
+                      seeAllDiscover(title, railGenreId);
+                    }}
+                    rowContent="genre"
+                    sectionTitle={title}
+                  />
+                </View>
               );
             })
           : (
@@ -216,12 +278,6 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
                 sectionTitle={row3Title}
               />
             )}
-        {anyRowLoadingMore ? (
-          <View style={styles.loadMoreFooter}>
-            <ActivityIndicator accessibilityLabel="Loading more movies" color={colors.primary} size="small" />
-            <Text style={styles.loadMoreFooterText}>Loading more content</Text>
-          </View>
-        ) : null}
       </ScrollView>
     </View>
   );
@@ -266,20 +322,5 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-  },
-  loadMoreFooter: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: spacing.md,
-    justifyContent: 'center',
-    opacity: 0.4,
-    paddingVertical: spacing.xl,
-  },
-  loadMoreFooterText: {
-    ...typography['label-sm'],
-    color: colors.on_surface_variant,
-    fontWeight: '700',
-    letterSpacing: 2,
-    textTransform: 'uppercase',
   },
 });
