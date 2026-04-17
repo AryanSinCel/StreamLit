@@ -5,7 +5,7 @@
 import type { JSX } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ShimmerBox } from '../common/ShimmerBox';
-import { homeHeroHeight, radiusCardInner, spacing } from '../../theme/spacing';
+import { homeHeroHeight, layout, radiusCardInner, spacing } from '../../theme/spacing';
 
 export function HomeHeroSkeleton(): JSX.Element {
   return (
@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
   badge: {
     alignSelf: 'flex-start',
     borderRadius: spacing.xs,
-    height: 24,
+    height: layout.skeletonBlockMd,
     marginBottom: spacing.lg,
-    width: 120,
+    width: layout.skeletonPosterWide,
   },
   content: {
     bottom: 0,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   detailsBtn: {
     borderRadius: spacing.md,
     flex: 1,
-    height: 48,
+    height: layout.skeletonTitle,
     minWidth: 0,
   },
   shell: {
@@ -69,35 +69,35 @@ const styles = StyleSheet.create({
   },
   synopsisLine: {
     borderRadius: spacing.xs,
-    height: 14,
+    height: layout.skeletonLineSm,
     marginTop: spacing.sm,
-    maxWidth: 320,
+    maxWidth: layout.contentMaxMd,
     width: '100%',
   },
   synopsisLineShort: {
     borderRadius: spacing.xs,
-    height: 14,
+    height: layout.skeletonLineSm,
     marginBottom: spacing.xxl,
     marginTop: spacing.xs,
-    maxWidth: 260,
+    maxWidth: layout.contentMaxNarrow,
     width: '82%',
   },
   titleLine: {
     borderRadius: spacing.xs,
-    height: 28,
+    height: layout.skeletonBlockLg,
     marginBottom: spacing.sm,
     width: '88%',
   },
   titleLineShort: {
     borderRadius: spacing.xs,
-    height: 24,
+    height: layout.skeletonBlockMd,
     marginBottom: spacing.lg,
     width: '55%',
   },
   watchBtn: {
     borderRadius: spacing.md,
     flex: 1,
-    height: 48,
+    height: layout.skeletonTitle,
     minWidth: 0,
   },
   wrap: {

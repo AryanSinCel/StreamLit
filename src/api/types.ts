@@ -1,9 +1,10 @@
 /** Shared types — extend as TMDB endpoints are implemented (feature PSDs). */
 
 /**
- * Standard shape for a single TMDB section (`useWatchlist.similar`, …).
- * `useMovieDetail` exposes **three** of these on `UseMovieDetailResult` (PSD-Detail §2.2).
- * `useHome` / `useSearch` use other composite types.
+ * Standard shape for TMDB-backed hooks (PSD §9.2).
+ * - **`data`** may be **`null`** only during the **first** bootstrap for tab hooks (`useHome`, `useSearch`);
+ *   after that, **`data`** stays populated while **`loading`** can still pulse on refetch.
+ * - `useMovieDetail` nests **three** of these on **`UseMovieDetailResult`** (PSD-Detail §2.2).
  */
 export interface UseQueryResult<T> {
   data: T | null;
@@ -182,19 +183,15 @@ export interface HomeChipResolved {
 export type HomeGenreRailsState = Readonly<Record<number, HomeFeedRowState>>;
 
 /**
- * `useHome` return shape: structured feeds + top-level `loading` / `error` / `refetch`
- * (not `UseQueryResult<T>` — see comment on `useHome`).
+ * Home tab payload inside **`useHome` → `UseQueryResult<HomeTabSnapshot>.data`**
+ * (null only on the first bootstrap tick; then stable while rows refetch).
  */
-export interface UseHomeResult {
-  loading: boolean;
-  error: string | null;
-  refetch: () => void;
+export interface HomeTabSnapshot {
   /** First trending movie when present (PSD: hero = `results[0]`). */
   hero: TmdbMovieListItem | null;
   /** True until first trending request settles (success or error). */
   heroLoading: boolean;
   genres: TmdbGenre[];
-  genresError: string | null;
   chips: readonly HomeChipResolved[];
   selectedChipKey: HomeChipKey;
   setSelectedChipKey: (key: HomeChipKey) => void;
@@ -228,34 +225,32 @@ export interface UseSearchInput {
 }
 
 /**
- * `useSearch` composite return (PSD-Search §2.2, §7 S3).
- * Search fetching is debounced; trending loads for default mode; recents hydrate from AsyncStorage.
+ * Search tab payload inside **`useSearch` → `UseQueryResult<SearchTabSnapshot>.data`**
+ * (null only while default-mode trending is still on its first load). Top-level **`loading` / `error` / `refetch`**
+ * reflect the active mode: default → trending; results → debounced search. **`refetch`** retries the active fetch.
  */
-export interface UseSearchResult {
+export interface SearchTabSnapshot {
   /** `default` when debounced query is empty; `results` when a non-empty debounced query is active. */
   mode: SearchScreenMode;
   /** Query string driving TMDB search after the 400ms debounce (trim + collapsed whitespace). */
   debouncedQuery: string;
   /** Last successful `GET /search/movie` payload for the current debounced query, or null. */
-  data: TmdbPagedSearchMoviesResponse | null;
+  searchPage: TmdbPagedSearchMoviesResponse | null;
   results: TmdbSearchMovieListItem[];
   totalResults: number;
   /** True while a debounced or genre-immediate search request is in flight. */
-  loading: boolean;
+  searchLoading: boolean;
   /** True while a subsequent search page is loading (`loadMore`). */
   loadingMore: boolean;
   /** More TMDB pages exist for the current debounced query. */
   hasMore: boolean;
-  error: string | null;
-  /** Re-runs the current debounced search (e.g. after error). */
-  refetch: () => void;
+  searchError: string | null;
   /** Fetches the next `GET /search/movie` page and appends unique rows. */
   loadMore: () => void;
   /** `GET /trending/movie/week` page 1 for the default-state trending block. */
   trending: TmdbPagedMoviesResponse | null;
   trendingLoading: boolean;
   trendingError: string | null;
-  refetchTrending: () => void;
   recentSearches: readonly string[];
   refreshRecentSearches: () => Promise<void>;
   clearRecentSearches: () => Promise<void>;
@@ -307,6 +302,8 @@ export interface UseWatchlistResult {
    * (`resources/watchlist.html`). Empty until a successful fetch while the list has items.
    */
   movieGenres: readonly TmdbGenre[];
+  /** Re-runs **`similar`** + **`popularRecommendations`** TMDB slices (error-boundary retry). */
+  refetchRemoteSlices: () => void;
 }
 
 /**

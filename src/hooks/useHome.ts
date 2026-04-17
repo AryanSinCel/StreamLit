@@ -1,7 +1,6 @@
 /**
- * Home data hook — returns `UseHomeResult` (structured), not `UseQueryResult<T>`:
- * top-level `loading` / `error` / `refetch` cover the initial bootstrap; each row has
- * its own `loading`, `loadingMore`, `error`, `page`, `hasMore`, and `items` with append-on-load-more.
+ * Home tab — **`UseQueryResult<HomeTabSnapshot>`**: `data` holds feeds, chips, and row actions;
+ * top-level `loading` is bootstrap; `error` is genre-list failure; `refetch` reloads genres + row 1.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -15,10 +14,11 @@ import type {
   HomeChipKey,
   HomeChipResolved,
   HomeFeedRowState,
+  HomeTabSnapshot,
   TmdbGenre,
   TmdbMovieListItem,
   TmdbPagedMoviesResponse,
-  UseHomeResult,
+  UseQueryResult,
 } from '../api/types';
 import { createInitialHomeFeedRowState } from '../api/types';
 import { mergeUniqueMovieListById } from '../utils/mergeUniqueMovieListById';
@@ -81,7 +81,7 @@ function idleGenreRailsRecord(ids: readonly number[]): Record<number, HomeFeedRo
   return Object.fromEntries(ids.map((id) => [id, createInitialHomeFeedRowState()]));
 }
 
-export function useHome(): UseHomeResult {
+export function useHome(): UseQueryResult<HomeTabSnapshot> {
   const [genres, setGenres] = useState<readonly TmdbGenre[]>([]);
   const [genresError, setGenresError] = useState<string | null>(null);
   const [trending, setTrending] = useState<HomeFeedRowState>(() => ({
@@ -101,8 +101,15 @@ export function useHome(): UseHomeResult {
   const [bootstrapLoading, setBootstrapLoading] = useState(true);
   const [reloadToken, setReloadToken] = useState(0);
 
+  const hasCompletedInitialBootstrapRef = useRef(false);
   const dataGenerationRef = useRef(0);
   const genreDiscoverGenRef = useRef(0);
+
+  useEffect(() => {
+    if (!bootstrapLoading) {
+      hasCompletedInitialBootstrapRef.current = true;
+    }
+  }, [bootstrapLoading]);
 
   const chipKeyRef = useRef<HomeChipKey>(selectedChipKey);
   chipKeyRef.current = selectedChipKey;
@@ -695,28 +702,48 @@ export function useHome(): UseHomeResult {
   const hero: TmdbMovieListItem | null = trending.items[0] ?? null;
   const heroLoading = trending.page === 0 && (trending.loading || trending.loadingMore);
 
-  const loading = bootstrapLoading;
-  const error = genresError;
+  const snapshot = useMemo(
+    (): HomeTabSnapshot => ({
+      hero,
+      heroLoading,
+      genres: [...genres],
+      chips,
+      selectedChipKey,
+      setSelectedChipKey,
+      trending,
+      topRated,
+      genre,
+      genreRails,
+      loadMoreTrending,
+      loadMoreTopRated,
+      loadMoreGenre,
+      loadMoreGenreRail,
+      activateGenreRail,
+    }),
+    [
+      hero,
+      heroLoading,
+      genres,
+      chips,
+      selectedChipKey,
+      setSelectedChipKey,
+      trending,
+      topRated,
+      genre,
+      genreRails,
+      loadMoreTrending,
+      loadMoreTopRated,
+      loadMoreGenre,
+      loadMoreGenreRail,
+      activateGenreRail,
+    ],
+  );
 
   return {
-    loading,
-    error,
+    data:
+      bootstrapLoading && !hasCompletedInitialBootstrapRef.current ? null : snapshot,
+    loading: bootstrapLoading,
+    error: genresError,
     refetch,
-    hero,
-    heroLoading,
-    genres: [...genres],
-    genresError,
-    chips,
-    selectedChipKey,
-    setSelectedChipKey,
-    trending,
-    topRated,
-    genre,
-    genreRails,
-    loadMoreTrending,
-    loadMoreTopRated,
-    loadMoreGenre,
-    loadMoreGenreRail,
-    activateGenreRail,
   };
 }

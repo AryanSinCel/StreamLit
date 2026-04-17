@@ -8,7 +8,7 @@ import type { TmdbMovieListItem } from '../../api/types';
 import { IconMovie } from '../common/SimpleIcons';
 import { ShimmerBox } from '../common/ShimmerBox';
 import { colors, contentCard } from '../../theme/colors';
-import { detailSimilarPosterWidth, radiusCardInner, spacing } from '../../theme/spacing';
+import { detailSimilarPosterWidth, layout, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W185 } from '../../utils/image';
 import { DetailSectionError } from './DetailSectionError';
@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
   },
   headingShim: {
     borderRadius: spacing.xs,
-    height: 22,
-    width: 160,
+    height: layout.skeletonTextLine,
+    width: layout.skeletonPosterMd,
   },
   posterImage: {
     ...StyleSheet.absoluteFill,
@@ -201,13 +201,13 @@ const styles = StyleSheet.create({
   },
   seeAllShim: {
     borderRadius: spacing.xs,
-    height: 18,
-    width: 56,
+    height: layout.skeletonLineMd,
+    width: layout.skeletonThumb,
   },
   titleShim: {
     alignSelf: 'flex-start',
     borderRadius: spacing.xs,
-    height: 12,
+    height: layout.skeletonLineXs,
     width: POSTER_W * 0.72,
   },
 });

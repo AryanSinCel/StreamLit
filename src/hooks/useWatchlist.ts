@@ -190,6 +190,11 @@ export function useWatchlist(): UseWatchlistResult {
     [popularData, popularError, popularLoading, refetchPopular],
   );
 
+  const refetchRemoteSlices = useCallback(() => {
+    refetchSimilar();
+    refetchPopular();
+  }, [refetchSimilar, refetchPopular]);
+
   return {
     hydrated,
     count,
@@ -200,5 +205,6 @@ export function useWatchlist(): UseWatchlistResult {
     similar,
     popularRecommendations,
     movieGenres,
+    refetchRemoteSlices,
   };
 }

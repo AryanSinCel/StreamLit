@@ -7,14 +7,15 @@
  * (`genreBypassDebounceRef` + immediate `debouncedQuery` update).
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { getMovieGenres, getTrendingMoviesWeek, searchMovies } from '../api/movies';
 import type {
+  SearchTabSnapshot,
   TmdbGenre,
   TmdbPagedMoviesResponse,
   TmdbPagedSearchMoviesResponse,
+  UseQueryResult,
   UseSearchInput,
-  UseSearchResult,
 } from '../api/types';
 import {
   addRecentSearch,
@@ -27,7 +28,7 @@ import { isLikelyCanceledRequest, mapUnknownError } from '../utils/mapUnknownErr
 
 const SEARCH_DEBOUNCE_MS = 400;
 
-export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult {
+export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult<SearchTabSnapshot> {
   const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const genreBypassDebounceRef = useRef(false);
   const debouncedQueryRef = useRef('');
@@ -53,6 +54,7 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
 
   const [recentSearches, setRecentSearches] = useState<readonly string[]>([]);
   const [movieGenres, setMovieGenres] = useState<readonly TmdbGenre[]>([]);
+  const hasSearchTrendingSettledRef = useRef(false);
 
   debouncedQueryRef.current = debouncedQuery;
 
@@ -79,6 +81,12 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
       controller.abort();
     };
   }, []);
+
+  useEffect(() => {
+    if (!trendingLoading) {
+      hasSearchTrendingSettledRef.current = true;
+    }
+  }, [trendingLoading]);
 
   /** 400ms trailing debounce from controlled `query` → `debouncedQuery`. */
   useEffect(() => {
@@ -273,11 +281,9 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
   const refetch = useCallback(() => {
     if (debouncedQueryRef.current.length > 0) {
       setSearchRetryKey((k) => k + 1);
+    } else {
+      setTrendingReloadKey((k) => k + 1);
     }
-  }, []);
-
-  const refetchTrending = useCallback(() => {
-    setTrendingReloadKey((k) => k + 1);
   }, []);
 
   const refreshRecentSearches = useCallback(async () => {
@@ -307,30 +313,63 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseSearchResult 
   );
 
   const mode = debouncedQuery.length === 0 ? 'default' : 'results';
-  const results = data?.results ?? [];
-  const totalResults = data?.total_results ?? 0;
 
-  return {
+  const snapshot = useMemo((): SearchTabSnapshot => {
+    const results = data?.results ?? [];
+    const totalResults = data?.total_results ?? 0;
+    return {
+      mode,
+      debouncedQuery,
+      searchPage: data,
+      results,
+      totalResults,
+      searchLoading: loading,
+      loadingMore,
+      hasMore,
+      searchError: error,
+      loadMore,
+      trending,
+      trendingLoading,
+      trendingError,
+      recentSearches,
+      refreshRecentSearches,
+      clearRecentSearches,
+      lastSuccessfulQuery,
+      applyGenreChip,
+      movieGenres,
+    };
+  }, [
     mode,
     debouncedQuery,
     data,
-    results,
-    totalResults,
     loading,
     loadingMore,
     hasMore,
     error,
-    refetch,
     loadMore,
     trending,
     trendingLoading,
     trendingError,
-    refetchTrending,
     recentSearches,
     refreshRecentSearches,
     clearRecentSearches,
     lastSuccessfulQuery,
     applyGenreChip,
     movieGenres,
+  ]);
+
+  const envelopeLoading = mode === 'results' ? loading : trendingLoading;
+  const envelopeError = mode === 'results' ? error : trendingError;
+
+  return {
+    data:
+      mode === 'default' &&
+      trendingLoading &&
+      !hasSearchTrendingSettledRef.current
+        ? null
+        : snapshot,
+    loading: envelopeLoading,
+    error: envelopeError,
+    refetch,
   };
 }

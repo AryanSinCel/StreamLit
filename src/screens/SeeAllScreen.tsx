@@ -6,11 +6,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { TmdbMovieListItem } from '../api/types';
 import { ContentCard } from '../components/common/ContentCard';
 import { LoadMoreContentIndicator } from '../components/common/LoadMoreContentIndicator';
+import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
 import { SeeAllGridSkeleton } from '../components/seeAll/SeeAllGridSkeleton';
 import { useSeeAll } from '../hooks/useSeeAll';
 import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
-import { spacing } from '../theme/spacing';
+import { layout, spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 import { formatListMovieSubtitle } from '../utils/formatMovieListItem';
 
@@ -108,9 +109,11 @@ export function SeeAllScreen({ navigation, route }: Props): JSX.Element {
   if (initialSkeleton) {
     return (
       <View style={styles.screen}>
-        <View style={[styles.paddedHorizontal, { paddingHorizontal: horizontalPad }]}>
-          <SeeAllGridSkeleton />
-        </View>
+        <ScreenErrorBoundary onRetry={refetch} screenLabel="See all" style={styles.flex}>
+          <View style={[styles.paddedHorizontal, { paddingHorizontal: horizontalPad }]}>
+            <SeeAllGridSkeleton />
+          </View>
+        </ScreenErrorBoundary>
       </View>
     );
   }
@@ -135,28 +138,31 @@ export function SeeAllScreen({ navigation, route }: Props): JSX.Element {
 
   return (
     <View style={styles.screen}>
-      <FlatList
-        key={mode}
-        columnWrapperStyle={[styles.gridRow, { gap: gridGutter }]}
-        contentContainerStyle={[
-          styles.listContent,
-          {
-            paddingHorizontal: horizontalPad,
-            paddingBottom: insets.bottom + spacing.xxl,
-            paddingTop: spacing.md,
-          },
-        ]}
-        data={items}
-        keyExtractor={(item) => String(item.id)}
-        ListEmptyComponent={listEmpty}
-        ListFooterComponent={listFooter}
-        ListHeaderComponent={listHeader}
-        numColumns={2}
-        onEndReached={onEndReached}
-        onEndReachedThreshold={0.35}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-      />
+      <ScreenErrorBoundary onRetry={refetch} screenLabel="See all" style={styles.flex}>
+        <FlatList
+          key={mode}
+          columnWrapperStyle={[styles.gridRow, { gap: gridGutter }]}
+          contentContainerStyle={[
+            styles.listContent,
+            {
+              paddingHorizontal: horizontalPad,
+              paddingBottom: insets.bottom + spacing.xxl,
+              paddingTop: spacing.md,
+            },
+          ]}
+          data={items}
+          keyExtractor={(item) => String(item.id)}
+          ListEmptyComponent={listEmpty}
+          ListFooterComponent={listFooter}
+          ListHeaderComponent={listHeader}
+          numColumns={2}
+          onEndReached={onEndReached}
+          onEndReachedThreshold={layout.flatListEndThreshold}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+          style={styles.flex}
+        />
+      </ScreenErrorBoundary>
     </View>
   );
 }
@@ -215,6 +221,9 @@ const styles = StyleSheet.create({
   },
   retryPressed: {
     opacity: 0.88,
+  },
+  flex: {
+    flex: 1,
   },
   screen: {
     backgroundColor: colors.surface,

@@ -7,7 +7,7 @@ import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { TmdbMovieCastCredit } from '../../api/types';
 import { ShimmerBox } from '../common/ShimmerBox';
 import { colors } from '../../theme/colors';
-import { detailCastAvatarSize, spacing } from '../../theme/spacing';
+import { detailCastAvatarSize, layout, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W185 } from '../../utils/image';
 import { DetailSectionError } from './DetailSectionError';
@@ -105,8 +105,6 @@ export function DetailCastSection({ loading, error, cast, onRetry }: DetailCastS
   );
 }
 
-const AVATAR_INNER = detailCastAvatarSize - AVATAR_RING * 2;
-
 const styles = StyleSheet.create({
   avatar: {
     borderColor: colors.detail_cast_avatar_ring,
@@ -159,9 +157,9 @@ const styles = StyleSheet.create({
   },
   headingShim: {
     borderRadius: spacing.xs,
-    height: 22,
+    height: layout.skeletonTextLine,
     marginBottom: spacing.lg,
-    width: 120,
+    width: layout.skeletonPosterWide,
   },
   initials: {
     ...typography['title-lg'],

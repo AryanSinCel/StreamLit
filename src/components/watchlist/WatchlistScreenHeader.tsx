@@ -8,7 +8,7 @@ import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { WatchlistMediaFilter } from '../../api/types';
 import { IconPerson, IconSearch } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { radiusCardOuter, radiusFullPill, spacing } from '../../theme/spacing';
+import { layout, radiusCardOuter, spacing, tracking } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type WatchlistScreenHeaderProps = {
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     ...typography['label-sm'],
     color: colors.primary,
     fontWeight: '700',
-    letterSpacing: 1.2,
+    letterSpacing: tracking.wide12,
     marginBottom: spacing.sm,
     textTransform: 'uppercase',
   },
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     opacity: 0.85,
   },
   chip: {
-    borderRadius: 5,
+    borderRadius: layout.chipRadiusSm,
     paddingHorizontal: spacing.lg + spacing.xs,
     paddingVertical: spacing.sm,
   },

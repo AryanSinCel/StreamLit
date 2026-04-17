@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { IconHistory } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
+import { spacing, tracking } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type SearchRecentSearchesSectionProps = {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     ...typography['label-sm'],
     color: colors.primary,
     fontWeight: '600',
-    letterSpacing: 2,
+    letterSpacing: tracking.caps,
     textTransform: 'uppercase',
   },
   recentHeaderRow: {

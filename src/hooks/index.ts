@@ -1,9 +1,10 @@
 export type {
+  HomeTabSnapshot,
   SearchScreenMode,
+  SearchTabSnapshot,
   UseMovieDetailResult,
   UseQueryResult,
   UseSearchInput,
-  UseSearchResult,
   UseWatchlistResult,
   WatchlistMediaFilter,
 } from '../api/types';

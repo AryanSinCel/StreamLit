@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   body: {
     ...typography['body-md'],
     color: colors.on_surface_variant,
-    lineHeight: 24,
+    lineHeight: spacing.xl,
     marginBottom: spacing.xxxl,
     paddingHorizontal: spacing.sm,
     textAlign: 'center',

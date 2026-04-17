@@ -5,12 +5,13 @@
 import type { JSX } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useWindowDimensions } from 'react-native';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import LinearGradient from 'react-native-linear-gradient';
 import type { SearchScreenMode, TmdbGenre, TmdbMovieListItem } from '../../api/types';
 import { IconMovie, IconSearch } from '../common/SimpleIcons';
 import { PosterRatingBadge } from '../common/PosterRatingBadge';
-import { colors, contentCard } from '../../theme/colors';
+import { colors, contentCard, surfaceContainerLowestRgba } from '../../theme/colors';
 import {
+  layout,
   radiusCardInner,
   radiusCardOuter,
   radiusFullPill,
@@ -23,8 +24,6 @@ import { buildImageUrl, TMDB_IMAGE_SIZE_W342, TMDB_IMAGE_SIZE_W780 } from '../..
 import { SEARCH_INPUT_PLACEHOLDER } from './searchDefaultMocks';
 import { SearchRecentSearchesSection } from './SearchRecentSearchesSection';
 import { SearchTrendingSkeleton } from './SearchTrendingSkeleton';
-
-const SEARCH_FEATURED_GRADIENT_ID = 'searchFeaturedScrim';
 
 export type SearchDefaultViewProps = {
   query: string;
@@ -205,37 +204,19 @@ export function SearchDefaultView({
                       <IconMovie color={colors.on_surface_variant} size={56} />
                     </View>
                   )}
-                  <View style={styles.featuredGradientHost} pointerEvents="none">
-                    <Svg
-                      height="100%"
-                      preserveAspectRatio="none"
-                      style={StyleSheet.absoluteFill}
-                      width="100%"
-                    >
-                      <Defs>
-                        <LinearGradient
-                          gradientUnits="objectBoundingBox"
-                          id={SEARCH_FEATURED_GRADIENT_ID}
-                          x1="0"
-                          x2="0"
-                          y1="1"
-                          y2="0"
-                        >
-                          <Stop offset="0" stopColor={colors.surface_container_lowest} stopOpacity="1" />
-                          <Stop offset="0.42" stopColor={colors.surface_container_lowest} stopOpacity="0.4" />
-                          <Stop offset="0.65" stopColor={colors.surface_container_lowest} stopOpacity="0" />
-                          <Stop offset="1" stopColor={colors.surface_container_lowest} stopOpacity="0" />
-                        </LinearGradient>
-                      </Defs>
-                      <Rect
-                        fill={`url(#${SEARCH_FEATURED_GRADIENT_ID})`}
-                        height="100%"
-                        width="100%"
-                        x="0"
-                        y="0"
-                      />
-                    </Svg>
-                  </View>
+                  <LinearGradient
+                    colors={[
+                      surfaceContainerLowestRgba(1),
+                      surfaceContainerLowestRgba(0.4),
+                      surfaceContainerLowestRgba(0),
+                      surfaceContainerLowestRgba(0),
+                    ]}
+                    end={{ x: 0.5, y: 0 }}
+                    locations={[0, 0.42, 0.65, 1]}
+                    pointerEvents="none"
+                    start={{ x: 0.5, y: 1 }}
+                    style={styles.featuredGradientHost}
+                  />
                   <View style={styles.featuredTextBlock}>
                     <View style={styles.featuredBadge}>
                       <Text style={styles.featuredBadgeLabel}>Featured</Text>
@@ -406,8 +387,8 @@ const styles = StyleSheet.create({
     color: colors.on_surface,
     fontWeight: '800',
     textShadowColor: colors.hero_text_shadow,
-    textShadowOffset: { height: 1, width: 0 },
-    textShadowRadius: 6,
+    textShadowOffset: { height: layout.hairline, width: 0 },
+    textShadowRadius: layout.shadowBlurSm,
   },
   featuredWrap: {
     alignSelf: 'stretch',

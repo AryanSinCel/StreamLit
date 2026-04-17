@@ -3,9 +3,27 @@
  * No hardcoded hex/rgba outside this module in app code.
  * No-line rule: no solid 1px layout borders — use spacing + backgrounds only.
  * Never `#FFFFFF` for body text — use `on_surface` / `on_surface_variant`.
+ *
+ * For scrims and shadows, prefer **`surfaceRgba`** / **`surfaceContainerLowestRgba`** /
+ * **`surfaceContainerRgba`** instead of repeating the same RGB under different names.
  */
 
 import { radiusCardInner, radiusCardOuter } from './spacing';
+
+/** `#131313` (`surface`) — use for hero/detail scrims and shadows at varying opacity. */
+export function surfaceRgba(alpha: number): string {
+  return `rgba(19, 19, 19, ${alpha})`;
+}
+
+/** `#0E0E0E` (`surface_container_lowest`) — featured / rail bottom fades. */
+export function surfaceContainerLowestRgba(alpha: number): string {
+  return `rgba(14, 14, 14, ${alpha})`;
+}
+
+/** `#232323` (`surface_container`) — tab bar glass tint (PSD §6.4). */
+export function surfaceContainerRgba(alpha: number): string {
+  return `rgba(35, 35, 35, ${alpha})`;
+}
 
 export const colors = {
   surface: '#131313',
@@ -34,13 +52,13 @@ export const colors = {
   poster_rating_scrim: 'rgba(0, 0, 0, 0.4)',
   /** Bottom tab icons when inactive (`home.html` ~60% opacity on variant). */
   tab_icon_inactive: 'rgba(228, 189, 186, 0.6)',
-  /** Tab bar scrim (`home.html` #131313 @ 70%). */
-  tab_bar_scrim: 'rgba(19, 19, 19, 0.70)',
+  /** Tab bar solid fallback (`home.html` #131313 @ 70%) — same RGB as `surface`. */
+  tab_bar_scrim: surfaceRgba(0.7),
   outline_variant: 'rgba(255,255,255,0.15)',
   /** Empty watchlist icon disc ring — `watchlist-empty.html` `ring-outline-variant/10`. */
   outline_variant_ring: 'rgba(255, 255, 255, 0.04)',
-  /** Hero title / synopsis legibility when scrim is omitted (no solid overlay panel). */
-  hero_text_shadow: 'rgba(19, 19, 19, 0.85)',
+  /** Hero title / synopsis legibility — same RGB as `surface`. */
+  hero_text_shadow: surfaceRgba(0.85),
   /** Watchlist empty-state radial glow (`resources/watchlist-empty.html` `.bg-empty-glow`). */
   watchlist_empty_radial_glow: 'rgba(130, 38, 37, 0.15)',
   /** `surface_container_low` @ 30% — bookmark icon disc behind (`watchlist-empty.html`). */
@@ -62,12 +80,9 @@ export const colors = {
   detail_nav_icon_pressed: 'rgba(255, 255, 255, 0.1)',
 } as const;
 
-/**
- * Tab bar “glass” — background for later `@react-native-community/blur` usage.
- * Prefer these constants; install blur package when wiring the tab bar.
- */
+/** Tab bar “glass” — PSD §6.4: `BlurView` + tint (`MainTabs` `tabBarBackground`). */
 export const tabBarGlass = {
-  backgroundColor: 'rgba(35, 35, 35, 0.70)',
+  backgroundColor: surfaceContainerRgba(0.7),
   blurAmount: 20,
 } as const;
 

@@ -1,13 +1,6 @@
 import type { JSX } from 'react';
-import { useId, useMemo } from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { IconBookmarkAdd, IconBookmarkAdded } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
 import { detailWatchlistCtaMinHeight, spacing } from '../../theme/spacing';
@@ -28,12 +21,6 @@ export function DetailWatchlistButton({
   storedInWatchlist,
   onPress,
 }: DetailWatchlistButtonProps): JSX.Element {
-  const reactId = useId();
-  const gradientId = useMemo(
-    () => `detail-watchlist-grad-${reactId.replace(/[^a-zA-Z0-9_-]/g, '')}`,
-    [reactId],
-  );
-
   if (!hydrated) {
     return (
       <View
@@ -69,20 +56,15 @@ export function DetailWatchlistButton({
       onPress={onPress}
       style={({ pressed }) => [styles.addOuter, pressed && styles.addPressed]}
     >
-      <Svg
+      <LinearGradient
         accessibilityElementsHidden
+        colors={[colors.primary, colors.primary_container]}
+        end={{ x: 1, y: 1 }}
         importantForAccessibility="no-hide-descendants"
-        preserveAspectRatio="none"
+        pointerEvents="none"
+        start={{ x: 0, y: 0 }}
         style={StyleSheet.absoluteFill}
-      >
-        <Defs>
-          <LinearGradient id={gradientId} x1="0%" x2="100%" y1="0%" y2="100%">
-            <Stop offset="0" stopColor={colors.primary} />
-            <Stop offset="1" stopColor={colors.primary_container} />
-          </LinearGradient>
-        </Defs>
-        <Rect fill={`url(#${gradientId})`} height="100%" width="100%" />
-      </Svg>
+      />
       <View style={styles.addInner}>
         <IconBookmarkAdd color={colors.on_primary_container} size={22} />
         <Text style={styles.addLabel}>Add to Watchlist</Text>

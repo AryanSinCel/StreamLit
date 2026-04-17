@@ -15,8 +15,9 @@ import { SeeAllScreen } from '../screens/SeeAllScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { SearchScreen } from '../screens/SearchScreen';
 import { WatchlistScreen } from '../screens/WatchlistScreen';
+import { TabBarGlassBackground } from './TabBarGlassBackground';
 import { colors } from '../theme/colors';
-import { spacing } from '../theme/spacing';
+import { layout, spacing } from '../theme/spacing';
 import { useWatchlistStore } from '../store/watchlistStore';
 import { typography } from '../theme/typography';
 import type {
@@ -34,6 +35,10 @@ const SearchStack = createNativeStackNavigator<SearchStackParamList>();
 const WatchlistStack = createNativeStackNavigator<WatchlistStackParamList>();
 const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
 const Tab = createBottomTabNavigator<RootTabParamList>();
+
+function renderTabBarGlassBackground() {
+  return <TabBarGlassBackground />;
+}
 
 const stackScreenOptions = {
   headerStyle: { backgroundColor: colors.surface_container },
@@ -124,7 +129,7 @@ const watchlistTabBadgeStyles = StyleSheet.create({
     color: colors.on_primary_container,
     ...typography['label-sm'],
     fontWeight: '700',
-    lineHeight: 16,
+    lineHeight: layout.tabBadgeLineHeight,
     minWidth: 18,
     overflow: 'hidden',
     paddingHorizontal: spacing.xs,
@@ -150,8 +155,9 @@ function MainTabNavigator() {
           ...typography['tab-label'],
           marginTop: spacing.xs,
         },
+        tabBarBackground: renderTabBarGlassBackground,
         tabBarStyle: {
-          backgroundColor: colors.tab_bar_scrim,
+          backgroundColor: 'transparent',
           borderTopWidth: 0,
           paddingBottom: spacing.xxl,
           paddingTop: spacing.md,

@@ -4,16 +4,14 @@
 
 import type { JSX } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import LinearGradient from 'react-native-linear-gradient';
 import type { TmdbMovieListItem } from '../../api/types';
 import { IconPlay } from '../common/SimpleIcons';
 import { HomeHeroSkeleton } from './HomeHeroSkeleton';
-import { colors } from '../../theme/colors';
-import { homeHeroHeight, radiusCardInner, spacing } from '../../theme/spacing';
+import { colors, surfaceRgba } from '../../theme/colors';
+import { homeHeroHeight, layout, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
-
-const HERO_SCRIM_GRADIENT_ID = 'homeHeroScrim';
 
 export type HomeHeroProps = {
   movie: TmdbMovieListItem | null;
@@ -75,26 +73,14 @@ export function HomeHero({ movie, loading, onWatchNow, onDetails }: HomeHeroProp
         ) : (
           <View style={styles.backdropPlaceholder} accessibilityLabel="Featured backdrop placeholder" />
         )}
-        <View style={styles.scrimHost} pointerEvents="none">
-          <Svg height="100%" preserveAspectRatio="none" style={StyleSheet.absoluteFill} width="100%">
-            <Defs>
-              <LinearGradient
-                gradientUnits="objectBoundingBox"
-                id={HERO_SCRIM_GRADIENT_ID}
-                x1="0"
-                x2="0"
-                y1="1"
-                y2="0"
-              >
-                <Stop offset="0" stopColor={colors.surface} stopOpacity="1" />
-                <Stop offset="0.42" stopColor={colors.surface} stopOpacity="0.35" />
-                <Stop offset="0.62" stopColor={colors.surface} stopOpacity="0" />
-                <Stop offset="1" stopColor={colors.surface} stopOpacity="0" />
-              </LinearGradient>
-            </Defs>
-            <Rect fill={`url(#${HERO_SCRIM_GRADIENT_ID})`} height="100%" width="100%" x="0" y="0" />
-          </Svg>
-        </View>
+        <LinearGradient
+          colors={[surfaceRgba(1), surfaceRgba(0.35), surfaceRgba(0), surfaceRgba(0)]}
+          end={{ x: 0.5, y: 0 }}
+          locations={[0, 0.42, 0.62, 1]}
+          pointerEvents="none"
+          start={{ x: 0.5, y: 1 }}
+          style={styles.scrimHost}
+        />
         <View style={styles.content}>
           <View style={styles.badge}>
             <Text style={styles.badgeText}>New Release</Text>
@@ -204,8 +190,8 @@ const styles = StyleSheet.create({
     ...typography['body-md'],
     color: colors.on_surface_variant,
     marginBottom: spacing.xxl,
-    maxWidth: 320,
-    minHeight: 40,
+    maxWidth: layout.contentMaxMd,
+    minHeight: spacing.xxxl,
     textShadowColor: colors.hero_text_shadow,
     textShadowOffset: { height: spacing.xs, width: 0 },
     textShadowRadius: spacing.md,

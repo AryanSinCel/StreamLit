@@ -6,6 +6,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
 import { SearchAppBar } from '../components/search/SearchAppBar';
 import { SearchDefaultView } from '../components/search/SearchDefaultView';
 import { SearchResultsStateView } from '../components/search/SearchResultsStateView';
@@ -34,11 +35,12 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
   const [inputFocused, setInputFocused] = useState(false);
 
   const search = useSearch({ query, setQuery });
-  const { movieGenres } = search;
+  const snap = search.data;
 
   const genreChipLabels = useMemo(
-    () => [...movieGenres].sort((a, b) => a.name.localeCompare(b.name)).map((g) => g.name),
-    [movieGenres],
+    () =>
+      [...(snap?.movieGenres ?? [])].sort((a, b) => a.name.localeCompare(b.name)).map((g) => g.name),
+    [snap?.movieGenres],
   );
 
   const selectedGenreIndex = useMemo(() => {
@@ -50,12 +52,12 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
     return i >= 0 ? i : null;
   }, [query, genreChipLabels]);
 
-  const trendingResults = search.trending?.results ?? [];
+  const trendingResults = snap?.trending?.results ?? [];
   const featuredMovie = trendingResults[0] ?? null;
   const gridMovies = trendingResults.slice(1, 5);
 
   /** Empty query and at least one stored recent — hide section when list is empty (hook returns []). */
-  const showRecentsBlock = query.trim().length === 0 && search.recentSearches.length > 0;
+  const showRecentsBlock = query.trim().length === 0 && (snap?.recentSearches.length ?? 0) > 0;
 
   const openSearchDetail = useCallback(
     (movieId: number) => {
@@ -64,12 +66,12 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
     [navigation],
   );
 
-  const totalResults = search.data?.total_results ?? 0;
+  const totalResults = snap?.searchPage?.total_results ?? 0;
 
   const lastSearchNearEndRef = useRef(0);
   const handleSearchScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      if (search.mode !== 'results') {
+      if (snap == null || snap.mode !== 'results') {
         return;
       }
       const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
@@ -77,7 +79,7 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
       if (distanceFromBottom > spacing.xxxxl * 2) {
         return;
       }
-      if (!search.hasMore || search.loadingMore || search.loading) {
+      if (!snap.hasMore || snap.loadingMore || snap.searchLoading) {
         return;
       }
       const now = Date.now();
@@ -85,10 +87,29 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
         return;
       }
       lastSearchNearEndRef.current = now;
-      search.loadMore();
+      snap.loadMore();
     },
-    [search],
+    [snap],
   );
+
+  if (snap == null) {
+    return (
+      <View style={styles.screen}>
+        <View
+          style={[
+            styles.headerDock,
+            {
+              paddingTop: insets.top + spacing.sm,
+            },
+          ]}
+        >
+          <SearchAppBar />
+        </View>
+      </View>
+    );
+  }
+
+  const d = snap;
 
   return (
     <View style={styles.screen}>
@@ -102,43 +123,44 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
       >
         <SearchAppBar />
       </View>
-      <ScrollView
-        contentContainerStyle={[
-          styles.scrollContent,
-          {
-            paddingBottom: insets.bottom + spacing.xxxxl,
-          },
-        ]}
-        keyboardShouldPersistTaps="handled"
-        nestedScrollEnabled
-        onScroll={handleSearchScroll}
-        scrollEventThrottle={16}
-        style={styles.scroll}
-      >
-        {search.mode === 'results' ? (
+      <ScreenErrorBoundary onRetry={search.refetch} screenLabel="Search" style={styles.scroll}>
+        <ScrollView
+          contentContainerStyle={[
+            styles.scrollContent,
+            {
+              paddingBottom: insets.bottom + spacing.xxxxl,
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
+          nestedScrollEnabled
+          onScroll={handleSearchScroll}
+          scrollEventThrottle={16}
+          style={styles.scrollFill}
+        >
+        {d.mode === 'results' ? (
           <SearchResultsStateView
-            debouncedQuery={search.debouncedQuery}
+            debouncedQuery={d.debouncedQuery}
             error={search.error}
             genreChipLabels={genreChipLabels}
-            hasMore={search.hasMore}
+            hasMore={d.hasMore}
             inputFocused={inputFocused}
-            loading={search.loading}
-            loadingMore={search.loadingMore}
+            loading={d.searchLoading}
+            loadingMore={d.loadingMore}
             onBlurInput={() => setInputFocused(false)}
             onChangeQuery={setQuery}
             onClearRecents={() => {
-              search.clearRecentSearches().catch(() => {
+              d.clearRecentSearches().catch(() => {
                 /* errors surfaced via hook state in a later pass if needed */
               });
             }}
             onFocusInput={() => setInputFocused(true)}
-            onGenreChipPress={search.applyGenreChip}
+            onGenreChipPress={d.applyGenreChip}
             onOpenResult={openSearchDetail}
             onRecentTermPress={(term) => setQuery(term)}
             onRetrySearch={search.refetch}
             query={query}
-            recentSearches={search.recentSearches}
-            results={search.results}
+            recentSearches={d.recentSearches}
+            results={d.results}
             selectedGenreIndex={selectedGenreIndex}
             showRecentsBlock={showRecentsBlock}
             totalResults={totalResults}
@@ -147,31 +169,32 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
           <SearchDefaultView
             featuredMovie={featuredMovie}
             genreChipLabels={genreChipLabels}
-            genres={movieGenres}
+            genres={d.movieGenres}
             gridMovies={gridMovies}
             inputFocused={inputFocused}
-            mode={search.mode}
+            mode={d.mode}
             onBlurInput={() => setInputFocused(false)}
             onChangeQuery={setQuery}
             onClearRecents={() => {
-              search.clearRecentSearches().catch(() => {
+              d.clearRecentSearches().catch(() => {
                 /* errors surfaced via hook state in a later pass if needed */
               });
             }}
             onFocusInput={() => setInputFocused(true)}
-            onGenreChipPress={search.applyGenreChip}
+            onGenreChipPress={d.applyGenreChip}
             onOpenResult={openSearchDetail}
             onRecentTermPress={(term) => setQuery(term)}
-            onRetryTrending={search.refetchTrending}
+            onRetryTrending={search.refetch}
             query={query}
-            recentSearches={search.recentSearches}
+            recentSearches={d.recentSearches}
             selectedGenreIndex={selectedGenreIndex}
             showRecentsBlock={showRecentsBlock}
-            trendingError={search.trendingError}
-            trendingLoading={search.trendingLoading}
+            trendingError={d.trendingError}
+            trendingLoading={d.trendingLoading}
           />
         )}
-      </ScrollView>
+        </ScrollView>
+      </ScreenErrorBoundary>
     </View>
   );
 }
@@ -187,6 +210,10 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+  },
+  scrollFill: {
+    flex: 1,
+    flexGrow: 1,
   },
   scrollContent: {
     flexGrow: 1,

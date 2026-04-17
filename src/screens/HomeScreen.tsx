@@ -8,6 +8,7 @@ import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } fr
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { HomeChipKey, HomeChipResolved } from '../api/types';
 import { LoadMoreContentIndicator } from '../components/common/LoadMoreContentIndicator';
+import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
 import { HomeContentRow } from '../components/home/HomeContentRow';
 import { HomeGenreStrip } from '../components/home/HomeGenreStrip';
 import { HomeHeader } from '../components/home/HomeHeader';
@@ -40,25 +41,15 @@ const GENRE_RAIL_VISIBILITY_BUFFER_PX = spacing.xxl + spacing.xxxl;
 export function HomeScreen({ navigation }: Props): JSX.Element {
   const insets = useSafeAreaInsets();
   const { height: windowHeight } = useWindowDimensions();
-  const {
-    error: genresError,
-    genres,
-    refetch,
-    hero,
-    heroLoading,
-    chips,
-    selectedChipKey,
-    setSelectedChipKey,
-    trending,
-    topRated,
-    genre,
-    genreRails,
-    loadMoreTrending,
-    loadMoreTopRated,
-    loadMoreGenre,
-    loadMoreGenreRail,
-    activateGenreRail,
-  } = useHome();
+  const { data: snap, error: genresError, refetch } = useHome();
+
+  const chips = useMemo(() => snap?.chips ?? [], [snap?.chips]);
+  const selectedChipKey = useMemo(() => snap?.selectedChipKey ?? 'all', [snap?.selectedChipKey]);
+  const genreRails = useMemo(() => snap?.genreRails ?? {}, [snap?.genreRails]);
+  const activateGenreRail = useMemo(
+    () => snap?.activateGenreRail ?? ((_genreId: number) => {}),
+    [snap?.activateGenreRail],
+  );
 
   const genreRailIds = useMemo((): number[] => {
     return chips
@@ -223,6 +214,30 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
     seeAllDiscover(row3Title, selectedChipKey);
   };
 
+  if (snap == null) {
+    return (
+      <View style={styles.screen}>
+        <View style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}>
+          <HomeHeader />
+        </View>
+      </View>
+    );
+  }
+
+  const {
+    hero,
+    heroLoading,
+    genres,
+    trending,
+    topRated,
+    genre,
+    loadMoreTrending,
+    loadMoreTopRated,
+    loadMoreGenre,
+    loadMoreGenreRail,
+    setSelectedChipKey,
+  } = snap;
+
   const heroMovieId = hero?.id;
 
   return (
@@ -237,16 +252,17 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
       >
         <HomeHeader />
       </View>
-      <ScrollView
-        contentContainerStyle={{
-          paddingBottom: insets.bottom + spacing.xxxxl,
-        }}
-        nestedScrollEnabled
-        onContentSizeChange={runGenreRailVisibilityPass}
-        onScroll={handleHomeScroll}
-        scrollEventThrottle={16}
-        style={styles.scroll}
-      >
+      <ScreenErrorBoundary onRetry={refetch} screenLabel="Home" style={styles.scroll}>
+        <ScrollView
+          contentContainerStyle={{
+            paddingBottom: insets.bottom + spacing.xxxxl,
+          }}
+          nestedScrollEnabled
+          onContentSizeChange={runGenreRailVisibilityPass}
+          onScroll={handleHomeScroll}
+          scrollEventThrottle={16}
+          style={styles.scrollFill}
+        >
         {genresError != null ? (
           <View style={styles.banner}>
             <Text style={styles.bannerText}>{genresError}</Text>
@@ -371,7 +387,8 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
                 sectionTitle={row3Title}
               />
             )}
-      </ScrollView>
+        </ScrollView>
+      </ScreenErrorBoundary>
     </View>
   );
 }
@@ -411,6 +428,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scroll: {
+    flex: 1,
+  },
+  scrollFill: {
+    flexGrow: 1,
     flex: 1,
   },
   /** Vertical feed only: after the last visible genre block while its first TMDB page loads (not horizontal rail pagination). */

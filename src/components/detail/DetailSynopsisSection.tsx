@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
+import { layout, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type DetailSynopsisSectionProps = {
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   body: {
     ...typography['body-md'],
     color: colors.on_surface_variant,
-    lineHeight: 22,
+    lineHeight: layout.skeletonTextLine,
   },
   heading: {
     ...typography['headline-search'],

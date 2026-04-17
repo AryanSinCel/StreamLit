@@ -6,7 +6,7 @@
 import type { JSX } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
+import { spacing, tracking } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type LoadMoreContentIndicatorProps = {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     ...typography['label-sm'],
     color: colors.on_surface_variant,
     fontWeight: '700',
-    letterSpacing: 2,
+    letterSpacing: tracking.caps,
     marginLeft: spacing.md,
     textTransform: 'uppercase',
   },

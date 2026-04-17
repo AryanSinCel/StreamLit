@@ -10,7 +10,7 @@ import type { TmdbGenre, TmdbMovieListItem } from '../../api/types';
 import { ContentCard } from '../common/ContentCard';
 import { ShimmerBox } from '../common/ShimmerBox';
 import { colors } from '../../theme/colors';
-import { homeRowCardWidth, radiusCardInner, spacing } from '../../theme/spacing';
+import { homeRowCardWidth, layout, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { formatHomeRailSubtitle } from '../../utils/formatMovieListItem';
 import { HomeRowSkeleton } from './HomeRowSkeleton';
@@ -145,7 +145,7 @@ export function HomeContentRow({
         fireNearEndIfAllowed();
       }
     },
-    [fireNearEndIfAllowed],
+    [error, fireNearEndIfAllowed, hasMore, items.length, loading, loadingMore, onNearEnd],
   );
 
   const handleRowContentSizeChange = useCallback(
@@ -339,13 +339,13 @@ const styles = StyleSheet.create({
   skeletonSectionTitle: {
     borderRadius: spacing.xs,
     flex: 1,
-    height: 24,
+    height: layout.skeletonBlockMd,
     marginRight: spacing.md,
-    maxWidth: 220,
+    maxWidth: layout.sectionTitleShimmerMax,
   },
   skeletonSeeAll: {
     borderRadius: spacing.xs,
-    height: 16,
-    width: 64,
+    height: spacing.lg,
+    width: layout.skeletonThumb,
   },
 });

@@ -7,11 +7,12 @@ import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { WatchlistMediaFilter } from '../api/types';
 import { IconPerson, IconSearch } from '../components/common/SimpleIcons';
+import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
 import { SearchAppBar } from '../components/search/SearchAppBar';
 import { WatchlistScreenHeader } from '../components/watchlist/WatchlistScreenHeader';
 import type { ProfileStackParamList, RootStackParamList, RootTabParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
-import { radiusCardInner, spacing } from '../theme/spacing';
+import { layout, radiusCardInner, spacing, tracking } from '../theme/spacing';
 import { typography } from '../theme/typography';
 
 type Props = CompositeScreenProps<
@@ -66,6 +67,10 @@ export function ProfileScreen({ navigation }: Props): JSX.Element {
 
   const noopSetFilter = useCallback((_f: WatchlistMediaFilter) => {}, []);
 
+  const retryProfileShell = useCallback(() => {
+    /* Static profile — boundary reset only; no remote refetch. */
+  }, []);
+
   const searchAppBarTrailing = useMemo(
     () => (
       <Pressable
@@ -93,18 +98,19 @@ export function ProfileScreen({ navigation }: Props): JSX.Element {
       >
         <SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={showComingSoon} />
       </View>
-      <ScrollView
-        contentContainerStyle={[
-          styles.scrollContent,
-          {
-            paddingBottom: insets.bottom + spacing.xxxxl,
-            paddingTop: spacing.lg,
-          },
-        ]}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        style={styles.scroll}
-      >
+      <ScreenErrorBoundary onRetry={retryProfileShell} screenLabel="Profile" style={styles.scroll}>
+        <ScrollView
+          contentContainerStyle={[
+            styles.scrollContent,
+            {
+              paddingBottom: insets.bottom + spacing.xxxxl,
+              paddingTop: spacing.lg,
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollFill}
+        >
         <View style={styles.body}>
           <WatchlistScreenHeader
             countLine="Signed in with placeholder data"
@@ -186,7 +192,8 @@ export function ProfileScreen({ navigation }: Props): JSX.Element {
 
           <Text style={styles.versionFoot}>{APP_VERSION_LABEL}</Text>
         </View>
-      </ScrollView>
+        </ScrollView>
+      </ScreenErrorBoundary>
     </View>
   );
 }
@@ -203,7 +210,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface_container_highest,
     borderColor: colors.outline_variant,
     borderRadius: AVATAR_DIAMETER / 2,
-    borderWidth: 2,
+    borderWidth: layout.borderSm,
     height: AVATAR_DIAMETER,
     justifyContent: 'center',
     width: AVATAR_DIAMETER,
@@ -259,7 +266,7 @@ const styles = StyleSheet.create({
     ...typography['label-sm'],
     color: colors.primary,
     fontWeight: '700',
-    letterSpacing: 1.2,
+    letterSpacing: tracking.wide12,
     marginBottom: spacing.xs,
     textTransform: 'uppercase',
   },
@@ -269,6 +276,10 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+  },
+  scrollFill: {
+    flex: 1,
+    flexGrow: 1,
   },
   scrollContent: {
     flexGrow: 1,

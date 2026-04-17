@@ -5,7 +5,7 @@
 import type { JSX } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ShimmerBox } from '../common/ShimmerBox';
-import { detailHeroHeight, detailSimilarPosterWidth, spacing } from '../../theme/spacing';
+import { detailHeroHeight, detailSimilarPosterWidth, layout, spacing } from '../../theme/spacing';
 
 export type DetailDetailsSkeletonProps = {
   /** Full-bleed hero width (typically screen width). */
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   chip: {
     borderRadius: spacing.sm,
-    height: 28,
+    height: layout.skeletonBlockLg,
     width: detailSimilarPosterWidth * 0.35,
   },
   chipRow: {
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   chipWide: {
     borderRadius: spacing.sm,
-    height: 28,
+    height: layout.skeletonBlockLg,
     width: detailSimilarPosterWidth * 0.55,
   },
   hero: {
@@ -64,10 +64,10 @@ const styles = StyleSheet.create({
   },
   line: {
     borderRadius: spacing.xs,
-    height: 14,
+    height: layout.skeletonLineSm,
   },
   titleLine: {
     borderRadius: spacing.xs,
-    height: 36,
+    height: layout.skeletonBlockXl,
   },
 });

@@ -15,6 +15,7 @@ import { DetailNavBar } from '../components/detail/DetailNavBar';
 import { DetailSectionError } from '../components/detail/DetailSectionError';
 import { DetailSimilarSection } from '../components/detail/DetailSimilarSection';
 import { DetailSynopsisSection } from '../components/detail/DetailSynopsisSection';
+import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
 import { DetailWatchlistButton } from '../components/detail/DetailWatchlistButton';
 import { useWatchlistStore } from '../store/watchlistStore';
 import { mapMovieDetailToWatchlistItem } from '../utils/mapMovieDetailToWatchlistItem';
@@ -96,17 +97,24 @@ export function DetailScreen({ route }: Props): JSX.Element {
     [navigation],
   );
 
+  const refetchDetailScreen = useCallback(() => {
+    details.refetch();
+    credits.refetch();
+    similar.refetch();
+  }, [credits, details, similar]);
+
   return (
     <View style={styles.screen}>
-      <ScrollView
-        contentContainerStyle={[
-          styles.scrollContent,
-          { paddingBottom: insets.bottom + spacing.xxl },
-        ]}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        style={styles.scroll}
-      >
+      <ScreenErrorBoundary onRetry={refetchDetailScreen} screenLabel="Movie detail" style={styles.scroll}>
+        <ScrollView
+          contentContainerStyle={[
+            styles.scrollContent,
+            { paddingBottom: insets.bottom + spacing.xxl },
+          ]}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollFill}
+        >
         {details.loading && details.data == null ? (
           <DetailDetailsSkeleton contentWidth={contentWidth} heroWidth={heroWidth} />
         ) : null}
@@ -149,7 +157,8 @@ export function DetailScreen({ route }: Props): JSX.Element {
             results={similar.data?.results ?? null}
           />
         </View>
-      </ScrollView>
+        </ScrollView>
+      </ScreenErrorBoundary>
       <DetailNavBar onBack={onBack} />
     </View>
   );
@@ -169,6 +178,10 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+  },
+  scrollFill: {
+    flex: 1,
+    flexGrow: 1,
   },
   scrollContent: {
     flexGrow: 1,

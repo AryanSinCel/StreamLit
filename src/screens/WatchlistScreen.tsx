@@ -12,6 +12,7 @@ import { WatchlistEmptyState } from '../components/watchlist/WatchlistEmptyState
 import { WatchlistFilterEmpty } from '../components/watchlist/WatchlistFilterEmpty';
 import { WatchlistGridCard } from '../components/watchlist/WatchlistGridCard';
 import { IconSearch } from '../components/common/SimpleIcons';
+import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
 import { SearchAppBar } from '../components/search/SearchAppBar';
 import { WatchlistScreenHeader } from '../components/watchlist/WatchlistScreenHeader';
 import { useWatchlist } from '../hooks/useWatchlist';
@@ -52,6 +53,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
     similar,
     popularRecommendations,
     movieGenres,
+    refetchRemoteSlices,
   } = useWatchlist();
 
   const persistWriteError = useWatchlistStore((s) => s.persistWriteError);
@@ -155,17 +157,18 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
         <View style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}>
           <SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />
         </View>
-        <ScrollView
-          contentContainerStyle={[
-            styles.scrollContent,
-            {
-              paddingBottom: insets.bottom + spacing.xxl,
-              paddingTop: spacing.lg,
-            },
-          ]}
-          keyboardShouldPersistTaps="handled"
-          style={styles.scroll}
-        >
+        <ScreenErrorBoundary onRetry={refetchRemoteSlices} screenLabel="Watchlist" style={styles.scroll}>
+          <ScrollView
+            contentContainerStyle={[
+              styles.scrollContent,
+              {
+                paddingBottom: insets.bottom + spacing.xxl,
+                paddingTop: spacing.lg,
+              },
+            ]}
+            keyboardShouldPersistTaps="handled"
+            style={styles.scrollFill}
+          >
           <View style={[styles.emptyScrollInner, { paddingHorizontal: horizontalPad }]}>
             <WatchlistScreenHeader
               countLine="0 titles"
@@ -184,7 +187,8 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
               popularRecommendations={popularRecommendations}
             />
           </View>
-        </ScrollView>
+          </ScrollView>
+        </ScreenErrorBoundary>
       </View>
     );
   }
@@ -194,56 +198,58 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
       <View style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}>
         <SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />
       </View>
-      <FlatList
-        style={styles.scroll}
-        columnWrapperStyle={[styles.gridRow, { gap: gridGutter, paddingHorizontal: horizontalPad }]}
-        contentContainerStyle={[
-          styles.listContent,
-          {
-            paddingBottom: insets.bottom + spacing.xxl,
-            paddingTop: spacing.lg,
-          },
-        ]}
-        data={filteredItems}
-        extraData={`${String(count)}-${filter}-${String(movieGenres.length)}`}
-        keyExtractor={watchlistItemKey}
-        ListEmptyComponent={
-          count > 0 && filteredItems.length === 0 ? (
-            <WatchlistFilterEmpty filter={filter} onBrowseAll={() => setFilter('all')} />
-          ) : undefined
-        }
-        ListFooterComponent={
-          showBecauseYouSavedRow ? (
+      <ScreenErrorBoundary onRetry={refetchRemoteSlices} screenLabel="Watchlist" style={styles.scroll}>
+        <FlatList
+          columnWrapperStyle={[styles.gridRow, { gap: gridGutter, paddingHorizontal: horizontalPad }]}
+          contentContainerStyle={[
+            styles.listContent,
+            {
+              paddingBottom: insets.bottom + spacing.xxl,
+              paddingTop: spacing.lg,
+            },
+          ]}
+          data={filteredItems}
+          extraData={`${String(count)}-${filter}-${String(movieGenres.length)}`}
+          keyExtractor={watchlistItemKey}
+          ListEmptyComponent={
+            count > 0 && filteredItems.length === 0 ? (
+              <WatchlistFilterEmpty filter={filter} onBrowseAll={() => setFilter('all')} />
+            ) : undefined
+          }
+          ListFooterComponent={
+            showBecauseYouSavedRow ? (
+              <View style={{ paddingHorizontal: horizontalPad }}>
+                <WatchlistBecauseYouSavedSection
+                  genres={movieGenres}
+                  movies={similarMovies}
+                  onPressMovie={(movieId) => {
+                    navigation.navigate('Detail', { movieId });
+                  }}
+                  onPressSeeAll={() => {
+                    if (similarAnchorMovieId == null) {
+                      return;
+                    }
+                    navigation.navigate('SeeAll', {
+                      title: `Because you saved ${savedTitle}`,
+                      mode: 'similar',
+                      similarSourceMovieId: similarAnchorMovieId,
+                    });
+                  }}
+                  savedTitle={savedTitle}
+                />
+              </View>
+            ) : null
+          }
+          ListHeaderComponent={
             <View style={{ paddingHorizontal: horizontalPad }}>
-              <WatchlistBecauseYouSavedSection
-                genres={movieGenres}
-                movies={similarMovies}
-                onPressMovie={(movieId) => {
-                  navigation.navigate('Detail', { movieId });
-                }}
-                onPressSeeAll={() => {
-                  if (similarAnchorMovieId == null) {
-                    return;
-                  }
-                  navigation.navigate('SeeAll', {
-                    title: `Because you saved ${savedTitle}`,
-                    mode: 'similar',
-                    similarSourceMovieId: similarAnchorMovieId,
-                  });
-                }}
-                savedTitle={savedTitle}
-              />
+              <WatchlistScreenHeader filter={filter} setFilter={setFilter} showChips showTopActions={false} />
             </View>
-          ) : null
-        }
-        ListHeaderComponent={
-          <View style={{ paddingHorizontal: horizontalPad }}>
-            <WatchlistScreenHeader filter={filter} setFilter={setFilter} showChips showTopActions={false} />
-          </View>
-        }
-        numColumns={2}
-        renderItem={renderItem}
-      />
+          }
+          numColumns={2}
+          renderItem={renderItem}
+          style={styles.scrollFill}
+        />
+      </ScreenErrorBoundary>
     </View>
   );
 }
@@ -265,6 +271,10 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+  },
+  scrollFill: {
+    flex: 1,
+    flexGrow: 1,
   },
   scrollContent: {
     flexGrow: 1,

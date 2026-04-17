@@ -11,7 +11,13 @@ import { LoadMoreContentIndicator } from '../common/LoadMoreContentIndicator';
 import { IconMovie, IconSearch } from '../common/SimpleIcons';
 import { PosterRatingBadge } from '../common/PosterRatingBadge';
 import { colors, contentCard } from '../../theme/colors';
-import { radiusCardInner, radiusCardOuter, radiusFullPill, spacing } from '../../theme/spacing';
+import {
+  radiusCardInner,
+  radiusCardOuter,
+  radiusFullPill,
+  spacing,
+  tracking,
+} from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W342 } from '../../utils/image';
 import { SEARCH_INPUT_PLACEHOLDER } from './searchDefaultMocks';
@@ -314,7 +320,7 @@ const styles = StyleSheet.create({
     ...typography['body-md'],
     color: colors.on_surface_variant,
     fontWeight: '500',
-    letterSpacing: 0.5,
+    letterSpacing: tracking.wide05,
     marginBottom: spacing.xl,
     marginTop: spacing.xl,
   },

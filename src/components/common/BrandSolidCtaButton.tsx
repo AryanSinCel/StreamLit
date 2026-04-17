@@ -5,7 +5,7 @@
 import type { JSX } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../theme/colors';
-import { radiusCardInner, spacing } from '../../theme/spacing';
+import { layout, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type BrandSolidCtaButtonProps = {
@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.xxl,
     paddingVertical: spacing.lg,
     shadowColor: colors.secondary_container,
-    shadowOffset: { width: 0, height: 8 },
+    shadowOffset: { width: 0, height: layout.shadowDropMd },
     shadowOpacity: 0.2,
-    shadowRadius: 16,
+    shadowRadius: layout.shadowRadiusMd,
   },
   label: {
     ...typography['watchlist-cta-label'],

@@ -3,12 +3,11 @@
  */
 
 import type { JSX } from 'react';
-import { useId } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import LinearGradient from 'react-native-linear-gradient';
 import type { TmdbMovieDetail } from '../../api/types';
 import { IconMovie } from '../common/SimpleIcons';
-import { colors } from '../../theme/colors';
+import { colors, surfaceRgba } from '../../theme/colors';
 import { detailHeroHeight } from '../../theme/spacing';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
 
@@ -20,8 +19,6 @@ export type DetailHeroProps = {
 };
 
 export function DetailHero({ width, movie }: DetailHeroProps): JSX.Element {
-  const reactId = useId();
-  const gradId = `detailHeroScrim-${reactId.replace(/:/g, '')}`;
   const w = Math.max(1, width);
   const backdropUri =
     buildImageUrl(movie?.backdrop_path, TMDB_IMAGE_SIZE_W780) ??
@@ -44,15 +41,13 @@ export function DetailHero({ width, movie }: DetailHeroProps): JSX.Element {
         </View>
       )}
       <View style={[styles.scrimWrap, { height: gradientH, width: w }]} pointerEvents="none">
-        <Svg height={gradientH} width={w}>
-          <Defs>
-            <LinearGradient id={gradId} x1="0" x2="0" y1="0" y2="1">
-              <Stop offset="0" stopColor={colors.surface} stopOpacity="0" />
-              <Stop offset="1" stopColor={colors.surface} stopOpacity="1" />
-            </LinearGradient>
-          </Defs>
-          <Rect fill={`url(#${gradId})`} height={gradientH} width={w} x={0} y={0} />
-        </Svg>
+        <LinearGradient
+          colors={[surfaceRgba(0), surfaceRgba(1)]}
+          end={{ x: 0.5, y: 1 }}
+          pointerEvents="none"
+          start={{ x: 0.5, y: 0 }}
+          style={{ height: gradientH, width: w }}
+        />
       </View>
     </View>
   );

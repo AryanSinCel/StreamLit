@@ -6,13 +6,14 @@ import type { JSX } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { ShimmerBox } from '../common/ShimmerBox';
 import { colors, contentCard } from '../../theme/colors';
-import { homeRowCardWidth, radiusCardOuter, spacing } from '../../theme/spacing';
+import { homeRowCardWidth, layout, radiusCardOuter, spacing } from '../../theme/spacing';
 
 const CARD_COUNT = 5;
 const posterHeight = homeRowCardWidth / contentCard.aspectRatio;
 
 /** Matches `styles.host.minHeight` — use for empty height reserve when skipping skeleton shimmer. */
-export const homeRowSkeletonHostMinHeight = posterHeight + spacing.sm + 14 + spacing.xs + 12;
+export const homeRowSkeletonHostMinHeight =
+  posterHeight + spacing.sm + layout.skeletonLineSm + spacing.xs + layout.skeletonLineXs;
 
 export function HomeRowSkeleton(): JSX.Element {
   return (
@@ -57,13 +58,13 @@ const styles = StyleSheet.create({
   },
   subLine: {
     borderRadius: spacing.xs,
-    height: 12,
+    height: layout.skeletonLineXs,
     marginTop: spacing.xs,
     width: '70%',
   },
   titleLine: {
     borderRadius: spacing.xs,
-    height: 14,
+    height: layout.skeletonLineSm,
     marginTop: spacing.sm,
     width: '85%',
   },

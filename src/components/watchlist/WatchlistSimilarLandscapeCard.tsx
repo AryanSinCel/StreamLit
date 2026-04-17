@@ -3,19 +3,21 @@
  */
 
 import type { JSX } from 'react';
-import { useId } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import LinearGradient from 'react-native-linear-gradient';
 import type { TmdbGenre, TmdbMovieListItem } from '../../api/types';
 import { IconMovie } from '../common/SimpleIcons';
-import { colors } from '../../theme/colors';
-import { radiusCardOuter, searchFeaturedHeroAspectRatio, spacing } from '../../theme/spacing';
+import { colors, surfaceContainerLowestRgba } from '../../theme/colors';
+import {
+  radiusCardOuter,
+  searchFeaturedHeroAspectRatio,
+  spacing,
+  tracking,
+} from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W342, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
 import { formatWatchlistSimilarRailGenreLine } from '../../utils/formatWatchlistGridSubtitle';
-
-const RAIL_GRADIENT_PREFIX = 'watchlistRailScrim-';
 
 export type WatchlistSimilarLandscapeCardProps = {
   item: TmdbMovieListItem;
@@ -32,8 +34,6 @@ export function WatchlistSimilarLandscapeCard({
   onPress,
   style,
 }: WatchlistSimilarLandscapeCardProps): JSX.Element {
-  const reactId = useId();
-  const gradId = `${RAIL_GRADIENT_PREFIX}${reactId.replace(/:/g, '')}`;
   const w = Math.max(1, width);
   const h = w / searchFeaturedHeroAspectRatio;
   const backdropUri =
@@ -65,26 +65,19 @@ export function WatchlistSimilarLandscapeCard({
             <IconMovie color={colors.on_surface_variant} size={40} />
           </View>
         )}
-        <View pointerEvents="none" style={StyleSheet.absoluteFill}>
-          <Svg height="100%" preserveAspectRatio="none" style={StyleSheet.absoluteFill} width="100%">
-            <Defs>
-              <LinearGradient
-                gradientUnits="objectBoundingBox"
-                id={gradId}
-                x1="0"
-                x2="0"
-                y1="1"
-                y2="0"
-              >
-                <Stop offset="0" stopColor={colors.surface_container_lowest} stopOpacity="1" />
-                <Stop offset="0.45" stopColor={colors.surface_container_lowest} stopOpacity="0.55" />
-                <Stop offset="0.78" stopColor={colors.surface_container_lowest} stopOpacity="0" />
-                <Stop offset="1" stopColor={colors.surface_container_lowest} stopOpacity="0" />
-              </LinearGradient>
-            </Defs>
-            <Rect fill={`url(#${gradId})`} height="100%" width="100%" x="0" y="0" />
-          </Svg>
-        </View>
+        <LinearGradient
+          colors={[
+            surfaceContainerLowestRgba(1),
+            surfaceContainerLowestRgba(0.55),
+            surfaceContainerLowestRgba(0),
+            surfaceContainerLowestRgba(0),
+          ]}
+          end={{ x: 0.5, y: 0 }}
+          locations={[0, 0.45, 0.78, 1]}
+          pointerEvents="none"
+          start={{ x: 0.5, y: 1 }}
+          style={StyleSheet.absoluteFill}
+        />
         <View style={styles.textBlock} pointerEvents="none">
           <Text numberOfLines={1} style={styles.title}>
             {title}
@@ -103,7 +96,7 @@ const styles = StyleSheet.create({
     ...typography['label-sm'],
     color: colors.on_surface_variant,
     fontWeight: '600',
-    letterSpacing: 1,
+    letterSpacing: tracking.railUpper,
     marginTop: spacing.xs,
     textTransform: 'uppercase',
   },

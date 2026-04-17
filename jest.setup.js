@@ -24,6 +24,14 @@ jest.mock('@react-native-community/blur', () => {
   };
 });
 
+jest.mock('react-native-linear-gradient', () => {
+  const { View } = require('react-native');
+  return {
+    __esModule: true,
+    default: View,
+  };
+});
+
 jest.mock('react-native-svg', () => {
   const React = require('react');
   const { View } = require('react-native');

@@ -7,7 +7,7 @@ import { StyleSheet, View } from 'react-native';
 import { useWindowDimensions } from 'react-native';
 import { ShimmerBox } from '../common/ShimmerBox';
 import { contentCard } from '../../theme/colors';
-import { radiusCardOuter, spacing } from '../../theme/spacing';
+import { layout, radiusCardOuter, spacing } from '../../theme/spacing';
 
 const SKELETON_ROW_COUNT = 3;
 
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   countLine: {
     alignSelf: 'flex-start',
     borderRadius: spacing.xs,
-    height: 14,
+    height: layout.skeletonLineSm,
     marginBottom: spacing.xl,
     width: '72%',
   },
@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
   titleLine: {
     alignSelf: 'flex-start',
     borderRadius: spacing.xs,
-    height: 18,
+    height: layout.skeletonLineMd,
     width: '90%',
   },
   yearLine: {
     alignSelf: 'flex-start',
     borderRadius: spacing.xs,
-    height: 12,
+    height: layout.skeletonLineXs,
     marginTop: spacing.xs,
     width: '36%',
   },
