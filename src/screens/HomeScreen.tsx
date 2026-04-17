@@ -7,6 +7,7 @@ import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { HomeChipKey, HomeChipResolved } from '../api/types';
+import { LoadMoreContentIndicator } from '../components/common/LoadMoreContentIndicator';
 import { HomeContentRow } from '../components/home/HomeContentRow';
 import { HomeGenreStrip } from '../components/home/HomeGenreStrip';
 import { HomeHeader } from '../components/home/HomeHeader';
@@ -65,20 +66,80 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
       .map((c) => c.key);
   }, [chips]);
 
+  /** Last genre rail in chip order that is no longer idle (loading, has items, or error). */
+  const lastStartedGenreRailIndex = useMemo(() => {
+    let last = -1;
+    for (let i = 0; i < genreRailIds.length; i += 1) {
+      const f = genreRails[genreRailIds[i]];
+      if (f == null) {
+        continue;
+      }
+      const idleAwaitingViewport =
+        f.page === 0 && !f.loading && f.error == null && f.items.length === 0;
+      if (!idleAwaitingViewport) {
+        last = i;
+      }
+    }
+    return last;
+  }, [genreRailIds, genreRails]);
+
+  const anyGenreRailInitialLoading = useMemo(
+    () =>
+      selectedChipKey === 'all' &&
+      genreRailIds.some((id) => {
+        const f = genreRails[id];
+        return f?.loading === true && f.items.length === 0;
+      }),
+    [genreRailIds, genreRails, selectedChipKey],
+  );
+
+  /** While a genre rail’s first page is loading, only render rails through that one (no rows below). */
+  const visibleGenreRailIds = useMemo(() => {
+    if (selectedChipKey !== 'all') {
+      return genreRailIds;
+    }
+    if (anyGenreRailInitialLoading && lastStartedGenreRailIndex >= 0) {
+      return genreRailIds.slice(0, lastStartedGenreRailIndex + 1);
+    }
+    return genreRailIds;
+  }, [anyGenreRailInitialLoading, genreRailIds, lastStartedGenreRailIndex, selectedChipKey]);
+
   const genreRailLayoutRef = useRef(new Map<number, { y: number; height: number }>());
   const scrollMetricsRef = useRef({ offsetY: 0, viewportH: windowHeight });
 
+  /**
+   * Activate at most one genre rail per pass — first in chip order that intersects the viewport
+   * and still needs its first page (avoids firing every visible rail at once).
+   */
   const runGenreRailVisibilityPass = useCallback(() => {
     const { offsetY, viewportH } = scrollMetricsRef.current;
     const top = offsetY - GENRE_RAIL_VISIBILITY_BUFFER_PX;
     const bottom = offsetY + viewportH + GENRE_RAIL_VISIBILITY_BUFFER_PX;
-    for (const [genreId, { y, height }] of genreRailLayoutRef.current) {
+    for (const railGenreId of genreRailIds) {
+      const layout = genreRailLayoutRef.current.get(railGenreId);
+      if (layout == null) {
+        continue;
+      }
+      const { y, height } = layout;
       const rowBottom = y + height;
-      if (rowBottom > top && y < bottom) {
-        activateGenreRail(genreId);
+      if (!(rowBottom > top && y < bottom)) {
+        continue;
+      }
+      const feed = genreRails[railGenreId];
+      if (feed == null) {
+        continue;
+      }
+      const needsFirstPage =
+        feed.page === 0 &&
+        feed.items.length === 0 &&
+        !feed.loading &&
+        feed.error == null;
+      if (needsFirstPage) {
+        activateGenreRail(railGenreId);
+        break;
       }
     }
-  }, [activateGenreRail]);
+  }, [activateGenreRail, genreRailIds, genreRails]);
 
   useEffect(() => {
     scrollMetricsRef.current.viewportH = windowHeight;
@@ -96,6 +157,32 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
       cancelAnimationFrame(id);
     };
   }, [selectedChipKey, genreRailIds, runGenreRailVisibilityPass]);
+
+  /** When a rail finishes loading, activate the next visible idle rail without waiting for scroll. */
+  useEffect(() => {
+    if (selectedChipKey !== 'all') {
+      return;
+    }
+    const id = requestAnimationFrame(() => {
+      runGenreRailVisibilityPass();
+    });
+    return () => {
+      cancelAnimationFrame(id);
+    };
+  }, [genreRails, selectedChipKey, runGenreRailVisibilityPass]);
+
+  /** Drop layout for rails not mounted so visibility pass does not use stale geometry. */
+  useEffect(() => {
+    if (selectedChipKey !== 'all') {
+      return;
+    }
+    const allowed = new Set(visibleGenreRailIds);
+    for (const id of [...genreRailLayoutRef.current.keys()]) {
+      if (!allowed.has(id)) {
+        genreRailLayoutRef.current.delete(id);
+      }
+    }
+  }, [selectedChipKey, visibleGenreRailIds]);
 
   const handleHomeScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -151,12 +238,9 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
         <HomeHeader />
       </View>
       <ScrollView
-        contentContainerStyle={[
-          styles.scrollContent,
-          {
-            paddingBottom: insets.bottom + spacing.xxxxl,
-          },
-        ]}
+        contentContainerStyle={{
+          paddingBottom: insets.bottom + spacing.xxxxl,
+        }}
         nestedScrollEnabled
         onContentSizeChange={runGenreRailVisibilityPass}
         onScroll={handleHomeScroll}
@@ -218,7 +302,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
           sectionTitle="Top Rated"
         />
         {selectedChipKey === 'all'
-          ? genreRailIds.map((railGenreId) => {
+          ? visibleGenreRailIds.map((railGenreId, railIndex) => {
               const title = chips.find((c) => c.key === railGenreId)?.label ?? 'Genre';
               const feed = genreRails[railGenreId];
               if (feed == null) {
@@ -229,6 +313,10 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
                 !feed.loading &&
                 feed.error == null &&
                 feed.items.length === 0;
+              const showVerticalGenreChainFooter =
+                anyGenreRailInitialLoading &&
+                lastStartedGenreRailIndex >= 0 &&
+                railIndex === lastStartedGenreRailIndex;
               return (
                 <View
                   key={railGenreId}
@@ -257,8 +345,13 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
                       seeAllDiscover(title, railGenreId);
                     }}
                     rowContent="genre"
+                    omitBodySkeletonForVerticalChainLoad={showVerticalGenreChainFooter}
                     sectionTitle={title}
+                    suppressInitialHorizontalSkeleton
                   />
+                  {showVerticalGenreChainFooter ? (
+                    <LoadMoreContentIndicator active style={styles.genreVerticalLoadMoreFooter} />
+                  ) : null}
                 </View>
               );
             })
@@ -320,7 +413,8 @@ const styles = StyleSheet.create({
   scroll: {
     flex: 1,
   },
-  scrollContent: {
-    flexGrow: 1,
+  /** Vertical feed only: after the last visible genre block while its first TMDB page loads (not horizontal rail pagination). */
+  genreVerticalLoadMoreFooter: {
+    marginBottom: spacing.lg,
   },
 });

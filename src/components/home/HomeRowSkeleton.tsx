@@ -11,6 +11,9 @@ import { homeRowCardWidth, radiusCardOuter, spacing } from '../../theme/spacing'
 const CARD_COUNT = 5;
 const posterHeight = homeRowCardWidth / contentCard.aspectRatio;
 
+/** Matches `styles.host.minHeight` — use for empty height reserve when skipping skeleton shimmer. */
+export const homeRowSkeletonHostMinHeight = posterHeight + spacing.sm + 14 + spacing.xs + 12;
+
 export function HomeRowSkeleton(): JSX.Element {
   return (
     <View style={styles.host} accessibilityLabel="Loading row">
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
     width: homeRowCardWidth,
   },
   host: {
-    minHeight: posterHeight + spacing.sm + 14 + spacing.xs + 12,
+    minHeight: homeRowSkeletonHostMinHeight,
   },
   poster: {
     backgroundColor: colors.surface_container_low,

@@ -8,7 +8,6 @@ import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { TmdbGenre, TmdbMovieListItem } from '../../api/types';
 import { ContentCard } from '../common/ContentCard';
-import { LoadMoreContentIndicator } from '../common/LoadMoreContentIndicator';
 import { ShimmerBox } from '../common/ShimmerBox';
 import { colors } from '../../theme/colors';
 import { homeRowCardWidth, radiusCardInner, spacing } from '../../theme/spacing';
@@ -47,6 +46,16 @@ export type HomeContentRowProps = {
    * Genre rail under **All**: not yet in viewport — show horizontal skeleton instead of empty-state copy.
    */
   awaitingLazyLoad?: boolean;
+  /**
+   * When true (genre row on Home **All**), keep the real section header on first-page fetch and show
+   * {@link HomeRowSkeleton} under it until results arrive (no full-row title shimmer).
+   */
+  suppressInitialHorizontalSkeleton?: boolean;
+  /**
+   * When the parent shows the vertical “Loading more content” footer for the genre chain, hide this
+   * row’s title / See All / body until the first page arrives (they appear together with posters).
+   */
+  omitBodySkeletonForVerticalChainLoad?: boolean;
 };
 
 export function HomeContentRow({
@@ -63,8 +72,21 @@ export function HomeContentRow({
   onNearEnd,
   rowContent = 'default',
   awaitingLazyLoad = false,
+  suppressInitialHorizontalSkeleton = false,
+  omitBodySkeletonForVerticalChainLoad = false,
 }: HomeContentRowProps): JSX.Element {
-  const showSkeleton = loading && items.length === 0;
+  const showSkeleton =
+    loading && items.length === 0 && !(suppressInitialHorizontalSkeleton && rowContent === 'genre');
+  const genreInitialBodyLoading =
+    rowContent === 'genre' &&
+    suppressInitialHorizontalSkeleton &&
+    loading &&
+    items.length === 0 &&
+    error == null;
+  const showGenreInitialBodySkeleton =
+    genreInitialBodyLoading && !omitBodySkeletonForVerticalChainLoad;
+  const hideRailChromeForVerticalChainLoad =
+    genreInitialBodyLoading && omitBodySkeletonForVerticalChainLoad;
   const showLazyPlaceholder =
     rowContent === 'genre' &&
     awaitingLazyLoad &&
@@ -117,7 +139,7 @@ export function HomeContentRow({
       const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
       const scrollable = contentSize.width > layoutMeasurement.width;
       const distanceFromEnd = contentSize.width - layoutMeasurement.width - contentOffset.x;
-      /** When the row does not overflow horizontally, treat as “at end” so pagination + indicator still run. */
+      /** When the row does not overflow horizontally, treat as “at end” so pagination still runs. */
       const nearHorizontalEnd = !scrollable || distanceFromEnd <= nearEndThresholdPx;
       if (nearHorizontalEnd) {
         fireNearEndIfAllowed();
@@ -139,22 +161,24 @@ export function HomeContentRow({
   );
 
   return (
-    <View style={styles.block}>
-      <View style={styles.header}>
-        {showSkeleton && !showLazyPlaceholder ? (
-          <>
-            <ShimmerBox style={styles.skeletonSectionTitle} />
-            <ShimmerBox style={styles.skeletonSeeAll} />
-          </>
-        ) : (
-          <>
-            <Text style={styles.sectionTitle}>{sectionTitle}</Text>
-            <Pressable accessibilityLabel={`See all ${sectionTitle}`} accessibilityRole="button" onPress={onSeeAll}>
-              <Text style={styles.seeAll}>See All</Text>
-            </Pressable>
-          </>
-        )}
-      </View>
+    <View style={[styles.block, hideRailChromeForVerticalChainLoad && styles.blockRailChromeHidden]}>
+      {!hideRailChromeForVerticalChainLoad ? (
+        <View style={styles.header}>
+          {showSkeleton && !showLazyPlaceholder ? (
+            <>
+              <ShimmerBox style={styles.skeletonSectionTitle} />
+              <ShimmerBox style={styles.skeletonSeeAll} />
+            </>
+          ) : (
+            <>
+              <Text style={styles.sectionTitle}>{sectionTitle}</Text>
+              <Pressable accessibilityLabel={`See all ${sectionTitle}`} accessibilityRole="button" onPress={onSeeAll}>
+                <Text style={styles.seeAll}>See All</Text>
+              </Pressable>
+            </>
+          )}
+        </View>
+      ) : null}
 
       {error != null ? (
         <View style={styles.messageBlock}>
@@ -172,7 +196,9 @@ export function HomeContentRow({
         </View>
       ) : null}
 
-      {showSkeleton || showLazyPlaceholder ? <HomeRowSkeleton /> : null}
+      {showSkeleton || showLazyPlaceholder || showGenreInitialBodySkeleton ? (
+        <HomeRowSkeleton />
+      ) : null}
 
       {showEmpty ? (
         rowContent === 'genre' ? (
@@ -224,7 +250,6 @@ export function HomeContentRow({
               title={item.title}
             />
           ))}
-          <LoadMoreContentIndicator active={loadingMore && hasMore} style={styles.loadMoreEndCap} />
         </ScrollView>
       ) : null}
     </View>
@@ -234,6 +259,9 @@ export function HomeContentRow({
 const styles = StyleSheet.create({
   block: {
     marginBottom: spacing.xxxxl,
+  },
+  blockRailChromeHidden: {
+    marginBottom: 0,
   },
   card: {
     marginRight: spacing.xxl,
@@ -296,20 +324,6 @@ const styles = StyleSheet.create({
   },
   rowScrollHost: {
     backgroundColor: colors.surface,
-  },
-  /**
-   * PSD `resources/home.html` — end of horizontal rail: spinner + uppercase label,
-   * `opacity-40`, `py-10`, `tracking-[0.2em]`, `text-on-surface-variant`.
-   */
-  loadMoreEndCap: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginRight: spacing.xxl,
-    opacity: 0.4,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xxxl,
   },
   sectionTitle: {
     ...typography['headline-rail'],

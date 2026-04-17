@@ -1,5 +1,5 @@
 /**
- * “More Like This” — `movie-showDetail.html`: 120×180 posters, **title · year** only (no rating).
+ * “More Like This” — `movie-showDetail.html`: 120×180 posters, **title** only under each poster (no year).
  */
 
 import type { JSX } from 'react';
@@ -12,14 +12,6 @@ import { detailSimilarPosterWidth, radiusCardInner, spacing } from '../../theme/
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W185 } from '../../utils/image';
 import { DetailSectionError } from './DetailSectionError';
-
-function yearFromListItem(item: TmdbMovieListItem): string {
-  const d = item.release_date;
-  if (d != null && d.length >= 4) {
-    return d.slice(0, 4);
-  }
-  return '—';
-}
 
 function listItemTitle(item: TmdbMovieListItem): string {
   const t = item.title?.trim() ?? '';
@@ -102,12 +94,10 @@ export function DetailSimilarSection({
         {list.map((item) => {
           const uri = buildImageUrl(item.poster_path, TMDB_IMAGE_SIZE_W185);
           const title = listItemTitle(item);
-          const year = yearFromListItem(item);
-          const label = `${title} · ${year}`;
           return (
             <Pressable
               key={item.id}
-              accessibilityLabel={label}
+              accessibilityLabel={title}
               accessibilityRole="button"
               onPress={() => {
                 onPressMovie(item.id);
@@ -130,7 +120,7 @@ export function DetailSimilarSection({
                 )}
               </View>
               <Text numberOfLines={2} style={styles.cardTitle}>
-                {label}
+                {title}
               </Text>
             </Pressable>
           );
