@@ -37,7 +37,14 @@ export function DetailScreen({ route }: Props): JSX.Element {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   const { width: windowWidth } = useWindowDimensions();
-  const { details, credits, similar } = useMovieDetail(movieId);
+  const { data: detailData, refetch } = useMovieDetail(movieId);
+  const details = detailData?.details;
+  const credits = detailData?.credits;
+  const similar = detailData?.similar;
+
+  const noopRetry = useCallback(() => {
+    /* invalid id — no section refetch */
+  }, []);
 
   const { hydrated, storedInWatchlist, addItem, removeItem } = useWatchlistStore(
     useShallow((s) => ({
@@ -49,7 +56,7 @@ export function DetailScreen({ route }: Props): JSX.Element {
   );
 
   const onToggleWatchlist = useCallback(() => {
-    const detail = details.data;
+    const detail = details?.data;
     if (detail == null || !hydrated) {
       return;
     }
@@ -58,10 +65,10 @@ export function DetailScreen({ route }: Props): JSX.Element {
       return;
     }
     addItem(mapMovieDetailToWatchlistItem(detail, movieId));
-  }, [addItem, details.data, hydrated, movieId, removeItem, storedInWatchlist]);
+  }, [addItem, details?.data, hydrated, movieId, removeItem, storedInWatchlist]);
 
   const watchlistControl = useMemo(() => {
-    if (details.data == null) {
+    if (details?.data == null) {
       return null;
     }
     return (
@@ -71,7 +78,7 @@ export function DetailScreen({ route }: Props): JSX.Element {
         storedInWatchlist={storedInWatchlist}
       />
     );
-  }, [details.data, hydrated, onToggleWatchlist, storedInWatchlist]);
+  }, [details?.data, hydrated, onToggleWatchlist, storedInWatchlist]);
 
   const horizontalPad = spacing.xl;
   const contentWidth = Math.max(1, windowWidth - horizontalPad * 2);
@@ -97,15 +104,9 @@ export function DetailScreen({ route }: Props): JSX.Element {
     [navigation],
   );
 
-  const refetchDetailScreen = useCallback(() => {
-    details.refetch();
-    credits.refetch();
-    similar.refetch();
-  }, [credits, details, similar]);
-
   return (
     <View style={styles.screen}>
-      <ScreenErrorBoundary onRetry={refetchDetailScreen} screenLabel="Movie detail" style={styles.scroll}>
+      <ScreenErrorBoundary onRetry={refetch} screenLabel="Movie detail" style={styles.scroll}>
         <ScrollView
           contentContainerStyle={[
             styles.scrollContent,
@@ -115,11 +116,11 @@ export function DetailScreen({ route }: Props): JSX.Element {
           showsVerticalScrollIndicator={false}
           style={styles.scrollFill}
         >
-        {details.loading && details.data == null ? (
+        {details?.loading && details?.data == null ? (
           <DetailDetailsSkeleton contentWidth={contentWidth} heroWidth={heroWidth} />
         ) : null}
 
-        {details.error != null && details.data == null ? (
+        {details?.error != null && details?.data == null ? (
           <View style={styles.padded}>
             <DetailSectionError
               message={details.error}
@@ -129,7 +130,7 @@ export function DetailScreen({ route }: Props): JSX.Element {
           </View>
         ) : null}
 
-        {details.data != null ? (
+        {details?.data != null ? (
           <>
             <DetailHero movie={details.data} width={heroWidth} />
             <View style={[styles.mainPull, { paddingHorizontal: horizontalPad }]}>
@@ -143,18 +144,18 @@ export function DetailScreen({ route }: Props): JSX.Element {
 
         <View style={styles.padded}>
           <DetailCastSection
-            cast={credits.data?.cast ?? null}
-            error={credits.error}
-            loading={credits.loading && credits.data == null}
-            onRetry={credits.refetch}
+            cast={credits?.data?.cast ?? null}
+            error={credits?.error ?? null}
+            loading={Boolean(credits?.loading && credits?.data == null)}
+            onRetry={credits?.refetch ?? noopRetry}
           />
           <DetailSimilarSection
-            error={similar.error}
-            loading={similar.loading && similar.data == null}
+            error={similar?.error ?? null}
+            loading={Boolean(similar?.loading && similar?.data == null)}
             onPressMovie={onPressSimilarMovie}
             onPressSeeAll={onPressSeeAllSimilar}
-            onRetry={similar.refetch}
-            results={similar.data?.results ?? null}
+            onRetry={similar?.refetch ?? noopRetry}
+            results={similar?.data?.results ?? null}
           />
         </View>
         </ScrollView>

@@ -1,12 +1,12 @@
 export type {
   HomeTabSnapshot,
+  MovieDetailSnapshot,
   SearchScreenMode,
   SearchTabSnapshot,
-  UseMovieDetailResult,
   UseQueryResult,
   UseSearchInput,
-  UseWatchlistResult,
   WatchlistMediaFilter,
+  WatchlistSnapshot,
 } from '../api/types';
 export { useHome } from './useHome';
 export { useMovieDetail } from './useMovieDetail';

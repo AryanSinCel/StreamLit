@@ -2,9 +2,9 @@
 
 /**
  * Standard shape for TMDB-backed hooks (PSD §9.2).
- * - **`data`** may be **`null`** only during the **first** bootstrap for tab hooks (`useHome`, `useSearch`);
+ * - **`data`** may be **`null`** only during the **first** bootstrap for tab hooks (`useHome`, `useSearch`, `useWatchlist`);
  *   after that, **`data`** stays populated while **`loading`** can still pulse on refetch.
- * - `useMovieDetail` nests **three** of these on **`UseMovieDetailResult`** (PSD-Detail §2.2).
+ * - **`useMovieDetail`** returns **`UseQueryResult<MovieDetailSnapshot>`** — nested slices each mirror this shape (PSD-Detail §2.2).
  */
 export interface UseQueryResult<T> {
   data: T | null;
@@ -131,10 +131,10 @@ export interface TmdbMovieCreditsResponse {
 }
 
 /**
- * `useMovieDetail(movieId)` — three parallel TMDB slices (PSD-Detail §2.1–2.2, task **D2**).
- * Each `refetch` retries **only** that section’s `GET` via `movies.ts`.
+ * Payload for **`useMovieDetail` → `UseQueryResult<MovieDetailSnapshot>.data`** (PSD-Detail §2.1–2.2, **D2**).
+ * Each nested **`UseQueryResult`**’s **`refetch`** retries **only** that section’s `GET` via **`movies.ts`**.
  */
-export interface UseMovieDetailResult {
+export interface MovieDetailSnapshot {
   details: UseQueryResult<TmdbMovieDetail>;
   credits: UseQueryResult<TmdbMovieCreditsResponse>;
   similar: UseQueryResult<TmdbPagedMoviesResponse>;
@@ -279,10 +279,10 @@ export interface WatchlistItem {
 export type WatchlistMediaFilter = 'all' | 'movie' | 'tv';
 
 /**
- * Watchlist screen hook (PSD-Watchlist §7 W1): local list + filter, TMDB similar
- * for the tail movie anchor, store hydration gate.
+ * Payload for **`useWatchlist` → `UseQueryResult<WatchlistSnapshot>.data`** (PSD-Watchlist §7 W1).
+ * Remote failures surface on **`similar`** / **`popularRecommendations`**; **`movieGenres`** fails silently (empty list).
  */
-export interface UseWatchlistResult {
+export interface WatchlistSnapshot {
   hydrated: boolean;
   count: number;
   /** Full persisted list (same order as the store). */
@@ -302,8 +302,6 @@ export interface UseWatchlistResult {
    * (`resources/watchlist.html`). Empty until a successful fetch while the list has items.
    */
   movieGenres: readonly TmdbGenre[];
-  /** Re-runs **`similar`** + **`popularRecommendations`** TMDB slices (error-boundary retry). */
-  refetchRemoteSlices: () => void;
 }
 
 /**

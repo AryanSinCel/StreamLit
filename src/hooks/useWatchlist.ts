@@ -4,15 +4,22 @@ import { getMovieGenres, getSimilarMovies, getTrendingMoviesWeek } from '../api/
 import type {
   TmdbGenre,
   TmdbPagedMoviesResponse,
-  UseWatchlistResult,
+  UseQueryResult,
   WatchlistMediaFilter,
+  WatchlistSnapshot,
 } from '../api/types';
 import { useWatchlistStore } from '../store/watchlistStore';
 import { filterWatchlistItems, getWatchlistSimilarMovieAnchorId } from '../utils/watchlistFilters';
 import { isLikelyCanceledRequest, mapUnknownError } from '../utils/mapUnknownError';
 
-/** Watchlist orchestration: filtered local items + similar movies for the tail anchor (PSD-Watchlist §7 W1). */
-export function useWatchlist(): UseWatchlistResult {
+/**
+ * Watchlist orchestration: filtered local items + similar movies for the tail anchor (PSD-Watchlist §7 W1).
+ *
+ * Top-level **`UseQueryResult`** semantics:
+ * - **`loading`**: `true` only while the persisted watchlist (**AsyncStorage**) is not yet rehydrated.
+ * - **`error`**: always **`null`** — TMDB failures use **`data.similar`** / **`data.popularRecommendations`**. **`refetch`** retries both remote slices.
+ */
+export function useWatchlist(): UseQueryResult<WatchlistSnapshot> {
   const { items, count, hydrated } = useWatchlistStore(
     useShallow((s) => ({
       items: s.items,
@@ -190,21 +197,41 @@ export function useWatchlist(): UseWatchlistResult {
     [popularData, popularError, popularLoading, refetchPopular],
   );
 
-  const refetchRemoteSlices = useCallback(() => {
+  const refetch = useCallback(() => {
     refetchSimilar();
     refetchPopular();
   }, [refetchSimilar, refetchPopular]);
 
-  return {
-    hydrated,
+  const data = useMemo((): WatchlistSnapshot | null => {
+    if (!hydrated) {
+      return null;
+    }
+    return {
+      hydrated,
+      count,
+      items,
+      filter,
+      setFilter,
+      filteredItems,
+      similar,
+      popularRecommendations,
+      movieGenres,
+    };
+  }, [
     count,
-    items,
-    filter,
-    setFilter,
     filteredItems,
-    similar,
-    popularRecommendations,
+    filter,
+    hydrated,
+    items,
     movieGenres,
-    refetchRemoteSlices,
+    popularRecommendations,
+    similar,
+  ]);
+
+  return {
+    data,
+    loading: !hydrated,
+    error: null,
+    refetch,
   };
 }

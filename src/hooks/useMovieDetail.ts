@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { getMovieCredits, getMovieDetail, getSimilarMovies } from '../api/movies';
 import type {
+  MovieDetailSnapshot,
   TmdbMovieCreditsResponse,
   TmdbMovieDetail,
   TmdbPagedMoviesResponse,
-  UseMovieDetailResult,
+  UseQueryResult,
 } from '../api/types';
 import { isLikelyCanceledRequest, mapUnknownError } from '../utils/mapUnknownError';
 
@@ -22,14 +23,27 @@ function emptySection<T>(): SectionSlice<T> {
   return { data: null, loading: false, error: null };
 }
 
+function noopRefetch(): void {
+  /* invalid movie id — nothing to refetch */
+}
+
 /**
  * Detail: `GET /movie/{id}`, `/credits`, `/similar` in one **`Promise.allSettled`** (PSD-Detail §2.1),
  * with **independent** `details` / `credits` / `similar` state and per-section **`refetch`** (§2.2, **D2**).
+ *
+ * Top-level **`UseQueryResult`** semantics:
+ * - **`loading`**: `true` only until the **initial** parallel batch for the current `movieId` settles
+ *   (not during a single-section refetch).
+ * - **`error`**: set only when the **details** slice fails with no data (hero is unusable). **`null`** when
+ *   only credits/similar fail — those stay on the nested **`UseQueryResult`**s.
+ * - **`refetch`**: retries **all three** sections (error-boundary / full retry).
+ * - **`data`**: `null` when `movieId` is invalid; otherwise **`MovieDetailSnapshot`** with nested slices.
  */
-export function useMovieDetail(movieId: number): UseMovieDetailResult {
+export function useMovieDetail(movieId: number): UseQueryResult<MovieDetailSnapshot> {
   const [details, setDetails] = useState<SectionSlice<TmdbMovieDetail>>(emptySection);
   const [credits, setCredits] = useState<SectionSlice<TmdbMovieCreditsResponse>>(emptySection);
   const [similar, setSimilar] = useState<SectionSlice<TmdbPagedMoviesResponse>>(emptySection);
+  const [initialBatchDone, setInitialBatchDone] = useState(false);
 
   const detailAbortRef = useRef<AbortController | null>(null);
   const creditsAbortRef = useRef<AbortController | null>(null);
@@ -44,8 +58,11 @@ export function useMovieDetail(movieId: number): UseMovieDetailResult {
       setDetails(emptySection());
       setCredits(emptySection());
       setSimilar(emptySection());
+      setInitialBatchDone(true);
       return;
     }
+
+    setInitialBatchDone(false);
 
     const batchController = new AbortController();
     let cancelled = false;
@@ -102,6 +119,8 @@ export function useMovieDetail(movieId: number): UseMovieDetailResult {
       } else {
         setSimilar((s) => ({ ...s, loading: false }));
       }
+
+      setInitialBatchDone(true);
     }
 
     runParallel().catch(() => {
@@ -186,6 +205,12 @@ export function useMovieDetail(movieId: number): UseMovieDetailResult {
       });
   }, [movieId]);
 
+  const refetchAll = useCallback(() => {
+    refetchDetails();
+    refetchCredits();
+    refetchSimilar();
+  }, [refetchCredits, refetchDetails, refetchSimilar]);
+
   const detailsQuery = useMemo(
     () => ({
       data: details.data,
@@ -216,9 +241,25 @@ export function useMovieDetail(movieId: number): UseMovieDetailResult {
     [similar.data, similar.error, similar.loading, refetchSimilar],
   );
 
+  const data = useMemo((): MovieDetailSnapshot | null => {
+    if (!validMovieId(movieId)) {
+      return null;
+    }
+    return {
+      details: detailsQuery,
+      credits: creditsQuery,
+      similar: similarQuery,
+    };
+  }, [creditsQuery, detailsQuery, movieId, similarQuery]);
+
+  const loading = validMovieId(movieId) && !initialBatchDone;
+  const error =
+    validMovieId(movieId) && details.data == null && details.error != null ? details.error : null;
+
   return {
-    details: detailsQuery,
-    credits: creditsQuery,
-    similar: similarQuery,
+    data,
+    loading,
+    error,
+    refetch: validMovieId(movieId) ? refetchAll : noopRefetch,
   };
 }

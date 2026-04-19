@@ -43,18 +43,8 @@ function watchlistItemKey(item: WatchlistItem): string {
 export function WatchlistScreen({ navigation }: Props): JSX.Element {
   const insets = useSafeAreaInsets();
   const { width: windowWidth } = useWindowDimensions();
-  const {
-    hydrated,
-    count,
-    items,
-    filter,
-    setFilter,
-    filteredItems,
-    similar,
-    popularRecommendations,
-    movieGenres,
-    refetchRemoteSlices,
-  } = useWatchlist();
+  const { data: watchlistData, loading: watchlistLoading, refetch: refetchWatchlistRemote } =
+    useWatchlist();
 
   const persistWriteError = useWatchlistStore((s) => s.persistWriteError);
   const clearPersistWriteError = useWatchlistStore((s) => s.clearPersistWriteError);
@@ -117,7 +107,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
     ({ item }: { item: WatchlistItem }) => (
       <WatchlistGridCard
         detailsEnabled={item.mediaType === 'movie'}
-        genres={movieGenres}
+        genres={watchlistData?.movieGenres ?? []}
         item={item}
         onPressDetails={() => {
           navigation.navigate('Detail', { movieId: item.id });
@@ -128,16 +118,27 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
         style={{ width: gridColWidth }}
       />
     ),
-    [gridColWidth, handleRemove, movieGenres, navigation],
+    [gridColWidth, handleRemove, navigation, watchlistData],
   );
 
-  if (!hydrated) {
+  if (watchlistLoading || watchlistData == null) {
     return (
       <View style={[styles.screen, styles.centered, { paddingTop: insets.top + spacing.lg }]}>
         <Text style={styles.mutedCenter}>Loading…</Text>
       </View>
     );
   }
+
+  const {
+    count,
+    items,
+    filter,
+    setFilter,
+    filteredItems,
+    similar,
+    popularRecommendations,
+    movieGenres,
+  } = watchlistData;
 
   const tailItem = items.length > 0 ? items[items.length - 1] : undefined;
   const savedTitle =
@@ -157,7 +158,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
         <View style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}>
           <SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />
         </View>
-        <ScreenErrorBoundary onRetry={refetchRemoteSlices} screenLabel="Watchlist" style={styles.scroll}>
+        <ScreenErrorBoundary onRetry={refetchWatchlistRemote} screenLabel="Watchlist" style={styles.scroll}>
           <ScrollView
             contentContainerStyle={[
               styles.scrollContent,
@@ -198,7 +199,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
       <View style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}>
         <SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />
       </View>
-      <ScreenErrorBoundary onRetry={refetchRemoteSlices} screenLabel="Watchlist" style={styles.scroll}>
+      <ScreenErrorBoundary onRetry={refetchWatchlistRemote} screenLabel="Watchlist" style={styles.scroll}>
         <FlatList
           columnWrapperStyle={[styles.gridRow, { gap: gridGutter, paddingHorizontal: horizontalPad }]}
           contentContainerStyle={[
