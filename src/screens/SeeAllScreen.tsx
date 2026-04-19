@@ -11,7 +11,7 @@ import { SeeAllGridSkeleton } from '../components/seeAll/SeeAllGridSkeleton';
 import { useSeeAll } from '../hooks/useSeeAll';
 import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
-import { layout, spacing } from '../theme/spacing';
+import { layout, opacity, spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 import { formatListMovieSubtitle } from '../utils/formatMovieListItem';
 
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   retryPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   flex: {
     flex: 1,

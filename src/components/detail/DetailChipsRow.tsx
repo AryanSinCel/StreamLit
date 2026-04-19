@@ -12,7 +12,7 @@ import {
 } from '../../utils/tmdbDisplayGuards';
 import { IconStar } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
+import { fill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type DetailChipsRowProps = {
@@ -140,6 +140,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: spacing.md,
-    marginTop: 0,
+    marginTop: fill.none,
   },
 });

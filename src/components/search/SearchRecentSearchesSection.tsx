@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { IconHistory } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { spacing, tracking } from '../../theme/spacing';
+import { opacity, spacing, tracking } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type SearchRecentSearchesSectionProps = {
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
   },
   recentRowPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   recentTerm: {
     ...typography['body-md'],

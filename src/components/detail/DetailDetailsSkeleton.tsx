@@ -5,7 +5,7 @@
 import type { JSX } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ShimmerBox } from '../common/ShimmerBox';
-import { detailHeroHeight, detailSimilarPosterWidth, layout, spacing } from '../../theme/spacing';
+import { detailHeroHeight, detailSimilarPosterWidth, elevation, layout, spacing } from '../../theme/spacing';
 
 export type DetailDetailsSkeletonProps = {
   /** Full-bleed hero width (typically screen width). */
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   inner: {
     gap: spacing.md,
     paddingHorizontal: spacing.xl,
-    zIndex: 10,
+    zIndex: elevation.screen,
   },
   line: {
     borderRadius: spacing.xs,

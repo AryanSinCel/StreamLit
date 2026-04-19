@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors, contentCard } from '../../theme/colors';
-import { radiusCardInner, radiusCardOuter, spacing } from '../../theme/spacing';
+import { opacity, radiusCardInner, radiusCardOuter, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W185 } from '../../utils/image';
 import { showTmdbVoteAverageBadge } from '../../utils/tmdbDisplayGuards';
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   /** Root is transparent; poster uses `surface_container_low` shell (`resources/home.html`). */
   card: {},
   cardPressed: {
-    opacity: 0.92,
+    opacity: opacity.emphasis,
   },
   posterShell: {
     width: '100%',

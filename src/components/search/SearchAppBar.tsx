@@ -6,7 +6,7 @@ import type { JSX, ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { IconMovie, IconPerson } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
+import { layout, opacity, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type SearchAppBarProps = {
@@ -76,14 +76,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface_container_highest,
     borderColor: colors.outline_variant,
     borderRadius: AVATAR_RADIUS,
-    borderWidth: 2,
+    borderWidth: layout.borderSm,
     height: AVATAR_SIZE,
     justifyContent: 'center',
     overflow: 'hidden',
     width: AVATAR_SIZE,
   },
   avatarPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   bar: {
     alignItems: 'center',

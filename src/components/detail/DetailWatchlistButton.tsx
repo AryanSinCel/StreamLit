@@ -3,7 +3,7 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-nati
 import LinearGradient from 'react-native-linear-gradient';
 import { IconBookmarkAdd, IconBookmarkAdded } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { detailWatchlistCtaMinHeight, spacing } from '../../theme/spacing';
+import { detailWatchlistCtaMinHeight, layout, opacity, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type DetailWatchlistButtonProps = {
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
   },
   addPressed: {
-    opacity: 0.92,
+    opacity: opacity.emphasis,
   },
   hydratePlaceholder: {
     alignItems: 'center',
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderColor: colors.primary,
     borderRadius: spacing.sm,
-    borderWidth: 1,
+    borderWidth: layout.hairline,
     flexDirection: 'row',
     gap: spacing.sm,
     justifyContent: 'center',
@@ -126,6 +126,6 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
   },
   inListPressed: {
-    opacity: 0.92,
+    opacity: opacity.emphasis,
   },
 });

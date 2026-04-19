@@ -24,7 +24,7 @@ import type {
   WatchlistStackParamList,
 } from '../navigation/types';
 import { colors } from '../theme/colors';
-import { spacing } from '../theme/spacing';
+import { elevation, opacity, spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 
 type Props = CompositeScreenProps<
@@ -259,11 +259,11 @@ const styles = StyleSheet.create({
     padding: spacing.xs,
   },
   appBarIconHitPressed: {
-    opacity: 0.85,
+    opacity: opacity.pressed,
   },
   headerDock: {
     backgroundColor: colors.surface,
-    zIndex: 1,
+    zIndex: elevation.dock,
   },
   screen: {
     backgroundColor: colors.surface,

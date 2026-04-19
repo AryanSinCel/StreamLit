@@ -13,7 +13,7 @@ import { GhostPosterPlaceholderGrid } from '../common/GhostPosterPlaceholderGrid
 import { RadialGlowBackdrop } from '../common/RadialGlowBackdrop';
 import { IconBookmark } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { radiusFullPill, spacing } from '../../theme/spacing';
+import { fill, layout, opacity, radiusFullPill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { formatListMovieSubtitle } from '../../utils/formatMovieListItem';
 
@@ -137,19 +137,19 @@ const styles = StyleSheet.create({
   centerSlot: {
     flexGrow: 1,
     justifyContent: 'center',
-    minHeight: 0,
+    minHeight: fill.none,
   },
   disc: {
     alignItems: 'center',
     backgroundColor: colors.watchlist_empty_icon_disc,
     borderColor: colors.outline_variant_ring,
     borderRadius: radiusFullPill,
-    borderWidth: 1,
+    borderWidth: layout.hairline,
     justifyContent: 'center',
     padding: spacing.xxl,
   },
   discIconDim: {
-    opacity: 0.5,
+    opacity: opacity.scrim,
   },
   emptyCluster: {
     alignItems: 'center',
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     width: ICON_RADIAL_GLOW_SIZE,
   },
   recommendationsGhost: {
-    opacity: 0.2,
+    opacity: opacity.ghost,
     pointerEvents: 'none',
   },
   recGrid: {
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
   },
   retryBtnPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   retryLabel: {
     ...typography['label-sm'],

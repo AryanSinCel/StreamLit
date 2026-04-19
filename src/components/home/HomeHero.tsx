@@ -9,7 +9,7 @@ import type { TmdbMovieListItem } from '../../api/types';
 import { IconPlay } from '../common/SimpleIcons';
 import { HomeHeroSkeleton } from './HomeHeroSkeleton';
 import { colors, surfaceRgba } from '../../theme/colors';
-import { homeHeroHeight, layout, radiusCardInner, spacing } from '../../theme/spacing';
+import { fill, homeHeroHeight, layout, opacity, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
 
@@ -127,11 +127,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'nowrap',
     gap: spacing.md,
-    marginTop: 0,
+    marginTop: fill.none,
   },
   backdrop: {
     ...StyleSheet.absoluteFill,
-    opacity: 0.6,
+    opacity: opacity.muted,
   },
   backdropPlaceholder: {
     ...StyleSheet.absoluteFill,
@@ -150,13 +150,13 @@ const styles = StyleSheet.create({
     color: colors.on_primary_container,
   },
   content: {
-    bottom: 0,
+    bottom: fill.none,
     justifyContent: 'flex-end',
-    left: 0,
+    left: fill.none,
     paddingBottom: spacing.xxxl,
     paddingHorizontal: spacing.xxxl,
     position: 'absolute',
-    right: 0,
+    right: fill.none,
   },
   detailsBtn: {
     alignItems: 'center',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    minWidth: 0,
+    minWidth: fill.none,
     paddingHorizontal: spacing.xl,
     paddingVertical: spacing.md,
   },
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   pressedDisabled: {
-    opacity: 0.5,
+    opacity: opacity.scrim,
   },
   scrimHost: {
     ...StyleSheet.absoluteFill,
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     maxWidth: layout.contentMaxMd,
     minHeight: spacing.xxxl,
     textShadowColor: colors.hero_text_shadow,
-    textShadowOffset: { height: spacing.xs, width: 0 },
+    textShadowOffset: { height: spacing.xs, width: fill.none },
     textShadowRadius: spacing.md,
   },
   title: {
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     color: colors.on_surface,
     marginBottom: spacing.lg,
     textShadowColor: colors.hero_text_shadow,
-    textShadowOffset: { height: spacing.xs, width: 0 },
+    textShadowOffset: { height: spacing.xs, width: fill.none },
     textShadowRadius: spacing.md,
     textTransform: 'uppercase',
   },
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: spacing.xs,
     justifyContent: 'center',
-    minWidth: 0,
+    minWidth: fill.none,
     paddingHorizontal: spacing.xxl,
     paddingVertical: spacing.md,
   },

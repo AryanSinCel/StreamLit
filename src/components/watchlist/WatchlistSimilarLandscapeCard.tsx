@@ -10,6 +10,8 @@ import type { TmdbGenre, TmdbMovieListItem } from '../../api/types';
 import { IconMovie } from '../common/SimpleIcons';
 import { colors, surfaceContainerLowestRgba } from '../../theme/colors';
 import {
+  fill,
+  opacity,
   radiusCardOuter,
   searchFeaturedHeroAspectRatio,
   spacing,
@@ -110,19 +112,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   pressed: {
-    opacity: 0.92,
+    opacity: opacity.emphasis,
   },
   shell: {
     overflow: 'hidden',
     position: 'relative',
   },
   textBlock: {
-    bottom: 0,
-    left: 0,
+    bottom: fill.none,
+    left: fill.none,
     paddingBottom: spacing.md,
     paddingHorizontal: spacing.md,
     position: 'absolute',
-    right: 0,
+    right: fill.none,
   },
   title: {
     ...typography['title-lg'],

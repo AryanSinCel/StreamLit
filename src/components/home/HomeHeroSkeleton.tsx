@@ -5,7 +5,7 @@
 import type { JSX } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ShimmerBox } from '../common/ShimmerBox';
-import { homeHeroHeight, layout, radiusCardInner, spacing } from '../../theme/spacing';
+import { fill, homeHeroHeight, layout, radiusCardInner, spacing } from '../../theme/spacing';
 
 export function HomeHeroSkeleton(): JSX.Element {
   return (
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'nowrap',
     gap: spacing.md,
-    marginTop: 0,
+    marginTop: fill.none,
   },
   backdrop: {
     ...StyleSheet.absoluteFill,
@@ -47,19 +47,19 @@ const styles = StyleSheet.create({
     width: layout.skeletonPosterWide,
   },
   content: {
-    bottom: 0,
+    bottom: fill.none,
     justifyContent: 'flex-end',
-    left: 0,
+    left: fill.none,
     paddingBottom: spacing.xxxl,
     paddingHorizontal: spacing.xxxl,
     position: 'absolute',
-    right: 0,
+    right: fill.none,
   },
   detailsBtn: {
     borderRadius: spacing.md,
     flex: 1,
     height: layout.skeletonTitle,
-    minWidth: 0,
+    minWidth: fill.none,
   },
   shell: {
     borderRadius: radiusCardInner,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     borderRadius: spacing.md,
     flex: 1,
     height: layout.skeletonTitle,
-    minWidth: 0,
+    minWidth: fill.none,
   },
   wrap: {
     marginBottom: spacing.xxxxl,

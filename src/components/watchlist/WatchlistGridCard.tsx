@@ -10,7 +10,7 @@ import type { TmdbGenre, WatchlistItem } from '../../api/types';
 import { IconClose, IconMovie } from '../common/SimpleIcons';
 import { PosterRatingBadge } from '../common/PosterRatingBadge';
 import { colors, contentCard } from '../../theme/colors';
-import { radiusCardOuter, radiusFullPill, spacing } from '../../theme/spacing';
+import { elevation, layout, opacity, radiusCardOuter, radiusFullPill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { formatWatchlistGridMetaParts } from '../../utils/formatWatchlistGridSubtitle';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W342 } from '../../utils/image';
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     padding: spacing.xs,
   },
   closeHitPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   detailsBtn: {
     alignItems: 'center',
@@ -125,15 +125,15 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface_container_highest,
     borderColor: colors.watchlist_details_cta_border,
     borderRadius: spacing.sm,
-    borderWidth: 1,
+    borderWidth: layout.hairline,
     marginTop: 'auto',
     paddingVertical: spacing.sm,
   },
   detailsBtnDisabled: {
-    opacity: 0.45,
+    opacity: opacity.faint,
   },
   detailsBtnPressed: {
-    opacity: 0.92,
+    opacity: opacity.emphasis,
   },
   detailsLabel: {
     ...typography['title-sm'],
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: spacing.sm,
     top: spacing.sm,
-    zIndex: 2,
+    zIndex: elevation.card,
   },
   title: {
     ...typography['watchlist-card-title'],

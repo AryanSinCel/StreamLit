@@ -8,7 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import type { TmdbMovieDetail } from '../../api/types';
 import { IconMovie } from '../common/SimpleIcons';
 import { colors, surfaceRgba } from '../../theme/colors';
-import { detailHeroHeight } from '../../theme/spacing';
+import { detailHeroHeight, fill } from '../../theme/spacing';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
 
 const HERO_GRADIENT_HEIGHT_RATIO = 0.4;
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   scrimWrap: {
-    bottom: 0,
-    left: 0,
+    bottom: fill.none,
+    left: fill.none,
     position: 'absolute',
   },
   shell: {

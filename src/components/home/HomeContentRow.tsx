@@ -10,7 +10,7 @@ import type { TmdbGenre, TmdbMovieListItem } from '../../api/types';
 import { ContentCard } from '../common/ContentCard';
 import { ShimmerBox } from '../common/ShimmerBox';
 import { colors } from '../../theme/colors';
-import { homeRowCardWidth, layout, radiusCardInner, spacing } from '../../theme/spacing';
+import { fill, homeRowCardWidth, layout, opacity, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { formatHomeRailSubtitle } from '../../utils/formatMovieListItem';
 import { HomeRowSkeleton } from './HomeRowSkeleton';
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xxxxl,
   },
   blockRailChromeHidden: {
-    marginBottom: 0,
+    marginBottom: fill.none,
   },
   card: {
     marginRight: spacing.xxl,
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   retryPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   rowScroll: {
     paddingHorizontal: spacing.xxl,

@@ -30,8 +30,6 @@ function usableCastEntries(cast: TmdbMovieCastCredit[] | null): TmdbMovieCastCre
   return cast.filter((c) => typeof c.name === 'string' && c.name.trim().length > 0);
 }
 
-const AVATAR_RING = 2;
-
 export function DetailCastSection({ loading, error, cast, onRetry }: DetailCastSectionProps): JSX.Element {
   if (loading && cast == null) {
     return (
@@ -109,7 +107,7 @@ const styles = StyleSheet.create({
   avatar: {
     borderColor: colors.detail_cast_avatar_ring,
     borderRadius: detailCastAvatarSize / 2,
-    borderWidth: AVATAR_RING,
+    borderWidth: layout.borderSm,
     height: detailCastAvatarSize,
     width: detailCastAvatarSize,
   },

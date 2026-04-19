@@ -11,7 +11,10 @@ import { IconMovie, IconSearch } from '../common/SimpleIcons';
 import { PosterRatingBadge } from '../common/PosterRatingBadge';
 import { colors, contentCard, surfaceContainerLowestRgba } from '../../theme/colors';
 import {
+  elevation,
+  fill,
   layout,
+  opacity,
   radiusCardInner,
   radiusCardOuter,
   radiusFullPill,
@@ -324,7 +327,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   chipPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   chipSelected: {
     backgroundColor: colors.secondary_container,
@@ -360,7 +363,7 @@ const styles = StyleSheet.create({
   },
   featuredGradientHost: {
     ...StyleSheet.absoluteFill,
-    zIndex: 1,
+    zIndex: elevation.dock,
   },
   featuredMeta: {
     ...typography['body-md'],
@@ -374,20 +377,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   featuredTextBlock: {
-    bottom: 0,
-    left: 0,
+    bottom: fill.none,
+    left: fill.none,
     paddingBottom: spacing.xl,
     paddingHorizontal: spacing.xl,
     position: 'absolute',
-    right: 0,
-    zIndex: 2,
+    right: fill.none,
+    zIndex: elevation.card,
   },
   featuredTitle: {
     ...typography['headline-rail'],
     color: colors.on_surface,
     fontWeight: '800',
     textShadowColor: colors.hero_text_shadow,
-    textShadowOffset: { height: layout.hairline, width: 0 },
+    textShadowOffset: { height: layout.hairline, width: fill.none },
     textShadowRadius: layout.shadowBlurSm,
   },
   featuredWrap: {
@@ -405,7 +408,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   itemPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   miniCard: {
     gap: spacing.md,
@@ -441,7 +444,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: spacing.sm,
     top: spacing.sm,
-    zIndex: 2,
+    zIndex: elevation.card,
   },
   retryBtn: {
     alignSelf: 'flex-start',
@@ -458,21 +461,21 @@ const styles = StyleSheet.create({
   },
   searchIconWrap: {
     alignItems: 'center',
-    bottom: 0,
+    bottom: fill.none,
     justifyContent: 'center',
     left: spacing.lg,
     pointerEvents: 'none',
     position: 'absolute',
-    top: 0,
+    top: fill.none,
     width: spacing.xxxl + spacing.sm,
-    zIndex: 1,
+    zIndex: elevation.dock,
   },
   searchInput: {
     ...typography['search-input-value'],
     backgroundColor: colors.surface_container_low,
     borderColor: 'transparent',
     borderRadius: spacing.md,
-    borderWidth: 2,
+    borderWidth: layout.borderSm,
     color: colors.on_surface,
     flex: 1,
     minHeight: spacing.xxxxl,

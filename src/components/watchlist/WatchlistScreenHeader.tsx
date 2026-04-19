@@ -8,7 +8,7 @@ import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { WatchlistMediaFilter } from '../../api/types';
 import { IconPerson, IconSearch } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { layout, radiusCardOuter, spacing, tracking } from '../../theme/spacing';
+import { fill, layout, opacity, radiusCardOuter, spacing, tracking } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type WatchlistScreenHeaderProps = {
@@ -129,7 +129,7 @@ export function WatchlistScreenHeader({
 
 const styles = StyleSheet.create({
   headerBlock: {
-    gap: 0,
+    gap: fill.none,
     marginBottom: spacing.xl,
   },
   headerTopRow: {
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     padding: spacing.xs,
   },
   iconHitPressed: {
-    opacity: 0.85,
+    opacity: opacity.pressed,
   },
   chip: {
     borderRadius: layout.chipRadiusSm,
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     color: colors.on_surface,
   },
   chipPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   chipSelected: {
     backgroundColor: colors.secondary_container,

@@ -5,7 +5,7 @@
 import type { JSX } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
+import { opacity, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type DetailSectionErrorProps = {
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   buttonPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   message: {
     ...typography['body-md'],

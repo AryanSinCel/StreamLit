@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { HomeChipKey, HomeChipResolved } from '../../api/types';
 import { colors } from '../../theme/colors';
-import { radiusFullPill, spacing } from '../../theme/spacing';
+import { opacity, radiusFullPill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type HomeGenreStripProps = {
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     color: colors.on_surface,
   },
   chipPressed: {
-    opacity: 0.9,
+    opacity: opacity.soft,
   },
   scroll: {
     paddingHorizontal: spacing.xxl,

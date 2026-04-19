@@ -6,7 +6,7 @@
 import type { JSX } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 import { colors } from '../../theme/colors';
-import { spacing, tracking } from '../../theme/spacing';
+import { opacity, spacing, tracking } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type LoadMoreContentIndicatorProps = {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-    opacity: 0.4,
+    opacity: opacity.subtle,
     paddingHorizontal: spacing.xxl,
     paddingVertical: spacing.xxxl,
   },

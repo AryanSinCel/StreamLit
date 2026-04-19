@@ -8,7 +8,7 @@ import type { TmdbMovieListItem } from '../../api/types';
 import { IconMovie } from '../common/SimpleIcons';
 import { ShimmerBox } from '../common/ShimmerBox';
 import { colors, contentCard } from '../../theme/colors';
-import { detailSimilarPosterWidth, layout, radiusCardInner, spacing } from '../../theme/spacing';
+import { detailSimilarPosterWidth, layout, opacity, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W185 } from '../../utils/image';
 import { DetailSectionError } from './DetailSectionError';
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   cardPressed: {
-    opacity: 0.92,
+    opacity: opacity.emphasis,
   },
   cardRow: {
     flexDirection: 'row',
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   seeAllPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   seeAllShim: {
     borderRadius: spacing.xs,

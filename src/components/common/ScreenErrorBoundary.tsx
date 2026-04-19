@@ -6,7 +6,7 @@ import { Component, type ReactNode } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
+import { opacity, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type ScreenErrorBoundaryProps = {
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   btnPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   title: {
     ...typography['headline-search'],

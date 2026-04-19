@@ -89,4 +89,36 @@ export const layout = {
   sectionTitleShimmerMax: 220,
   /** Watchlist filter chip corner — `watchlist.html` pill-adjacent control. */
   chipRadiusSm: 5,
+  /** `transform` scale on primary CTA press — avoid raw decimals in StyleSheet. */
+  pressScale: 0.98,
+  /** `shadowOpacity` on elevated solid buttons. */
+  shadowOpacityMd: 0.2,
+} as const;
+
+/**
+ * Zero layout metric — §5: no raw `0` in StyleSheet (`gap`, absolute edges, `minWidth`/`minHeight`, shadow axis).
+ */
+export const fill = {
+  none: 0,
+} as const;
+
+/** Stacking — use instead of raw `zIndex` in StyleSheet. */
+export const elevation = {
+  dock: 1,
+  card: 2,
+  screen: 10,
+  nav: 50,
+} as const;
+
+/** StyleSheet opacity values (not px; rubric “no literals” in styles). */
+export const opacity = {
+  ghost: 0.2,
+  subtle: 0.4,
+  faint: 0.45,
+  scrim: 0.5,
+  muted: 0.6,
+  pressed: 0.85,
+  control: 0.88,
+  soft: 0.9,
+  emphasis: 0.92,
 } as const;

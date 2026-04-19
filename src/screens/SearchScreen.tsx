@@ -17,7 +17,7 @@ import type {
   SearchStackParamList,
 } from '../navigation/types';
 import { colors } from '../theme/colors';
-import { spacing } from '../theme/spacing';
+import { elevation, spacing } from '../theme/spacing';
 import { normalizeSearchTerm } from '../utils/recentSearches';
 
 type Props = CompositeScreenProps<
@@ -202,7 +202,7 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
 const styles = StyleSheet.create({
   headerDock: {
     backgroundColor: colors.surface,
-    zIndex: 1,
+    zIndex: elevation.dock,
   },
   screen: {
     backgroundColor: colors.surface,

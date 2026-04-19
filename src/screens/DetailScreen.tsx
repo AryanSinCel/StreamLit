@@ -20,7 +20,7 @@ import { DetailWatchlistButton } from '../components/detail/DetailWatchlistButto
 import { useWatchlistStore } from '../store/watchlistStore';
 import { mapMovieDetailToWatchlistItem } from '../utils/mapMovieDetailToWatchlistItem';
 import { colors } from '../theme/colors';
-import { spacing } from '../theme/spacing';
+import { elevation, spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 
 type DetailScreenRouteProp = RouteProp<RootStackParamList, 'Detail'>;
@@ -167,7 +167,7 @@ export function DetailScreen({ route }: Props): JSX.Element {
 const styles = StyleSheet.create({
   mainPull: {
     marginTop: -spacing.xxl,
-    zIndex: 10,
+    zIndex: elevation.screen,
   },
   padded: {
     paddingHorizontal: spacing.xl,

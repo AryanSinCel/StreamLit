@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { IconMovie, IconNotifications } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
+import { opacity, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export function HomeHeader(): JSX.Element {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   pressed: {
-    opacity: 0.85,
+    opacity: opacity.pressed,
   },
   wordmark: {
     ...typography['brand-wordmark'],

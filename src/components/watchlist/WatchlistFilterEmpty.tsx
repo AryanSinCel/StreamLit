@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { WatchlistMediaFilter } from '../../api/types';
 import { colors } from '../../theme/colors';
-import { radiusFullPill, spacing } from '../../theme/spacing';
+import { opacity, radiusFullPill, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 function filterLabel(filter: WatchlistMediaFilter): string {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm + spacing.xs,
   },
   chipPressed: {
-    opacity: 0.9,
+    opacity: opacity.soft,
   },
   chipLabel: {
     ...typography['title-sm'],

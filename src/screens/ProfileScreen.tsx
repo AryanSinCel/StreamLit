@@ -12,7 +12,7 @@ import { SearchAppBar } from '../components/search/SearchAppBar';
 import { WatchlistScreenHeader } from '../components/watchlist/WatchlistScreenHeader';
 import type { ProfileStackParamList, RootStackParamList, RootTabParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
-import { layout, radiusCardInner, spacing, tracking } from '../theme/spacing';
+import { elevation, layout, opacity, radiusCardInner, spacing, tracking } from '../theme/spacing';
 import { typography } from '../theme/typography';
 
 type Props = CompositeScreenProps<
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     padding: spacing.xs,
   },
   appBarIconHitPressed: {
-    opacity: 0.85,
+    opacity: opacity.pressed,
   },
   avatarCircle: {
     alignItems: 'center',
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
   },
   avatarWrapPressed: {
-    opacity: 0.92,
+    opacity: opacity.emphasis,
   },
   body: {
     paddingHorizontal: spacing.xl,
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
   },
   editProfileBtnPressed: {
-    opacity: 0.92,
+    opacity: opacity.emphasis,
   },
   editProfileLabel: {
     ...typography['title-sm'],
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
   },
   headerDock: {
     backgroundColor: colors.surface,
-    zIndex: 1,
+    zIndex: elevation.dock,
   },
   menuGroup: {
     gap: spacing.sm,
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
   },
   settingsRowPressed: {
-    opacity: 0.92,
+    opacity: opacity.emphasis,
   },
   signOutBtn: {
     alignItems: 'center',
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
   },
   signOutBtnPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   signOutLabel: {
     ...typography['title-sm'],

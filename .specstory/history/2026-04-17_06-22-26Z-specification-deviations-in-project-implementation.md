@@ -7752,3 +7752,307 @@ So the changes were not “instead of React Native”; they are **how React Nati
 - **Runtime loading** — e.g. `expo-font` / loading from a URI still relies on **native modules** and build setup; it’s not “pure JS” in the sense of zero native surface.
 
 **Bottom line:** Custom bundled fonts require the **native app** to include the font files. Updating `android/` (and iOS) is the normal, correct consequence of that—not a duplicate of something you could do entirely from `StyleSheet` alone.
+
+---
+
+_**User**_
+
+§5 spacing rule
+Spec: no hardcoded pixel values in StyleSheet — only tokens from spacing.ts.
+You still have literals (e.g. minWidth: 18, gap: 0, 0 fills, etc.).
+Rubric text for a 5 explicitly requires spacing from tokens with no hardcoded values → this alone can cap you at 4 or even 3 if they’re strict. fix it 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Reading spacing tokens**
+
+I'm reading spacing.ts to understand available tokens and identify missing ones like 0, 18, etc. </details></think>
+
+_**Agent (composer-2)**_
+
+Auditing StyleSheets for numeric literals and extending `spacing.ts` with tokens so we can replace them.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts}",
+  "outputMode": "files_with_matches",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "StyleSheet\\.create"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "files_with_matches",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "StyleSheet\\.create",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/components/detail/DetailWatchlistButton.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchTrendingSkeleton.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistSimilarLandscapeCard.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/detail/DetailHero.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/detail/DetailSimilarSection.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/screens/DetailScreen.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/detail/DetailCastSection.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/navigation/TabBarGlassBackground.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/navigation/RootNavigator.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchAppBar.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchRecentSearchesSection.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistBecauseYouSavedSection.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/detail/DetailSectionError.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/seeAll/SeeAllGridSkeleton.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchResultsStateView.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/ScreenErrorBoundary.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/GhostPosterPlaceholderGrid.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/RadialGlowBackdrop.tsx"
+    }
+  ],
+  "totalFiles": 43,
+  "totalMatches": 43
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Adding canonical tokens**
+
+I'm adding canonical tokens for zero values in layout dimensions like gap and shadow offsets. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.tsx",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": ":\\s*-?\\d+(\\.\\d+)?\\s*[,}]"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": ":\\s*-?\\d+(\\.\\d+)?\\s*[,}]",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "src/navigation/RootNavigator.tsx"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/components/watchlist/WatchlistScreenHeader.tsx"
+    },
+    {
+      "matchCount": 14,
+      "uri": "src/components/home/HomeHero.tsx"
+    },
+    {
+      "matchCount": 6,
+      "uri": "src/screens/DetailScreen.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/common/ScreenErrorBoundary.tsx"
+    },
+    {
+      "matchCount": 7,
+      "uri": "src/components/watchlist/WatchlistEmptyState.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/detail/DetailDetailsSkeleton.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/detail/DetailSimilarSection.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/detail/DetailCastSection.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchRecentSearchesSection.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/LoadMoreContentIndicator.tsx"
+    },
+    {
+      "matchCount": 9,
+      "uri": "src/components/search/SearchResultsStateView.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/detail/DetailSynopsisSection.tsx"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/components/home/HomeContentRow.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/home/HomeRowSkeleton.tsx"
+    },
+    {
+      "matchCount": 12,
+      "uri": "src/screens/ProfileScreen.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchTrendingSkeleton.tsx"
+    },
+    {
+      "matchCount": 8,
+      "uri": "src/components/home/HomeHeroSkeleton.tsx"
+    },
+    {
+      "matchCount": 16,
+      "uri": "src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/components/common/BrandSolidCtaButton.tsx"
+    }
+  ],
+  "totalFiles": 39,
+  "totalMatches": 168
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Analyzing rubric requirements**
+
+I'm focusing on StyleSheet values rather than JSX props like numberOfLines={3}. I'm identifying hardcoded values in StyleSheet that violate the rubric's 'no hardcoded pixel values' rule, focusing on spacing and dimension-based properties. 
+
+**Replacing hardcoded values**
+
+I'm replacing hardcoded values like 0 and 1 with layout constants such as `layout.hairline`, `layout.borderSm`, and `fill.none`. I'm replacing minWidth: 18 with layout.skeletonLineMd and leaving flex properties as-is. 
+
+**Tokenizing layout metrics**
+
+I'm replacing layout dimensions with tokens, including minWidth: 0  fill.none and border widths with hairline/borderSm. </details></think>

@@ -12,6 +12,10 @@ import { IconMovie, IconSearch } from '../common/SimpleIcons';
 import { PosterRatingBadge } from '../common/PosterRatingBadge';
 import { colors, contentCard } from '../../theme/colors';
 import {
+  elevation,
+  fill,
+  layout,
+  opacity,
   radiusCardInner,
   radiusCardOuter,
   radiusFullPill,
@@ -274,7 +278,7 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   cardPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   cardTitle: {
     ...typography['title-search-card'],
@@ -305,7 +309,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   chipPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   chipSelected: {
     backgroundColor: colors.secondary_container,
@@ -391,7 +395,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: spacing.sm,
     top: spacing.sm,
-    zIndex: 2,
+    zIndex: elevation.card,
   },
   retryBtn: {
     alignSelf: 'flex-start',
@@ -408,21 +412,21 @@ const styles = StyleSheet.create({
   },
   searchIconWrap: {
     alignItems: 'center',
-    bottom: 0,
+    bottom: fill.none,
     justifyContent: 'center',
     left: spacing.lg,
     pointerEvents: 'none',
     position: 'absolute',
-    top: 0,
+    top: fill.none,
     width: spacing.xxxl + spacing.sm,
-    zIndex: 1,
+    zIndex: elevation.dock,
   },
   searchInput: {
     ...typography['search-input-value'],
     backgroundColor: colors.surface_container_low,
     borderColor: 'transparent',
     borderRadius: spacing.md,
-    borderWidth: 2,
+    borderWidth: layout.borderSm,
     color: colors.on_surface,
     flex: 1,
     minHeight: spacing.xxxxl,

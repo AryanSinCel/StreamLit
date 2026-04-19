@@ -20,7 +20,7 @@ import type {
   RootTabParamList,
 } from '../navigation/types';
 import { colors } from '../theme/colors';
-import { spacing } from '../theme/spacing';
+import { elevation, opacity, spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 
 type Props = CompositeScreenProps<
@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   bannerBtnPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   bannerText: {
     ...typography['body-md'],
@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
   },
   headerDock: {
     backgroundColor: colors.surface,
-    zIndex: 1,
+    zIndex: elevation.dock,
   },
   screen: {
     backgroundColor: colors.surface,

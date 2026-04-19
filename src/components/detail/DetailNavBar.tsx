@@ -9,7 +9,7 @@ import { Alert, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IconArrowBack, IconShareOutlined } from '../common/SimpleIcons';
 import { colors, detailNavBarBlur } from '../../theme/colors';
-import { radiusFullPill, spacing } from '../../theme/spacing';
+import { elevation, fill, radiusFullPill, spacing } from '../../theme/spacing';
 
 export type DetailNavBarProps = {
   onBack: () => void;
@@ -78,12 +78,12 @@ export function DetailNavBar({ onBack }: DetailNavBarProps): JSX.Element {
 
 const styles = StyleSheet.create({
   bar: {
-    left: 0,
+    left: fill.none,
     overflow: 'hidden',
     position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 50,
+    right: fill.none,
+    top: fill.none,
+    zIndex: elevation.nav,
   },
   tintOverlay: {
     backgroundColor: colors.detail_nav_bar_tint,

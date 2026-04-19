@@ -5,7 +5,7 @@
 import type { JSX } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../theme/colors';
-import { layout, radiusCardInner, spacing } from '../../theme/spacing';
+import { fill, layout, opacity, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type BrandSolidCtaButtonProps = {
@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   hitPressed: {
-    opacity: 0.92,
-    transform: [{ scale: 0.98 }],
+    opacity: opacity.emphasis,
+    transform: [{ scale: layout.pressScale }],
   },
   inner: {
     alignItems: 'center',
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.xxl,
     paddingVertical: spacing.lg,
     shadowColor: colors.secondary_container,
-    shadowOffset: { width: 0, height: layout.shadowDropMd },
-    shadowOpacity: 0.2,
+    shadowOffset: { width: fill.none, height: layout.shadowDropMd },
+    shadowOpacity: layout.shadowOpacityMd,
     shadowRadius: layout.shadowRadiusMd,
   },
   label: {

@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../theme/colors';
-import { layout, spacing } from '../../theme/spacing';
+import { layout, opacity, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type DetailSynopsisSectionProps = {
@@ -66,6 +66,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   togglePressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
 });

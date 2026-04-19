@@ -17,7 +17,7 @@ import { SearchScreen } from '../screens/SearchScreen';
 import { WatchlistScreen } from '../screens/WatchlistScreen';
 import { TabBarGlassBackground } from './TabBarGlassBackground';
 import { colors } from '../theme/colors';
-import { layout, spacing } from '../theme/spacing';
+import { fill, layout, spacing } from '../theme/spacing';
 import { useWatchlistStore } from '../store/watchlistStore';
 import { typography } from '../theme/typography';
 import type {
@@ -130,7 +130,7 @@ const watchlistTabBadgeStyles = StyleSheet.create({
     ...typography['label-sm'],
     fontWeight: '700',
     lineHeight: layout.tabBadgeLineHeight,
-    minWidth: 18,
+    minWidth: layout.skeletonLineMd,
     overflow: 'hidden',
     paddingHorizontal: spacing.xs,
     textAlign: 'center',
@@ -158,7 +158,7 @@ function MainTabNavigator() {
         tabBarBackground: renderTabBarGlassBackground,
         tabBarStyle: {
           backgroundColor: 'transparent',
-          borderTopWidth: 0,
+          borderTopWidth: fill.none,
           paddingBottom: spacing.xxl,
           paddingTop: spacing.md,
         },

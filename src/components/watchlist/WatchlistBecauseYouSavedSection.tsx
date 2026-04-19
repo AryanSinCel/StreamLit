@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { TmdbGenre, TmdbMovieListItem } from '../../api/types';
 import { colors } from '../../theme/colors';
-import { spacing, watchlistSimilarRailCardWidth } from '../../theme/spacing';
+import { opacity, spacing, watchlistSimilarRailCardWidth } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { WatchlistSimilarLandscapeCard } from './WatchlistSimilarLandscapeCard';
 
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   seeAllPressed: {
-    opacity: 0.88,
+    opacity: opacity.control,
   },
   titleRow: {
     alignItems: 'flex-start',

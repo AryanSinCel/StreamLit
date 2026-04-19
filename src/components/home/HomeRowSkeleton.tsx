@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { ShimmerBox } from '../common/ShimmerBox';
 import { colors, contentCard } from '../../theme/colors';
-import { homeRowCardWidth, layout, radiusCardOuter, spacing } from '../../theme/spacing';
+import { fill, homeRowCardWidth, layout, radiusCardOuter, spacing } from '../../theme/spacing';
 
 const CARD_COUNT = 5;
 const posterHeight = homeRowCardWidth / contentCard.aspectRatio;
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.xxl,
   },
   rowScrollHost: {
-    flexGrow: 0,
+    flexGrow: fill.none,
   },
   subLine: {
     borderRadius: spacing.xs,
