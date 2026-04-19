@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     color: colors.primary_container,
   },
   headline: {
-    ...typography['headline-rail'],
+    ...typography['headline-md'],
     color: colors.on_surface,
     marginBottom: spacing.md,
     textAlign: 'center',

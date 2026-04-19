@@ -3,7 +3,7 @@
  */
 
 import type { JSX } from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Image, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useWindowDimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import type { SearchScreenMode, TmdbGenre, TmdbMovieListItem } from '../../api/types';
@@ -112,44 +112,52 @@ export function SearchDefaultView({
         />
       </View>
 
-      <View style={styles.section}>
-        <ScrollView
-          contentContainerStyle={styles.chipsScrollContent}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        >
-          {genreChipLabels.map((label, index) => {
-            const selected = selectedGenreIndex !== null && index === selectedGenreIndex;
-            return (
-              <Pressable
-                accessibilityRole="button"
-                accessibilityState={{ selected }}
-                key={label}
-                onPress={() => onGenreChipPress(label)}
-                style={({ pressed }) => [
-                  styles.chip,
-                  selected ? styles.chipSelected : styles.chipIdle,
-                  pressed && styles.chipPressed,
-                ]}
-              >
-                <Text style={[styles.chipLabel, selected ? styles.chipLabelSelected : styles.chipLabelIdle]}>
-                  {label}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </ScrollView>
-      </View>
+      <Pressable
+        accessibilityRole="none"
+        onPress={() => {
+          Keyboard.dismiss();
+          onBlurInput();
+        }}
+        style={styles.tapOutsideSearch}
+      >
+        <View style={styles.section}>
+          <ScrollView
+            contentContainerStyle={styles.chipsScrollContent}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          >
+            {genreChipLabels.map((label, index) => {
+              const selected = selectedGenreIndex !== null && index === selectedGenreIndex;
+              return (
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityState={{ selected }}
+                  key={label}
+                  onPress={() => onGenreChipPress(label)}
+                  style={({ pressed }) => [
+                    styles.chip,
+                    selected ? styles.chipSelected : styles.chipIdle,
+                    pressed && styles.chipPressed,
+                  ]}
+                >
+                  <Text style={[styles.chipLabel, selected ? styles.chipLabelSelected : styles.chipLabelIdle]}>
+                    {label}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+        </View>
 
-      <SearchRecentSearchesSection
-        onClearRecents={onClearRecents}
-        onRecentTermPress={onRecentTermPress}
-        recentSearches={recentSearches}
-        visible={showRecentsBlock}
-      />
+        <SearchRecentSearchesSection
+          onClearRecents={onClearRecents}
+          onRecentTermPress={onRecentTermPress}
+          recentSearches={recentSearches}
+          visible={showRecentsBlock && !inputFocused}
+        />
 
-      {showTrending ? (
-        <View style={styles.sectionLast}>
+        {showTrending ? (
+          <View style={styles.sectionLast}>
           <Text style={styles.sectionTitle}>Trending Now</Text>
 
           {trendingError != null ? (
@@ -249,6 +257,7 @@ export function SearchDefaultView({
           ) : null}
         </View>
       ) : null}
+      </Pressable>
     </View>
   );
 }
@@ -304,6 +313,12 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xxl,
     paddingHorizontal: spacing.xl,
     paddingTop: spacing.sm,
+    width: '100%',
+  },
+  /** Tap below the search field to dismiss keyboard + blur (spec: unfocus when editing outside the box). */
+  tapOutsideSearch: {
+    alignSelf: 'stretch',
+    flexGrow: 1,
     width: '100%',
   },
   chip: {
@@ -386,7 +401,7 @@ const styles = StyleSheet.create({
     zIndex: elevation.card,
   },
   featuredTitle: {
-    ...typography['headline-rail'],
+    ...typography['headline-md'],
     color: colors.on_surface,
     fontWeight: '800',
     textShadowColor: colors.hero_text_shadow,

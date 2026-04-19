@@ -4,7 +4,7 @@
  */
 
 import type { JSX } from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Image, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useWindowDimensions } from 'react-native';
 import type { TmdbSearchMovieListItem } from '../../api/types';
 import { LoadMoreContentIndicator } from '../common/LoadMoreContentIndicator';
@@ -130,43 +130,51 @@ export function SearchResultsStateView({
         />
       </View>
 
-      <View style={styles.section}>
-        <ScrollView
-          contentContainerStyle={styles.chipsScrollContent}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        >
-          {genreChipLabels.map((label, index) => {
-            const selected = selectedGenreIndex !== null && index === selectedGenreIndex;
-            return (
-              <Pressable
-                accessibilityRole="button"
-                accessibilityState={{ selected }}
-                key={label}
-                onPress={() => onGenreChipPress(label)}
-                style={({ pressed }) => [
-                  styles.chip,
-                  selected ? styles.chipSelected : styles.chipIdle,
-                  pressed && styles.chipPressed,
-                ]}
-              >
-                <Text style={[styles.chipLabel, selected ? styles.chipLabelSelected : styles.chipLabelIdle]}>
-                  {label}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </ScrollView>
-      </View>
+      <Pressable
+        accessibilityRole="none"
+        onPress={() => {
+          Keyboard.dismiss();
+          onBlurInput();
+        }}
+        style={styles.tapOutsideSearch}
+      >
+        <View style={styles.section}>
+          <ScrollView
+            contentContainerStyle={styles.chipsScrollContent}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          >
+            {genreChipLabels.map((label, index) => {
+              const selected = selectedGenreIndex !== null && index === selectedGenreIndex;
+              return (
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityState={{ selected }}
+                  key={label}
+                  onPress={() => onGenreChipPress(label)}
+                  style={({ pressed }) => [
+                    styles.chip,
+                    selected ? styles.chipSelected : styles.chipIdle,
+                    pressed && styles.chipPressed,
+                  ]}
+                >
+                  <Text style={[styles.chipLabel, selected ? styles.chipLabelSelected : styles.chipLabelIdle]}>
+                    {label}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+        </View>
 
-      <SearchRecentSearchesSection
-        onClearRecents={onClearRecents}
-        onRecentTermPress={onRecentTermPress}
-        recentSearches={recentSearches}
-        visible={showRecentsBlock}
-      />
+        <SearchRecentSearchesSection
+          onClearRecents={onClearRecents}
+          onRecentTermPress={onRecentTermPress}
+          recentSearches={recentSearches}
+          visible={showRecentsBlock && !inputFocused}
+        />
 
-      {error != null ? (
+        {error != null ? (
         <View style={styles.messageBlock}>
           <Text style={styles.errorText}>{error}</Text>
           <Pressable
@@ -217,6 +225,7 @@ export function SearchResultsStateView({
           </Text>
         </View>
       ) : null}
+      </Pressable>
     </View>
   );
 }
@@ -272,6 +281,11 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xxl,
     paddingHorizontal: spacing.xl,
     paddingTop: spacing.sm,
+    width: '100%',
+  },
+  tapOutsideSearch: {
+    alignSelf: 'stretch',
+    flexGrow: 1,
     width: '100%',
   },
   card: {

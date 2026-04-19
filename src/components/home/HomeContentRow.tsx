@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   sectionTitle: {
-    ...typography['headline-rail'],
+    ...typography['headline-md'],
     color: colors.on_surface,
     flex: 1,
     marginRight: spacing.md,

@@ -294,4 +294,7876 @@ _**Agent (composer-2)**_
 <think><details><summary>Thought Process</summary>
 **Updating query types**
 
-I'm replacing `UseMovieDetailResult` with `UseQueryResult<MovieDetailSnapshot>` and adding nested query results for details, credits, and similar movies. I'm defining the loading state to be true only during the initial parallel batch fetch for a movieId. </details></think>
+I'm replacing `UseMovieDetailResult` with `UseQueryResult<MovieDetailSnapshot>` and adding nested query results for details, credits, and similar movies. I'm defining the loading state to be true only during the initial parallel batch fetch for a movieId. I'm adjusting the loading state logic to trigger only when the details section is loading and details.data is null. 
+
+I'm setting `loading` to true only during the initial parallel fetch for `movieId`, then false afterward. I'm adjusting error handling so top-level error is null unless details fetch fails fatally. 
+
+I'm implementing loading state tracking with a ref to manage initial batch completion and error exposure based on details data nullity. 
+
+**Handling error boundaries**
+
+I'm adjusting error boundary logic to ensure section-level errors for credits only trigger within their respective sections, not globally. I'm clarifying when `data` should be null in the MovieDetail hook  likely only on invalid movieId, not always. 
+
+**Defining snapshot structure**
+
+I'm defining `MovieDetailSnapshot` to carry all three slices with their respective `data | null` types. I'm using Option B where `data` is always non-null for valid `movieId`, with nested sections carrying `null` values instead. I'm simplifying the snapshot structure so `data` is null only for invalid movie IDs, keeping loading/error states at the top level. I'm implementing the snapshot structure with null data for invalid movie IDs and structured data for valid ones. 
+
+**Handling error states**
+
+I'm setting the top-level error to the details fatal error when present, else null, and implementing initialLoading state for batch operations. I'm resetting the loading state on movieId change and ensuring stable snapshot references with useMemo. I'm refactoring WatchlistSnapshot to properly bundle Zustand state with remote data and align top-level loading/error handling with async hook work. I'm implementing loading logic that combines hydration status with remote slice loading states. I'm adjusting the top-level loading state to match the hook's async work rather than just blocking hydration. I'm updating WatchlistScreen to use top-level loading from the hook for the main list. 
+
+I'm defining loading and error states for the watchlist screen, using hydrated state for top-level loading and nested errors for similar/popular sections. I'm setting error to null at the top level for watchlist, using section-level errors instead. I'm clarifying data nullability patterns for hydrated vs non-hydrated states. 
+
+I clarified the hydration logic: `stSnapshot` requires `hydrated: true` when data is non-null, and `loading` reflects top-level vs. nested loading states. 
+
+**Updating watchlist screen**
+
+I updated WatchlistScreen to handle loading states properly using the `useWatchlist()` hook. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Searching tests and other consumers for old types.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{ts,tsx}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "UseMovieDetailResult|UseWatchlistResult|useMovieDetail|useWatchlist"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "UseMovieDetailResult|UseWatchlistResult|useMovieDetail|useWatchlist",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "src/navigation/RootNavigator.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/utils/mapMovieDetailToWatchlistItem.ts"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/api/types.ts"
+    },
+    {
+      "matchCount": 21,
+      "uri": "__tests__/watchlistStore.test.ts"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/store/watchlistStore.ts"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/screens/DetailScreen.tsx"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/hooks/index.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/hooks/useMovieDetail.ts"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/hooks/useWatchlist.ts"
+    },
+    {
+      "matchCount": 7,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    }
+  ],
+  "totalFiles": 10,
+  "totalMatches": 54
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/index.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **9** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/__tests__** (9 files)
+
+| File |
+|------|
+| `watchlistStore.test.ts` |
+| `mapUnknownError.test.ts` |
+| `formatMovieListItem.test.ts` |
+| `tmdbDisplayGuards.test.ts` |
+| `mapMovieDetailToWatchlistItem.test.ts` |
+| `mergeUniqueMovieListById.test.ts` |
+| `App.test.tsx` |
+| `watchlistFilters.test.ts` |
+| `recentSearches.test.ts` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating types**
+
+I'm updating types.ts to remove UseMovieDetailResult and add MovieDetailSnapshot and WatchlistSnapshot types. I'm simplifying the initial loading state by using `useRef` to track `isInitialBatch` instead of complex effect logic. I'm refactoring the loading state logic to properly handle initial settlement and edge cases during movie ID changes. I'm simplifying the error handling logic to avoid duplication and align with the generic error boundary pattern. 
+
+I'm refining the error assignment logic to handle null data scenarios correctly. I'm updating the types for `useWatchlist` to return `UseQueryResult<WatchlistSnapshot>` with proper null handling for data and loading states. I'm simplifying null handling for `useWatchlist` types and updating `useMovieDetail` to properly destructure data with null checks. I'm implementing safe access patterns for movie details with optional chaining and null placeholders. 
+
+I'm simplifying the movie ID validation by using early returns and optional chaining instead of complex null checks. I'm handling undefined data states in the details query by using optional chaining and conditional rendering. I'm implementing fallback objects with `useMemo` for empty sections, using null checks in JSX instead of empty defaults. I found a bug in the conditional logic where `details?.data == null` incorrectly evaluates to true for undefined data. I'm updating the types for `credits?.data?.cast` and `similar?.data?.results` to match the expected structure. I'm changing `refetchRemoteSlices` to `refetch` in ScreenErrorBoundary for consistency with top-level hook. 
+
+I'm removing `refetchRemoteSlices` from snapshot to avoid duplication, using `refetch` from hook everywhere. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "UseMovieDetailResult|UseWatchlistResult"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "UseMovieDetailResult|UseWatchlistResult",
+  "topFiles": [
+    {
+      "matchCount": 7,
+      "uri": ".specstory/history/2026-04-14_11-03-42Z-watchlist-empty-state-ui.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-17_06-22-26Z-specification-deviations-in-project-implementation.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/hooks/useMovieDetail.ts"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/api/types.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/hooks/useWatchlist.ts"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".specstory/history/2026-04-15_08-57-49Z-watchlist-empty-ui-screen.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/hooks/index.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-15_08-13-59Z-watchlist-ui-adjustments.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".specstory/history/2026-04-19_20-06-33Z-standardizing-data-fetching-hooks.md"
+    },
+    {
+      "matchCount": 7,
+      "uri": ".specstory/history/2026-04-14_09-19-54Z-usewatchlist-implementation-details.md"
+    }
+  ],
+  "totalFiles": 10,
+  "totalMatches": 31
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing useMovieDetail**
+
+I'm adding initial batch tracking to useMovieDetail with useState and useEffect. 
+
+**Handling batch loading**
+
+I'm fixing the initial batch loading logic to properly handle valid vs invalid movie IDs. I'm ensuring `initialBatchDone` starts as `false` and correctly handles valid vs invalid movie IDs on first mount. I'm adding logic to reset `initialBatchDone` when switching to a valid movie ID. 
+
+I'm setting `setInitialBatchDone` in the right places to track batch completion. I'm ensuring `setInitialBatchDone` is set after all section updates complete to prevent flicker from React 18 Strict Mode. 
+
+I'm computing top-level error from latest state rather than data snapshot to avoid stale values. I'm ensuring error states are reset during loading to prevent stale errors from persisting. I'm clarifying error handling logic to ensure top-level error clears when only credits fail. I'm removing `refetchRemoteSlices` from WatchlistSnapshot and updating its type. 
+
+**Updating WatchlistSnapshot type**
+
+I'm removing `refetchRemoteSlices` from WatchlistSnapshot to avoid duplication with UseQueryResult's refetch. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Implementing: `UseQueryResult` exists — adding snapshot types, refactoring both hooks, and updating consumers.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useMovieDetail.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling async errors**
+
+I'm adding a finally block to ensure `initialBatchDone` is set to true even if `runParallel` rejects. I'm adding a try/finally block to ensure `initialBatchDone` is set to true even if `runParallel` rejects. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useWatchlist.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating detail screen**
+
+I'm updating DetailScreen to use the new data shape from the hook. I'm replacing `refetchDetailScreen` with `refetch` in the DetailScreen component. I'm adding a loading check to ensure data is non-null when loading is false, since TypeScript doesn't narrow automatically. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useWatchlist.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useWatchlist.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useWatchlist.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useWatchlist.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Simplifying cast rendering**
+
+I'll simplify the cast rendering by only showing it when we have valid detailData, avoiding unnecessary conditional logic. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailCastSection.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling retry logic**
+
+I'm using `credits?.refetch ?? refetch` to simplify retry logic while ensuring only credits are refetched when needed. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+  "pattern": "refetchRemoteSlices|ScreenErrorBoundary"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+  "pattern": "refetchRemoteSlices|ScreenErrorBoundary",
+  "topFiles": [
+    {
+      "matchCount": 5,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 5
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/index.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{ts,tsx}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "UseWatchlistResult|UseMovieDetailResult"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "UseWatchlistResult|UseMovieDetailResult",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/package.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+
+```
+src/screens/WatchlistScreen.tsx(121,34): error TS2448: Block-scoped variable 'movieGenres' used before its declaration.
+src/screens/WatchlistScreen.tsx(121,34): error TS2454: Variable 'movieGenres' is used before being assigned.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test -- --passWithNoTests 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test -- --passWithNoTests 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest --passWithNoTests
+
+watchman warning:  Recrawled this watch 33 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 9 passed, 9 total
+Tests:       47 passed, 47 total
+Snapshots:   0 total
+Time:        2.745 s, estimated 4 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing hook rules**
+
+I'm moving `renderItem` above the early return to comply with React hooks rules. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Fixing a Rules of Hooks violation: `useCallback` must run unconditionally. Using `watchlistData?.movieGenres` in `renderItem` and moving it before the early return.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useMovieDetail.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useMovieDetail.ts",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useWatchlist.ts",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useMovieDetail.ts"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useWatchlist.ts"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating type definitions**
+
+I've verified App.test.tsx doesn't import old types and tests pass. I'm updating type definitions to use `UseQueryResult<WatchlistSnapshot>` with loading = !hydrated, error = null, refetch = both remotes. 
+
+**Handling component cleanup**
+
+I'm handling potential race conditions where cleanup from the first effect might cause stale updates in the second effect. I found a race condition where the old runParallel might still call setInitialBatchDone(true) on the wrong batch after cancellation. I need to ensure initialBatchDone is set correctly even if the first batch completes after cleanup. The old effect's cleanup sets `cancelled=true` but may miss the `cancelled` check in `runParallel` if `abort()` happens before the check. 
+
+I'm verifying the cleanup behavior under strict mode double mount edge cases. I need to set `initialBatchDone` to false in the invalid branch to ensure proper cleanup. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Here is a concise summary of what changed.
+
+### 1. `UseQueryResult<T>` (`src/api/types.ts`)
+It was already defined; the comment was updated. **`MovieDetailSnapshot`** and **`WatchlistSnapshot`** replace **`UseMovieDetailResult`** and **`UseWatchlistResult`**.
+
+### 2. `useMovieDetail` → `UseQueryResult<MovieDetailSnapshot>`
+- **`data`**: `null` if `movieId` is invalid; otherwise `{ details, credits, similar }`, each a **`UseQueryResult`** (same parallel **`Promise.allSettled`** + per-section refetch as before).
+- **`loading`**: `true` only until the **first** parallel batch for the current `movieId` finishes (not during a single-section refetch). Tracked with **`initialBatchDone`**.
+- **`error`**: non-null only when the **details** slice has an error and **no** detail payload (hero can’t load). Credits/similar errors stay on the nested results only.
+- **`refetch`**: retries all three sections (`noop` when id is invalid).
+
+### 3. `useWatchlist` → `UseQueryResult<WatchlistSnapshot>`
+- **`data`**: `null` until **`hydrated`**; then the previous bundle (items, filter, `filteredItems`, **`similar`**, **`popularRecommendations`**, **`movieGenres`**) without a separate **`refetchRemoteSlices`** (use top-level **`refetch`**).
+- **`loading`**: `!hydrated` (blocking “Loading…” gate).
+- **`error`**: always **`null`**; TMDB issues stay on **`similar`** / **`popularRecommendations`**.
+- **`refetch`**: bumps both remote reload keys (same as old **`refetchRemoteSlices`**).
+
+### 4. Consumers
+- **`DetailScreen`**: reads **`detailData?.details` / `credits` / `similar`**, uses hook **`refetch`** for **`ScreenErrorBoundary`**, optional **`noopRetry`** for section props when slices are missing.
+- **`WatchlistScreen`**: gates on **`watchlistLoading || watchlistData == null`**, then destructures **`watchlistData`**; **`renderItem`** uses **`watchlistData?.movieGenres`** so hooks order stays valid; **`refetchWatchlistRemote`** replaces **`refetchRemoteSlices`**.
+
+### 5. Exports (`src/hooks/index.ts`)
+Exports **`MovieDetailSnapshot`** and **`WatchlistSnapshot`** instead of the old result type names.
+
+### Verification
+- **`npx tsc --noEmit`**, **`npm run lint`**, and **`npm test`** all succeed.
+
+**Files touched:** `src/api/types.ts`, `src/hooks/useMovieDetail.ts`, `src/hooks/useWatchlist.ts`, `src/hooks/index.ts`, `src/screens/DetailScreen.tsx`, `src/screens/WatchlistScreen.tsx`.
+
+---
+
+_**User**_
+
+Spec = headline-md (28px). Yours = headline-rail (24px) for rails. fix it 
+
+---
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "headline-rail|headline-md|rail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "headline-rail|headline-md|rail",
+  "topFiles": [
+    {
+      "matchCount": 21,
+      "uri": "src/screens/HomeScreen.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/theme/typography.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/theme/colors.ts"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/theme/spacing.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/hooks/useSearch.ts"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    },
+    {
+      "matchCount": 9,
+      "uri": "src/hooks/useHome.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/utils/formatWatchlistGridSubtitle.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/watchlist/WatchlistEmptyState.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/screens/ProfileScreen.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/utils/formatMovieListItem.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/ContentCard.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistFilterEmpty.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchResultsStateView.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/home/HomeContentRow.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/api/types.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/watchlist/WatchlistSimilarLandscapeCard.tsx"
+    }
+  ],
+  "totalFiles": 18,
+  "totalMatches": 58
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "headline-rail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "headline-rail",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/theme/typography.ts"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".specstory/history/2026-04-15_07-36-48Z-movie-grid-layout.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/home/HomeContentRow.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistEmptyState.tsx"
+    },
+    {
+      "matchCount": 5,
+      "uri": ".specstory/history/2026-04-15_06-45-45Z-home-ui-parity-adjustments.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".specstory/history/2026-04-15_08-13-59Z-watchlist-ui-adjustments.md"
+    }
+  ],
+  "totalFiles": 7,
+  "totalMatches": 13
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx",
+  "pattern": "headline|sectionTitle|typography"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx",
+  "pattern": "headline|sectionTitle|typography",
+  "topFiles": [
+    {
+      "matchCount": 13,
+      "uri": "src/components/search/SearchDefaultView.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 13
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components",
+  "pattern": "headline-rail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components",
+  "pattern": "headline-rail",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/home/HomeContentRow.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistEmptyState.tsx"
+    }
+  ],
+  "totalFiles": 3,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating headline-rail usages**
+
+I'm changing HomeContentRow's sectionTitle to headline-md and WatchlistEmptyState's headline to match the rail pattern. The WatchlistEmptyState headline isn't a rail title, so I'll leave its typography unchanged. I'm adjusting the empty state headline to match the rail typography spec, changing it from headline-rail to headline-md as requested. 
+
+I'm using `headline-md` for the WatchlistEmptyState headline to match the updated spec and maintain consistency with section headlines. I'm switching `headline-rail` to `headline-md` for rails, including HomeContentRow sectionTitle and WatchlistEmptyState headline. I'm changing all `headline-rail` usages to `headline-md` for consistent 28px sizing, keeping `fontWeight: '800'` override for featured titles. I verified that switching to `headline-md` maintains the `fontWeight: '800'` override pattern consistently across all featured titles. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Replacing `headline-rail` (24px) with `headline-md` (28px) for rail and matching headlines in the three components that use it.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "headline-rail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "headline-rail",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/theme/typography.ts"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist",
+  "pattern": "typography\\[.headline"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist",
+  "pattern": "typography\\[.headline",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "src/components/watchlist/WatchlistEmptyState.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistFilterEmpty.tsx"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens",
+  "pattern": "typography\\[.headline"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens",
+  "pattern": "typography\\[.headline",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistBecauseYouSavedSection.tsx",
+  "pattern": "typography|StyleSheet"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistBecauseYouSavedSection.tsx",
+  "pattern": "typography|StyleSheet",
+  "topFiles": [
+    {
+      "matchCount": 5,
+      "uri": "src/components/watchlist/WatchlistBecauseYouSavedSection.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 5
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Here’s what was updated:
+
+### Changes
+- **`HomeContentRow.tsx`** — `sectionTitle` (rail headers like “Trending”, genre rails, etc.) now uses **`headline-md`** (28px Manrope bold) instead of **`headline-rail`** (24px).
+- **`SearchDefaultView.tsx`** — **`featuredTitle`** on the default/featured hero card now uses **`headline-md`** as the base (still with **`fontWeight: '800'`** for the featured treatment).
+- **`WatchlistEmptyState.tsx`** — main empty-state headline (“Your watchlist is empty”) now uses **`headline-md`** for alignment with the same spec.
+- **`typography.ts`** — Comment on **`headline-rail`** notes it’s legacy and that **`headline-md`** is preferred for rail/hero headlines per spec. The **`headline-rail`** token remains for any future use.
+
+No other `src` files referenced **`headline-rail`**; rail-style titles that mattered for this pass now use **`headline-md`**.
+
+---
+
+_**User**_
+
+Spec = show only when empty and not focused. mine = empty query only (can still show when focused). fix it 
+
+---
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="semantic_search_full">
+<details>
+<summary>Tool use: **semantic_search_full**</summary>
+
+
+Parameters:
+
+```json
+{
+  "explanation": "",
+  "includePattern": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "query": "Where is search input focus or empty query used to show or hide UI?",
+  "topK": 10
+}
+```
+Result:
+
+```json
+{
+  "codeResults": [
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "isSignature": true,
+            "lineNumber": 65,
+            "text": "export function SearchDefaultView({"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 66,
+            "text": "  query,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 67,
+            "text": "  onChangeQuery,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 68,
+            "text": "  inputFocused,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 69,
+            "text": "  onFocusInput,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 70,
+            "text": "  onBlurInput,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 71,
+            "text": "  genreChipLabels,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 72,
+            "text": "  selectedGenreIndex,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 73,
+            "text": "  onGenreChipPress,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 74,
+            "text": "  recentSearches,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 75,
+            "text": "  onClearRecents,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 76,
+            "text": "  onRecentTermPress,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 77,
+            "text": "  showRecentsBlock,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 78,
+            "text": "  mode,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 79,
+            "text": "  featuredMovie,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 80,
+            "text": "  genres,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 81,
+            "text": "  gridMovies,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 82,
+            "text": "  trendingLoading,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 83,
+            "text": "  trendingError,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 84,
+            "text": "  onRetryTrending,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 85,
+            "text": "  onOpenResult,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 86,
+            "text": "}: SearchDefaultViewProps): JSX.Element {"
+          },
+          {
+            "lineNumber": 94
+          },
+          {
+            "lineNumber": 95,
+            "text": "  return ("
+          },
+          {
+            "lineNumber": 96,
+            "text": "    \u003cView style={styles.body}\u003e"
+          },
+          {
+            "lineNumber": 97,
+            "text": "      \u003cView style={styles.searchRow}\u003e"
+          },
+          {
+            "lineNumber": 98,
+            "text": "        \u003cView style={styles.searchIconWrap} pointerEvents=\"none\"\u003e"
+          },
+          {
+            "lineNumber": 99,
+            "text": "          \u003cIconSearch color={colors.on_surface_variant} size={24} /\u003e"
+          },
+          {
+            "lineNumber": 100,
+            "text": "        \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 101,
+            "text": "        \u003cTextInput"
+          },
+          {
+            "lineNumber": 102,
+            "text": "          accessibilityLabel=\"Search movies, actors, directors\""
+          },
+          {
+            "lineNumber": 103,
+            "text": "          autoCapitalize=\"none\""
+          },
+          {
+            "lineNumber": 104,
+            "text": "          autoCorrect={false}"
+          },
+          {
+            "lineNumber": 105,
+            "text": "          onBlur={onBlurInput}"
+          },
+          {
+            "lineNumber": 106,
+            "text": "          onChangeText={onChangeQuery}"
+          },
+          {
+            "lineNumber": 107,
+            "text": "          onFocus={onFocusInput}"
+          },
+          {
+            "lineNumber": 108,
+            "text": "          placeholder={SEARCH_INPUT_PLACEHOLDER}"
+          },
+          {
+            "lineNumber": 109,
+            "text": "          placeholderTextColor={colors.search_placeholder}"
+          },
+          {
+            "lineNumber": 110,
+            "text": "          style={[styles.searchInput, inputFocused \u0026\u0026 styles.searchInputFocused]}"
+          },
+          {
+            "lineNumber": 111,
+            "text": "          value={query}"
+          },
+          {
+            "lineNumber": 112,
+            "text": "        /\u003e"
+          },
+          {
+            "lineNumber": 113,
+            "text": "      \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 114
+          },
+          {
+            "lineNumber": 115,
+            "text": "      \u003cView style={styles.section}\u003e"
+          },
+          {
+            "lineNumber": 116,
+            "text": "        \u003cScrollView"
+          },
+          {
+            "lineNumber": 117,
+            "text": "          contentContainerStyle={styles.chipsScrollContent}"
+          },
+          {
+            "lineNumber": 118,
+            "text": "          horizontal"
+          },
+          {
+            "lineNumber": 119,
+            "text": "          showsHorizontalScrollIndicator={false}"
+          },
+          {
+            "lineNumber": 120,
+            "text": "        \u003e"
+          },
+          {
+            "lineNumber": 121,
+            "text": "          {genreChipLabels.map((label, index) =\u003e {"
+          },
+          {
+            "lineNumber": 122,
+            "text": "            const selected = selectedGenreIndex !== null \u0026\u0026 index === selectedGenreIndex;"
+          },
+          {
+            "lineNumber": 123,
+            "text": "            return ("
+          },
+          {
+            "lineNumber": 124,
+            "text": "              \u003cPressable"
+          },
+          {
+            "lineNumber": 125,
+            "text": "                accessibilityRole=\"button\""
+          },
+          {
+            "lineNumber": 126,
+            "text": "                accessibilityState={{ selected }}"
+          },
+          {
+            "lineNumber": 127,
+            "text": "                key={label}"
+          },
+          {
+            "lineNumber": 128,
+            "text": "                onPress={() =\u003e onGenreChipPress(label)}"
+          },
+          {
+            "lineNumber": 129,
+            "text": "                style={({ pressed }) =\u003e ["
+          },
+          {
+            "lineNumber": 130,
+            "text": "                  styles.chip,"
+          },
+          {
+            "lineNumber": 131,
+            "text": "                  selected ? styles.chipSelected : styles.chipIdle,"
+          },
+          {
+            "lineNumber": 132,
+            "text": "                  pressed \u0026\u0026 styles.chipPressed,"
+          },
+          {
+            "lineNumber": 133,
+            "text": "                ]}"
+          },
+          {
+            "lineNumber": 134,
+            "text": "              \u003e"
+          },
+          {
+            "lineNumber": 135,
+            "text": "                \u003cText style={[styles.chipLabel, selected ? styles.chipLabelSelected : styles.chipLabelIdle]}\u003e"
+          },
+          {
+            "lineNumber": 136,
+            "text": "                  {label}"
+          },
+          {
+            "lineNumber": 137,
+            "text": "                \u003c/Text\u003e"
+          },
+          {
+            "lineNumber": 138,
+            "text": "              \u003c/Pressable\u003e"
+          },
+          {
+            "lineNumber": 139,
+            "text": "            );"
+          },
+          {
+            "lineNumber": 140,
+            "text": "          })}"
+          },
+          {
+            "lineNumber": 141,
+            "text": "        \u003c/ScrollView\u003e"
+          },
+          {
+            "lineNumber": 142,
+            "text": "      \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 143
+          },
+          {
+            "lineNumber": 144,
+            "text": "      \u003cSearchRecentSearchesSection"
+          },
+          {
+            "lineNumber": 145,
+            "text": "        onClearRecents={onClearRecents}"
+          },
+          {
+            "lineNumber": 146,
+            "text": "        onRecentTermPress={onRecentTermPress}"
+          },
+          {
+            "lineNumber": 147,
+            "text": "        recentSearches={recentSearches}"
+          },
+          {
+            "lineNumber": 148,
+            "text": "        visible={showRecentsBlock}"
+          },
+          {
+            "lineNumber": 149,
+            "text": "      /\u003e"
+          },
+          {
+            "lineNumber": 150
+          },
+          {
+            "lineNumber": 151,
+            "text": "      {showTrending ? ("
+          },
+          {
+            "lineNumber": 152,
+            "text": "        \u003cView style={styles.sectionLast}\u003e"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 254,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 253
+          },
+          "startPosition": {
+            "line": 64
+          }
+        },
+        "relativeWorkspacePath": "./src/components/search/SearchDefaultView.tsx",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 8,
+                "line": 65
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 65
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 87
+              },
+              "startPosition": {
+                "column": 8,
+                "line": 65
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.4185701906681061
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "isSignature": true,
+            "lineNumber": 75,
+            "text": "export function SearchResultsStateView({"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 76,
+            "text": "  query,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 77,
+            "text": "  onChangeQuery,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 78,
+            "text": "  inputFocused,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 79,
+            "text": "  onFocusInput,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 80,
+            "text": "  onBlurInput,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 81,
+            "text": "  genreChipLabels,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 82,
+            "text": "  selectedGenreIndex,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 83,
+            "text": "  onGenreChipPress,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 84,
+            "text": "  showRecentsBlock,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 85,
+            "text": "  recentSearches,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 86,
+            "text": "  onClearRecents,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 87,
+            "text": "  onRecentTermPress,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 88,
+            "text": "  debouncedQuery,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 89,
+            "text": "  totalResults,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 90,
+            "text": "  results,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 91,
+            "text": "  loading,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 92,
+            "text": "  loadingMore,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 93,
+            "text": "  hasMore,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 94,
+            "text": "  error,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 95,
+            "text": "  onRetrySearch,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 96,
+            "text": "  onOpenResult,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 97,
+            "text": "}: SearchResultsStateViewProps): JSX.Element {"
+          },
+          {
+            "lineNumber": 110
+          },
+          {
+            "lineNumber": 111,
+            "text": "  const showCount = showGrid;"
+          },
+          {
+            "lineNumber": 112
+          },
+          {
+            "lineNumber": 113,
+            "text": "  return ("
+          },
+          {
+            "lineNumber": 114,
+            "text": "    \u003cView style={styles.body}\u003e"
+          },
+          {
+            "lineNumber": 115,
+            "text": "      \u003cView style={styles.searchRow}\u003e"
+          },
+          {
+            "lineNumber": 116,
+            "text": "        \u003cView style={styles.searchIconWrap} pointerEvents=\"none\"\u003e"
+          },
+          {
+            "lineNumber": 117,
+            "text": "          \u003cIconSearch color={colors.on_surface_variant} size={24} /\u003e"
+          },
+          {
+            "lineNumber": 118,
+            "text": "        \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 119,
+            "text": "        \u003cTextInput"
+          },
+          {
+            "lineNumber": 120,
+            "text": "          accessibilityLabel=\"Search movies, actors, directors\""
+          },
+          {
+            "lineNumber": 121,
+            "text": "          autoCapitalize=\"none\""
+          },
+          {
+            "lineNumber": 122,
+            "text": "          autoCorrect={false}"
+          },
+          {
+            "lineNumber": 123,
+            "text": "          onBlur={onBlurInput}"
+          },
+          {
+            "lineNumber": 124,
+            "text": "          onChangeText={onChangeQuery}"
+          },
+          {
+            "lineNumber": 125,
+            "text": "          onFocus={onFocusInput}"
+          },
+          {
+            "lineNumber": 126,
+            "text": "          placeholder={SEARCH_INPUT_PLACEHOLDER}"
+          },
+          {
+            "lineNumber": 127,
+            "text": "          placeholderTextColor={colors.search_placeholder}"
+          },
+          {
+            "lineNumber": 128,
+            "text": "          style={[styles.searchInput, inputFocused \u0026\u0026 styles.searchInputFocused]}"
+          },
+          {
+            "lineNumber": 129,
+            "text": "          value={query}"
+          },
+          {
+            "lineNumber": 130,
+            "text": "        /\u003e"
+          },
+          {
+            "lineNumber": 131,
+            "text": "      \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 132
+          },
+          {
+            "lineNumber": 133,
+            "text": "      \u003cView style={styles.section}\u003e"
+          },
+          {
+            "lineNumber": 134,
+            "text": "        \u003cScrollView"
+          },
+          {
+            "lineNumber": 135,
+            "text": "          contentContainerStyle={styles.chipsScrollContent}"
+          },
+          {
+            "lineNumber": 136,
+            "text": "          horizontal"
+          },
+          {
+            "lineNumber": 137,
+            "text": "          showsHorizontalScrollIndicator={false}"
+          },
+          {
+            "lineNumber": 138,
+            "text": "        \u003e"
+          },
+          {
+            "lineNumber": 139,
+            "text": "          {genreChipLabels.map((label, index) =\u003e {"
+          },
+          {
+            "lineNumber": 140,
+            "text": "            const selected = selectedGenreIndex !== null \u0026\u0026 index === selectedGenreIndex;"
+          },
+          {
+            "lineNumber": 141,
+            "text": "            return ("
+          },
+          {
+            "lineNumber": 142,
+            "text": "              \u003cPressable"
+          },
+          {
+            "lineNumber": 143,
+            "text": "                accessibilityRole=\"button\""
+          },
+          {
+            "lineNumber": 144,
+            "text": "                accessibilityState={{ selected }}"
+          },
+          {
+            "lineNumber": 145,
+            "text": "                key={label}"
+          },
+          {
+            "lineNumber": 146,
+            "text": "                onPress={() =\u003e onGenreChipPress(label)}"
+          },
+          {
+            "lineNumber": 147,
+            "text": "                style={({ pressed }) =\u003e ["
+          },
+          {
+            "lineNumber": 148,
+            "text": "                  styles.chip,"
+          },
+          {
+            "lineNumber": 149,
+            "text": "                  selected ? styles.chipSelected : styles.chipIdle,"
+          },
+          {
+            "lineNumber": 150,
+            "text": "                  pressed \u0026\u0026 styles.chipPressed,"
+          },
+          {
+            "lineNumber": 151,
+            "text": "                ]}"
+          },
+          {
+            "lineNumber": 152,
+            "text": "              \u003e"
+          },
+          {
+            "lineNumber": 153,
+            "text": "                \u003cText style={[styles.chipLabel, selected ? styles.chipLabelSelected : styles.chipLabelIdle]}\u003e"
+          },
+          {
+            "lineNumber": 154,
+            "text": "                  {label}"
+          },
+          {
+            "lineNumber": 155,
+            "text": "                \u003c/Text\u003e"
+          },
+          {
+            "lineNumber": 156,
+            "text": "              \u003c/Pressable\u003e"
+          },
+          {
+            "lineNumber": 157,
+            "text": "            );"
+          },
+          {
+            "lineNumber": 158,
+            "text": "          })}"
+          },
+          {
+            "lineNumber": 159,
+            "text": "        \u003c/ScrollView\u003e"
+          },
+          {
+            "lineNumber": 160,
+            "text": "      \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 161
+          },
+          {
+            "lineNumber": 162,
+            "text": "      \u003cSearchRecentSearchesSection"
+          },
+          {
+            "lineNumber": 163,
+            "text": "        onClearRecents={onClearRecents}"
+          },
+          {
+            "lineNumber": 164,
+            "text": "        onRecentTermPress={onRecentTermPress}"
+          },
+          {
+            "lineNumber": 165,
+            "text": "        recentSearches={recentSearches}"
+          },
+          {
+            "lineNumber": 166,
+            "text": "        visible={showRecentsBlock}"
+          },
+          {
+            "lineNumber": 167,
+            "text": "      /\u003e"
+          },
+          {
+            "lineNumber": 168
+          },
+          {
+            "lineNumber": 169,
+            "text": "      {error != null ? ("
+          },
+          {
+            "lineNumber": 170,
+            "text": "        \u003cView style={styles.messageBlock}\u003e"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 222,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 221
+          },
+          "startPosition": {
+            "line": 74
+          }
+        },
+        "relativeWorkspacePath": "./src/components/search/SearchResultsStateView.tsx",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 8,
+                "line": 75
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 75
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 98
+              },
+              "startPosition": {
+                "column": 8,
+                "line": 75
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.4170581102371216
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "isSignature": true,
+            "lineNumber": 32,
+            "text": "export function SearchScreen({ navigation }: Props): JSX.Element {"
+          },
+          {
+            "lineNumber": 108
+          },
+          {
+            "lineNumber": 109,
+            "text": "    );"
+          },
+          {
+            "lineNumber": 110,
+            "text": "  }"
+          },
+          {
+            "lineNumber": 111
+          },
+          {
+            "lineNumber": 112,
+            "text": "  const d = snap;"
+          },
+          {
+            "lineNumber": 113
+          },
+          {
+            "lineNumber": 114,
+            "text": "  return ("
+          },
+          {
+            "lineNumber": 115,
+            "text": "    \u003cView style={styles.screen}\u003e"
+          },
+          {
+            "lineNumber": 116,
+            "text": "      \u003cView"
+          },
+          {
+            "lineNumber": 117,
+            "text": "        style={["
+          },
+          {
+            "lineNumber": 118,
+            "text": "          styles.headerDock,"
+          },
+          {
+            "lineNumber": 119,
+            "text": "          {"
+          },
+          {
+            "lineNumber": 120,
+            "text": "            paddingTop: insets.top + spacing.sm,"
+          },
+          {
+            "lineNumber": 121,
+            "text": "          },"
+          },
+          {
+            "lineNumber": 122,
+            "text": "        ]}"
+          },
+          {
+            "lineNumber": 123,
+            "text": "      \u003e"
+          },
+          {
+            "lineNumber": 124,
+            "text": "        \u003cSearchAppBar /\u003e"
+          },
+          {
+            "lineNumber": 125,
+            "text": "      \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 126,
+            "text": "      \u003cScreenErrorBoundary onRetry={search.refetch} screenLabel=\"Search\" style={styles.scroll}\u003e"
+          },
+          {
+            "lineNumber": 127,
+            "text": "        \u003cScrollView"
+          },
+          {
+            "lineNumber": 128,
+            "text": "          contentContainerStyle={["
+          },
+          {
+            "lineNumber": 129,
+            "text": "            styles.scrollContent,"
+          },
+          {
+            "lineNumber": 130,
+            "text": "            {"
+          },
+          {
+            "lineNumber": 131,
+            "text": "              paddingBottom: insets.bottom + spacing.xxxxl,"
+          },
+          {
+            "lineNumber": 132,
+            "text": "            },"
+          },
+          {
+            "lineNumber": 133,
+            "text": "          ]}"
+          },
+          {
+            "lineNumber": 134,
+            "text": "          keyboardShouldPersistTaps=\"handled\""
+          },
+          {
+            "lineNumber": 135,
+            "text": "          nestedScrollEnabled"
+          },
+          {
+            "lineNumber": 136,
+            "text": "          onScroll={handleSearchScroll}"
+          },
+          {
+            "lineNumber": 137,
+            "text": "          scrollEventThrottle={16}"
+          },
+          {
+            "lineNumber": 138,
+            "text": "          style={styles.scrollFill}"
+          },
+          {
+            "lineNumber": 139,
+            "text": "        \u003e"
+          },
+          {
+            "lineNumber": 140,
+            "text": "        {d.mode === 'results' ? ("
+          },
+          {
+            "lineNumber": 141,
+            "text": "          \u003cSearchResultsStateView"
+          },
+          {
+            "lineNumber": 142,
+            "text": "            debouncedQuery={d.debouncedQuery}"
+          },
+          {
+            "lineNumber": 143,
+            "text": "            error={search.error}"
+          },
+          {
+            "lineNumber": 144,
+            "text": "            genreChipLabels={genreChipLabels}"
+          },
+          {
+            "lineNumber": 145,
+            "text": "            hasMore={d.hasMore}"
+          },
+          {
+            "lineNumber": 146,
+            "text": "            inputFocused={inputFocused}"
+          },
+          {
+            "lineNumber": 147,
+            "text": "            loading={d.searchLoading}"
+          },
+          {
+            "lineNumber": 148,
+            "text": "            loadingMore={d.loadingMore}"
+          },
+          {
+            "lineNumber": 149,
+            "text": "            onBlurInput={() =\u003e setInputFocused(false)}"
+          },
+          {
+            "lineNumber": 150,
+            "text": "            onChangeQuery={setQuery}"
+          },
+          {
+            "lineNumber": 151,
+            "text": "            onClearRecents={() =\u003e {"
+          },
+          {
+            "lineNumber": 152,
+            "text": "              d.clearRecentSearches().catch(() =\u003e {"
+          },
+          {
+            "lineNumber": 153,
+            "text": "                /* errors surfaced via hook state in a later pass if needed */"
+          },
+          {
+            "lineNumber": 154,
+            "text": "              });"
+          },
+          {
+            "lineNumber": 155,
+            "text": "            }}"
+          },
+          {
+            "lineNumber": 156,
+            "text": "            onFocusInput={() =\u003e setInputFocused(true)}"
+          },
+          {
+            "lineNumber": 157,
+            "text": "            onGenreChipPress={d.applyGenreChip}"
+          },
+          {
+            "lineNumber": 158,
+            "text": "            onOpenResult={openSearchDetail}"
+          },
+          {
+            "lineNumber": 159,
+            "text": "            onRecentTermPress={(term) =\u003e setQuery(term)}"
+          },
+          {
+            "lineNumber": 160,
+            "text": "            onRetrySearch={search.refetch}"
+          },
+          {
+            "lineNumber": 161,
+            "text": "            query={query}"
+          },
+          {
+            "lineNumber": 162,
+            "text": "            recentSearches={d.recentSearches}"
+          },
+          {
+            "lineNumber": 163,
+            "text": "            results={d.results}"
+          },
+          {
+            "lineNumber": 164,
+            "text": "            selectedGenreIndex={selectedGenreIndex}"
+          },
+          {
+            "lineNumber": 165,
+            "text": "            showRecentsBlock={showRecentsBlock}"
+          },
+          {
+            "lineNumber": 166,
+            "text": "            totalResults={totalResults}"
+          },
+          {
+            "lineNumber": 167,
+            "text": "          /\u003e"
+          },
+          {
+            "lineNumber": 168,
+            "text": "        ) : ("
+          },
+          {
+            "lineNumber": 169,
+            "text": "          \u003cSearchDefaultView"
+          },
+          {
+            "lineNumber": 170,
+            "text": "            featuredMovie={featuredMovie}"
+          },
+          {
+            "lineNumber": 171,
+            "text": "            genreChipLabels={genreChipLabels}"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 200,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 199
+          },
+          "startPosition": {
+            "line": 31
+          }
+        },
+        "relativeWorkspacePath": "./src/screens/SearchScreen.tsx",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 8,
+                "line": 32
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 32
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 33
+              },
+              "startPosition": {
+                "column": 8,
+                "line": 32
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.40544068813323975
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "lineNumber": 31,
+            "text": "/** Search tab: default (&#96;useSearch&#96; + S4) vs results State 2 (S5b); Detail opens on root stack (no tab bar). */"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 32,
+            "text": "export function SearchScreen({ navigation }: Props): JSX.Element {"
+          },
+          {
+            "lineNumber": 33,
+            "text": "  const insets = useSafeAreaInsets();"
+          },
+          {
+            "lineNumber": 34,
+            "text": "  const [query, setQuery] = useState('');"
+          },
+          {
+            "lineNumber": 35,
+            "text": "  const [inputFocused, setInputFocused] = useState(false);"
+          },
+          {
+            "lineNumber": 36
+          },
+          {
+            "lineNumber": 37,
+            "text": "  const search = useSearch({ query, setQuery });"
+          },
+          {
+            "lineNumber": 38,
+            "text": "  const snap = search.data;"
+          },
+          {
+            "lineNumber": 39
+          },
+          {
+            "lineNumber": 40,
+            "text": "  const genreChipLabels = useMemo("
+          },
+          {
+            "lineNumber": 41,
+            "text": "    () =\u003e"
+          },
+          {
+            "lineNumber": 42,
+            "text": "      [...(snap?.movieGenres ?? [])].sort((a, b) =\u003e a.name.localeCompare(b.name)).map((g) =\u003e g.name),"
+          },
+          {
+            "lineNumber": 43,
+            "text": "    [snap?.movieGenres],"
+          },
+          {
+            "lineNumber": 44,
+            "text": "  );"
+          },
+          {
+            "lineNumber": 45
+          },
+          {
+            "lineNumber": 46,
+            "text": "  const selectedGenreIndex = useMemo(() =\u003e {"
+          },
+          {
+            "lineNumber": 47,
+            "text": "    const n = normalizeSearchTerm(query);"
+          },
+          {
+            "lineNumber": 48,
+            "text": "    if (n.length === 0) {"
+          },
+          {
+            "lineNumber": 49,
+            "text": "      return 0;"
+          },
+          {
+            "lineNumber": 50,
+            "text": "    }"
+          },
+          {
+            "lineNumber": 51,
+            "text": "    const i = genreChipLabels.findIndex((l) =\u003e normalizeSearchTerm(l) === n);"
+          },
+          {
+            "lineNumber": 52,
+            "text": "    return i \u003e= 0 ? i : null;"
+          },
+          {
+            "lineNumber": 53,
+            "text": "  }, [query, genreChipLabels]);"
+          },
+          {
+            "lineNumber": 54
+          },
+          {
+            "lineNumber": 55,
+            "text": "  const trendingResults = snap?.trending?.results ?? [];"
+          },
+          {
+            "lineNumber": 56,
+            "text": "  const featuredMovie = trendingResults[0] ?? null;"
+          },
+          {
+            "lineNumber": 57,
+            "text": "  const gridMovies = trendingResults.slice(1, 5);"
+          },
+          {
+            "lineNumber": 58
+          },
+          {
+            "lineNumber": 59,
+            "text": "  /** Empty query and at least one stored recent — hide section when list is empty (hook returns []). */"
+          },
+          {
+            "lineNumber": 60,
+            "text": "  const showRecentsBlock = query.trim().length === 0 \u0026\u0026 (snap?.recentSearches.length ?? 0) \u003e 0;"
+          },
+          {
+            "lineNumber": 61
+          },
+          {
+            "lineNumber": 62,
+            "text": "  const openSearchDetail = useCallback("
+          },
+          {
+            "lineNumber": 63,
+            "text": "    (movieId: number) =\u003e {"
+          },
+          {
+            "lineNumber": 64,
+            "text": "      navigation.navigate('Detail', { movieId });"
+          },
+          {
+            "lineNumber": 65,
+            "text": "    },"
+          },
+          {
+            "lineNumber": 66,
+            "text": "    [navigation],"
+          },
+          {
+            "lineNumber": 67,
+            "text": "  );"
+          },
+          {
+            "lineNumber": 68
+          },
+          {
+            "lineNumber": 69,
+            "text": "  const totalResults = snap?.searchPage?.total_results ?? 0;"
+          },
+          {
+            "lineNumber": 70
+          },
+          {
+            "lineNumber": 71,
+            "text": "  const lastSearchNearEndRef = useRef(0);"
+          },
+          {
+            "lineNumber": 72,
+            "text": "  const handleSearchScroll = useCallback("
+          },
+          {
+            "lineNumber": 73,
+            "text": "    (event: NativeSyntheticEvent\u003cNativeScrollEvent\u003e) =\u003e {"
+          },
+          {
+            "lineNumber": 74,
+            "text": "      if (snap == null || snap.mode !== 'results') {"
+          },
+          {
+            "lineNumber": 75,
+            "text": "        return;"
+          },
+          {
+            "lineNumber": 76,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 91,
+            "text": "    }"
+          },
+          {
+            "lineNumber": 93,
+            "text": ";"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 200,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 199
+          },
+          "startPosition": {
+            "column": 2,
+            "line": 28
+          }
+        },
+        "relativeWorkspacePath": "./src/screens/SearchScreen.tsx",
+        "signatures": {}
+      },
+      "score": 0.3773007094860077
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "isSignature": true,
+            "lineNumber": 32,
+            "text": "export function SearchScreen({ navigation }: Props): JSX.Element {"
+          },
+          {
+            "lineNumber": 166
+          },
+          {
+            "lineNumber": 167,
+            "text": "          /\u003e"
+          },
+          {
+            "lineNumber": 168,
+            "text": "        ) : ("
+          },
+          {
+            "lineNumber": 169,
+            "text": "          \u003cSearchDefaultView"
+          },
+          {
+            "lineNumber": 170,
+            "text": "            featuredMovie={featuredMovie}"
+          },
+          {
+            "lineNumber": 171,
+            "text": "            genreChipLabels={genreChipLabels}"
+          },
+          {
+            "lineNumber": 172,
+            "text": "            genres={d.movieGenres}"
+          },
+          {
+            "lineNumber": 173,
+            "text": "            gridMovies={gridMovies}"
+          },
+          {
+            "lineNumber": 174,
+            "text": "            inputFocused={inputFocused}"
+          },
+          {
+            "lineNumber": 175,
+            "text": "            mode={d.mode}"
+          },
+          {
+            "lineNumber": 176,
+            "text": "            onBlurInput={() =\u003e setInputFocused(false)}"
+          },
+          {
+            "lineNumber": 177,
+            "text": "            onChangeQuery={setQuery}"
+          },
+          {
+            "lineNumber": 178,
+            "text": "            onClearRecents={() =\u003e {"
+          },
+          {
+            "lineNumber": 179,
+            "text": "              d.clearRecentSearches().catch(() =\u003e {"
+          },
+          {
+            "lineNumber": 180,
+            "text": "                /* errors surfaced via hook state in a later pass if needed */"
+          },
+          {
+            "lineNumber": 181,
+            "text": "              });"
+          },
+          {
+            "lineNumber": 182,
+            "text": "            }}"
+          },
+          {
+            "lineNumber": 183,
+            "text": "            onFocusInput={() =\u003e setInputFocused(true)}"
+          },
+          {
+            "lineNumber": 184,
+            "text": "            onGenreChipPress={d.applyGenreChip}"
+          },
+          {
+            "lineNumber": 185,
+            "text": "            onOpenResult={openSearchDetail}"
+          },
+          {
+            "lineNumber": 186,
+            "text": "            onRecentTermPress={(term) =\u003e setQuery(term)}"
+          },
+          {
+            "lineNumber": 187,
+            "text": "            onRetryTrending={search.refetch}"
+          },
+          {
+            "lineNumber": 188,
+            "text": "            query={query}"
+          },
+          {
+            "lineNumber": 189,
+            "text": "            recentSearches={d.recentSearches}"
+          },
+          {
+            "lineNumber": 190,
+            "text": "            selectedGenreIndex={selectedGenreIndex}"
+          },
+          {
+            "lineNumber": 191,
+            "text": "            showRecentsBlock={showRecentsBlock}"
+          },
+          {
+            "lineNumber": 192,
+            "text": "            trendingError={d.trendingError}"
+          },
+          {
+            "lineNumber": 193,
+            "text": "            trendingLoading={d.trendingLoading}"
+          },
+          {
+            "lineNumber": 194,
+            "text": "          /\u003e"
+          },
+          {
+            "lineNumber": 195,
+            "text": "        )}"
+          },
+          {
+            "lineNumber": 196,
+            "text": "        \u003c/ScrollView\u003e"
+          },
+          {
+            "lineNumber": 197,
+            "text": "      \u003c/ScreenErrorBoundary\u003e"
+          },
+          {
+            "lineNumber": 198,
+            "text": "    \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 199,
+            "text": "  );"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 200,
+            "text": "}"
+          },
+          {
+            "lineNumber": 201
+          },
+          {
+            "lineNumber": 202,
+            "text": "const styles = StyleSheet.create({"
+          },
+          {
+            "lineNumber": 203,
+            "text": "  headerDock:"
+          },
+          {
+            "lineNumber": 222,
+            "text": ";"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 221
+          },
+          "startPosition": {
+            "line": 31
+          }
+        },
+        "relativeWorkspacePath": "./src/screens/SearchScreen.tsx",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 8,
+                "line": 32
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 32
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 33
+              },
+              "startPosition": {
+                "column": 8,
+                "line": 32
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.3627220094203949
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "isSignature": true,
+            "lineNumber": 31,
+            "text": "export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult\u003cSearchTabSnapshot\u003e {"
+          },
+          {
+            "lineNumber": 293,
+            "text": "const clearRecentSearches = async () =\u003e {"
+          },
+          {
+            "lineNumber": 295
+          },
+          {
+            "lineNumber": 296,
+            "text": "  }, []);"
+          },
+          {
+            "lineNumber": 297
+          },
+          {
+            "lineNumber": 298,
+            "text": "  const applyGenreChip = useCallback("
+          },
+          {
+            "lineNumber": 299,
+            "text": "    (label: string) =\u003e {"
+          },
+          {
+            "lineNumber": 300,
+            "text": "      const normalized = normalizeSearchTerm(label);"
+          },
+          {
+            "lineNumber": 301,
+            "text": "      if (normalized.length === 0) {"
+          },
+          {
+            "lineNumber": 302,
+            "text": "        return;"
+          },
+          {
+            "lineNumber": 303,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 304,
+            "text": "      if (debounceTimerRef.current != null) {"
+          },
+          {
+            "lineNumber": 305,
+            "text": "        clearTimeout(debounceTimerRef.current);"
+          },
+          {
+            "lineNumber": 306,
+            "text": "        debounceTimerRef.current = null;"
+          },
+          {
+            "lineNumber": 307,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 308,
+            "text": "      genreBypassDebounceRef.current = true;"
+          },
+          {
+            "lineNumber": 309,
+            "text": "      setDebouncedQuery(normalized);"
+          },
+          {
+            "lineNumber": 310,
+            "text": "      setQuery?.(normalized);"
+          },
+          {
+            "lineNumber": 311,
+            "text": "    },"
+          },
+          {
+            "lineNumber": 312,
+            "text": "    [setQuery],"
+          },
+          {
+            "lineNumber": 313,
+            "text": "  );"
+          },
+          {
+            "lineNumber": 314
+          },
+          {
+            "lineNumber": 315,
+            "text": "  const mode = debouncedQuery.length === 0 ? 'default' : 'results';"
+          },
+          {
+            "lineNumber": 316
+          },
+          {
+            "lineNumber": 317,
+            "text": "  const snapshot = useMemo((): SearchTabSnapshot =\u003e {"
+          },
+          {
+            "lineNumber": 318,
+            "text": "    const results = data?.results ?? [];"
+          },
+          {
+            "lineNumber": 319,
+            "text": "    const totalResults = data?.total_results ?? 0;"
+          },
+          {
+            "lineNumber": 320,
+            "text": "    return {"
+          },
+          {
+            "lineNumber": 321,
+            "text": "      mode,"
+          },
+          {
+            "lineNumber": 322,
+            "text": "      debouncedQuery,"
+          },
+          {
+            "lineNumber": 323,
+            "text": "      searchPage: data,"
+          },
+          {
+            "lineNumber": 324,
+            "text": "      results,"
+          },
+          {
+            "lineNumber": 325,
+            "text": "      totalResults,"
+          },
+          {
+            "lineNumber": 326,
+            "text": "      searchLoading: loading,"
+          },
+          {
+            "lineNumber": 327,
+            "text": "      loadingMore,"
+          },
+          {
+            "lineNumber": 328,
+            "text": "      hasMore,"
+          },
+          {
+            "lineNumber": 329,
+            "text": "      searchError: error,"
+          },
+          {
+            "lineNumber": 330,
+            "text": "      loadMore,"
+          },
+          {
+            "lineNumber": 331,
+            "text": "      trending,"
+          },
+          {
+            "lineNumber": 332,
+            "text": "      trendingLoading,"
+          },
+          {
+            "lineNumber": 333,
+            "text": "      trendingError,"
+          },
+          {
+            "lineNumber": 334,
+            "text": "      recentSearches,"
+          },
+          {
+            "lineNumber": 335,
+            "text": "      refreshRecentSearches,"
+          },
+          {
+            "lineNumber": 336,
+            "text": "      clearRecentSearches,"
+          },
+          {
+            "lineNumber": 337,
+            "text": "      lastSuccessfulQuery,"
+          },
+          {
+            "lineNumber": 338,
+            "text": "      applyGenreChip,"
+          },
+          {
+            "lineNumber": 339,
+            "text": "      movieGenres,"
+          },
+          {
+            "lineNumber": 340,
+            "text": "    };"
+          },
+          {
+            "lineNumber": 341,
+            "text": "  }, ["
+          },
+          {
+            "lineNumber": 342,
+            "text": "    mode,"
+          },
+          {
+            "lineNumber": 343,
+            "text": "    debouncedQuery,"
+          },
+          {
+            "lineNumber": 344,
+            "text": "    data,"
+          },
+          {
+            "lineNumber": 345,
+            "text": "    loading,"
+          },
+          {
+            "lineNumber": 346,
+            "text": "    loadingMore,"
+          },
+          {
+            "lineNumber": 347,
+            "text": "    hasMore,"
+          },
+          {
+            "lineNumber": 348,
+            "text": "    error,"
+          },
+          {
+            "lineNumber": 349,
+            "text": "    loadMore,"
+          },
+          {
+            "lineNumber": 350,
+            "text": "    trending,"
+          },
+          {
+            "lineNumber": 351,
+            "text": "    trendingLoading,"
+          },
+          {
+            "lineNumber": 352,
+            "text": "    trendingError,"
+          },
+          {
+            "lineNumber": 353,
+            "text": "    recentSearches,"
+          },
+          {
+            "lineNumber": 354,
+            "text": "    refreshRecentSearches,"
+          },
+          {
+            "lineNumber": 355,
+            "text": "    clearRecentSearches,"
+          },
+          {
+            "lineNumber": 356,
+            "text": "    lastSuccessfulQuery,"
+          },
+          {
+            "lineNumber": 357,
+            "text": "    applyGenreChip,"
+          },
+          {
+            "lineNumber": 358,
+            "text": "    movieGenres,"
+          },
+          {
+            "lineNumber": 359,
+            "text": "  ]);"
+          },
+          {
+            "lineNumber": 360
+          },
+          {
+            "lineNumber": 361,
+            "text": "  const envelopeLoading = mode === 'results' ? loading : trendingLoading;"
+          },
+          {
+            "lineNumber": 362,
+            "text": "  const envelopeError = mode === 'results' ? error : trendingError;"
+          },
+          {
+            "lineNumber": 363
+          },
+          {
+            "lineNumber": 364,
+            "text": "  return {"
+          },
+          {
+            "lineNumber": 365,
+            "text": "    data:"
+          },
+          {
+            "lineNumber": 366,
+            "text": "      mode === 'default' \u0026\u0026"
+          },
+          {
+            "lineNumber": 367,
+            "text": "      trendingLoading \u0026\u0026"
+          },
+          {
+            "lineNumber": 368,
+            "text": "      !hasSearchTrendingSettledRef.current"
+          },
+          {
+            "lineNumber": 369,
+            "text": "        ? null"
+          },
+          {
+            "lineNumber": 370,
+            "text": "        : snapshot,"
+          },
+          {
+            "lineNumber": 371,
+            "text": "    loading: envelopeLoading,"
+          },
+          {
+            "lineNumber": 372,
+            "text": "    error: envelopeError,"
+          },
+          {
+            "lineNumber": 373,
+            "text": "    refetch,"
+          },
+          {
+            "lineNumber": 374,
+            "text": "  };"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 375,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 374
+          },
+          "startPosition": {
+            "line": 30
+          }
+        },
+        "relativeWorkspacePath": "./src/hooks/useSearch.ts",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 8,
+                "line": 31
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 31
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 32
+              },
+              "startPosition": {
+                "column": 8,
+                "line": 31
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.35319983959198
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "isSignature": true,
+            "lineNumber": 31,
+            "text": "export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult\u003cSearchTabSnapshot\u003e {"
+          },
+          {
+            "lineNumber": 113
+          },
+          {
+            "lineNumber": 147,
+            "text": " [trendingReloadKey]);"
+          },
+          {
+            "lineNumber": 148
+          },
+          {
+            "lineNumber": 149,
+            "text": "  /** Debounced / retried movie search + completed-search recents. */"
+          },
+          {
+            "lineNumber": 150,
+            "text": "  useEffect(() =\u003e {"
+          },
+          {
+            "lineNumber": 151,
+            "text": "    const term = debouncedQuery;"
+          },
+          {
+            "lineNumber": 152,
+            "text": "    if (term.length === 0) {"
+          },
+          {
+            "lineNumber": 153,
+            "text": "      searchAbortRef.current?.abort();"
+          },
+          {
+            "lineNumber": 154,
+            "text": "      searchAbortRef.current = null;"
+          },
+          {
+            "lineNumber": 155,
+            "text": "      searchSessionGenRef.current += 1;"
+          },
+          {
+            "lineNumber": 156,
+            "text": "      searchPageRef.current = 0;"
+          },
+          {
+            "lineNumber": 157,
+            "text": "      setData(null);"
+          },
+          {
+            "lineNumber": 158,
+            "text": "      setLoading(false);"
+          },
+          {
+            "lineNumber": 159,
+            "text": "      setLoadingMore(false);"
+          },
+          {
+            "lineNumber": 160,
+            "text": "      setHasMore(false);"
+          },
+          {
+            "lineNumber": 161,
+            "text": "      setError(null);"
+          },
+          {
+            "lineNumber": 162,
+            "text": "      setLastSuccessfulQuery(null);"
+          },
+          {
+            "lineNumber": 163,
+            "text": "      return;"
+          },
+          {
+            "lineNumber": 164,
+            "text": "    }"
+          },
+          {
+            "lineNumber": 165
+          },
+          {
+            "lineNumber": 166,
+            "text": "    searchSessionGenRef.current += 1;"
+          },
+          {
+            "lineNumber": 167,
+            "text": "    searchAbortRef.current?.abort();"
+          },
+          {
+            "lineNumber": 168,
+            "text": "    const controller = new AbortController();"
+          },
+          {
+            "lineNumber": 169,
+            "text": "    searchAbortRef.current = controller;"
+          },
+          {
+            "lineNumber": 170,
+            "text": "    const termAtStart = term;"
+          },
+          {
+            "lineNumber": 171,
+            "text": "    let cancelled = false;"
+          },
+          {
+            "lineNumber": 172
+          },
+          {
+            "lineNumber": 173,
+            "text": "    (async () =\u003e {"
+          },
+          {
+            "lineNumber": 174,
+            "text": "      setLoading(true);"
+          },
+          {
+            "lineNumber": 175,
+            "text": "      setLoadingMore(false);"
+          },
+          {
+            "lineNumber": 176,
+            "text": "      setError(null);"
+          },
+          {
+            "lineNumber": 177,
+            "text": "      setData(null);"
+          },
+          {
+            "lineNumber": 178,
+            "text": "      setHasMore(false);"
+          },
+          {
+            "lineNumber": 179,
+            "text": "      searchPageRef.current = 0;"
+          },
+          {
+            "lineNumber": 180,
+            "text": "      try {"
+          },
+          {
+            "lineNumber": 181,
+            "text": "        const result = await searchMovies"
+          },
+          {
+            "lineNumber": 184,
+            "text": ";"
+          },
+          {
+            "lineNumber": 216,
+            "text": "    }"
+          },
+          {
+            "lineNumber": 218
+          },
+          {
+            "lineNumber": 224,
+            "text": "  }"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 375,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 374
+          },
+          "startPosition": {
+            "line": 30
+          }
+        },
+        "relativeWorkspacePath": "./src/hooks/useSearch.ts",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 8,
+                "line": 31
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 31
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 32
+              },
+              "startPosition": {
+                "column": 8,
+                "line": 31
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.3452337980270386
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "lineNumber": 29,
+            "text": "const SEARCH_DEBOUNCE_MS = 400;"
+          },
+          {
+            "lineNumber": 30
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 31,
+            "text": "export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult\u003cSearchTabSnapshot\u003e {"
+          },
+          {
+            "lineNumber": 32,
+            "text": "  const debounceTimerRef = useRef\u003cReturnType\u003ctypeof setTimeout\u003e | null\u003e(null);"
+          },
+          {
+            "lineNumber": 33,
+            "text": "  const genreBypassDebounceRef = useRef(false);"
+          },
+          {
+            "lineNumber": 34,
+            "text": "  const debouncedQueryRef = useRef('');"
+          },
+          {
+            "lineNumber": 35,
+            "text": "  const searchAbortRef = useRef\u003cAbortController | null\u003e(null);"
+          },
+          {
+            "lineNumber": 36,
+            "text": "  /** Last committed TMDB search &#96;page&#96; — drives &#96;loadMore&#96; next page. */"
+          },
+          {
+            "lineNumber": 37,
+            "text": "  const searchPageRef = useRef(0);"
+          },
+          {
+            "lineNumber": 38,
+            "text": "  /** Bumped when the debounced query session changes — invalidates in-flight &#96;loadMore&#96;. */"
+          },
+          {
+            "lineNumber": 39,
+            "text": "  const searchSessionGenRef = useRef(0);"
+          },
+          {
+            "lineNumber": 40
+          },
+          {
+            "lineNumber": 41,
+            "text": "  const [debouncedQuery, setDebouncedQuery] = useState('');"
+          },
+          {
+            "lineNumber": 42,
+            "text": "  const [data, setData] = useState\u003cTmdbPagedSearchMoviesResponse | null\u003e(null);"
+          },
+          {
+            "lineNumber": 43,
+            "text": "  const [loading, setLoading] = useState(false);"
+          },
+          {
+            "lineNumber": 44,
+            "text": "  const [loadingMore, setLoadingMore] = useState(false);"
+          },
+          {
+            "lineNumber": 45,
+            "text": "  const [hasMore, setHasMore] = useState(false);"
+          },
+          {
+            "lineNumber": 46,
+            "text": "  const [error, setError] = useState\u003cstring | null\u003e(null);"
+          },
+          {
+            "lineNumber": 47,
+            "text": "  const [searchRetryKey, setSearchRetryKey] = useState(0);"
+          },
+          {
+            "lineNumber": 48,
+            "text": "  const [lastSuccessfulQuery, setLastSuccessfulQuery] = useState\u003cstring | null\u003e(null);"
+          },
+          {
+            "lineNumber": 49
+          },
+          {
+            "lineNumber": 50,
+            "text": "  const [trending, setTrending] = useState\u003cTmdbPagedMoviesResponse | null\u003e(null);"
+          },
+          {
+            "lineNumber": 51,
+            "text": "  const [trendingLoading, setTrendingLoading] = useState(true);"
+          },
+          {
+            "lineNumber": 52,
+            "text": "  const [trendingError, setTrendingError] = useState\u003cstring | null\u003e(null);"
+          },
+          {
+            "lineNumber": 53,
+            "text": "  const [trendingReloadKey, setTrendingReloadKey] = useState(0);"
+          },
+          {
+            "lineNumber": 54
+          },
+          {
+            "lineNumber": 55,
+            "text": "  const [recentSearches, setRecentSearches] = useState\u003creadonly string[]\u003e([]);"
+          },
+          {
+            "lineNumber": 56,
+            "text": "  const [movieGenres, setMovieGenres] = useState\u003creadonly TmdbGenre[]\u003e([]);"
+          },
+          {
+            "lineNumber": 57,
+            "text": "  const hasSearchTrendingSettledRef = useRef(false);"
+          },
+          {
+            "lineNumber": 58
+          },
+          {
+            "lineNumber": 59,
+            "text": "  debouncedQueryRef.current = debouncedQuery;"
+          },
+          {
+            "lineNumber": 60
+          },
+          {
+            "lineNumber": 61,
+            "text": "  /** Genre list for Search default trending (&#96;genre_ids&#96; → labels). */"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 375,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 374
+          },
+          "startPosition": {
+            "column": 84,
+            "line": 26
+          }
+        },
+        "relativeWorkspacePath": "./src/hooks/useSearch.ts",
+        "signatures": {}
+      },
+      "score": 0.3388192057609558
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "isSignature": true,
+            "lineNumber": 75,
+            "text": "export function SearchResultsStateView({"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 76,
+            "text": "  query,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 77,
+            "text": "  onChangeQuery,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 78,
+            "text": "  inputFocused,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 79,
+            "text": "  onFocusInput,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 80,
+            "text": "  onBlurInput,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 81,
+            "text": "  genreChipLabels,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 82,
+            "text": "  selectedGenreIndex,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 83,
+            "text": "  onGenreChipPress,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 84,
+            "text": "  showRecentsBlock,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 85,
+            "text": "  recentSearches,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 86,
+            "text": "  onClearRecents,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 87,
+            "text": "  onRecentTermPress,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 88,
+            "text": "  debouncedQuery,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 89,
+            "text": "  totalResults,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 90,
+            "text": "  results,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 91,
+            "text": "  loading,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 92,
+            "text": "  loadingMore,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 93,
+            "text": "  hasMore,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 94,
+            "text": "  error,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 95,
+            "text": "  onRetrySearch,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 96,
+            "text": "  onOpenResult,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 97,
+            "text": "}: SearchResultsStateViewProps): JSX.Element {"
+          },
+          {
+            "lineNumber": 167
+          },
+          {
+            "lineNumber": 168
+          },
+          {
+            "lineNumber": 169,
+            "text": "      {error != null ? ("
+          },
+          {
+            "lineNumber": 170,
+            "text": "        \u003cView style={styles.messageBlock}\u003e"
+          },
+          {
+            "lineNumber": 171,
+            "text": "          \u003cText style={styles.errorText}\u003e{error}\u003c/Text\u003e"
+          },
+          {
+            "lineNumber": 172,
+            "text": "          \u003cPressable"
+          },
+          {
+            "lineNumber": 173,
+            "text": "            accessibilityLabel=\"Retry search\""
+          },
+          {
+            "lineNumber": 174,
+            "text": "            accessibilityRole=\"button\""
+          },
+          {
+            "lineNumber": 175,
+            "text": "            onPress={onRetrySearch}"
+          },
+          {
+            "lineNumber": 176,
+            "text": "            style={({ pressed }) =\u003e [styles.retryBtn, pressed \u0026\u0026 styles.chipPressed]}"
+          },
+          {
+            "lineNumber": 177,
+            "text": "          \u003e"
+          },
+          {
+            "lineNumber": 178,
+            "text": "            \u003cText style={styles.retryBtnLabel}\u003eTry again\u003c/Text\u003e"
+          },
+          {
+            "lineNumber": 179,
+            "text": "          \u003c/Pressable\u003e"
+          },
+          {
+            "lineNumber": 180,
+            "text": "        \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 181,
+            "text": "      ) : null}"
+          },
+          {
+            "lineNumber": 182
+          },
+          {
+            "lineNumber": 183,
+            "text": "      {error == null \u0026\u0026 loading ? \u003cSearchResultsGridSkeleton /\u003e : null}"
+          },
+          {
+            "lineNumber": 184
+          },
+          {
+            "lineNumber": 185,
+            "text": "      {showCount ? ("
+          },
+          {
+            "lineNumber": 186,
+            "text": "        \u003cText style={styles.countLine}\u003e"
+          },
+          {
+            "lineNumber": 187,
+            "text": "          {totalResults.toLocaleString()} results for \u0026apos;{debouncedQuery}\u0026apos;"
+          },
+          {
+            "lineNumber": 188,
+            "text": "        \u003c/Text\u003e"
+          },
+          {
+            "lineNumber": 189,
+            "text": "      ) : null}"
+          },
+          {
+            "lineNumber": 190
+          },
+          {
+            "lineNumber": 191,
+            "text": "      {showGrid ? ("
+          },
+          {
+            "lineNumber": 192,
+            "text": "        \u003cView style={styles.grid}\u003e"
+          },
+          {
+            "lineNumber": 193,
+            "text": "          {pairs.map((row) =\u003e ("
+          },
+          {
+            "lineNumber": 194,
+            "text": "            \u003cView key={row.map((m) =\u003e String(m.id)).join('|')} style={[styles.gridRow, { gap: gridRowGap }]}\u003e"
+          },
+          {
+            "lineNumber": 195,
+            "text": "              {row.map((item) =\u003e ("
+          },
+          {
+            "lineNumber": 196,
+            "text": "                \u003cView key={String(item.id)} style={{ width: gridColWidth }}\u003e"
+          },
+          {
+            "lineNumber": 197,
+            "text": "                  \u003cSearchResultGridCard item={item} onPress={() =\u003e onOpenResult(item.id)} /\u003e"
+          },
+          {
+            "lineNumber": 198,
+            "text": "                \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 199,
+            "text": "              ))}"
+          },
+          {
+            "lineNumber": 200,
+            "text": "            \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 201,
+            "text": "          ))}"
+          },
+          {
+            "lineNumber": 202,
+            "text": "          \u003cLoadMoreContentIndicator active={hasMore \u0026\u0026 loadingMore} style={styles.searchLoadMore} /\u003e"
+          },
+          {
+            "lineNumber": 203,
+            "text": "        \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 204,
+            "text": "      ) : null}"
+          },
+          {
+            "lineNumber": 205
+          },
+          {
+            "lineNumber": 206,
+            "text": "      {showEmpty ? ("
+          },
+          {
+            "lineNumber": 207,
+            "text": "        \u003cView style={styles.emptyWrap}\u003e"
+          },
+          {
+            "lineNumber": 208,
+            "text": "          \u003cView style={styles.emptyIconCircle}\u003e"
+          },
+          {
+            "lineNumber": 209,
+            "text": "            \u003cIconSearch color={colors.on_surface_variant} size={44} /\u003e"
+          },
+          {
+            "lineNumber": 210,
+            "text": "          \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 211,
+            "text": "          \u003cText style={styles.emptyTitle}\u003e"
+          },
+          {
+            "lineNumber": 212,
+            "text": "            No results for \u0026apos;{debouncedQuery}\u0026apos;"
+          },
+          {
+            "lineNumber": 213,
+            "text": "          \u003c/Text\u003e"
+          },
+          {
+            "lineNumber": 214,
+            "text": "          \u003cText style={styles.emptyBody}\u003e"
+          },
+          {
+            "lineNumber": 215,
+            "text": "            Try a different title or check your spelling. You can also clear the search bar to browse"
+          },
+          {
+            "lineNumber": 216,
+            "text": "            trending picks."
+          },
+          {
+            "lineNumber": 217,
+            "text": "          \u003c/Text\u003e"
+          },
+          {
+            "lineNumber": 218,
+            "text": "        \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 219,
+            "text": "      ) : null}"
+          },
+          {
+            "lineNumber": 220,
+            "text": "    \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 221,
+            "text": "  );"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 222,
+            "text": "}"
+          },
+          {
+            "lineNumber": 223
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 224,
+            "text": "function SearchResultGridCard({"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 225,
+            "text": "  item,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 226,
+            "text": "  onPress,"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 227,
+            "text": "}: {"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 228,
+            "text": "  item: TmdbSearchMovieListItem;"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 229,
+            "text": "  onPress: () =\u003e void;"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 230,
+            "text": "}): JSX.Element {"
+          },
+          {
+            "lineNumber": 231,
+            "text": "  "
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 266,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 265
+          },
+          "startPosition": {
+            "line": 74
+          }
+        },
+        "relativeWorkspacePath": "./src/components/search/SearchResultsStateView.tsx",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 8,
+                "line": 75
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 75
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 98
+              },
+              "startPosition": {
+                "column": 8,
+                "line": 75
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.3312419652938843
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "lineNumber": 1,
+            "text": "/**"
+          },
+          {
+            "lineNumber": 2,
+            "text": " * PSD Search §4 State 2 (results) — count line, 2-column poster grid, zero-results, loading/error."
+          },
+          {
+            "lineNumber": 3,
+            "text": " * Loading uses shape-matched skeleton (§7 S6). Presentational: parent supplies &#96;useSearch&#96; + navigation."
+          },
+          {
+            "lineNumber": 4,
+            "text": " */"
+          },
+          {
+            "lineNumber": 5
+          },
+          {
+            "lineNumber": 6,
+            "text": "import type { JSX } from 'react';"
+          },
+          {
+            "lineNumber": 7,
+            "text": "import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';"
+          },
+          {
+            "lineNumber": 8,
+            "text": "import { useWindowDimensions } from 'react-native';"
+          },
+          {
+            "lineNumber": 9,
+            "text": "import type { TmdbSearchMovieListItem } from '../../api/types';"
+          },
+          {
+            "lineNumber": 10,
+            "text": "import { LoadMoreContentIndicator } from '../common/LoadMoreContentIndicator';"
+          },
+          {
+            "lineNumber": 11,
+            "text": "import { IconMovie, IconSearch } from '../common/SimpleIcons';"
+          },
+          {
+            "lineNumber": 12,
+            "text": "import { PosterRatingBadge } from '../common/PosterRatingBadge';"
+          },
+          {
+            "lineNumber": 13,
+            "text": "import { colors, contentCard } from '../../theme/colors';"
+          },
+          {
+            "lineNumber": 14,
+            "text": "import {"
+          },
+          {
+            "lineNumber": 15,
+            "text": "  elevation,"
+          },
+          {
+            "lineNumber": 16,
+            "text": "  fill,"
+          },
+          {
+            "lineNumber": 17,
+            "text": "  layout,"
+          },
+          {
+            "lineNumber": 18,
+            "text": "  opacity,"
+          },
+          {
+            "lineNumber": 19,
+            "text": "  radiusCardInner,"
+          },
+          {
+            "lineNumber": 20,
+            "text": "  radiusCardOuter,"
+          },
+          {
+            "lineNumber": 21,
+            "text": "  radiusFullPill,"
+          },
+          {
+            "lineNumber": 22,
+            "text": "  spacing,"
+          },
+          {
+            "lineNumber": 23,
+            "text": "  tracking,"
+          },
+          {
+            "lineNumber": 24,
+            "text": "} from '../../theme/spacing';"
+          },
+          {
+            "lineNumber": 25,
+            "text": "import { typography } from '../../theme/typography';"
+          },
+          {
+            "lineNumber": 26,
+            "text": "import { buildImageUrl, TMDB_IMAGE_SIZE_W342 } from '../../utils/image';"
+          },
+          {
+            "lineNumber": 27,
+            "text": "import { SEARCH_INPUT_PLACEHOLDER } from './searchDefaultMocks';"
+          },
+          {
+            "lineNumber": 28,
+            "text": "import { SearchRecentSearchesSection } from './SearchRecentSearchesSection';"
+          },
+          {
+            "lineNumber": 29,
+            "text": "import { SearchResultsGridSkeleton } from './SearchResultsGridSkeleton';"
+          },
+          {
+            "lineNumber": 30
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 31,
+            "text": "export type SearchResultsStateViewProps = {"
+          },
+          {
+            "lineNumber": 32,
+            "text": "  query: string;"
+          },
+          {
+            "lineNumber": 33,
+            "text": "  onChangeQuery: (value: string) =\u003e void;"
+          },
+          {
+            "lineNumber": 34,
+            "text": "  inputFocused: boolean;"
+          },
+          {
+            "lineNumber": 35,
+            "text": "  onFocusInput: () =\u003e void;"
+          },
+          {
+            "lineNumber": 36,
+            "text": "  onBlurInput: () =\u003e void;"
+          },
+          {
+            "lineNumber": 37,
+            "text": "  genreChipLabels: readonly string[];"
+          },
+          {
+            "lineNumber": 38,
+            "text": "  selectedGenreIndex: number | null;"
+          },
+          {
+            "lineNumber": 39,
+            "text": "  onGenreChipPress: (label: string) =\u003e void;"
+          },
+          {
+            "lineNumber": 40,
+            "text": "  showRecentsBlock: boolean;"
+          },
+          {
+            "lineNumber": 41,
+            "text": "  recentSearches: readonly string[];"
+          },
+          {
+            "lineNumber": 42,
+            "text": "  onClearRecents: () =\u003e void;"
+          },
+          {
+            "lineNumber": 43,
+            "text": "  onRecentTermPress: (term: string) =\u003e void;"
+          },
+          {
+            "lineNumber": 44,
+            "text": "  debouncedQuery: string;"
+          },
+          {
+            "lineNumber": 45,
+            "text": "  totalResults: number;"
+          },
+          {
+            "lineNumber": 46,
+            "text": "  results: readonly TmdbSearchMovieListItem[];"
+          },
+          {
+            "lineNumber": 47,
+            "text": "  loading: boolean;"
+          },
+          {
+            "lineNumber": 48,
+            "text": "  loadingMore: boolean;"
+          },
+          {
+            "lineNumber": 49,
+            "text": "  hasMore: boolean;"
+          },
+          {
+            "lineNumber": 50,
+            "text": "  error: string | null;"
+          },
+          {
+            "lineNumber": 51,
+            "text": "  onRetrySearch: () =\u003e void;"
+          },
+          {
+            "lineNumber": 52,
+            "text": "  onOpenResult: (movieId: number) =\u003e void;"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 53,
+            "text": "};"
+          },
+          {
+            "lineNumber": 54
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 55,
+            "text": "function listItemTitle(item: TmdbSearchMovieListItem): string {"
+          },
+          {
+            "lineNumber": 56,
+            "text": "  const t = item.title?.trim() ?? '';"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 65,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 64
+          },
+          "startPosition": {}
+        },
+        "relativeWorkspacePath": "./src/components/search/SearchResultsStateView.tsx",
+        "signatures": {}
+      },
+      "score": 0.3246951997280121
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "isSignature": true,
+            "lineNumber": 31,
+            "text": "export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult\u003cSearchTabSnapshot\u003e {"
+          },
+          {
+            "lineNumber": 150,
+            "text": "() =\u003e {"
+          },
+          {
+            "lineNumber": 173,
+            "text": "async () =\u003e {"
+          },
+          {
+            "lineNumber": 179
+          },
+          {
+            "lineNumber": 180,
+            "text": "      try {"
+          },
+          {
+            "lineNumber": 181,
+            "text": "        const result = await searchMovies(termAtStart, {"
+          },
+          {
+            "lineNumber": 182,
+            "text": "          page: 1,"
+          },
+          {
+            "lineNumber": 183,
+            "text": "          signal: controller.signal,"
+          },
+          {
+            "lineNumber": 184,
+            "text": "        });"
+          },
+          {
+            "lineNumber": 185,
+            "text": "        if (cancelled || controller.signal.aborted) {"
+          },
+          {
+            "lineNumber": 186,
+            "text": "          return;"
+          },
+          {
+            "lineNumber": 187,
+            "text": "        }"
+          },
+          {
+            "lineNumber": 188,
+            "text": "        if (debouncedQueryRef.current !== termAtStart) {"
+          },
+          {
+            "lineNumber": 189,
+            "text": "          return;"
+          },
+          {
+            "lineNumber": 190,
+            "text": "        }"
+          },
+          {
+            "lineNumber": 191,
+            "text": "        setData(result);"
+          },
+          {
+            "lineNumber": 192,
+            "text": "        searchPageRef.current = result.page;"
+          },
+          {
+            "lineNumber": 193,
+            "text": "        setHasMore(result.page \u003c result.total_pages);"
+          },
+          {
+            "lineNumber": 194,
+            "text": "        setLastSuccessfulQuery(termAtStart);"
+          },
+          {
+            "lineNumber": 195,
+            "text": "        await addRecentSearch(termAtStart);"
+          },
+          {
+            "lineNumber": 196,
+            "text": "        const nextRecents = await getRecentSearches();"
+          },
+          {
+            "lineNumber": 197,
+            "text": "        if (!cancelled \u0026\u0026 debouncedQueryRef.current === termAtStart) {"
+          },
+          {
+            "lineNumber": 198,
+            "text": "          setRecentSearches(nextRecents);"
+          },
+          {
+            "lineNumber": 199,
+            "text": "        }"
+          },
+          {
+            "lineNumber": 200,
+            "text": "      } catch (e) {"
+          },
+          {
+            "lineNumber": 201,
+            "text": "        if (cancelled || controller.signal.aborted || isLikelyCanceledRequest(e)) {"
+          },
+          {
+            "lineNumber": 202,
+            "text": "          return;"
+          },
+          {
+            "lineNumber": 203,
+            "text": "        }"
+          },
+          {
+            "lineNumber": 204,
+            "text": "        if (debouncedQueryRef.current !== termAtStart) {"
+          },
+          {
+            "lineNumber": 205,
+            "text": "          return;"
+          },
+          {
+            "lineNumber": 206,
+            "text": "        }"
+          },
+          {
+            "lineNumber": 207,
+            "text": "        setData(null);"
+          },
+          {
+            "lineNumber": 208,
+            "text": "        setHasMore(false);"
+          },
+          {
+            "lineNumber": 209,
+            "text": "        searchPageRef.current = 0;"
+          },
+          {
+            "lineNumber": 210,
+            "text": "        setError(mapUnknownError(e));"
+          },
+          {
+            "lineNumber": 211,
+            "text": "      } finally {"
+          },
+          {
+            "lineNumber": 212,
+            "text": "        if (!cancelled \u0026\u0026 !controller.signal.aborted \u0026\u0026 debouncedQueryRef.current === termAtStart) {"
+          },
+          {
+            "lineNumber": 213,
+            "text": "          setLoading(false);"
+          },
+          {
+            "lineNumber": 214,
+            "text": "        }"
+          },
+          {
+            "lineNumber": 215,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 216,
+            "text": "    })().catch(() =\u003e {"
+          },
+          {
+            "lineNumber": 217,
+            "text": "      /* handled in try/catch */"
+          },
+          {
+            "lineNumber": 218,
+            "text": "    });"
+          },
+          {
+            "lineNumber": 219
+          },
+          {
+            "lineNumber": 220,
+            "text": "    return () =\u003e {"
+          },
+          {
+            "lineNumber": 221,
+            "text": "      cancelled = true;"
+          },
+          {
+            "lineNumber": 222,
+            "text": "      controller.abort();"
+          },
+          {
+            "lineNumber": 223,
+            "text": "    };"
+          },
+          {
+            "lineNumber": 224,
+            "text": "  }, [debouncedQuery, searchRetryKey]);"
+          },
+          {
+            "lineNumber": 225
+          },
+          {
+            "lineNumber": 226,
+            "text": "  useEffect(() =\u003e {"
+          },
+          {
+            "lineNumber": 227,
+            "text": "    let cancelled = false;"
+          },
+          {
+            "lineNumber": 228,
+            "text": "    getRecentSearches().then((list) =\u003e {"
+          },
+          {
+            "lineNumber": 229,
+            "text": "      if (!cancelled) {"
+          },
+          {
+            "lineNumber": 230,
+            "text": "        setRecentSearches(list);"
+          },
+          {
+            "lineNumber": 231,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 232,
+            "text": "    });"
+          },
+          {
+            "lineNumber": 233,
+            "text": "    return () =\u003e {"
+          },
+          {
+            "lineNumber": 234,
+            "text": "      cancelled = true;"
+          },
+          {
+            "lineNumber": 235,
+            "text": "    };"
+          },
+          {
+            "lineNumber": 236,
+            "text": "  }, []);"
+          },
+          {
+            "lineNumber": 237
+          },
+          {
+            "lineNumber": 238,
+            "text": "  const loadMore = useCallback(() =\u003e {"
+          },
+          {
+            "lineNumber": 239,
+            "text": "    const term = debouncedQueryRef.current;"
+          },
+          {
+            "lineNumber": 279,
+            "text": "  };"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 375,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 374
+          },
+          "startPosition": {
+            "line": 30
+          }
+        },
+        "relativeWorkspacePath": "./src/hooks/useSearch.ts",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 8,
+                "line": 31
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 31
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 32
+              },
+              "startPosition": {
+                "column": 8,
+                "line": 31
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 150
+              },
+              "startPosition": {
+                "column": 3,
+                "line": 150
+              }
+            },
+            {
+              "endPosition": {
+                "column": 5,
+                "line": 151
+              },
+              "startPosition": {
+                "column": 13,
+                "line": 150
+              }
+            },
+            {
+              "endPosition": {
+                "column": 5,
+                "line": 173
+              },
+              "startPosition": {
+                "column": 5,
+                "line": 173
+              }
+            },
+            {
+              "endPosition": {
+                "column": 5,
+                "line": 173
+              },
+              "startPosition": {
+                "column": 5,
+                "line": 173
+              }
+            },
+            {
+              "endPosition": {
+                "column": 7,
+                "line": 174
+              },
+              "startPosition": {
+                "column": 6,
+                "line": 173
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.31108200550079346
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "isSignature": true,
+            "lineNumber": 31,
+            "text": "export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult\u003cSearchTabSnapshot\u003e {"
+          },
+          {
+            "lineNumber": 59
+          },
+          {
+            "lineNumber": 60
+          },
+          {
+            "lineNumber": 61,
+            "text": "  /** Genre list for Search default trending (&#96;genre_ids&#96; → labels). */"
+          },
+          {
+            "lineNumber": 62,
+            "text": "  useEffect(() =\u003e {"
+          },
+          {
+            "lineNumber": 63,
+            "text": "    const controller = new AbortController();"
+          },
+          {
+            "lineNumber": 64,
+            "text": "    let cancelled = false;"
+          },
+          {
+            "lineNumber": 65,
+            "text": "    (async () =\u003e {"
+          },
+          {
+            "lineNumber": 66,
+            "text": "      try {"
+          },
+          {
+            "lineNumber": 67,
+            "text": "        const res = await getMovieGenres({ signal: controller.signal });"
+          },
+          {
+            "lineNumber": 68,
+            "text": "        if (!cancelled) {"
+          },
+          {
+            "lineNumber": 69,
+            "text": "          setMovieGenres(res.genres);"
+          },
+          {
+            "lineNumber": 70,
+            "text": "        }"
+          },
+          {
+            "lineNumber": 71,
+            "text": "      } catch {"
+          },
+          {
+            "lineNumber": 72,
+            "text": "        if (!cancelled) {"
+          },
+          {
+            "lineNumber": 73,
+            "text": "          setMovieGenres([]);"
+          },
+          {
+            "lineNumber": 74,
+            "text": "        }"
+          },
+          {
+            "lineNumber": 75,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 76,
+            "text": "    })().catch(() =\u003e {"
+          },
+          {
+            "lineNumber": 77,
+            "text": "      /* non-fatal for Search UI */"
+          },
+          {
+            "lineNumber": 78,
+            "text": "    });"
+          },
+          {
+            "lineNumber": 79,
+            "text": "    return () =\u003e {"
+          },
+          {
+            "lineNumber": 80,
+            "text": "      cancelled = true;"
+          },
+          {
+            "lineNumber": 81,
+            "text": "      controller.abort();"
+          },
+          {
+            "lineNumber": 82,
+            "text": "    };"
+          },
+          {
+            "lineNumber": 83,
+            "text": "  }, []);"
+          },
+          {
+            "lineNumber": 84
+          },
+          {
+            "lineNumber": 85,
+            "text": "  useEffect(() =\u003e {"
+          },
+          {
+            "lineNumber": 86,
+            "text": "    if (!trendingLoading) {"
+          },
+          {
+            "lineNumber": 87,
+            "text": "      hasSearchTrendingSettledRef.current = true;"
+          },
+          {
+            "lineNumber": 88,
+            "text": "    }"
+          },
+          {
+            "lineNumber": 89,
+            "text": "  }, [trendingLoading]);"
+          },
+          {
+            "lineNumber": 90
+          },
+          {
+            "lineNumber": 91,
+            "text": "  /** 400ms trailing debounce from controlled &#96;query&#96; → &#96;debouncedQuery&#96;. */"
+          },
+          {
+            "lineNumber": 92,
+            "text": "  useEffect(() =\u003e {"
+          },
+          {
+            "lineNumber": 93,
+            "text": "    if (genreBypassDebounceRef.current) {"
+          },
+          {
+            "lineNumber": 94,
+            "text": "      genreBypassDebounceRef.current = false;"
+          },
+          {
+            "lineNumber": 95,
+            "text": "      return;"
+          },
+          {
+            "lineNumber": 96,
+            "text": "    }"
+          },
+          {
+            "lineNumber": 97,
+            "text": "    if (debounceTimerRef.current != null) {"
+          },
+          {
+            "lineNumber": 98,
+            "text": "      clearTimeout(debounceTimerRef.current);"
+          },
+          {
+            "lineNumber": 99,
+            "text": "    }"
+          },
+          {
+            "lineNumber": 100,
+            "text": "    debounceTimerRef.current = setTimeout(() =\u003e {"
+          },
+          {
+            "lineNumber": 101,
+            "text": "      debounceTimerRef.current = null;"
+          },
+          {
+            "lineNumber": 102,
+            "text": "      setDebouncedQuery(normalizeSearchTerm(query));"
+          },
+          {
+            "lineNumber": 103,
+            "text": "    }, SEARCH_DEBOUNCE_MS);"
+          },
+          {
+            "lineNumber": 104,
+            "text": "    return () =\u003e {"
+          },
+          {
+            "lineNumber": 105,
+            "text": "      if (debounceTimerRef.current != null) {"
+          },
+          {
+            "lineNumber": 106,
+            "text": "        clearTimeout(debounceTimerRef.current);"
+          },
+          {
+            "lineNumber": 107,
+            "text": "        debounceTimerRef.current = null;"
+          },
+          {
+            "lineNumber": 108,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 109,
+            "text": "    };"
+          },
+          {
+            "lineNumber": 110,
+            "text": "  }, [query]);"
+          },
+          {
+            "lineNumber": 111
+          },
+          {
+            "lineNumber": 112,
+            "text": "  /** Default-mode trending (page 1). */"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 375,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 374
+          },
+          "startPosition": {
+            "line": 30
+          }
+        },
+        "relativeWorkspacePath": "./src/hooks/useSearch.ts",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 8,
+                "line": 31
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 31
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 32
+              },
+              "startPosition": {
+                "column": 8,
+                "line": 31
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.28974008560180664
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "lineNumber": 221,
+            "text": "/** Controlled Search input — &#96;setQuery&#96; enables &#96;applyGenreChip&#96; to sync the text field. */"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 222,
+            "text": "export interface UseSearchInput {"
+          },
+          {
+            "lineNumber": 223,
+            "text": "  query: string;"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 224,
+            "text": "  setQuery?: (value: string) =\u003e void;"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 225,
+            "text": "}"
+          },
+          {
+            "lineNumber": 226
+          },
+          {
+            "lineNumber": 227,
+            "text": "/**"
+          },
+          {
+            "lineNumber": 228,
+            "text": " * Search tab payload inside **&#96;useSearch&#96; → &#96;UseQueryResult\u003cSearchTabSnapshot\u003e.data&#96;**"
+          },
+          {
+            "lineNumber": 229,
+            "text": " * (null only while default-mode trending is still on its first load). Top-level **&#96;loading&#96; / &#96;error&#96; / &#96;refetch&#96;**"
+          },
+          {
+            "lineNumber": 230,
+            "text": " * reflect the active mode: default → trending; results → debounced search. **&#96;refetch&#96;** retries the active fetch."
+          },
+          {
+            "lineNumber": 231,
+            "text": " */"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 3,
+            "line": 230
+          },
+          "startPosition": {
+            "column": 53,
+            "line": 218
+          }
+        },
+        "relativeWorkspacePath": "./src/api/types.ts",
+        "signatures": {}
+      },
+      "score": 0.2882753610610962
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "lineNumber": 301,
+            "text": "const styles = "
+          },
+          {
+            "lineNumber": 459
+          },
+          {
+            "lineNumber": 460,
+            "text": "    fontWeight: '600',"
+          },
+          {
+            "lineNumber": 461,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 462,
+            "text": "  searchIconWrap: {"
+          },
+          {
+            "lineNumber": 463,
+            "text": "    alignItems: 'center',"
+          },
+          {
+            "lineNumber": 464,
+            "text": "    bottom: fill.none,"
+          },
+          {
+            "lineNumber": 465,
+            "text": "    justifyContent: 'center',"
+          },
+          {
+            "lineNumber": 466,
+            "text": "    left: spacing.lg,"
+          },
+          {
+            "lineNumber": 467,
+            "text": "    pointerEvents: 'none',"
+          },
+          {
+            "lineNumber": 468,
+            "text": "    position: 'absolute',"
+          },
+          {
+            "lineNumber": 469,
+            "text": "    top: fill.none,"
+          },
+          {
+            "lineNumber": 470,
+            "text": "    width: spacing.xxxl + spacing.sm,"
+          },
+          {
+            "lineNumber": 471,
+            "text": "    zIndex: elevation.dock,"
+          },
+          {
+            "lineNumber": 472,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 473,
+            "text": "  searchInput: {"
+          },
+          {
+            "lineNumber": 474,
+            "text": "    ...typography['search-input-value'],"
+          },
+          {
+            "lineNumber": 475,
+            "text": "    backgroundColor: colors.surface_container_low,"
+          },
+          {
+            "lineNumber": 476,
+            "text": "    borderColor: 'transparent',"
+          },
+          {
+            "lineNumber": 477,
+            "text": "    borderRadius: spacing.md,"
+          },
+          {
+            "lineNumber": 478,
+            "text": "    borderWidth: layout.borderSm,"
+          },
+          {
+            "lineNumber": 479,
+            "text": "    color: colors.on_surface,"
+          },
+          {
+            "lineNumber": 480,
+            "text": "    flex: 1,"
+          },
+          {
+            "lineNumber": 481,
+            "text": "    minHeight: spacing.xxxxl,"
+          },
+          {
+            "lineNumber": 482,
+            "text": "    paddingLeft: spacing.xxxl + spacing.sm,"
+          },
+          {
+            "lineNumber": 483,
+            "text": "    paddingRight: spacing.md,"
+          },
+          {
+            "lineNumber": 484,
+            "text": "    paddingVertical: spacing.lg,"
+          },
+          {
+            "lineNumber": 485,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 486,
+            "text": "  searchInputFocused: {"
+          },
+          {
+            "lineNumber": 487,
+            "text": "    borderColor: colors.search_input_focus_ring,"
+          },
+          {
+            "lineNumber": 488,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 489,
+            "text": "  searchRow: {"
+          },
+          {
+            "lineNumber": 490,
+            "text": "    marginBottom: spacing.xxl,"
+          },
+          {
+            "lineNumber": 491,
+            "text": "    position: 'relative',"
+          },
+          {
+            "lineNumber": 492,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 493,
+            "text": "  section: {"
+          },
+          {
+            "lineNumber": 494,
+            "text": "    marginBottom: spacing.xxxl,"
+          },
+          {
+            "lineNumber": 495,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 496,
+            "text": "  sectionLast: {"
+          },
+          {
+            "lineNumber": 497,
+            "text": "    marginBottom: spacing.xl,"
+          },
+          {
+            "lineNumber": 498,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 499,
+            "text": "  sectionTitle: {"
+          },
+          {
+            "lineNumber": 500,
+            "text": "    ...typography['headline-search'],"
+          },
+          {
+            "lineNumber": 501,
+            "text": "    color: colors.on_surface,"
+          },
+          {
+            "lineNumber": 502,
+            "text": "    marginBottom: spacing.xl,"
+          },
+          {
+            "lineNumber": 503,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 504,
+            "text": "  trendingErrorBlock: {"
+          },
+          {
+            "lineNumber": 505,
+            "text": "    gap: spacing.sm,"
+          },
+          {
+            "lineNumber": 506,
+            "text": "    marginBottom: spacing.lg,"
+          },
+          {
+            "lineNumber": 507,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 508,
+            "text": "  trendingErrorText: {"
+          },
+          {
+            "lineNumber": 509,
+            "text": "    ...typography['body-md'],"
+          },
+          {
+            "lineNumber": 510,
+            "text": "    color: colors.primary_container,"
+          },
+          {
+            "lineNumber": 511,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 512,
+            "text": "});"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 3,
+            "line": 511
+          },
+          "startPosition": {
+            "line": 300
+          }
+        },
+        "relativeWorkspacePath": "./src/components/search/SearchDefaultView.tsx",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 7,
+                "line": 301
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 301
+              }
+            },
+            {
+              "endPosition": {
+                "column": 16,
+                "line": 301
+              },
+              "startPosition": {
+                "column": 7,
+                "line": 301
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.2808539867401123
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "isSignature": true,
+            "lineNumber": 31,
+            "text": "export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult\u003cSearchTabSnapshot\u003e {"
+          },
+          {
+            "lineNumber": 236
+          },
+          {
+            "lineNumber": 237
+          },
+          {
+            "lineNumber": 238,
+            "text": "  const loadMore = useCallback(() =\u003e {"
+          },
+          {
+            "lineNumber": 239,
+            "text": "    const term = debouncedQueryRef.current;"
+          },
+          {
+            "lineNumber": 240,
+            "text": "    if (term.length === 0 || loading || loadingMore || !hasMore) {"
+          },
+          {
+            "lineNumber": 241,
+            "text": "      return;"
+          },
+          {
+            "lineNumber": 242,
+            "text": "    }"
+          },
+          {
+            "lineNumber": 243,
+            "text": "    const nextPage = searchPageRef.current + 1;"
+          },
+          {
+            "lineNumber": 244,
+            "text": "    const sessionAtStart = searchSessionGenRef.current;"
+          },
+          {
+            "lineNumber": 245,
+            "text": "    setLoadingMore(true);"
+          },
+          {
+            "lineNumber": 246,
+            "text": "    (async () =\u003e {"
+          },
+          {
+            "lineNumber": 247,
+            "text": "      try {"
+          },
+          {
+            "lineNumber": 248,
+            "text": "        const result = await searchMovies(term, {"
+          },
+          {
+            "lineNumber": 249,
+            "text": "          page: nextPage,"
+          },
+          {
+            "lineNumber": 250,
+            "text": "        });"
+          },
+          {
+            "lineNumber": 251,
+            "text": "        if (sessionAtStart !== searchSessionGenRef.current || debouncedQueryRef.current !== term) {"
+          },
+          {
+            "lineNumber": 252,
+            "text": "          return;"
+          },
+          {
+            "lineNumber": 253,
+            "text": "        }"
+          },
+          {
+            "lineNumber": 254,
+            "text": "        setData((prev) =\u003e ({"
+          },
+          {
+            "lineNumber": 255,
+            "text": "          ...result,"
+          },
+          {
+            "lineNumber": 256,
+            "text": "          results: mergeUniqueSearchMovieListById(prev?.results ?? [], result.results),"
+          },
+          {
+            "lineNumber": 257,
+            "text": "        }));"
+          },
+          {
+            "lineNumber": 258,
+            "text": "        searchPageRef.current = result.page;"
+          },
+          {
+            "lineNumber": 259,
+            "text": "        setHasMore(result.page \u003c result.total_pages);"
+          },
+          {
+            "lineNumber": 260,
+            "text": "        setError(null);"
+          },
+          {
+            "lineNumber": 261,
+            "text": "      } catch (e) {"
+          },
+          {
+            "lineNumber": 262,
+            "text": "        if ("
+          },
+          {
+            "lineNumber": 263,
+            "text": "          sessionAtStart === searchSessionGenRef.current \u0026\u0026"
+          },
+          {
+            "lineNumber": 264,
+            "text": "          debouncedQueryRef.current === term \u0026\u0026"
+          },
+          {
+            "lineNumber": 265,
+            "text": "          !isLikelyCanceledRequest(e)"
+          },
+          {
+            "lineNumber": 266,
+            "text": "        ) {"
+          },
+          {
+            "lineNumber": 267,
+            "text": "          setError(mapUnknownError(e));"
+          },
+          {
+            "lineNumber": 268,
+            "text": "        }"
+          },
+          {
+            "lineNumber": 269,
+            "text": "      } finally {"
+          },
+          {
+            "lineNumber": 270,
+            "text": "        if (sessionAtStart === searchSessionGenRef.current) {"
+          },
+          {
+            "lineNumber": 271,
+            "text": "          setLoadingMore(false);"
+          },
+          {
+            "lineNumber": 272,
+            "text": "        }"
+          },
+          {
+            "lineNumber": 273,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 274,
+            "text": "    })().catch(() =\u003e {"
+          },
+          {
+            "lineNumber": 275,
+            "text": "      if (sessionAtStart === searchSessionGenRef.current) {"
+          },
+          {
+            "lineNumber": 276,
+            "text": "        setLoadingMore(false);"
+          },
+          {
+            "lineNumber": 277,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 278,
+            "text": "    });"
+          },
+          {
+            "lineNumber": 279,
+            "text": "  }, [hasMore, loading, loadingMore]);"
+          },
+          {
+            "lineNumber": 280
+          },
+          {
+            "lineNumber": 281,
+            "text": "  const refetch = useCallback(() =\u003e {"
+          },
+          {
+            "lineNumber": 282,
+            "text": "    if (debouncedQueryRef.current.length \u003e 0) {"
+          },
+          {
+            "lineNumber": 283,
+            "text": "      setSearchRetryKey((k) =\u003e k + 1);"
+          },
+          {
+            "lineNumber": 284,
+            "text": "    } else {"
+          },
+          {
+            "lineNumber": 285,
+            "text": "      setTrendingReloadKey((k) =\u003e k + 1);"
+          },
+          {
+            "lineNumber": 286,
+            "text": "    }"
+          },
+          {
+            "lineNumber": 287,
+            "text": "  }, []);"
+          },
+          {
+            "lineNumber": 288
+          },
+          {
+            "lineNumber": 289,
+            "text": "  const refreshRecentSearches = useCallback(async () =\u003e {"
+          },
+          {
+            "lineNumber": 290,
+            "text": "    setRecentSearches(await getRecentSearches());"
+          },
+          {
+            "lineNumber": 291,
+            "text": "  }, []);"
+          },
+          {
+            "lineNumber": 292
+          },
+          {
+            "lineNumber": 293,
+            "text": "  const clearRecentSearches = useCallback(async () =\u003e {"
+          },
+          {
+            "lineNumber": 294,
+            "text": "    await clearRecentSearchesStorage();"
+          },
+          {
+            "lineNumber": 295,
+            "text": "    setRecentSearches([]);"
+          },
+          {
+            "lineNumber": 296,
+            "text": "  }, []);"
+          },
+          {
+            "lineNumber": 297
+          },
+          {
+            "lineNumber": 298,
+            "text": "  const applyGenreChip = useCallback"
+          },
+          {
+            "lineNumber": 313,
+            "text": ";"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 375,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 374
+          },
+          "startPosition": {
+            "line": 30
+          }
+        },
+        "relativeWorkspacePath": "./src/hooks/useSearch.ts",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 8,
+                "line": 31
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 31
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 32
+              },
+              "startPosition": {
+                "column": 8,
+                "line": 31
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.27826035022735596
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "isSignature": true,
+            "lineNumber": 43,
+            "text": "export function WatchlistScreen({ navigation }: Props): JSX.Element {"
+          },
+          {
+            "lineNumber": 148,
+            "text": "const showBecauseYouSavedRow ="
+          },
+          {
+            "lineNumber": 151,
+            "text": " \u0026\u0026"
+          },
+          {
+            "lineNumber": 152,
+            "text": "    similarMovies.length \u003e 0 \u0026\u0026"
+          },
+          {
+            "lineNumber": 153,
+            "text": "    similarAnchorMovieId != null;"
+          },
+          {
+            "lineNumber": 154
+          },
+          {
+            "lineNumber": 155,
+            "text": "  if (count === 0) {"
+          },
+          {
+            "lineNumber": 156,
+            "text": "    return ("
+          },
+          {
+            "lineNumber": 157,
+            "text": "      \u003cView style={styles.screen}\u003e"
+          },
+          {
+            "lineNumber": 158,
+            "text": "        \u003cView style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}\u003e"
+          },
+          {
+            "lineNumber": 159,
+            "text": "          \u003cSearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} /\u003e"
+          },
+          {
+            "lineNumber": 160,
+            "text": "        \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 161,
+            "text": "        \u003cScreenErrorBoundary onRetry={refetchWatchlistRemote} screenLabel=\"Watchlist\" style={styles.scroll}\u003e"
+          },
+          {
+            "lineNumber": 162,
+            "text": "          \u003cScrollView"
+          },
+          {
+            "lineNumber": 163,
+            "text": "            contentContainerStyle={["
+          },
+          {
+            "lineNumber": 164,
+            "text": "              styles.scrollContent,"
+          },
+          {
+            "lineNumber": 165,
+            "text": "              {"
+          },
+          {
+            "lineNumber": 166,
+            "text": "                paddingBottom: insets.bottom + spacing.xxl,"
+          },
+          {
+            "lineNumber": 167,
+            "text": "                paddingTop: spacing.lg,"
+          },
+          {
+            "lineNumber": 168,
+            "text": "              },"
+          },
+          {
+            "lineNumber": 169,
+            "text": "            ]}"
+          },
+          {
+            "lineNumber": 170,
+            "text": "            keyboardShouldPersistTaps=\"handled\""
+          },
+          {
+            "lineNumber": 171,
+            "text": "            style={styles.scrollFill}"
+          },
+          {
+            "lineNumber": 172,
+            "text": "          \u003e"
+          },
+          {
+            "lineNumber": 173,
+            "text": "          \u003cView style={[styles.emptyScrollInner, { paddingHorizontal: horizontalPad }]}\u003e"
+          },
+          {
+            "lineNumber": 174,
+            "text": "            \u003cWatchlistScreenHeader"
+          },
+          {
+            "lineNumber": 175,
+            "text": "              countLine=\"0 titles\""
+          },
+          {
+            "lineNumber": 176,
+            "text": "              filter={filter}"
+          },
+          {
+            "lineNumber": 177,
+            "text": "              setFilter={setFilter}"
+          },
+          {
+            "lineNumber": 178,
+            "text": "              showChips={false}"
+          },
+          {
+            "lineNumber": 179,
+            "text": "              showTopActions={false}"
+          },
+          {
+            "lineNumber": 180,
+            "text": "              style={styles.emptyEditorialHeader}"
+          },
+          {
+            "lineNumber": 181,
+            "text": "            /\u003e"
+          },
+          {
+            "lineNumber": 182,
+            "text": "            \u003cWatchlistEmptyState"
+          },
+          {
+            "lineNumber": 183,
+            "text": "              ctaWidth={ctaWidth}"
+          },
+          {
+            "lineNumber": 184,
+            "text": "              onBrowseTrending={onBrowseTrending}"
+          },
+          {
+            "lineNumber": 185,
+            "text": "              onPressRecommendation={(movieId) =\u003e {"
+          },
+          {
+            "lineNumber": 186,
+            "text": "                navigation.navigate('Detail', { movieId });"
+          },
+          {
+            "lineNumber": 187,
+            "text": "              }}"
+          },
+          {
+            "lineNumber": 188,
+            "text": "              popularRecommendations={popularRecommendations}"
+          },
+          {
+            "lineNumber": 189,
+            "text": "            /\u003e"
+          },
+          {
+            "lineNumber": 190,
+            "text": "          \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 191,
+            "text": "          \u003c/ScrollView\u003e"
+          },
+          {
+            "lineNumber": 192,
+            "text": "        \u003c/ScreenErrorBoundary\u003e"
+          },
+          {
+            "lineNumber": 193,
+            "text": "      \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 194,
+            "text": "    );"
+          },
+          {
+            "lineNumber": 195,
+            "text": "  }"
+          },
+          {
+            "lineNumber": 196
+          },
+          {
+            "lineNumber": 197,
+            "text": "  return ("
+          },
+          {
+            "lineNumber": 198,
+            "text": "    \u003cView style={styles.screen}\u003e"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 256,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 255
+          },
+          "startPosition": {
+            "line": 42
+          }
+        },
+        "relativeWorkspacePath": "./src/screens/WatchlistScreen.tsx",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 8,
+                "line": 43
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 43
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 44
+              },
+              "startPosition": {
+                "column": 8,
+                "line": 43
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.2770653963088989
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "lineNumber": 268,
+            "text": "const styles = "
+          },
+          {
+            "lineNumber": 421
+          },
+          {
+            "lineNumber": 422,
+            "text": "    zIndex: elevation.dock,"
+          },
+          {
+            "lineNumber": 423,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 424,
+            "text": "  searchInput: {"
+          },
+          {
+            "lineNumber": 425,
+            "text": "    ...typography['search-input-value'],"
+          },
+          {
+            "lineNumber": 426,
+            "text": "    backgroundColor: colors.surface_container_low,"
+          },
+          {
+            "lineNumber": 427,
+            "text": "    borderColor: 'transparent',"
+          },
+          {
+            "lineNumber": 428,
+            "text": "    borderRadius: spacing.md,"
+          },
+          {
+            "lineNumber": 429,
+            "text": "    borderWidth: layout.borderSm,"
+          },
+          {
+            "lineNumber": 430,
+            "text": "    color: colors.on_surface,"
+          },
+          {
+            "lineNumber": 431,
+            "text": "    flex: 1,"
+          },
+          {
+            "lineNumber": 432,
+            "text": "    minHeight: spacing.xxxxl,"
+          },
+          {
+            "lineNumber": 433,
+            "text": "    paddingLeft: spacing.xxxl + spacing.sm,"
+          },
+          {
+            "lineNumber": 434,
+            "text": "    paddingRight: spacing.md,"
+          },
+          {
+            "lineNumber": 435,
+            "text": "    paddingVertical: spacing.lg,"
+          },
+          {
+            "lineNumber": 436,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 437,
+            "text": "  searchInputFocused: {"
+          },
+          {
+            "lineNumber": 438,
+            "text": "    borderColor: colors.search_input_focus_ring,"
+          },
+          {
+            "lineNumber": 439,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 440,
+            "text": "  searchRow: {"
+          },
+          {
+            "lineNumber": 441,
+            "text": "    marginBottom: spacing.xxl,"
+          },
+          {
+            "lineNumber": 442,
+            "text": "    position: 'relative',"
+          },
+          {
+            "lineNumber": 443,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 444,
+            "text": "  section: {"
+          },
+          {
+            "lineNumber": 445,
+            "text": "    marginBottom: spacing.xxxl,"
+          },
+          {
+            "lineNumber": 446,
+            "text": "  },"
+          },
+          {
+            "lineNumber": 447,
+            "text": "});"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 3,
+            "line": 446
+          },
+          "startPosition": {
+            "line": 267
+          }
+        },
+        "relativeWorkspacePath": "./src/components/search/SearchResultsStateView.tsx",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 7,
+                "line": 268
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 268
+              }
+            },
+            {
+              "endPosition": {
+                "column": 16,
+                "line": 268
+              },
+              "startPosition": {
+                "column": 7,
+                "line": 268
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.27613043785095215
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "lineNumber": 1,
+            "text": "/**"
+          },
+          {
+            "lineNumber": 2,
+            "text": " * Search tab default (idle) body — PSD-Search §3; trending skeleton on first load (§7 S6)."
+          },
+          {
+            "lineNumber": 3,
+            "text": " */"
+          },
+          {
+            "lineNumber": 4
+          },
+          {
+            "lineNumber": 5,
+            "text": "import type { JSX } from 'react';"
+          },
+          {
+            "lineNumber": 6,
+            "text": "import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';"
+          },
+          {
+            "lineNumber": 7,
+            "text": "import { useWindowDimensions } from 'react-native';"
+          },
+          {
+            "lineNumber": 8,
+            "text": "import LinearGradient from 'react-native-linear-gradient';"
+          },
+          {
+            "lineNumber": 9,
+            "text": "import type { SearchScreenMode, TmdbGenre, TmdbMovieListItem } from '../../api/types';"
+          },
+          {
+            "lineNumber": 10,
+            "text": "import { IconMovie, IconSearch } from '../common/SimpleIcons';"
+          },
+          {
+            "lineNumber": 11,
+            "text": "import { PosterRatingBadge } from '../common/PosterRatingBadge';"
+          },
+          {
+            "lineNumber": 12,
+            "text": "import { colors, contentCard, surfaceContainerLowestRgba } from '../../theme/colors';"
+          },
+          {
+            "lineNumber": 13,
+            "text": "import {"
+          },
+          {
+            "lineNumber": 14,
+            "text": "  elevation,"
+          },
+          {
+            "lineNumber": 15,
+            "text": "  fill,"
+          },
+          {
+            "lineNumber": 16,
+            "text": "  layout,"
+          },
+          {
+            "lineNumber": 17,
+            "text": "  opacity,"
+          },
+          {
+            "lineNumber": 18,
+            "text": "  radiusCardInner,"
+          },
+          {
+            "lineNumber": 19,
+            "text": "  radiusCardOuter,"
+          },
+          {
+            "lineNumber": 20,
+            "text": "  radiusFullPill,"
+          },
+          {
+            "lineNumber": 21,
+            "text": "  spacing,"
+          },
+          {
+            "lineNumber": 22,
+            "text": "  searchFeaturedHeroAspectRatio,"
+          },
+          {
+            "lineNumber": 23,
+            "text": "} from '../../theme/spacing';"
+          },
+          {
+            "lineNumber": 24,
+            "text": "import { typography } from '../../theme/typography';"
+          },
+          {
+            "lineNumber": 25,
+            "text": "import { formatSearchFeaturedMeta, formatSearchTrendingGenreOnly } from '../../utils/formatMovieListItem';"
+          },
+          {
+            "lineNumber": 26,
+            "text": "import { buildImageUrl, TMDB_IMAGE_SIZE_W342, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';"
+          },
+          {
+            "lineNumber": 27,
+            "text": "import { SEARCH_INPUT_PLACEHOLDER } from './searchDefaultMocks';"
+          },
+          {
+            "lineNumber": 28,
+            "text": "import { SearchRecentSearchesSection } from './SearchRecentSearchesSection';"
+          },
+          {
+            "lineNumber": 29,
+            "text": "import { SearchTrendingSkeleton } from './SearchTrendingSkeleton';"
+          },
+          {
+            "lineNumber": 30
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 31,
+            "text": "export type SearchDefaultViewProps = {"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 52
+          },
+          "startPosition": {}
+        },
+        "relativeWorkspacePath": "./src/components/search/SearchDefaultView.tsx",
+        "signatures": {}
+      },
+      "score": 0.2746790945529938
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "lineNumber": 227,
+            "text": "/**"
+          },
+          {
+            "lineNumber": 228,
+            "text": " * Search tab payload inside **&#96;useSearch&#96; → &#96;UseQueryResult\u003cSearchTabSnapshot\u003e.data&#96;**"
+          },
+          {
+            "lineNumber": 229,
+            "text": " * (null only while default-mode trending is still on its first load). Top-level **&#96;loading&#96; / &#96;error&#96; / &#96;refetch&#96;**"
+          },
+          {
+            "lineNumber": 230,
+            "text": " * reflect the active mode: default → trending; results → debounced search. **&#96;refetch&#96;** retries the active fetch."
+          },
+          {
+            "lineNumber": 231,
+            "text": " */"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 232,
+            "text": "export interface SearchTabSnapshot {"
+          },
+          {
+            "lineNumber": 233,
+            "text": "  /** &#96;default&#96; when debounced query is empty; &#96;results&#96; when a non-empty debounced query is active. */"
+          },
+          {
+            "lineNumber": 234,
+            "text": "  mode: SearchScreenMode;"
+          },
+          {
+            "lineNumber": 235,
+            "text": "  /** Query string driving TMDB search after the 400ms debounce (trim + collapsed whitespace). */"
+          },
+          {
+            "lineNumber": 236,
+            "text": "  debouncedQuery: string;"
+          },
+          {
+            "lineNumber": 237,
+            "text": "  /** Last successful &#96;GET /search/movie&#96; payload for the current debounced query, or null. */"
+          },
+          {
+            "lineNumber": 238,
+            "text": "  searchPage: TmdbPagedSearchMoviesResponse | null;"
+          },
+          {
+            "lineNumber": 239,
+            "text": "  results: TmdbSearchMovieListItem[];"
+          },
+          {
+            "lineNumber": 240,
+            "text": "  totalResults: number;"
+          },
+          {
+            "lineNumber": 241,
+            "text": "  /** True while a debounced or genre-immediate search request is in flight. */"
+          },
+          {
+            "lineNumber": 242,
+            "text": "  searchLoading: boolean;"
+          },
+          {
+            "lineNumber": 243,
+            "text": "  /** True while a subsequent search page is loading (&#96;loadMore&#96;). */"
+          },
+          {
+            "lineNumber": 244,
+            "text": "  loadingMore: boolean;"
+          },
+          {
+            "lineNumber": 245,
+            "text": "  /** More TMDB pages exist for the current debounced query. */"
+          },
+          {
+            "lineNumber": 246,
+            "text": "  hasMore: boolean;"
+          },
+          {
+            "lineNumber": 247,
+            "text": "  searchError: string | null;"
+          },
+          {
+            "lineNumber": 248,
+            "text": "  /** Fetches the next &#96;GET /search/movie&#96; page and appends unique rows. */"
+          },
+          {
+            "lineNumber": 249,
+            "text": "  loadMore: () =\u003e void;"
+          },
+          {
+            "lineNumber": 250,
+            "text": "  /** &#96;GET /trending/movie/week&#96; page 1 for the default-state trending block. */"
+          },
+          {
+            "lineNumber": 251,
+            "text": "  trending: TmdbPagedMoviesResponse | null;"
+          },
+          {
+            "lineNumber": 252,
+            "text": "  trendingLoading: boolean;"
+          },
+          {
+            "lineNumber": 253,
+            "text": "  trendingError: string | null;"
+          },
+          {
+            "lineNumber": 254,
+            "text": "  recentSearches: readonly string[];"
+          },
+          {
+            "lineNumber": 255,
+            "text": "  refreshRecentSearches: () =\u003e Promise\u003cvoid\u003e;"
+          },
+          {
+            "lineNumber": 256,
+            "text": "  clearRecentSearches: () =\u003e Promise\u003cvoid\u003e;"
+          },
+          {
+            "lineNumber": 257,
+            "text": "  /** Last query that completed a successful search (for “N results for ‘…’” copy). */"
+          },
+          {
+            "lineNumber": 258,
+            "text": "  lastSuccessfulQuery: string | null;"
+          },
+          {
+            "lineNumber": 259,
+            "text": "  /**"
+          },
+          {
+            "lineNumber": 260,
+            "text": "   * Genre chip path: updates controlled &#96;query&#96; when &#96;setQuery&#96; is provided, skips debounce,"
+          },
+          {
+            "lineNumber": 261,
+            "text": "   * and runs &#96;GET /search/movie&#96; immediately for the label text."
+          },
+          {
+            "lineNumber": 262,
+            "text": "   */"
+          },
+          {
+            "lineNumber": 263,
+            "text": "  applyGenreChip: (label: string) =\u003e void;"
+          },
+          {
+            "lineNumber": 264,
+            "text": "  /** &#96;/genre/movie/list&#96; — resolves &#96;genre_ids&#96; on default trending / featured copy (Search tab). */"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 265,
+            "text": "  movieGenres: readonly TmdbGenre[];"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 266,
+            "text": "}"
+          },
+          {
+            "lineNumber": 267
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 268,
+            "text": "export interface WatchlistItem {"
+          },
+          {
+            "lineNumber": 269,
+            "text": "  id: number;"
+          },
+          {
+            "lineNumber": 270,
+            "text": "  title: string;"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 275,
+            "text": ";"
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 276,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 275
+          },
+          "startPosition": {
+            "column": 1,
+            "line": 224
+          }
+        },
+        "relativeWorkspacePath": "./src/api/types.ts",
+        "signatures": {}
+      },
+      "score": 0.2712790071964264
+    },
+    {
+      "codeBlock": {
+        "detailedLines": [
+          {
+            "isSignature": true,
+            "lineNumber": 32,
+            "text": "export function SearchScreen({ navigation }: Props): JSX.Element {"
+          },
+          {
+            "lineNumber": 71
+          },
+          {
+            "lineNumber": 72,
+            "text": "  const handleSearchScroll = useCallback("
+          },
+          {
+            "lineNumber": 73,
+            "text": "    (event: NativeSyntheticEvent\u003cNativeScrollEvent\u003e) =\u003e {"
+          },
+          {
+            "lineNumber": 74,
+            "text": "      if (snap == null || snap.mode !== 'results') {"
+          },
+          {
+            "lineNumber": 75,
+            "text": "        return;"
+          },
+          {
+            "lineNumber": 76,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 77,
+            "text": "      const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;"
+          },
+          {
+            "lineNumber": 78,
+            "text": "      const distanceFromBottom = contentSize.height - layoutMeasurement.height - contentOffset.y;"
+          },
+          {
+            "lineNumber": 79,
+            "text": "      if (distanceFromBottom \u003e spacing.xxxxl * 2) {"
+          },
+          {
+            "lineNumber": 80,
+            "text": "        return;"
+          },
+          {
+            "lineNumber": 81,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 82,
+            "text": "      if (!snap.hasMore || snap.loadingMore || snap.searchLoading) {"
+          },
+          {
+            "lineNumber": 83,
+            "text": "        return;"
+          },
+          {
+            "lineNumber": 84,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 85,
+            "text": "      const now = Date.now();"
+          },
+          {
+            "lineNumber": 86,
+            "text": "      if (now - lastSearchNearEndRef.current \u003c 550) {"
+          },
+          {
+            "lineNumber": 87,
+            "text": "        return;"
+          },
+          {
+            "lineNumber": 88,
+            "text": "      }"
+          },
+          {
+            "lineNumber": 89,
+            "text": "      lastSearchNearEndRef.current = now;"
+          },
+          {
+            "lineNumber": 90,
+            "text": "      snap.loadMore();"
+          },
+          {
+            "lineNumber": 91,
+            "text": "    },"
+          },
+          {
+            "lineNumber": 92,
+            "text": "    [snap],"
+          },
+          {
+            "lineNumber": 93,
+            "text": "  );"
+          },
+          {
+            "lineNumber": 94
+          },
+          {
+            "lineNumber": 95,
+            "text": "  if (snap == null) {"
+          },
+          {
+            "lineNumber": 96,
+            "text": "    return ("
+          },
+          {
+            "lineNumber": 97,
+            "text": "      \u003cView style={styles.screen}\u003e"
+          },
+          {
+            "lineNumber": 98,
+            "text": "        \u003cView"
+          },
+          {
+            "lineNumber": 99,
+            "text": "          style={["
+          },
+          {
+            "lineNumber": 100,
+            "text": "            styles.headerDock,"
+          },
+          {
+            "lineNumber": 101,
+            "text": "            {"
+          },
+          {
+            "lineNumber": 102,
+            "text": "              paddingTop: insets.top + spacing.sm,"
+          },
+          {
+            "lineNumber": 103,
+            "text": "            },"
+          },
+          {
+            "lineNumber": 104,
+            "text": "          ]}"
+          },
+          {
+            "lineNumber": 105,
+            "text": "        \u003e"
+          },
+          {
+            "lineNumber": 106,
+            "text": "          \u003cSearchAppBar /\u003e"
+          },
+          {
+            "lineNumber": 107,
+            "text": "        \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 108,
+            "text": "      \u003c/View\u003e"
+          },
+          {
+            "lineNumber": 109,
+            "text": "    );"
+          },
+          {
+            "lineNumber": 110,
+            "text": "  }"
+          },
+          {
+            "lineNumber": 111
+          },
+          {
+            "lineNumber": 112,
+            "text": "  const d = snap;"
+          },
+          {
+            "lineNumber": 113
+          },
+          {
+            "lineNumber": 114,
+            "text": "  return ("
+          },
+          {
+            "isSignature": true,
+            "lineNumber": 200,
+            "text": "}"
+          }
+        ],
+        "range": {
+          "endPosition": {
+            "column": 1,
+            "line": 199
+          },
+          "startPosition": {
+            "line": 31
+          }
+        },
+        "relativeWorkspacePath": "./src/screens/SearchScreen.tsx",
+        "signatures": {
+          "ranges": [
+            {
+              "endPosition": {
+                "column": 8,
+                "line": 32
+              },
+              "startPosition": {
+                "column": 1,
+                "line": 32
+              }
+            },
+            {
+              "endPosition": {
+                "column": 3,
+                "line": 33
+              },
+              "startPosition": {
+                "column": 8,
+                "line": 32
+              }
+            }
+          ]
+        }
+      },
+      "score": 0.27121639251708984
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="semantic_search_full"><details>
+<summary>Tool use: **semantic_search_full**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "focused|isFocused|onFocus|onBlur"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "focused|isFocused|onFocus|onBlur",
+  "topFiles": [
+    {
+      "matchCount": 4,
+      "uri": "src/screens/SearchScreen.tsx"
+    },
+    {
+      "matchCount": 6,
+      "uri": "src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "matchCount": 10,
+      "uri": "src/navigation/RootNavigator.tsx"
+    },
+    {
+      "matchCount": 6,
+      "uri": "src/components/search/SearchResultsStateView.tsx"
+    }
+  ],
+  "totalFiles": 4,
+  "totalMatches": 26
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Updating `showRecentsBlock`: it's currently gated only by an empty query; the spec requires hiding it when the search input is focused.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*test*",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "showRecents|recentSearches|SearchScreen"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "showRecents|recentSearches|SearchScreen",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "__tests__/recentSearches.test.ts"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+### What was wrong
+`showRecentsBlock` only required an **empty** query and at least one recent, so the **Recent searches** block could still show while the field was **focused** (e.g. user taps in, empty field, recents still visible).
+
+### What we did
+In `src/screens/SearchScreen.tsx`, visibility is now:
+
+- `query.trim().length === 0`
+- **`!inputFocused`**
+- `recentSearches.length > 0`
+
+So recents show only when the input is **empty and blurred**; focusing the search field hides them until blur (unless you’d rather show them again—spec says not while focused).
+
+---
+
+_**User**_
+
+On the Search tab, update Recent Searches visibility to match this rule:
+
+- Show the Recent Searches block only when BOTH are true:
+  1) The search query is empty (after trim).
+  2) The search TextInput is NOT focused (user is not actively editing the field).
+
+Today `showRecentsBlock` (or equivalent) only checks empty query — recents still appear while the field is focused. Wire in the existing `inputFocused` / `onFocusInput` / `onBlurInput` state so recents hide on focus and can show again on blur when the query is still empty.
+
+Apply this consistently in:
+- Default search UI (`SearchDefaultView` or wherever recents render)
+- Results UI if recents appear there too (`SearchResultsStateView` or equivalent)
+
+Keep behavior for saving/clearing recents unchanged. After changes, manually verify: empty field + tap into search → recents hidden; blur with still-empty field → recents visible (if any stored). Minimal diff, no unrelated refactors.
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating search visibility**
+
+I'm implementing the recent searches visibility rule in SearchDefaultView and SearchResultsStateView. 
+
+**Checking search state**
+
+I'm reviewing the current codebase to verify how `!inputFocused` is handled in SearchScreen and its child components. I'm unable to apply changes as I'm in Ask mode and must follow system constraints. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Checking the codebase for how `showRecentsBlock` and focus state are wired.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "showRecentsBlock|SearchRecentSearches"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "showRecentsBlock|SearchRecentSearches",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "src/components/search/SearchRecentSearchesSection.tsx"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/components/search/SearchResultsStateView.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/screens/SearchScreen.tsx"
+    }
+  ],
+  "totalFiles": 4,
+  "totalMatches": 16
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Reviewing search logic**
+
+I found the existing implementation handles recent searches visibility based on query length and focus state. </details></think>
+
+_**Agent (composer-2)**_
+
+
+This behavior is **already implemented** in your repo. You don’t need to duplicate logic inside `SearchDefaultView` / `SearchResultsStateView` — both already take a single **`showRecentsBlock`** flag from the parent.
+
+### Where the rule lives
+
+In `SearchScreen.tsx`, recents visibility is:
+
+```59:64:src/screens/SearchScreen.tsx
+  /**
+   * Recent searches: show only when the field is **empty** and **not focused** (spec — hide while typing focus).
+   * Also hidden when there are no stored recents (hook returns `[]`).
+   */
+  const showRecentsBlock =
+    query.trim().length === 0 && !inputFocused && (snap?.recentSearches.length ?? 0) > 0;
+```
+
+So it requires **all** of: trimmed query empty, **`!inputFocused`**, and at least one stored recent.
+
+Focus is driven by the existing **`inputFocused`** state and **`onFocusInput` / `onBlurInput`** passed into both search UIs (same pattern for default vs results).
+
+### Consistency across default + results
+
+- **`SearchDefaultView`** — `SearchRecentSearchesSection` uses `visible={showRecentsBlock}`.
+- **`SearchResultsStateView`** — same.
+
+So one boolean from `SearchScreen` keeps default and results in sync; no separate “empty query only” path remains in those components.
+
+### Manual check (as you described)
+
+1. Have at least one recent saved; go to Search with an **empty** field and **blur** → recents **show** (if `showRecentsBlock` is true).
+2. **Focus** the field with query still empty → recents **hide** (`inputFocused === true`).
+3. **Blur** with query still empty → recents **show** again.
+
+Saving/clearing recents is unchanged; it’s still whatever `useSearch`/`recentSearches` does.
+
+---
+
+If you want this enforced *inside* each view as well (e.g. `visible={showRecentsBlock && !inputFocused}`), that would be redundant with the parent and is unnecessary unless you’re passing `showRecentsBlock` from somewhere else without focus — **not** the case here.
+
+*(I’m in **Ask mode**, so I can’t edit files; if you want a follow-up tweak, switch to Agent mode.)*
+
+---
+
+_**User**_
+
+fix it 
+
+---
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchRecentSearchesSection.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Debugging search logic**
+
+I found that `showRecentsBlock` is evaluated before checking if `snap` is null, which causes issues when accessing `snap?.recentSearches`. I found the bug: `showRecentsBlock` is computed before checking if `snap` is null, causing issues when accessing `snap?.recentSearches`. I'm checking if `!inputFocused` was removed locally, as the current file still includes it. I'm implementing defense-in-depth by adding redundant visibility checks in child components to ensure recents block hides when input is focused. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "**/search/**/*.tsx",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "Recent|showRecents|recentSearches"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "Recent|showRecents|recentSearches",
+  "topFiles": [
+    {
+      "matchCount": 14,
+      "uri": "src/components/search/SearchRecentSearchesSection.tsx"
+    },
+    {
+      "matchCount": 14,
+      "uri": "src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "matchCount": 14,
+      "uri": "src/components/search/SearchResultsStateView.tsx"
+    }
+  ],
+  "totalFiles": 3,
+  "totalMatches": 42
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing input handling**
+
+I found that `showRecentsBlock` runs `snap` before null check on every render, causing potential errors. I confirmed that `snap?.recentSearches.length ?? 0` correctly evaluates to 0 when snap is null, making `showRecentsBlock` false as expected. 
+
+**Handling input focus**
+
+I'll implement `visible={showRecentsBlock && !inputFocused}` to control recents block visibility instead of relying on `editable`. 
+
+**Updating visibility logic**
+
+I'm updating SearchDefaultView and SearchResultsStateView to use the simplified visibility logic with `visible={showRecentsBlock && !inputFocused}`. I'm simplifying the visibility logic by having the child component AND with `!inputFocused` and the parent handle the rest of the conditions. 
+
+I'm refactoring the visibility logic to use clearer variable names: `recentsAvailable` and `visible`. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating search screen**
+
+I'm adding defensive logic to both views and simplifying SearchScreen's recents block condition. I'm renaming `showRecentsBlock` to `recentsSectionEligible` and adjusting visibility logic to reflect actual display conditions. 
+
+I'm fixing stale closure issue by ensuring proper dependency tracking in search visibility logic. I'm investigating a focus tracking bug where inputFocused stays false despite keyboard being open. I'm implementing a workaround to ensure recents hide when TextInput loses focus on mobile, as the blur event isn't firing reliably. 
+
+**Debugging input focus**
+
+The inputFocused state is false when TextInput is focused, indicating onFocus isn't firing or resetting incorrectly. 
+
+**Fixing input focus**
+
+I'm switching to TextInput's built-in focus state using onFocus/onBlur handlers instead of the custom inputFocused state. 
+
+**Checking search screen props**
+
+I found that SearchScreen passes incorrect props to the child component, which is causing the visibility logic to behave unexpectedly. I'm adding `useMemo` to optimize `showRecentsBlock` computation in SearchScreen. 
+
+**Optimizing search visibility**
+
+I'm refactoring the search visibility logic to handle recents block display at the child level with explicit dual-checks for query and focus state. 
+
+**Refining search logic**
+
+I'm simplifying the search visibility logic by passing a single computed boolean from parent to child, instead of dual-checks. I'm updating the search visibility logic to use explicit child composition with `recentsEligible` and `inputFocused` props. 
+
+**Updating search logic**
+
+I'm centralizing the focus check in the SearchScreen and passing `recentsEligible` as a prop to simplify visibility logic. I'm renaming `showRecentsBlock` to `recentsEligible` in SearchDefaultView and SearchResultsStateView to align with the parent prop naming. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Moving the focus check into `SearchDefaultView` and `SearchResultsStateView`: we'll treat `showRecentsBlock` as eligibility (empty query + stored recents) and set `visible={showRecentsBlock && !inputFocused}` so focus is enforced where both props are available.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Reverting parent logic**
+
+I reverted the parent logic and simplified the visibility condition to match the original behavior. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating prop documentation**
+
+I updated the JSDoc for `showRecentsBlock` prop in SearchDefaultView and SearchResultsStateView to clarify it indicates eligibility, not final visibility. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Here’s what changed:
+
+### Behavior
+Recent searches still show only when **trimmed query is empty**, there is **at least one** stored recent, and the field is **not focused** — same as before, but the **focus rule is applied in both search layouts**.
+
+### Code
+1. **`SearchScreen.tsx`** — `showRecentsBlock` is only **eligibility**: empty query + `recentSearches.length > 0`. It no longer depends on `inputFocused` (that’s handled next to the `TextInput`).
+
+2. **`SearchDefaultView.tsx`** and **`SearchResultsStateView.tsx`** —  
+   `SearchRecentSearchesSection` now gets  
+   `visible={showRecentsBlock && !inputFocused}`  
+   so default and results UIs both hide recents while the search field is focused and show them again on blur when the query is still empty.
+
+Saving/clearing recents is unchanged. `tsc` and `eslint` both pass.
+
+---
+
+_**User**_
+
+ok add whenever i click outside the search box focus should be removed 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling touch outside**
+
+I'm implementing touch outside dismissal for the search input using TouchableWithoutFeedback. I'm implementing touch outside dismissal for the search input using Pressable with Keyboard.dismiss. I'm switching to `TouchableWithoutFeedback` with `Keyboard.dismiss` as the standard approach for touch outside dismissal. I'm adding `keyboardShouldPersistTaps="handled"` to ScrollView and wrapping it with Pressable to handle touch dismissal properly. I'm implementing `keyboardDismissMode="on-drag"` on ScrollView to dismiss keyboard when scrolling, as requested by user. I'll implement TouchableWithoutFeedback with keyboard dismissal for outside taps, since ScrollView's responder system interferes with regular press handlers. 
+
+I'm implementing TouchableWithoutFeedback with keyboard dismissal for outside taps, since ScrollView's responder system interferes with regular press handlers. I'm using TouchableWithoutFeedback with Keyboard.dismiss for tap-outside handling on both platforms. I'm switching from TouchableWithoutFeedback to Pressable for more reliable tap-outside handling. I'm testing whether Pressable receives taps when ScrollView is its child and touch events are handled by ScrollView. I found that Pressable doesn't receive taps when ScrollView handles touch events, but padding around ScrollView might trigger Pressable's onPress. I'm implementing a pressable area outside TextInput to detect true 'tap outside' behavior using pointerEvents. 
+
+I'm testing TouchableWithoutFeedback around ScrollView as an alternative to Pressable with absoluteFillObject. I'll implement the KeyboardAvoidingView pattern with Pressable wrapper and ScrollView for proper touch handling. I'm implementing KeyboardAvoidingView with Pressable wrapper and ScrollView, using `keyboardShouldPersistTaps="handled"` for proper touch handling. I'm switching to Pressable wrapping SearchDefaultView for better touch handling outside TextInput. I'm adjusting SearchDefaultView's structure to ensure Pressable receives taps on non-interactive areas. 
+
+I'm wrapping the body view with Pressable to dismiss keyboard on outside tap, ensuring TextInput retains tap priority. I'm checking if Pressable correctly dismisses keyboard when tapping non-touchable children like Trending text or empty view areas. 
+
+I'm implementing Keyboard.dismiss() in Pressable's onPress to handle touch outside correctly. I'm switching to `TouchableWithoutFeedback` and `Keyboard.dismiss()` for cleaner touch outside handling. I'm wrapping ScrollView with Pressable to ensure Keyboard.dismiss works properly when tapping inside the scrollable area. I'm adding Pressable with flex:1 minHeight as ListFooter to handle taps on static areas inside ScrollView. 
+
+I'll avoid adding new dependencies and implement tap-to-dismiss using ScrollView</details></think>

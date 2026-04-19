@@ -4,7 +4,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { JSX } from 'react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
 import { SearchAppBar } from '../components/search/SearchAppBar';
@@ -56,8 +56,9 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
   const featuredMovie = trendingResults[0] ?? null;
   const gridMovies = trendingResults.slice(1, 5);
 
-  /** Empty query and at least one stored recent — hide section when list is empty (hook returns []). */
-  const showRecentsBlock = query.trim().length === 0 && (snap?.recentSearches.length ?? 0) > 0;
+  /** Empty query + at least one stored recent; views also require `!inputFocused` to show the block. */
+  const showRecentsBlock =
+    query.trim().length === 0 && (snap?.recentSearches.length ?? 0) > 0;
 
   const openSearchDetail = useCallback(
     (movieId: number) => {
@@ -131,9 +132,14 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
               paddingBottom: insets.bottom + spacing.xxxxl,
             },
           ]}
+          keyboardDismissMode="on-drag"
           keyboardShouldPersistTaps="handled"
           nestedScrollEnabled
           onScroll={handleSearchScroll}
+          onScrollBeginDrag={() => {
+            Keyboard.dismiss();
+            setInputFocused(false);
+          }}
           scrollEventThrottle={16}
           style={styles.scrollFill}
         >

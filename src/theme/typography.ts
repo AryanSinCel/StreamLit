@@ -81,7 +81,7 @@ export const typography = {
     fontWeight: '700' as const,
     letterSpacing: lsEm(-0.01, 28),
   },
-  /** Home rail section titles — `resources/home.html` (`text-2xl` / Manrope bold). */
+  /** Legacy 24px rail title — prefer **`headline-md`** (28px) for rail / hero headlines per spec. */
   'headline-rail': {
     fontFamily: fontFamilies.manropeBold,
     fontSize: 24,
