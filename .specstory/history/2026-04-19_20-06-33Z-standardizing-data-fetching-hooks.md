@@ -16396,3 +16396,1162 @@ _**Agent (composer-2)**_
 <summary>Tool use: **read_file_v2**</summary>
 
 </details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Checking navigation types**
+
+I'm verifying whether `NavigationProp<RootStackParamList>` works with composite navigators by checking with tsc. 
+
+**Updating navigation helpers**
+
+I'm creating helpers.ts with generic navigate functions for composite navigators. I'm creating navigateToDetail and navigateToSeeAll helpers for cleaner navigation calls. 
+
+I'm replacing direct navigation calls with navigateToDetail and navigateToSeeAll helpers across screens. I'm adjusting the navigation type definitions to properly handle the CompositeNavigationProp and ensure navigate function types are correctly inferred for Detail routes. I'm simplifying the navigation type definitions by using `NavigationProp<RootStackParamList>` from @react-navigation/native. I'm refactoring navigation helpers to use a permissive yet typed approach with `NavigationProp<RootStackParamList>`. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating navigation patterns**
+
+I'm standardizing navigation calls to use `navigation.navigate` for consistency, only changing screens explicitly mentioned in the grep search. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Creating navigation helpers**
+
+I'm creating a typed navigation helper function to navigate to detail views with proper type safety. I'm testing typed navigation helpers with composite screen props and will use a generic type if TypeScript compilation fails. I'm implementing typed navigation helpers using React Navigation's CompositeNavigationProp for better type safety. 
+
+**Checking types**
+
+I'm reviewing @react-navigation/native types to understand how CompositeNavigationProp handles navigate method inference. I'm updating the navigation prop type to include tab screens with `CompositeNavigationProp`. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Creating `navigation/helpers.ts` and updating screens to use it.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/helpers.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+  "pattern": "navigate\\("
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+  "pattern": "navigate\\(",
+  "topFiles": [
+    {
+      "matchCount": 5,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 5
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx",
+  "pattern": "CommonActions"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx",
+  "pattern": "CommonActions",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "src/screens/DetailScreen.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/DetailScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "navigate\\('Detail'|navigate\\('SeeAll'"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "navigate\\('Detail'|navigate\\('SeeAll'",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "src/navigation/helpers.ts"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint
+```
+
+```
+src/screens/HomeScreen.tsx(195,22): error TS2345: Argument of type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;HomeStackParamList, "HomeMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Home", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to parameter of type 'NavigationProp&lt;RootStackParamList&gt;'.
+  Type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;HomeStackParamList, "HomeMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Home", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to type 'Omit&lt;NavigationHelpersCommon&lt;RootStackParamList, Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;&gt;, "getParent"&gt;'.
+    Types of property 'dispatch' are incompatible.
+      Type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;...&gt;)) =&gt; void' is not assignable to type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; ...'.
+        Types of parameters 'action' and 'action' are incompatible.
+          Type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+            Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+              Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type '(state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt;'.
+                Types of parameters 'state' and 'state' are incompatible.
+                  Type 'StackNavigationState&lt;HomeStackParamList&gt;' is not assignable to type 'Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;'.
+                    Types of property 'routeNames' are incompatible.
+                      Type '"HomeMain"[]' is not assignable to type '(keyof RootStackParamList)[]'.
+                        Type '"HomeMain"' is not assignable to type 'keyof RootStackParamList'.
+src/screens/HomeScreen.tsx(199,22): error TS2345: Argument of type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;HomeStackParamList, "HomeMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Home", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to parameter of type 'NavigationProp&lt;RootStackParamList&gt;'.
+  Type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;HomeStackParamList, "HomeMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Home", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to type 'Omit&lt;NavigationHelpersCommon&lt;RootStackParamList, Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;&gt;, "getParent"&gt;'.
+    Types of property 'dispatch' are incompatible.
+      Type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;...&gt;)) =&gt; void' is not assignable to type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; ...'.
+        Types of parameters 'action' and 'action' are incompatible.
+          Type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+            Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+              Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type '(state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt;'.
+                Types of parameters 'state' and 'state' are incompatible.
+                  Type 'StackNavigationState&lt;HomeStackParamList&gt;' is not assignable to type 'Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;'.
+                    Types of property 'routeNames' are incompatible.
+                      Type '"HomeMain"[]' is not assignable to type '(keyof RootStackParamList)[]'.
+                        Type '"HomeMain"' is not assignable to type 'keyof RootStackParamList'.
+src/screens/HomeScreen.tsx(203,22): error TS2345: Argument of type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;HomeStackParamList, "HomeMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Home", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to parameter of type 'NavigationProp&lt;RootStackParamList&gt;'.
+  Type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;HomeStackParamList, "HomeMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Home", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to type 'Omit&lt;NavigationHelpersCommon&lt;RootStackParamList, Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;&gt;, "getParent"&gt;'.
+    Types of property 'dispatch' are incompatible.
+      Type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;...&gt;)) =&gt; void' is not assignable to type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; ...'.
+        Types of parameters 'action' and 'action' are incompatible.
+          Type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+            Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+              Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type '(state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt;'.
+                Types of parameters 'state' and 'state' are incompatible.
+                  Type 'StackNavigationState&lt;HomeStackParamList&gt;' is not assignable to type 'Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;'.
+                    Types of property 'routeNames' are incompatible.
+                      Type '"HomeMain"[]' is not assignable to type '(keyof RootStackParamList)[]'.
+                        Type '"HomeMain"' is not assignable to type 'keyof RootStackParamList'.
+src/screens/HomeScreen.tsx(208,22): error TS2345: Argument of type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;HomeStackParamList, "HomeMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Home", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to parameter of type 'NavigationProp&lt;RootStackParamList&gt;'.
+  Type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;HomeStackParamList, "HomeMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Home", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to type 'Omit&lt;NavigationHelpersCommon&lt;RootStackParamList, Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;&gt;, "getParent"&gt;'.
+    Types of property 'dispatch' are incompatible.
+      Type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;...&gt;)) =&gt; void' is not assignable to type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; ...'.
+        Types of parameters 'action' and 'action' are incompatible.
+          Type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+            Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+              Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type '(state: StackNavigationState&lt;HomeStackParamList&gt;) =&gt; Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt;'.
+                Types of parameters 'state' and 'state' are incompatible.
+                  Type 'StackNavigationState&lt;HomeStackParamList&gt;' is not assignable to type 'Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;'.
+                    Types of property 'routeNames' are incompatible.
+                      Type '"HomeMain"[]' is not assignable to type '(keyof RootStackParamList)[]'.
+                        Type '"HomeMain"' is not assignable to type 'keyof RootStackParamList'.
+src/screens/SearchScreen.tsx(66,24): error TS2345: Argument of type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;SearchStackParamList, "SearchMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Search", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to parameter of type 'NavigationProp&lt;RootStackParamList&gt;'.
+  Type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;SearchStackParamList, "SearchMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Search", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to type 'Omit&lt;NavigationHelpersCommon&lt;RootStackParamList, Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;&gt;, "getParent"&gt;'.
+    Types of property 'dispatch' are incompatible.
+      Type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;SearchStackParamList&gt;) =&gt; Readonly&lt;...&gt;)) =&gt; void' is not assignable to type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; ...'.
+        Types of parameters 'action' and 'action' are incompatible.
+          Type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;SearchStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+            Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;SearchStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+              Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type '(state: StackNavigationState&lt;SearchStackParamList&gt;) =&gt; Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt;'.
+                Types of parameters 'state' and 'state' are incompatible.
+                  Type 'StackNavigationState&lt;SearchStackParamList&gt;' is not assignable to type 'Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;'.
+                    Types of property 'routeNames' are incompatible.
+                      Type '"SearchMain"[]' is not assignable to type '(keyof RootStackParamList)[]'.
+                        Type '"SearchMain"' is not assignable to type 'keyof RootStackParamList'.
+src/screens/WatchlistScreen.tsx(115,28): error TS2345: Argument of type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;WatchlistStackParamList, "WatchlistMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Watchlist", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to parameter of type 'NavigationProp&lt;RootStackParamList&gt;'.
+  Type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;WatchlistStackParamList, "WatchlistMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Watchlist", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to type 'Omit&lt;NavigationHelpersCommon&lt;RootStackParamList, Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;&gt;, "getParent"&gt;'.
+    Types of property 'dispatch' are incompatible.
+      Type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;...&gt;)) =&gt; void' is not assignable to type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; ...'.
+        Types of parameters 'action' and 'action' are incompatible.
+          Type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+            Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+              Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type '(state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt;'.
+                Types of parameters 'state' and 'state' are incompatible.
+                  Type 'StackNavigationState&lt;WatchlistStackParamList&gt;' is not assignable to type 'Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;'.
+                    Types of property 'routeNames' are incompatible.
+                      Type '"WatchlistMain"[]' is not assignable to type '(keyof RootStackParamList)[]'.
+                        Type '"WatchlistMain"' is not assignable to type 'keyof RootStackParamList'.
+src/screens/WatchlistScreen.tsx(202,34): error TS2345: Argument of type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;WatchlistStackParamList, "WatchlistMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Watchlist", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to parameter of type 'NavigationProp&lt;RootStackParamList&gt;'.
+  Type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;WatchlistStackParamList, "WatchlistMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Watchlist", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to type 'Omit&lt;NavigationHelpersCommon&lt;RootStackParamList, Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;&gt;, "getParent"&gt;'.
+    Types of property 'dispatch' are incompatible.
+      Type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;...&gt;)) =&gt; void' is not assignable to type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; ...'.
+        Types of parameters 'action' and 'action' are incompatible.
+          Type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+            Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+              Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type '(state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt;'.
+                Types of parameters 'state' and 'state' are incompatible.
+                  Type 'StackNavigationState&lt;WatchlistStackParamList&gt;' is not assignable to type 'Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;'.
+                    Types of property 'routeNames' are incompatible.
+                      Type '"WatchlistMain"[]' is not assignable to type '(keyof RootStackParamList)[]'.
+                        Type '"WatchlistMain"' is not assignable to type 'keyof RootStackParamList'.
+src/screens/WatchlistScreen.tsx(243,38): error TS2345: Argument of type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;WatchlistStackParamList, "WatchlistMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Watchlist", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to parameter of type 'NavigationProp&lt;RootStackParamList&gt;'.
+  Type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;WatchlistStackParamList, "WatchlistMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Watchlist", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to type 'Omit&lt;NavigationHelpersCommon&lt;RootStackParamList, Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;&gt;, "getParent"&gt;'.
+    Types of property 'dispatch' are incompatible.
+      Type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;...&gt;)) =&gt; void' is not assignable to type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; ...'.
+        Types of parameters 'action' and 'action' are incompatible.
+          Type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+            Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+              Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type '(state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt;'.
+                Types of parameters 'state' and 'state' are incompatible.
+                  Type 'StackNavigationState&lt;WatchlistStackParamList&gt;' is not assignable to type 'Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;'.
+                    Types of property 'routeNames' are incompatible.
+                      Type '"WatchlistMain"[]' is not assignable to type '(keyof RootStackParamList)[]'.
+                        Type '"WatchlistMain"' is not assignable to type 'keyof RootStackParamList'.
+src/screens/WatchlistScreen.tsx(249,38): error TS2345: Argument of type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;WatchlistStackParamList, "WatchlistMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Watchlist", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to parameter of type 'NavigationProp&lt;RootStackParamList&gt;'.
+  Type 'CompositeNavigationProp&lt;NativeStackNavigationProp&lt;WatchlistStackParamList, "WatchlistMain", undefined&gt;, CompositeNavigationProp&lt;BottomTabNavigationProp&lt;RootTabParamList, "Watchlist", undefined&gt;, NativeStackNavigationProp&lt;...&gt;&gt;&gt;' is not assignable to type 'Omit&lt;NavigationHelpersCommon&lt;RootStackParamList, Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;&gt;, "getParent"&gt;'.
+    Types of property 'dispatch' are incompatible.
+      Type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;...&gt;)) =&gt; void' is not assignable to type '(action: Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; ...'.
+        Types of parameters 'action' and 'action' are incompatible.
+          Type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;...&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+            Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type 'Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt; | ((state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;...&gt;)'.
+              Type '(state: Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;) =&gt; Readonly&lt;...&gt;' is not assignable to type '(state: StackNavigationState&lt;WatchlistStackParamList&gt;) =&gt; Readonly&lt;{ type: string; payload?: object | undefined; source?: string | undefined; target?: string | undefined; }&gt;'.
+                Types of parameters 'state' and 'state' are incompatible.
+                  Type 'StackNavigationState&lt;WatchlistStackParamList&gt;' is not assignable to type 'Readonly&lt;{ key: string; index: number; routeNames: (keyof RootStackParamList)[]; history?: unknown[] | undefined; routes: NavigationRoute&lt;RootStackParamList, keyof RootStackParamList&gt;[]; type: string; stale: false; }&gt;'.
+                    Types of property 'routeNames' are incompatible.
+                      Type '"WatchlistMain"[]' is not assignable to type '(keyof RootStackParamList)[]'.
+                        Type '"WatchlistMain"' is not assignable to type 'keyof RootStackParamList'.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating navigation types**
+
+I'm refactoring navigation helpers to use a minimal interface instead of strict `NavigationProp` types. 
+
+**Refactoring navigation**
+
+I'm simplifying navigation type definitions using function overloads for cleaner signature handling. I'm simplifying navigation functions by extracting typed helpers for cleaner usage. I'm implementing a generic navigate function to resolve type assignment issues in composite navigation. I'm adding type assertion to preserve type safety in the navigate helper. 
+
+I'm exporting a minimal type alias for navigation to improve type safety. I'm checking if `CompositeNavigationProp` satisfies `RootRouteNavigation` interface for type compatibility. I'm testing structural typing for `CompositeNavigationProp` compatibility with `RootRouteNavigation` interface. 
+
+I'm refactoring the RootRouteNavigation interface to use explicit call signatures for navigate method. I'm implementing explicit overloads for the navigate method in RootRouteNavigation interface. 
+
+**Fixing navigation overloads**
+
+I'm addressing a contravariance issue with navigate method overloads by using `unknown` type with internal assertions. I'm refactoring the navigateToDetail function to use NavigationHelpersCommon from react-navigation for proper typing. I'm removing the `any` type assertion in `navigateToDetail` and using explicit `NavigationProp<RootStackParamList>` casting. I'm simplifying the navigation parameter typing to use `NavigationProp<RootStackParamList>` with `as const` assertion at call sites. I'm switching to generic navigation helpers to avoid type inference issues with `NavigationProp<RootStackParamList>`. I'm implementing overload resolution with assertion for navigation helpers. 
+
+I'm verifying CompositeNavigationProp extends NavigationProp and checking if NavigationProp<ParamListBase> is too permissive. I'm removing type assertions in favor of direct navigate calls for cleaner type safety. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Relaxing helper parameter types: `NavigationProp<RootStackParamList>` isn't assignable from composite tab navigators. Using `NavigationProp<ParamListBase>` (standard pattern for bubbling navigators):
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/helpers.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **4** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/src/navigation** (4 files)
+
+| File |
+|------|
+| `TabBarGlassBackground.tsx` |
+| `types.ts` |
+| `RootNavigator.tsx` |
+| `helpers.ts` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx",
+  "pattern": "RootStackParamList"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx",
+  "pattern": "RootStackParamList",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "src/screens/HomeScreen.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+### Added `src/navigation/helpers.ts`
+- **`navigateToDetail(navigation, movieId)`** — navigates to **`Detail`** with `{ movieId }`.
+- **`navigateToSeeAll(navigation, params)`** — navigates to **`SeeAll`** with typed **`SeeAllParams`**.
+- Parameters use **`NavigationProp<ParamListBase>`** so composite tab navigators type-check; a narrow cast to **`NavigationProp<RootStackParamList>`** is used only inside the helpers so the route names stay correct.
+
+### Call sites updated
+- **`HomeScreen.tsx`** — `openDetail`, `seeAllTrending`, `seeAllTopRated`, `seeAllDiscover`.
+- **`SearchScreen.tsx`** — `openSearchDetail`.
+- **`SeeAllScreen.tsx`** — `onOpenDetail`.
+- **`WatchlistScreen.tsx`** — grid `onPressDetails`, empty recommendations, “Because you saved” movie + See All.
+- **`DetailScreen.tsx`** — `onPressSimilarMovie` uses **`navigateToDetail`**; **`useNavigation`** is typed as **`NavigationProp<RootStackParamList>`**; **`CommonActions`** removed.
+
+Tab navigations like **`Home`** / **`Search`** are unchanged.
+
+`npx tsc --noEmit` and `npm run lint` both pass.
+
+---
+
+_**User**_
+
+1. Unused npm dependency
+@react-native/new-app-screen is in package.json but nothing imports it (App.tsx uses RootNavigator only).
+Action: Remove it from package.json / lockfile if you don’t plan to use the RN template welcome screen.
+2. Unused typography token
+typography['headline-rail'] is only defined in src/theme/typography.ts; no src/ file references it (rails use headline-md now).
+Action: Delete the headline-rail entry or keep it only if you still want a 24px escape hatch — otherwise it’s dead theme API.
+
+---
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts,json}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "new-app-screen|headline-rail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "new-app-screen|headline-rail",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/theme/typography.ts"
+    },
+    {
+      "matchCount": 3,
+      "uri": "package-lock.json"
+    },
+    {
+      "matchCount": 1,
+      "uri": "package.json"
+    }
+  ],
+  "totalFiles": 3,
+  "totalMatches": 5
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/package.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/package.json</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm install</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm install
+```
+
+```
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'MovieList@0.0.1',
+npm warn EBADENGINE   required: { node: '&gt;= 22.11.0' },
+npm warn EBADENGINE   current: { node: 'v20.19.5', npm: '10.8.2' }
+npm warn EBADENGINE }
+
+added 1 package, removed 1 package, and audited 916 packages in 1s
+
+178 packages are looking for funding
+  run &#96;npm fund&#96; for details
+
+found 0 vulnerabilities
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts,json}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "new-app-screen|headline-rail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "new-app-screen|headline-rail",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>

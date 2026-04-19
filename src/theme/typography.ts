@@ -75,13 +75,6 @@ export const typography = {
     fontWeight: '700' as const,
     letterSpacing: lsEm(-0.01, 28),
   },
-  /** Legacy 24px rail title — prefer **`headline-md`** (28px) for rail / hero headlines per spec. */
-  'headline-rail': {
-    fontFamily: fontFamilies.manropeBold,
-    fontSize: 24,
-    fontWeight: '700' as const,
-    letterSpacing: lsEm(-0.01, 24),
-  },
   /** Search section titles — `resources/search.html` (`text-xl font-bold` / Manrope). */
   'headline-search': {
     fontFamily: fontFamilies.manropeBold,
