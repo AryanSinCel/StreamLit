@@ -13738,9 +13738,14 @@ _**Agent (composer-2)**_
 
 <tool-use data-tool-type="search" data-tool-name="glob_file_search">
 <details>
-<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **0** directories</summary>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **1** result in **1** directory</summary>
 
-No results found
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList** (1 file)
+
+| File |
+|------|
+| `ios/MovieList/Images.xcassets/AppIcon.appiconset/Contents.json` |
+
 </details>
 </tool-use>
 
@@ -13769,6 +13774,2620 @@ _**Agent (composer-2)**_
 
 <tool-use data-tool-type="read" data-tool-name="read_file_v2">
 <details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/package.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/ios/MovieList/Images.xcassets/AppIcon.appiconset/Contents.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/android** (0 files)
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList** (0 files)
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **1** result in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/ios/MovieList/Images.xcassets/AppIcon.appiconset** (1 file)
+
+| File |
+|------|
+| `Contents.json` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **3** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/android/app/src/main/res** (3 files)
+
+| File |
+|------|
+| `drawable/rn_edit_text_material.xml` |
+| `values/strings.xml` |
+| `values/styles.xml` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Generating app icons**
+
+I'm using macOS `sips` to generate resized icons from the source PNG. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/android/app/src/main/AndroidManifest.xml</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **1** result in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/android** (1 file)
+
+| File |
+|------|
+| `app/src/main/AndroidManifest.xml` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Creating mipmap directories**
+
+I'm generating the missing mipmap directories with launcher icons for Android. I'm generating missing mipmap directories and adaptive icon XML for Android build compatibility. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: sips -g pixelWidth -g pixelHeight "/Users/aryansingh/.cursor/projects/Users-aryansingh-Desktop-Task2-MovieList/assets/appIcon-427a97dc-960e-4aed-b027-29a87152092f.png" 2>&1</summary>
+
+```bash
+sips -g pixelWidth -g pixelHeight "/Users/aryansingh/.cursor/projects/Users-aryansingh-Desktop-Task2-MovieList/assets/appIcon-427a97dc-960e-4aed-b027-29a87152092f.png" 2>&1
+```
+
+```
+/Users/aryansingh/.cursor/projects/Users-aryansingh-Desktop-Task2-MovieList/assets/appIcon-427a97dc-960e-4aed-b027-29a87152092f.png
+  pixelWidth: 1024
+  pixelHeight: 1024
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Copying source file**
+
+I'm copying the 1024x1024 source image to the MovieList project's assets folder for version control. I'm copying the source image to `MovieList/assets/app-icon-1024.png` following industry convention. 
+
+**Generating app icons**
+
+I'm generating app icons with standard sizes and naming conventions. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native/template/android/app/src/main/res** (0 files)
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/node_modules/@react-native-community/cli** (0 files)
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.xml",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native",
+  "pattern": "ic_launcher"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native",
+  "pattern": "ic_launcher",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Setting up Android resources**
+
+I'm creating minimal mipmap folders with PNGs for the launcher icons. I'm creating raster launcher icons in all mipmap densities for compatibility. 
+
+**Generating app icons**
+
+I'm generating iOS app icons using sips with proper dimensions and Contents.json format. I'm building Contents.json with proper iOS icon dimensions and filenames. I'm standardizing iOS icon filenames to avoid Apple's confusing naming convention. I'm using one file for both 40@3x and 60@2x slots in Contents.json to simplify icon management. 
+
+I'm generating app-120.png once and referencing it in both 40@3x and 60@2x slots. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Copying the 1024×1024 source into the project and generating required iOS and Android icon sizes.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: SRC="/Users/aryansingh/.cursor/projects/Users-aryansingh-Desktop-Task2-MovieList/assets/appIcon-427a97dc-960e-4aed-b027-29a87152092f.png"
+BASE="/Users/aryansingh/Desktop/Task2/MovieList"
+mkdir -p "$BASE/assets" "$BASE/ios/MovieList/Images.xcassets/AppIcon.appiconset"
+cp "$SRC" "$BASE/assets/app-icon-source-1024.png"
+
+IC="$BASE/ios/MovieList/Images.xcassets/AppIcon.appiconset"
+gen() { sips -z "$2" "$2" "$SRC" --out "$IC/$1" >/dev/null; }
+
+gen app-40.png 40
+gen app-60.png 60
+gen app-58.png 58
+gen app-87.png 87
+gen app-80.png 80
+gen app-120.png 120
+gen app-180.png 180
+cp "$SRC" "$IC/app-1024.png"
+
+# Android mipmaps (legacy raster launcher)
+for spec in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
+  folder="${spec%%:*}"
+  px="${spec##*:}"
+  dir="$BASE/android/app/src/main/res/mipmap-${folder}"
+  mkdir -p "$dir"
+  sips -z "$px" "$px" "$SRC" --out "$dir/ic_launcher.png" >/dev/null
+  cp "$dir/ic_launcher.png" "$dir/ic_launcher_round.png"
+done
+
+echo done && ls -la "$IC" | head -20</summary>
+
+```bash
+SRC="/Users/aryansingh/.cursor/projects/Users-aryansingh-Desktop-Task2-MovieList/assets/appIcon-427a97dc-960e-4aed-b027-29a87152092f.png"
+BASE="/Users/aryansingh/Desktop/Task2/MovieList"
+mkdir -p "$BASE/assets" "$BASE/ios/MovieList/Images.xcassets/AppIcon.appiconset"
+cp "$SRC" "$BASE/assets/app-icon-source-1024.png"
+
+IC="$BASE/ios/MovieList/Images.xcassets/AppIcon.appiconset"
+gen() { sips -z "$2" "$2" "$SRC" --out "$IC/$1" >/dev/null; }
+
+gen app-40.png 40
+gen app-60.png 60
+gen app-58.png 58
+gen app-87.png 87
+gen app-80.png 80
+gen app-120.png 120
+gen app-180.png 180
+cp "$SRC" "$IC/app-1024.png"
+
+# Android mipmaps (legacy raster launcher)
+for spec in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
+  folder="${spec%%:*}"
+  px="${spec##*:}"
+  dir="$BASE/android/app/src/main/res/mipmap-${folder}"
+  mkdir -p "$dir"
+  sips -z "$px" "$px" "$SRC" --out "$dir/ic_launcher.png" >/dev/null
+  cp "$dir/ic_launcher.png" "$dir/ic_launcher_round.png"
+done
+
+echo done && ls -la "$IC" | head -20
+```
+
+```
+done
+total 232
+drwxr-xr-x@ 11 aryansingh  staff    352 Apr 20 03:11 .
+drwxr-xr-x@  4 aryansingh  staff    128 Apr 14 01:30 ..
+-rw-r--r--@  1 aryansingh  staff    849 Apr 14 01:30 Contents.json
+-rw-r--r--@  1 aryansingh  staff  74845 Apr 20 03:11 app-1024.png
+-rw-r--r--@  1 aryansingh  staff   4819 Apr 20 03:11 app-120.png
+-rw-r--r--@  1 aryansingh  staff   7691 Apr 20 03:11 app-180.png
+-rw-r--r--@  1 aryansingh  staff   1467 Apr 20 03:11 app-40.png
+-rw-r--r--@  1 aryansingh  staff   2163 Apr 20 03:11 app-58.png
+-rw-r--r--@  1 aryansingh  staff   2220 Apr 20 03:11 app-60.png
+-rw-r--r--@  1 aryansingh  staff   2970 Apr 20 03:11 app-80.png
+-rw-r--r--@  1 aryansingh  staff   3387 Apr 20 03:11 app-87.png
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **10** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/android/app/src/main/res** (10 files)
+
+| File |
+|------|
+| `mipmap-hdpi/ic_launcher_round.png` |
+| `mipmap-xxxhdpi/ic_launcher.png` |
+| `mipmap-xxxhdpi/ic_launcher_round.png` |
+| `mipmap-mdpi/ic_launcher_round.png` |
+| `mipmap-xxhdpi/ic_launcher_round.png` |
+| `mipmap-xhdpi/ic_launcher.png` |
+| `mipmap-xxhdpi/ic_launcher.png` |
+| `mipmap-xhdpi/ic_launcher_round.png` |
+| `mipmap-hdpi/ic_launcher.png` |
+| `mipmap-mdpi/ic_launcher.png` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/ios/MovieList/Images.xcassets/AppIcon.appiconset/Contents.json</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/.gitignore",
+  "pattern": "AppIcon|mipmap|\\.png"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/.gitignore",
+  "pattern": "AppIcon|mipmap|\\.png",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/ios",
+  "pattern": "AppIcon|Images.xcassets"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/ios",
+  "pattern": "AppIcon|Images.xcassets",
+  "topFiles": [
+    {
+      "matchCount": 6,
+      "uri": "ios/MovieList.xcodeproj/project.pbxproj"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 6
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: ls -la /Users/aryansingh/Desktop/Task2/MovieList/android/app/src/main/res/mipmap-xxhdpi/</summary>
+
+```bash
+ls -la /Users/aryansingh/Desktop/Task2/MovieList/android/app/src/main/res/mipmap-xxhdpi/
+```
+
+```
+total 32
+drwxr-xr-x@ 4 aryansingh  staff   128 Apr 20 03:11 .
+drwxr-xr-x@ 9 aryansingh  staff   288 Apr 14 01:30 ..
+-rw-r--r--@ 1 aryansingh  staff  5864 Apr 20 03:11 ic_launcher.png
+-rw-r--r--@ 1 aryansingh  staff  5864 Apr 20 03:11 ic_launcher_round.png
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating README**
+
+I'm adding guidance about adaptive icon layers for Android home screen display. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: for d in mdpi hdpi xhdpi xxhdpi xxxhdpi; do echo -n "mipmap-$d: "; ls "/Users/aryansingh/Desktop/Task2/MovieList/android/app/src/main/res/mipmap-$d" 2>/dev/null | wc -l; done</summary>
+
+```bash
+for d in mdpi hdpi xhdpi xxhdpi xxxhdpi; do echo -n "mipmap-$d: "; ls "/Users/aryansingh/Desktop/Task2/MovieList/android/app/src/main/res/mipmap-$d" 2>/dev/null | wc -l; done
+```
+
+```
+mipmap-mdpi:        2
+mipmap-hdpi:        2
+mipmap-xhdpi:        2
+mipmap-xxhdpi:        2
+mipmap-xxxhdpi:        2
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Here’s what was set up.
+
+### Source asset
+- **`assets/app-icon-source-1024.png`** — copy of your 1024×1024 artwork (kept in the repo as the canonical source).
+
+### iOS (`ios/MovieList/Images.xcassets/AppIcon.appiconset/`)
+- Generated PNGs: **`app-40.png`** … **`app-180.png`** and **`app-1024.png`** (App Store).
+- **`Contents.json`** updated so each slot points at the right file (including **`app-120.png`** for both 40×40 @3× and 60×60 @2×).
+- Xcode is already set to **`ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon`**, so no project file edits were required.
+
+### Android (`android/app/src/main/res/`)
+- **`mipmap-mdpi` … `mipmap-xxxhdpi`** each contain **`ic_launcher.png`** and **`ic_launcher_round.png`** (same artwork at 48–192 px), matching **`AndroidManifest.xml`** (`@mipmap/ic_launcher` / `ic_launcher_round`).
+
+Icons were produced with **`sips`** from your file so sizes match platform expectations.
+
+**Note:** The artwork is mostly transparent around the mark. On some Android versions, legacy mipmaps still look fine; if the home screen shows an odd fringe, we can add an **adaptive icon** (solid background + foreground) in a follow-up. Rebuild the native apps to see the new icons (`npx react-native run-ios` / `run-android`).
+
+---
+
+_**User**_
+
+Refactor the repeated “tab screen shell” used on Home, Search, Watchlist, and Profile:
+
+**Problem:** Four screens duplicate the same layout:
+- Outer `View` with `styles.screen` (`backgroundColor: colors.surface`, `flex: 1`)
+- Inner `View` with `styles.headerDock` (`backgroundColor: colors.surface`, `zIndex: elevation.dock`) and `paddingTop: insets.top + spacing.sm` from `useSafeAreaInsets()`
+- The top bar is passed as children: `HomeHeader`, `SearchAppBar` (with optional `beforeProfile` / `onPressProfile`), etc.
+
+**Task:**
+1. Add a reusable component under `src/components/common/`, e.g. **`TabScreenShell.tsx`** (or `ScreenWithTopBar.tsx` — pick one clear name). It should:
+   - Accept **`children`** for the top bar content (the bar row only)
+   - Apply **`useSafeAreaInsets()`** internally and set **`paddingTop: insets.top + spacing.sm`** on the dock
+   - Use **theme tokens only** (`colors.surface`, `elevation.dock`, `spacing`) — same visual behavior as today
+   - Optional: accept **`style`** for the outer `screen` root if any screen needs a tweak (default: full flex + surface background)
+
+2. Move the shared **`screen`** and **`headerDock`** styles into this component’s `StyleSheet` (or a tiny shared style object), **not** duplicated in four screens.
+
+3. Update **`HomeScreen.tsx`**, **`SearchScreen.tsx`**, **`WatchlistScreen.tsx`**, and **`ProfileScreen.tsx`** to use the new wrapper instead of inline `View` + duplicated styles. Remove now-unused **`headerDock`** / duplicate **`screen`** entries from those files if fully redundant.
+
+4. Verify **Search** bootstrap state** (when `snap == null`) still shows only the dock + `SearchAppBar` — layout must match before/after.
+
+5. Run **`npm run lint`** (or project lint) and fix any issues. **Minimal diff** — no unrelated refactors or renaming of unrelated components.
+
+**Files to touch:** new file in `src/components/common/`, plus the four screen files above.
+
+---
+
+_**Agent (composer-2)**_
+
+
+Reading the four screens to extract the shared shell pattern.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Creating tab screen shell**
+
+I'm implementing TabScreenShell.tsx with safe area insets and header dock layout. 
+
+**Refining tab screen shell**
+
+I'm adjusting the TabScreenShell API to support additional siblings like ScrollView while maintaining the dock layout. 
+
+**Designing API structure**
+
+I'm implementing a compound component pattern for TabScreenShell with topBar prop and children for main content. 
+
+**Implementing tab screen shell**
+
+I'm implementing TabScreenShell with topBar and optional children, handling Search bootstrap case where only topBar is needed. I'm adjusting padding for scroll content in TabScreenShell, noting that Watchlist loading view uses different padding and doesn't show SearchAppBar. I'm refactoring screens to use TabScreenShell with appropriate top bars and error boundaries. 
+
+**Refactoring screens**
+
+Removing elevation import from Profile, HomeScreen, and SearchScreen as it's only used by headerDock. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Implementing `TabScreenShell` with `topBar` and optional `children`, then updating the four screens.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/TabScreenShell.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating screens**
+
+I'm replacing return branches in HomeScreen and SearchScreen with TabScreenShell components. I'm removing unused colors import from SearchScreen and replacing return branches with TabScreenShell components. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx",
+  "pattern": "View"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx",
+  "pattern": "View",
+  "topFiles": [
+    {
+      "matchCount": 7,
+      "uri": "src/screens/SearchScreen.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 7
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint
+```
+
+```
+src/screens/WatchlistScreen.tsx(127,28): error TS2339: Property 'screen' does not exist on type '{ appBarIconHit: { padding: 4; }; appBarIconHitPressed: { opacity: 0.85; }; scroll: { flex: number; }; scrollFill: { flex: number; flexGrow: number; }; scrollContent: { flexGrow: number; }; emptyEditorialHeader: { ...; }; ... 4 more ...; gridRow: { ...; }; }'.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating loading styles**
+
+I'm replacing styles.screen with inline theme tokens for the loading state while keeping the full-screen layout. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Restoring a `screen` style for Watchlist's loading-only branch (no top bar).
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/common/TabScreenShell.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/common/TabScreenShell.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+### What we added
+- **`src/components/common/TabScreenShell.tsx`** — Outer **`screen`** (`colors.surface`, `flex: 1`) + **`headerDock`** (`colors.surface`, `zIndex: elevation.dock`) with **`paddingTop: insets.top + spacing.sm`** from **`useSafeAreaInsets()`**. Props: **`topBar`** (the bar row), optional **`children`** (main content below the dock), optional **`style`** merged onto the outer root.
+
+### Screen updates
+- **`HomeScreen.tsx`** — Both **`snap == null`** and the main tree use **`TabScreenShell topBar={<HomeHeader />}>`**. Removed duplicated **`screen`** / **`headerDock`**; dropped unused **`elevation`** import.
+- **`SearchScreen.tsx`** — Bootstrap and loaded state use **`TabScreenShell topBar={<SearchAppBar />}`**. Removed **`screen`** / **`headerDock`** and unused **`colors`** / **`elevation`** / **`View`** import. **`snap == null`** is still **only** shell + **`SearchAppBar`** (no **`children`**), same layout as before.
+- **`WatchlistScreen.tsx`** — Empty and grid states use **`TabScreenShell`** with the **`SearchAppBar`** props. **Loading / null data** stays a plain **`View`** with **`loadingScreen`** (`surface` + `flex: 1`) so there is still **no** top bar during hydration (not part of the shared shell).
+- **`ProfileScreen.tsx`** — Wrapped with **`TabScreenShell`** + **`SearchAppBar`**; removed duplicated **`screen`** / **`headerDock`**; dropped unused **`elevation`** import.
+
+### Checks
+- **`npx tsc --noEmit`** and **`npm run lint`** both pass.
+
+---
+
+_**User**_
+
+Watchlist loading state: align with the rest of the tab screens.
+
+**Current:** When `watchlistLoading || watchlistData == null`, `WatchlistScreen` returns a full-screen `View` with “Loading…” and **no** `TabScreenShell` — so there’s no top bar / header dock during hydration, unlike Home, Search, and Profile.
+
+**Goal:** During that loading phase, use **`TabScreenShell`** from `src/components/common/TabScreenShell.tsx` so the **same top chrome** appears (use the same **`SearchAppBar`** pattern as the populated Watchlist screen: `beforeProfile` search icon + `onPressProfile` as today).
+
+**Loading body:** Replace the plain centered text with a **skeleton** that matches the Watchlist layout intent, e.g.:
+- Reuse or add a small **`WatchlistScreenSkeleton`** (or reuse existing shimmer/skeleton pieces from `common/` + watchlist patterns) — header strip + 2-column card placeholders **or** a minimal shimmer block that doesn’t require `useWatchlist` data.
+- Avoid flashing wrong counts; keep copy minimal (“Loading…” is OK inside skeleton if needed).
+
+**Constraints:**
+- Do **not** change watchlist store / hook loading semantics — only **UI shell** for the loading branch.
+- After `watchlistData` is ready, behavior must stay **identical** to now (empty vs grid).
+- Run lint / TypeScript and fix issues. **Minimal diff** — no unrelated refactors.
+
+**Files:** `src/screens/WatchlistScreen.tsx` (+ new skeleton component under `components/watchlist/` or `common/` if appropriate). 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating watchlist loading state**
+
+I'm implementing the loading state with TabScreenShell and SearchAppBar, replacing the centered loader with skeleton placeholders. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Reviewing the Watchlist loading branch and existing skeleton patterns.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenHeader.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **6** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/src/components** (6 files)
+
+| File |
+|------|
+| `home/HomeRowSkeleton.tsx` |
+| `search/SearchTrendingSkeleton.tsx` |
+| `search/SearchResultsGridSkeleton.tsx` |
+| `home/HomeHeroSkeleton.tsx` |
+| `detail/DetailDetailsSkeleton.tsx` |
+| `seeAll/SeeAllGridSkeleton.tsx` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Reading component patterns**
+
+I'm examining ShimmerBox, SearchResultsGridSkeleton, and SeeAllGridSkeleton for 2-column layout patterns. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/ShimmerBox.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/seeAll/SeeAllGridSkeleton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Creating skeleton component**
+
+I'm creating `WatchlistScreenSkeleton.tsx` with shimmer effects for header, filter chips, and grid items. I'm composing the WatchlistScreenSkeleton with header shimmers and 3 chip shimmers, reusing existing CellSkeleton patterns. 
+
+I'm implementing the skeleton layout with 2x3 grid for watchlist cards and ScrollView with safe area padding. 
+
+**Adjusting layout padding**
+
+I'm adding safe area padding to the ScrollView in WatchlistScreen to match the list header padding. 
+
+**Restructuring screen components**
+
+I'm restructuring WatchlistScreen to move ScrollView to the parent component and simplify WatchlistScreenSkeleton to avoid unnecessary scrolling. I'm simplifying WatchlistScreenSkeleton to return a fragment and moving ScrollView to WatchlistScreen with consistent styling. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenHeader.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing skeleton**
+
+I'm implementing WatchlistScreenSkeleton with header, chip tray, and grid skeletons using existing patterns. I'm replacing the loading return with conditional rendering based on `watchlistLoading` in WatchlistScreen. I'm implementing WatchlistScreenSkeleton with proper horizontal padding using paddingHorizontal. I'm adding horizontal padding to WatchlistScreenSkeleton using spacing.xl to match the design. 
+
+I'm implementing the skeleton layout with shimmer boxes for the header and chip tray, using `layout.skeletonBlockXl` for the title bar. I'm adding shimmer chips to the chip tray with consistent styling and spacing. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+  "pattern": "typography"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+  "pattern": "typography",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Removing unused imports**
+
+I'm removing the unused typography import from WatchlistScreen after deleting mutedCenter. 
+
+**Designing skeleton layout**
+
+I'm implementing the skeleton layout with proper spacing: headerBlock with marginBottom spacing.xl and chipTray with marginTop spacing.lg + spacing.xs from headerBlock. 
+
+**Implementing skeleton layout**
+
+I'm adding shimmer boxes for chip pills with fixed dimensions using spacing tokens. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Creating `WatchlistScreenSkeleton` and updating the loading branch.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating skeleton styles**
+
+I'm replacing skeletonRadiusMd with radiusCardInner for poster corners and updating WatchlistScreenSkeleton's styling to match the real header. I'm adjusting skeleton layout to match real layout by adding marginTop: spacing.lg + spacing.xs to chipTray. 
+
+I'm fixing the duplicate titleLine key in StyleSheet by renaming one of the titleLine definitions to avoid conflicts between grid cell and header styles. I'm renaming the grid card shimmer titleLine style to avoid conflict with the header titleLineHero. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Adjusting header layout**
+
+I'm adjusting the header layout to match the real WatchlistScreenHeader with proper spacing between kicker, title, and chip tray. I'm restructuring the header layout with a single headerBlock containing kicker, title, and chips, using marginBottom spacing.xl for proper spacing. 
+
+**Restructuring header layout**
+
+I'm simplifying the header layout by wrapping kicker and title in a single view with gap spacing, keeping chipTray separate, all inside the outer headerBlock. I'm updating the component JSX to wrap header and chipTray in one block with marginBottom spacing.xl, removing standalone marginBottom from headerBlock. I'm removing standalone marginBottom from headerBlock and relying on chipTray's marginBottom xl for proper spacing. I'm removing marginBottom from headerBlock and using only marginTop on chipTray for correct spacing. 
+
+I'm adjusting the header layout to use marginTop on chipTray instead of marginBottom on headerBlock for proper spacing. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Wrapping the header and chip tray to match `WatchlistScreenHeader` spacing.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Renaming styles**
+
+I'm renaming conflicting style names to ensure consistency between grid and header components. I'm extracting the `appBarIconHit` style into a reusable constant for better maintainability. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+  "pattern": "Text"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+  "pattern": "Text",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+  "pattern": "\u003cText"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx",
+  "pattern": "\u003cText",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenSkeleton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenSkeleton.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenSkeleton.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+### What changed
+
+**`src/components/watchlist/WatchlistScreenSkeleton.tsx`**
+- New skeleton: kicker + “title” shimmers, **`surface_container_high`** chip tray with three pill shimmers (same spacing idea as `WatchlistScreenHeader`), then a **2×3** grid of poster + line shimmers using `contentCard.aspectRatio` and `ShimmerBox` (aligned with `SeeAllGridSkeleton`).
+- Centered **“Loading…”** under the grid (`body-md`, `on_surface_variant`) — no counts or titles.
+- `accessibilityLabel="Loading watchlist"` on the root.
+
+**`src/screens/WatchlistScreen.tsx`**
+- When **`watchlistLoading || watchlistData == null`**, renders **`TabScreenShell`** with the same **`SearchAppBar`** as the populated screen (`beforeProfile` + `onPressProfile`).
+- **`ScrollView`** uses the same **`contentContainerStyle`** pattern as the empty state (`paddingTop: spacing.lg`, `paddingBottom: insets.bottom + spacing.xxl`, `scrollContent` + `scrollFill`).
+- Removed the old full-screen loading view and styles **`loadingScreen`**, **`centered`**, **`mutedCenter`**; dropped unused **`Text`** / **`typography`** imports.
+
+Hook/store loading behavior is unchanged; only this branch’s UI. `tsc` and `npm run lint` pass.
+
+---
+
+_**User**_
+
+Repeated navigation.navigate('Detail', { movieId }) / SeeAll — a typed navigateToDetail(movieId) in a small navigation/helpers.ts or hook reduces noise; not UI, but cleans screens. fix it 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Searching navigation patterns**
+
+I'm identifying repeated navigation calls to create typed helpers for Detail and SeeAll navigations. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Searching for navigation patterns and reviewing navigation types.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "navigate\\('Detail'|navigate\\('SeeAll'"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "navigate\\('Detail'|navigate\\('SeeAll'",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/screens/SeeAllScreen.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/screens/SearchScreen.tsx"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/screens/HomeScreen.tsx"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    }
+  ],
+  "totalFiles": 4,
+  "totalMatches": 10
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "navigate\\(.*Detail|SeeAll"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "navigate\\(.*Detail|SeeAll",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "src/navigation/RootNavigator.tsx"
+    },
+    {
+      "matchCount": 9,
+      "uri": "src/hooks/useSeeAll.ts"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/detail/DetailSimilarSection.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/hooks/index.ts"
+    },
+    {
+      "matchCount": 7,
+      "uri": "src/screens/SeeAllScreen.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/utils/formatMovieListItem.ts"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/watchlist/WatchlistBecauseYouSavedSection.tsx"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/screens/DetailScreen.tsx"
+    },
+    {
+      "matchCount": 8,
+      "uri": "src/screens/HomeScreen.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/screens/SearchScreen.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/seeAll/SeeAllGridSkeleton.tsx"
+    },
+    {
+      "matchCount": 6,
+      "uri": "src/navigation/types.ts"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/components/home/HomeContentRow.tsx"
+    }
+  ],
+  "totalFiles": 14,
+  "totalMatches": 58
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "navigate\\("
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "navigate\\(",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/screens/SeeAllScreen.tsx"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/screens/HomeScreen.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/screens/DetailScreen.tsx"
+    },
+    {
+      "matchCount": 6,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/screens/ProfileScreen.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/screens/SearchScreen.tsx"
+    }
+  ],
+  "totalFiles": 6,
+  "totalMatches": 14
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Creating navigation helpers**
+
+I'm implementing `navigateToDetail` helper with proper typing for nested navigation scenarios. 
+
+**Handling navigation types**
+
+I'm adjusting navigation helper types to match CompositeScreenProps usage in React Navigation 6. 
+
+**Adjusting navigation types**
+
+I'm ensuring CompositeScreenProps includes all declared routes for proper navigation typing. I'm simplifying the navigation function to use direct `navigate` call instead of complex typing. I'm tightening the navigation typing by using `NavigationProp<RootStackParamList>` instead of the loose function signature. I'm updating the navigation functions to use `NavigationProp<RootStackParamList>` for type safety. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
 
 </details>
 </tool-use>

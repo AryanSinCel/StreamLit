@@ -8,11 +8,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { WatchlistMediaFilter } from '../api/types';
 import { IconPerson, IconSearch } from '../components/common/SimpleIcons';
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
+import { TabScreenShell } from '../components/common/TabScreenShell';
 import { SearchAppBar } from '../components/search/SearchAppBar';
 import { WatchlistScreenHeader } from '../components/watchlist/WatchlistScreenHeader';
 import type { ProfileStackParamList, RootStackParamList, RootTabParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
-import { elevation, layout, opacity, radiusCardInner, spacing, tracking } from '../theme/spacing';
+import { layout, opacity, radiusCardInner, spacing, tracking } from '../theme/spacing';
 import { typography } from '../theme/typography';
 
 type Props = CompositeScreenProps<
@@ -87,17 +88,9 @@ export function ProfileScreen({ navigation }: Props): JSX.Element {
   );
 
   return (
-    <View style={styles.screen}>
-      <View
-        style={[
-          styles.headerDock,
-          {
-            paddingTop: insets.top + spacing.sm,
-          },
-        ]}
-      >
-        <SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={showComingSoon} />
-      </View>
+    <TabScreenShell
+      topBar={<SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={showComingSoon} />}
+    >
       <ScreenErrorBoundary onRetry={retryProfileShell} screenLabel="Profile" style={styles.scroll}>
         <ScrollView
           contentContainerStyle={[
@@ -194,7 +187,7 @@ export function ProfileScreen({ navigation }: Props): JSX.Element {
         </View>
         </ScrollView>
       </ScreenErrorBoundary>
-    </View>
+    </TabScreenShell>
   );
 }
 
@@ -254,10 +247,6 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
     textAlign: 'center',
   },
-  headerDock: {
-    backgroundColor: colors.surface,
-    zIndex: elevation.dock,
-  },
   menuGroup: {
     gap: spacing.sm,
     marginTop: spacing.xl,
@@ -269,10 +258,6 @@ const styles = StyleSheet.create({
     letterSpacing: tracking.wide12,
     marginBottom: spacing.xs,
     textTransform: 'uppercase',
-  },
-  screen: {
-    backgroundColor: colors.surface,
-    flex: 1,
   },
   scroll: {
     flex: 1,

@@ -9,18 +9,20 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { HomeChipKey, HomeChipResolved } from '../api/types';
 import { LoadMoreContentIndicator } from '../components/common/LoadMoreContentIndicator';
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
+import { TabScreenShell } from '../components/common/TabScreenShell';
 import { HomeContentRow } from '../components/home/HomeContentRow';
 import { HomeGenreStrip } from '../components/home/HomeGenreStrip';
 import { HomeHeader } from '../components/home/HomeHeader';
 import { HomeHero } from '../components/home/HomeHero';
 import { useHome } from '../hooks/useHome';
+import { navigateToDetail, navigateToSeeAll } from '../navigation/helpers';
 import type {
   HomeStackParamList,
   RootStackParamList,
   RootTabParamList,
 } from '../navigation/types';
 import { colors } from '../theme/colors';
-import { elevation, opacity, spacing } from '../theme/spacing';
+import { opacity, spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 
 type Props = CompositeScreenProps<
@@ -190,20 +192,20 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
   const row3Title = row3SectionTitle(selectedChipKey, chips);
 
   const openDetail = (movieId: number): void => {
-    navigation.navigate('Detail', { movieId });
+    navigateToDetail(navigation, movieId);
   };
 
   const seeAllTrending = (): void => {
-    navigation.navigate('SeeAll', { title: 'Trending Now', mode: 'trending' });
+    navigateToSeeAll(navigation, { title: 'Trending Now', mode: 'trending' });
   };
 
   const seeAllTopRated = (): void => {
-    navigation.navigate('SeeAll', { title: 'Top Rated', mode: 'top_rated' });
+    navigateToSeeAll(navigation, { title: 'Top Rated', mode: 'top_rated' });
   };
 
   const seeAllDiscover = (title: string, chipKey: HomeChipKey): void => {
     const gid = chips.find((c) => c.key === chipKey)?.genreId;
-    navigation.navigate('SeeAll', {
+    navigateToSeeAll(navigation, {
       title,
       mode: 'discover',
       ...(gid != null ? { genreId: gid } : {}),
@@ -215,13 +217,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
   };
 
   if (snap == null) {
-    return (
-      <View style={styles.screen}>
-        <View style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}>
-          <HomeHeader />
-        </View>
-      </View>
-    );
+    return <TabScreenShell topBar={<HomeHeader />} />;
   }
 
   const {
@@ -241,17 +237,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
   const heroMovieId = hero?.id;
 
   return (
-    <View style={styles.screen}>
-      <View
-        style={[
-          styles.headerDock,
-          {
-            paddingTop: insets.top + spacing.sm,
-          },
-        ]}
-      >
-        <HomeHeader />
-      </View>
+    <TabScreenShell topBar={<HomeHeader />}>
       <ScreenErrorBoundary onRetry={refetch} screenLabel="Home" style={styles.scroll}>
         <ScrollView
           contentContainerStyle={{
@@ -389,7 +375,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
             )}
         </ScrollView>
       </ScreenErrorBoundary>
-    </View>
+    </TabScreenShell>
   );
 }
 
@@ -418,14 +404,6 @@ const styles = StyleSheet.create({
   bannerText: {
     ...typography['body-md'],
     color: colors.primary_container,
-  },
-  headerDock: {
-    backgroundColor: colors.surface,
-    zIndex: elevation.dock,
-  },
-  screen: {
-    backgroundColor: colors.surface,
-    flex: 1,
   },
   scroll: {
     flex: 1,

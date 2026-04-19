@@ -3,7 +3,7 @@ import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { JSX } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
-import { Alert, FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, FlatList, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { WatchlistItem } from '../api/types';
@@ -11,21 +11,23 @@ import { WatchlistBecauseYouSavedSection } from '../components/watchlist/Watchli
 import { WatchlistEmptyState } from '../components/watchlist/WatchlistEmptyState';
 import { WatchlistFilterEmpty } from '../components/watchlist/WatchlistFilterEmpty';
 import { WatchlistGridCard } from '../components/watchlist/WatchlistGridCard';
+import { WatchlistScreenSkeleton } from '../components/watchlist/WatchlistScreenSkeleton';
 import { IconSearch } from '../components/common/SimpleIcons';
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
+import { TabScreenShell } from '../components/common/TabScreenShell';
 import { SearchAppBar } from '../components/search/SearchAppBar';
 import { WatchlistScreenHeader } from '../components/watchlist/WatchlistScreenHeader';
 import { useWatchlist } from '../hooks/useWatchlist';
 import { useWatchlistStore } from '../store/watchlistStore';
 import { getWatchlistSimilarMovieAnchorId } from '../utils/watchlistFilters';
+import { navigateToDetail, navigateToSeeAll } from '../navigation/helpers';
 import type {
   RootStackParamList,
   RootTabParamList,
   WatchlistStackParamList,
 } from '../navigation/types';
 import { colors } from '../theme/colors';
-import { elevation, opacity, spacing } from '../theme/spacing';
-import { typography } from '../theme/typography';
+import { opacity, spacing } from '../theme/spacing';
 
 type Props = CompositeScreenProps<
   NativeStackScreenProps<WatchlistStackParamList, 'WatchlistMain'>,
@@ -110,7 +112,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
         genres={watchlistData?.movieGenres ?? []}
         item={item}
         onPressDetails={() => {
-          navigation.navigate('Detail', { movieId: item.id });
+          navigateToDetail(navigation, item.id);
         }}
         onPressRemove={() => {
           handleRemove(item.id);
@@ -123,9 +125,23 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
 
   if (watchlistLoading || watchlistData == null) {
     return (
-      <View style={[styles.screen, styles.centered, { paddingTop: insets.top + spacing.lg }]}>
-        <Text style={styles.mutedCenter}>Loading…</Text>
-      </View>
+      <TabScreenShell
+        topBar={<SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />}
+      >
+        <ScrollView
+          contentContainerStyle={[
+            styles.scrollContent,
+            {
+              paddingBottom: insets.bottom + spacing.xxl,
+              paddingTop: spacing.lg,
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
+          style={styles.scrollFill}
+        >
+          <WatchlistScreenSkeleton />
+        </ScrollView>
+      </TabScreenShell>
     );
   }
 
@@ -155,10 +171,9 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
 
   if (count === 0) {
     return (
-      <View style={styles.screen}>
-        <View style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}>
-          <SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />
-        </View>
+      <TabScreenShell
+        topBar={<SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />}
+      >
         <ScreenErrorBoundary onRetry={refetchWatchlistRemote} screenLabel="Watchlist" style={styles.scroll}>
           <ScrollView
             contentContainerStyle={[
@@ -184,7 +199,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
               ctaWidth={ctaWidth}
               onBrowseTrending={onBrowseTrending}
               onPressRecommendation={(movieId) => {
-                navigation.navigate('Detail', { movieId });
+                navigateToDetail(navigation, movieId);
               }}
               popularRecommendations={popularRecommendations}
               trendingContents={trendingContents}
@@ -192,15 +207,14 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
           </View>
           </ScrollView>
         </ScreenErrorBoundary>
-      </View>
+      </TabScreenShell>
     );
   }
 
   return (
-    <View style={styles.screen}>
-      <View style={[styles.headerDock, { paddingTop: insets.top + spacing.sm }]}>
-        <SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />
-      </View>
+    <TabScreenShell
+      topBar={<SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />}
+    >
       <ScreenErrorBoundary onRetry={refetchWatchlistRemote} screenLabel="Watchlist" style={styles.scroll}>
         <FlatList
           columnWrapperStyle={[styles.gridRow, { gap: gridGutter, paddingHorizontal: horizontalPad }]}
@@ -226,13 +240,13 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
                   genres={movieGenres}
                   movies={similarMovies}
                   onPressMovie={(movieId) => {
-                    navigation.navigate('Detail', { movieId });
+                    navigateToDetail(navigation, movieId);
                   }}
                   onPressSeeAll={() => {
                     if (similarAnchorMovieId == null) {
                       return;
                     }
-                    navigation.navigate('SeeAll', {
+                    navigateToSeeAll(navigation, {
                       title: `Because you saved ${savedTitle}`,
                       mode: 'similar',
                       similarSourceMovieId: similarAnchorMovieId,
@@ -253,7 +267,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
           style={styles.scrollFill}
         />
       </ScreenErrorBoundary>
-    </View>
+    </TabScreenShell>
   );
 }
 
@@ -263,14 +277,6 @@ const styles = StyleSheet.create({
   },
   appBarIconHitPressed: {
     opacity: opacity.pressed,
-  },
-  headerDock: {
-    backgroundColor: colors.surface,
-    zIndex: elevation.dock,
-  },
-  screen: {
-    backgroundColor: colors.surface,
-    flex: 1,
   },
   scroll: {
     flex: 1,
@@ -287,14 +293,6 @@ const styles = StyleSheet.create({
   },
   emptyScrollInner: {
     flexGrow: 1,
-  },
-  centered: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  mutedCenter: {
-    ...typography['body-md'],
-    color: colors.on_surface_variant,
   },
   listContent: {
     flexGrow: 1,

@@ -9,6 +9,7 @@ import { LoadMoreContentIndicator } from '../components/common/LoadMoreContentIn
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
 import { SeeAllGridSkeleton } from '../components/seeAll/SeeAllGridSkeleton';
 import { useSeeAll } from '../hooks/useSeeAll';
+import { navigateToDetail } from '../navigation/helpers';
 import type { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
 import { layout, opacity, spacing } from '../theme/spacing';
@@ -39,7 +40,7 @@ export function SeeAllScreen({ navigation, route }: Props): JSX.Element {
 
   const onOpenDetail = useCallback(
     (movieId: number) => {
-      navigation.navigate('Detail', { movieId });
+      navigateToDetail(navigation, movieId);
     },
     [navigation],
   );

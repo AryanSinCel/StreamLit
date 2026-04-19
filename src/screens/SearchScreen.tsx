@@ -4,20 +4,21 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { JSX } from 'react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
-import { Keyboard, ScrollView, StyleSheet, View } from 'react-native';
+import { Keyboard, ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
+import { TabScreenShell } from '../components/common/TabScreenShell';
 import { SearchAppBar } from '../components/search/SearchAppBar';
 import { SearchDefaultView } from '../components/search/SearchDefaultView';
 import { SearchResultsStateView } from '../components/search/SearchResultsStateView';
 import { useSearch } from '../hooks/useSearch';
+import { navigateToDetail } from '../navigation/helpers';
 import type {
   RootStackParamList,
   RootTabParamList,
   SearchStackParamList,
 } from '../navigation/types';
-import { colors } from '../theme/colors';
-import { elevation, spacing } from '../theme/spacing';
+import { spacing } from '../theme/spacing';
 import { normalizeSearchTerm } from '../utils/recentSearches';
 
 type Props = CompositeScreenProps<
@@ -62,7 +63,7 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
 
   const openSearchDetail = useCallback(
     (movieId: number) => {
-      navigation.navigate('Detail', { movieId });
+      navigateToDetail(navigation, movieId);
     },
     [navigation],
   );
@@ -94,36 +95,13 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
   );
 
   if (snap == null) {
-    return (
-      <View style={styles.screen}>
-        <View
-          style={[
-            styles.headerDock,
-            {
-              paddingTop: insets.top + spacing.sm,
-            },
-          ]}
-        >
-          <SearchAppBar />
-        </View>
-      </View>
-    );
+    return <TabScreenShell topBar={<SearchAppBar />} />;
   }
 
   const d = snap;
 
   return (
-    <View style={styles.screen}>
-      <View
-        style={[
-          styles.headerDock,
-          {
-            paddingTop: insets.top + spacing.sm,
-          },
-        ]}
-      >
-        <SearchAppBar />
-      </View>
+    <TabScreenShell topBar={<SearchAppBar />}>
       <ScreenErrorBoundary onRetry={search.refetch} screenLabel="Search" style={styles.scroll}>
         <ScrollView
           contentContainerStyle={[
@@ -201,19 +179,11 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
         )}
         </ScrollView>
       </ScreenErrorBoundary>
-    </View>
+    </TabScreenShell>
   );
 }
 
 const styles = StyleSheet.create({
-  headerDock: {
-    backgroundColor: colors.surface,
-    zIndex: elevation.dock,
-  },
-  screen: {
-    backgroundColor: colors.surface,
-    flex: 1,
-  },
   scroll: {
     flex: 1,
   },

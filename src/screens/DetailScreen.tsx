@@ -1,11 +1,12 @@
-import type { RouteProp } from '@react-navigation/native';
-import { CommonActions, StackActions, useNavigation } from '@react-navigation/native';
+import type { NavigationProp, RouteProp } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import type { JSX } from 'react';
 import { useCallback, useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useShallow } from 'zustand/react/shallow';
 import { useMovieDetail } from '../hooks/useMovieDetail';
+import { navigateToDetail } from '../navigation/helpers';
 import type { RootStackParamList } from '../navigation/types';
 import { DetailCastSection } from '../components/detail/DetailCastSection';
 import { DetailChipsRow } from '../components/detail/DetailChipsRow';
@@ -34,7 +35,7 @@ type Props = {
  */
 export function DetailScreen({ route }: Props): JSX.Element {
   const { movieId } = route.params;
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const insets = useSafeAreaInsets();
   const { width: windowWidth } = useWindowDimensions();
   const { data: detailData, refetch } = useMovieDetail(movieId);
@@ -99,7 +100,7 @@ export function DetailScreen({ route }: Props): JSX.Element {
 
   const onPressSimilarMovie = useCallback(
     (id: number) => {
-      navigation.dispatch(CommonActions.navigate({ name: 'Detail', params: { movieId: id } }));
+      navigateToDetail(navigation, id);
     },
     [navigation],
   );
