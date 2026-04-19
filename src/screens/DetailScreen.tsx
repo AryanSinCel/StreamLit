@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   title: {
-    ...typography['watchlist-screen-title'],
+    ...typography['display-md'],
     color: colors.on_surface,
     marginBottom: spacing.md,
   },

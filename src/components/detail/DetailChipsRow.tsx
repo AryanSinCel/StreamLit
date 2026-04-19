@@ -1,5 +1,5 @@
 /**
- * Year · rating · genres · runtime — `movie-showDetail.html` (rounded-md chips, rating pill).
+ * Year · rating · genres · runtime — PSD-Detail §7.3 (uniform chips: `surface_container_highest`, `label-sm`).
  */
 
 import type { JSX, ReactNode } from 'react';
@@ -52,7 +52,7 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
   if (year != null) {
     chips.push({
       key: 'year',
-      node: <Text style={styles.chipTextNeutral}>{year}</Text>,
+      node: <Text style={styles.chipText}>{year}</Text>,
     });
   }
 
@@ -62,9 +62,9 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
     chips.push({
       key: 'rating',
       node: (
-        <View style={styles.ratingChip}>
-          <IconStar color={colors.primary} size={14} />
-          <Text style={styles.ratingChipText}>
+        <View style={styles.chipRowInner}>
+          <IconStar color={colors.on_surface_variant} size={14} />
+          <Text style={styles.chipText}>
             {label}
             {' Rating'}
           </Text>
@@ -78,7 +78,7 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
     chips.push({
       key: 'genre',
       node: (
-        <Text numberOfLines={2} style={styles.chipTextNeutral}>
+        <Text numberOfLines={2} style={styles.chipText}>
           {genres}
         </Text>
       ),
@@ -89,7 +89,7 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
   if (showTmdbRuntimeChip(runtime) && typeof runtime === 'number') {
     chips.push({
       key: 'runtime',
-      node: <Text style={styles.chipTextNeutral}>{formatRuntimeLabel(runtime)}</Text>,
+      node: <Text style={styles.chipText}>{formatRuntimeLabel(runtime)}</Text>,
     });
   }
 
@@ -100,7 +100,7 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
   return (
     <View style={styles.row}>
       {chips.map((c) => (
-        <View key={c.key} style={c.key === 'rating' ? styles.ratingChipWrap : styles.chipWrap}>
+        <View key={c.key} style={styles.chipWrap}>
           {c.node}
         </View>
       ))}
@@ -109,29 +109,17 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  chipTextNeutral: {
-    ...typography['label-sm'],
-    color: colors.on_surface_variant,
-    fontWeight: '500',
-  },
-  chipWrap: {
-    backgroundColor: colors.surface_container_high,
-    borderRadius: spacing.sm,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
-  },
-  ratingChip: {
+  chipRowInner: {
     alignItems: 'center',
     flexDirection: 'row',
     gap: spacing.xs,
   },
-  ratingChipText: {
+  chipText: {
     ...typography['label-sm'],
-    color: colors.primary,
-    fontWeight: '700',
+    color: colors.on_surface_variant,
   },
-  ratingChipWrap: {
-    backgroundColor: colors.detail_rating_chip_bg,
+  chipWrap: {
+    backgroundColor: colors.surface_container_highest,
     borderRadius: spacing.sm,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,

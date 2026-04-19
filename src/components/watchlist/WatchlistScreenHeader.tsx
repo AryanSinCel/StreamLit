@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   screenTitle: {
-    ...typography['watchlist-screen-title'],
+    ...typography['display-md'],
     color: colors.on_surface,
   },
   countLine: {

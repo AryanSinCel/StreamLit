@@ -40,7 +40,7 @@ export const colors = {
   on_primary: '#68000B',
   /** Text on `primary_container` (e.g. hero “New Release” badge). */
   on_primary_container: '#5C0008',
-  /** Header wordmark + active tab accent (matches `home.html` #E5383B). */
+  /** Header wordmark accent (matches `home.html` #E5383B). Active tab uses `primary_container`. */
   brand_coral: '#E5383B',
   on_surface: '#E5E2E1',
   on_surface_variant: '#E4BDBA',
@@ -67,8 +67,6 @@ export const colors = {
    * Watchlist grid **Details** CTA — Stitch `border-outline-variant/15` on `surface-container-highest`.
    */
   watchlist_details_cta_border: 'rgba(255, 255, 255, 0.023)',
-  /** Detail metadata rating chip — `movie-showDetail.html` (`bg-secondary-container/30`). */
-  detail_rating_chip_bg: 'rgba(130, 38, 37, 0.3)',
   /** Cast avatar ring — `ring-outline-variant/20` in `movie-showDetail.html`. */
   detail_cast_avatar_ring: 'rgba(255, 255, 255, 0.08)',
   /**

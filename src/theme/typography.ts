@@ -16,6 +16,7 @@ export const typography = {
     fontWeight: '800' as const,
     letterSpacing: lsEm(-0.02, 56),
   },
+  /** PSD-Watchlist §7.4 main title (“My Watchlist”) — 40px Manrope 800. */
   'display-md': {
     fontFamily: fontFamilies.manropeExtraBold,
     fontSize: 40,
@@ -53,13 +54,6 @@ export const typography = {
     fontWeight: '700' as const,
     letterSpacing: lsEm(-0.01, 18),
     lineHeight: 22,
-  },
-  /** Watchlist main title — `resources/watchlist.html` (`text-4xl font-extrabold`). */
-  'watchlist-screen-title': {
-    fontFamily: fontFamilies.manropeExtraBold,
-    fontSize: 36,
-    fontWeight: '800' as const,
-    letterSpacing: lsEm(-0.02, 36),
   },
   /** Watchlist empty “0 titles” — `resources/watchlist-empty.html` (body, `font-medium`). */
   'watchlist-count-line': {

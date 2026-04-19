@@ -95,11 +95,11 @@ function ProfileStackNavigator() {
   );
 }
 
-const tabBarActiveTintColor = colors.brand_coral;
+const tabBarActiveTintColor = colors.primary_container;
 const tabBarInactiveTintColor = colors.tab_icon_inactive;
 
 function tabBarIconColor(focused: boolean): string {
-  return focused ? colors.brand_coral : colors.tab_icon_inactive;
+  return focused ? colors.primary_container : colors.tab_icon_inactive;
 }
 
 const mainTabBarIconHome: NonNullable<BottomTabNavigationOptions['tabBarIcon']> = ({
