@@ -347,7 +347,6 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
                       seeAllDiscover(title, railGenreId);
                     }}
                     rowContent="genre"
-                    omitBodySkeletonForVerticalChainLoad={showVerticalGenreChainFooter}
                     sectionTitle={title}
                     suppressInitialHorizontalSkeleton
                   />

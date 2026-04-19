@@ -17555,3 +17555,707 @@ cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint
 <summary>Tool use: **run_terminal_command_v2**</summary>
 
 </details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/package-lock.json",
+  "pattern": "new-app-screen"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/package-lock.json",
+  "pattern": "new-app-screen",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+### 1. `@react-native/new-app-screen`
+- Removed from **`package.json`**.
+- Ran **`npm install`** so **`package-lock.json`** no longer lists that package (confirmed no `new-app-screen` entries).
+
+### 2. `typography['headline-rail']`
+- Removed the **`headline-rail`** entry and its comment from **`src/theme/typography.ts`**. Rails should keep using **`headline-md`** (or other active tokens).
+
+### Checks
+- **`npx tsc --noEmit`** and **`npm run lint`** both succeed.
+
+---
+
+_**User**_
+
+in home the row title and see all is showing when loading more content spinned is showing after that it hides and show both the header and card content for that row fix it before loading more content spinned neighter the head + see all should show nor the content card this is vertical scrolling content we are talking about do not mix it up with horizontal scrolling content don't try to change anything for horizontal scrolling content 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing scroll behavior**
+
+I'm adjusting the loading state so the row header and 'See all' disappear during pagination instead of appearing then disappearing after load. I'm implementing skeleton loading for entire genre rows during vertical load more instead of partial display. I'm adjusting loading state behavior to hide title, 'see all', and cards until vertical load more completes. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Tracing how genre rails and vertical "load more" interact in `HomeContentRow` and `HomeScreen`.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Tracing the auth flow**
+
+I'm tracing the auth flow to understand how `omitBodySkeletonForVerticalChainLoad` is determined. I'm investigating why title and 'see all' appear during spinner load instead of being hidden until content is ready. 
+
+**Adjusting loading states**
+
+I'm updating `hideRailChromeForVerticalChainLoad` to hide the entire row during vertical chain loads, not just when loading and empty. I'm refining the logic for showing the footer to ensure it only displays for the last loading genre rail. I'm refining the footer visibility logic to show it only for the last loading genre rail. I'm hiding header and body skeleton for vertical chain load, resulting in an empty block with no cards. I'm adjusting the vertical chain load to prevent row collapse by ensuring proper margin handling. 
+
+I'm refining the loading state logic to ensure empty views don't show visible elements during spinners. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts",
+  "pattern": "loading|loadingMore|genreRail"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts",
+  "pattern": "loading|loadingMore|genreRail",
+  "topFiles": [
+    {
+      "matchCount": 75,
+      "uri": "src/hooks/useHome.ts"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 75
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling vertical scroll loading**
+
+I'm implementing the vertical scroll loading indicator for genre rails with `loading && !loadingMore` condition. I found that `genreInitialBodyLoading` incorrectly uses `loading` instead of `loadingMore`, causing the loading indicator to show on first page load. 
+
+**Fixing genre loading state**
+
+I'm fixing `genreInitialBodyLoading` to use `loadingMore` instead of `loading`. I'm updating the genre loading logic to handle skeleton states correctly. The bug is that genre headers show real titles instead of skeletons when loading with suppressInitialHorizontalSkeleton. I'm adjusting the skeleton logic to properly hide headers only when vertical spinners are active and the body skeleton is omitted. I'm clarifying the conditions for hiding headers in vertical chains: both `genreInitialBodyLoading` and `omitBodySkeletonForVerticalChainLoad` must be true. The vertical spinner shows title+see all when loading more content, indicating `hideRailChromeForVerticalChainLoad` is false for the wrong rail. 
+
+The `hideRailChromeForVerticalChainLoad` flag isn't hiding the header for the rail with `showVerticalGenreChainFooter` true, likely due to `genreInitialBodyLoading` being false or a separate header rendering path. The header is null when `hideRailChromeForVerticalChainLoad` is true, which prevents skeleton display for genre rows. I'm implementing a fix for genre rows where the header is shown during initial load instead of hiding it entirely when in vertical chain mode. I'm adjusting the genre loading logic to hide the header only when the vertical footer is showing and awaiting the first page. 
+
+**Adjusting loading logic**
+
+I'm refining the loading logic to hide headers and cards for rails during initial vertical chain loads, ensuring `omitBodySkeletonForVerticalChainLoad` correctly applies to all loading rails. The bug is simpler than race conditions: genre rails showing title+see all when loading first page without footer rail. I see that only the currently loading rail should hide its title+see all, not all rails on the first page. I'm adjusting the rail chrome hiding logic to only hide titles and see-all buttons for the currently loading rail. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing genre rail logic**
+
+I found that `lastStartedGenreRailIndex` incorrectly includes rails that are currently loading or have loaded items, rather than only those in the `idleAwaitingViewport` state. I updated `lastStartedGenreRailIndex` to only include rails in `idleAwaitingViewport` state, excluding currently loading rails. I updated the logic to correctly identify the last non-idle rail in chip order for footer display. I'm clarifying the conditions for hiding rail chrome during vertical chain loads. I'm investigating why `ChainLoad` is true but `genreInitialBodyLoading` is false during vertical chain loads. 
+
+**Investigating genre rail logic**
+
+I'm checking if `loadingMore` is used instead of `loading` in the first page fetch code path. I confirmed that real titles show when `hideRailChromeForVerticalChainLoad` is false and the header is visible. 
+
+**Fixing genre rail logic**
+
+I'll implement the fix to hide header and body cards when rowContent is 'genre', suppressInitialHorizontalSkeleton is true, loading is true, and items length is 0. I'm implementing logic to hide header and body cards for genre rows during initial load state when items are empty and loading is true. I'm checking if `genreInitialBodyLoading` should also account for `loadingMore` to properly hide header and cards during initial load. I'm investigating why `omitBodySkeletonForVerticalChainLoad` might be incorrectly false during initial vertical loading. I'm checking if `lastStartedGenreRailIndex` is pointing to the wrong rail due to an error causing incorrect loading state. I'm simplifying the genre rail logic to correctly handle error states and prevent incorrect loading behavior. 
+
+**Handling empty rows**
+
+I'm implementing logic to hide row headers when showing initial loading skeletons for empty genre rows. I'm updating the logic to conditionally show real titles and See All buttons only when items exist, errors occur, or empty states are reached, otherwise using skeleton headers during loading. I'm refining the title display logic to show real titles only under specific conditions, avoiding skeleton placeholders when genre headers are suppressed. 
+
+I'm implementing conditional rendering for genre rails to hide title+see all on first page load when no content is available. I'm deciding whether to show skeleton loaders or blank space for empty genre rows during initial load. I'm implementing skeleton loaders for empty genre rows during initial load, showing only footer spinner without header. 
+
+**Updating loading logic**
+
+I'm extending the loading logic to hide genre rail chrome until first content appears, instead of just hiding it during vertical scrolling. I'm using conditional logic to hide the header during initial genre loads when no items exist yet. 
+
+I'm adjusting the header visibility logic to prevent skeleton cards from appearing without section titles during initial genre loads. I'm fixing the bug where the rail shows title+see all despite `omitBodySkeletonForVerticalChainLoad` being true. I found that `hideRailChromeForVerticalChainLoad` is computed incorrectly - it should hide chrome when `omitBodySkeletonForVerticalChainLoad` is true, not when it's false. I fixed the logic for `hideRailChromeForVerticalChainLoad` to correctly hide chrome when `omitBodySkeletonForVerticalChainLoad` is true. I'm clarifying the loading states and error handling for the genre initial body component. I'm making `applyPageResponse` atomic in `setGenreRails` to prevent race conditions. 
+
+I'm reconsidering the lazy placeholder behavior for vertical chains and how `visibleGenreRailIds` interacts with `awaitingLazyLoad` rails. I'm adjusting the chrome hiding logic to exclude genre rails during vertical chain loads. I'm simplifying the skeleton rendering logic to hide headers during vertical chain loads when no items exist. I'm removing the loading flag dependency from the vertical chain load logic. I'm adjusting the loading logic to show header and cards only when items exist, and handling error states separately. I'm adjusting the rail chrome visibility logic to show error states properly. 
+
+I'm refining the genre initial body skeleton logic to handle edge cases with omit and loading states. I'm ensuring `showEmpty` doesn't trigger incorrectly when loading is false and items are empty. 
+
+I'm adjusting rail loading behavior to avoid showing placeholders when loading is active. I'm adjusting the loading logic to prevent showing skeletons for vertical rails during initial loading. I'm adjusting the loading logic to handle vertical rail skeletons and chrome hiding correctly. I'm removing the loading dependency from `hideRailChrome` and adjusting skeleton visibility logic. 
+
+I'm adjusting the skeleton visibility logic in `hideRailChrome` to handle the vertical chain load case properly. I'm removing the `genreInitialBodyLoading` condition from `hideRailChrome` while preserving its usage in `showGenreInitialBodySkeleton`. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Identifying the issue: `hideRailChromeForVerticalChainLoad` requires `genreInitialBodyLoading` (`loading === true`). If `loading` flips false before `items` populate or there's a brief mismatch, the header shows real title + "See All" while the vertical footer spinner is still active. Fixing by hiding that rail's chrome whenever `omitBodySkeletonForVerticalChainLoad` is true and the row has no items yet (no error), independent of the `loading` flag.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Debugging loading state**
+
+I found that `hideRailChromeForVerticalChainLoad` incorrectly depended on `genreInitialBodyLoading` which requires `loading === true`, causing skeleton states to misfire during initial fetch. </details></think>
+
+_**Agent (composer-2)**_
+
+
+### Cause
+For genre rails with `suppressInitialHorizontalSkeleton`, **`showSkeleton` is always false** on first load, so the header always took the **real** “row title + See All” branch whenever the row wasn’t fully hidden.
+
+**`hideRailChromeForVerticalChainLoad`** was tied to **`genreInitialBodyLoading`**, which requires **`loading === true`**. If `loading` dropped before **`items`** was set (or any brief mismatch), the row stopped hiding chrome and you’d see **title + See All** with **no cards** while the **vertical** “Loading more content” footer was still the right state.
+
+### Change (`src/components/home/HomeContentRow.tsx`)
+**`hideRailChromeForVerticalChainLoad`** is now based only on:
+
+- `omitBodySkeletonForVerticalChainLoad` (parent: vertical genre-chain footer is for this rail)
+- `rowContent === 'genre'` + `suppressInitialHorizontalSkeleton`
+- `items.length === 0` and `error == null`
+
+So for that vertical case, **neither** the **header** nor **cards** show until **`items`** has data—**without** using `loading`, so the header can’t flash real copy during the vertical spinner phase.
+
+Horizontal rail behavior is unchanged (same `ScrollView` / `onNearEnd` / `loadingMore` logic).
+
+`npx tsc --noEmit` and `npm run lint` both pass.
+
+---
+
+_**User**_
+
+remove the shimmer loading from vertical scrollable content just show the content after loading more content spinner 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Removing shimmer loading**
+
+I'm removing the shimmer loading for genre rails and showing only a spinner until content is ready. I'm removing shimmer from vertical scrollable content and showing only a spinner until LoadMoreContentIndicator is ready. 
+
+**Updating loading states**
+
+I'm removing HomeRowSkeleton for genre rows during initial load and hiding the header during vertical chain loading. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Reviewing HomeContentRow and HomeScreen to remove genre-row shimmer and align with the vertical spinner-only loading state.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Removing genre skeleton**
+
+I'm removing the initial skeleton for genre rows by setting `showGenreInitialBodySkeleton` to false. I'm removing the HomeRowSkeleton for genre vertical content and showing only a spinner after loading. 
+
+I'm removing the genre initial body skeleton condition to show empty state until loading completes. I'm removing `showGenreInitialBodySkeleton` to prevent shimmer on genre rows during initial load. I'm removing the genre skeleton rendering logic to eliminate shimmer on initial load. I'm simplifying the genre skeleton logic by removing `genreInitialBodyLoading` since it's only used for `showGenreInitialBodySkeleton`. 
+
+**Updating skeleton logic**
+
+I'm removing the genre skeleton logic by eliminating `showGenreInitialBodySkeleton` and `genreInitialBodyLoading` variables and updating the render condition. I'm removing genre skeleton logic and will check if `showLazyPlaceholder` still uses HomeRowSkeleton for lazy-loaded rails. 
+
+I'm removing the genre skeleton logic for consistency since vertical scrollable content refers to genre rails under All chip. I'm removing HomeRowSkeleton for showLazyPlaceholder to avoid empty space below the fold. 
+
+I'm removing HomeRowSkeleton to prevent empty space below the fold when showing shimmer loading. I'm removing only the genre initial body skeleton to prevent empty space during first page load. 
+
+I'm removing genre initial body skeleton variables and updating conditional rendering logic. I'm keeping the HomeRowSkeleton import for headers and updating the body logic to use `showSkeleton || showLazyPlaceholder || showGenreInitialBodySkeleton`. I'm considering hiding the entire row until items load for any genre to avoid shimmering placeholders. 
+
+I'm implementing suppress logic for rails to show only spinner then content for active rail, while keeping title visible for Crime genre. I'm adjusting skeleton logic to hide HomeRowSkeleton for suppressed genres and considering hiding headers for loading rails. 
+
+**Adjusting skeleton logic**
+
+I'm removing genre body skeletons for loading empty states to eliminate shimmer effects. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Removing the genre rail `HomeRowSkeleton` (first-page load under "Crime" / section title). Keeping Trending/Top Rated skeleton behavior and lazy-placeholder behavior unless we should remove those too.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing jsdoc links**
+
+I'm replacing the `{@link LoadMoreContentIndicator}` JSDoc reference with plain text 'vertical "Loading more content" footer in HomeScreen' to avoid potential eslint no-undef issues. I'm verifying JSDoc @link references to LoadMoreContentIndicator with TypeScript and ESLint checks. 
+
+I'm removing lazy placeholder skeletons for genre rails to match the vertical scroll loading removal request. I'm adjusting the skeleton rendering logic to prevent showing placeholders for inactive genre rails. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling genre headers**
+
+I'm extending `hideRailChromeForVertical` to also hide headers on first-page genre loads. I'm updating `lChainLoad` to hide headers for genre rails during initial load, showing only spinners for sequential loading. I'm adding logic to hide genre rail headers during initial load when there are no items, preventing orphaned titles. I'm implementing conditional logic to hide genre headers during loading states and empty item scenarios. I'm refining the conditions for showing genre headers to avoid display issues during loading and empty states. I'm adjusting the logic to show genre headers only for the last visible rail in the chain. 
+
+I'm suppressing genre headers during initial load to prevent flashing, even if omit logic is incorrect. I'm combining the omit logic with loading state to prevent skeleton flashing during vertical chain loads. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Hiding the section header while the first page loads for genre rows (not only when `omitBodySkeletonForVerticalChainLoad`), so we don't show "Crime" + "See All" above an empty row after removing the skeleton.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling empty states**
+
+I'm fixing the logic for showing empty states when API returns empty results but loading completes. I'm adjusting the empty state logic to ensure the header and genre panel are shown correctly when hiding rail chrome. I'm adjusting the empty state logic to account for showEmpty being true and prevent hiding chrome unnecessarily. I'm simplifying the rail chrome visibility logic to properly handle loading and omit states. I'm clarifying the rail chrome visibility logic for empty states with loading and omit flags. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx",
+  "pattern": "genreInitialBodyLoading|showGenreInitialBodySkeleton"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx",
+  "pattern": "genreInitialBodyLoading|showGenreInitialBodySkeleton",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling empty API responses**
+
+I'm adjusting the hideRailChrome logic to properly handle empty API responses while preserving user preferences for flash fixes. I'm ensuring header visibility for empty state messages by adjusting the omit logic to prevent premature hiding. I'm adjusting the omit logic to correctly handle empty API responses by ensuring loading state and item count are properly evaluated. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+### What changed (`src/components/home/HomeContentRow.tsx`)
+
+1. **Removed genre row body shimmer**  
+   `HomeRowSkeleton` is no longer used for the genre + `suppressInitialHorizontalSkeleton` first-page case (the old `showGenreInitialBodySkeleton` path). The horizontal row skeleton under “Crime” / “See All” is gone.
+
+2. **Shimmer block**  
+   Body shimmer now only runs for **`showSkeleton`** (Trending / Top Rated, etc.) and **`showLazyPlaceholder`** (idle genre rail before viewport activation). Genre first-load no longer adds a third case.
+
+3. **Chrome while loading**  
+   **`hideRailChromeForVerticalChainLoad`** is now true when  
+   `genre` + `suppressInitialHorizontalSkeleton` + no items + no error + **`(loading || omitBodySkeletonForVerticalChainLoad)`**.  
+   So during first-page fetch you don’t get the **title + “See All”** strip above an empty row; you rely on the **vertical “Loading more content”** spinner from `HomeScreen`, then the full row (title + poster strip) when `items` arrive.
+
+4. **Docs**  
+   JSDoc for `suppressInitialHorizontalSkeleton` and `omitBodySkeletonForVerticalChainLoad` updated to match this behavior.
+
+Trending / Top Rated and other non-genre rows still use the existing header/body skeleton rules; horizontal pagination is unchanged.
+
+---
+
+_**User**_
+
+the Music and See all is showing during loading more content without the content only header fix it both the Music + See All and its content should show after loading more content when its content is actually loaded 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing vertical chain load**
+
+I'm extending `hideRailChromeForVerticalChainLoad` to include the Music genre row header and content. 
+
+**Fixing auth middleware**
+
+I'm adjusting the logic for hiding rail chrome to account for cases where items are temporarily empty during loading. I'm updating the header visibility logic to show it only when items exist or when an error/empty state requires it. </details></think>

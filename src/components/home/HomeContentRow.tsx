@@ -47,15 +47,11 @@ export type HomeContentRowProps = {
    */
   awaitingLazyLoad?: boolean;
   /**
-   * When true (genre row on Home **All**), keep the real section header on first-page fetch and show
-   * {@link HomeRowSkeleton} under it until results arrive (no full-row title shimmer).
+   * When true (genre row on Home **All**), first-page fetch does not use row body shimmer — the
+   * vertical “Loading more content” footer in `HomeScreen` covers loading; title + cards appear once
+   * **`items`** arrive.
    */
   suppressInitialHorizontalSkeleton?: boolean;
-  /**
-   * When the parent shows the vertical “Loading more content” footer for the genre chain, hide this
-   * row’s title / See All / body until the first page arrives (they appear together with posters).
-   */
-  omitBodySkeletonForVerticalChainLoad?: boolean;
 };
 
 export function HomeContentRow({
@@ -73,20 +69,9 @@ export function HomeContentRow({
   rowContent = 'default',
   awaitingLazyLoad = false,
   suppressInitialHorizontalSkeleton = false,
-  omitBodySkeletonForVerticalChainLoad = false,
 }: HomeContentRowProps): JSX.Element {
   const showSkeleton =
     loading && items.length === 0 && !(suppressInitialHorizontalSkeleton && rowContent === 'genre');
-  const genreInitialBodyLoading =
-    rowContent === 'genre' &&
-    suppressInitialHorizontalSkeleton &&
-    loading &&
-    items.length === 0 &&
-    error == null;
-  const showGenreInitialBodySkeleton =
-    genreInitialBodyLoading && !omitBodySkeletonForVerticalChainLoad;
-  const hideRailChromeForVerticalChainLoad =
-    genreInitialBodyLoading && omitBodySkeletonForVerticalChainLoad;
   const showLazyPlaceholder =
     rowContent === 'genre' &&
     awaitingLazyLoad &&
@@ -102,6 +87,17 @@ export function HomeContentRow({
     !(rowContent === 'genre' && awaitingLazyLoad) &&
     !showSkeleton &&
     !showLazyPlaceholder;
+  /**
+   * Genre **All** rails: show **Music + See All** only once there is something to show — posters,
+   * empty-state panel, or (with header) we defer until load finishes (`!showEmpty` while fetching).
+   * Avoids header-only flashes while `loading` / `loadingMore` disagree with parent footer timing.
+   */
+  const hideRailChromeForVerticalChainLoad =
+    rowContent === 'genre' &&
+    suppressInitialHorizontalSkeleton &&
+    items.length === 0 &&
+    error == null &&
+    !showEmpty;
   const lastNearEndFireRef = useRef(0);
   const scrollHostWidthRef = useRef(0);
 
@@ -196,7 +192,7 @@ export function HomeContentRow({
         </View>
       ) : null}
 
-      {showSkeleton || showLazyPlaceholder || showGenreInitialBodySkeleton ? (
+      {showSkeleton || showLazyPlaceholder ? (
         <HomeRowSkeleton />
       ) : null}
 
