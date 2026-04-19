@@ -58,12 +58,12 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Manrope_700Bold.ttf</string>
 		<string>Manrope_600SemiBold.ttf</string>
 		<string>Manrope_800ExtraBold.ttf</string>
-		<string>Inter_500Medium.ttf</string>
+		<string>Manrope_700Bold.ttf</string>
 		<string>Inter_400Regular.ttf</string>
 		<string>Inter_700Bold.ttf</string>
+		<string>Inter_500Medium.ttf</string>
 		<string>Inter_600SemiBold.ttf</string>
 	</array>
 </dict>

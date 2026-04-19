@@ -1,6 +1,6 @@
 /**
  * PostScript names for fonts linked via `react-native.config.js` + `npx react-native-asset`
- * (`@react-native-google-fonts/manrope` / `@react-native-google-fonts/inter` TTFs). Use in `typography.ts` only.
+ * (`@expo-google-fonts/manrope` / `@expo-google-fonts/inter` TTFs). Use in `typography.ts` only.
  */
 
 export const fontFamilies = {

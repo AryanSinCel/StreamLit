@@ -137,6 +137,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
     filteredItems,
     similar,
     popularRecommendations,
+    trendingContents,
     movieGenres,
   } = watchlistData;
 
@@ -186,6 +187,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
                 navigation.navigate('Detail', { movieId });
               }}
               popularRecommendations={popularRecommendations}
+              trendingContents={trendingContents}
             />
           </View>
           </ScrollView>

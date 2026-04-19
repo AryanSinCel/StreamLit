@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
-import { getMovieGenres, getSimilarMovies, getTrendingMoviesWeek } from '../api/movies';
+import { getMovieGenres, getSimilarMovies, getTopRatedMovies, getTrendingMoviesWeek } from '../api/movies';
 import type {
   TmdbGenre,
   TmdbPagedMoviesResponse,
@@ -17,7 +17,7 @@ import { isLikelyCanceledRequest, mapUnknownError } from '../utils/mapUnknownErr
  *
  * Top-level **`UseQueryResult`** semantics:
  * - **`loading`**: `true` only while the persisted watchlist (**AsyncStorage**) is not yet rehydrated.
- * - **`error`**: always **`null`** — TMDB failures use **`data.similar`** / **`data.popularRecommendations`**. **`refetch`** retries both remote slices.
+ * - **`error`**: always **`null`** — TMDB failures use **`similar`** / **`popularRecommendations`** / **`trendingContents`**. **`refetch`** retries those remote slices.
  */
 export function useWatchlist(): UseQueryResult<WatchlistSnapshot> {
   const { items, count, hydrated } = useWatchlistStore(
@@ -47,6 +47,11 @@ export function useWatchlist(): UseQueryResult<WatchlistSnapshot> {
   const [popularLoading, setPopularLoading] = useState(false);
   const [popularError, setPopularError] = useState<string | null>(null);
   const [popularReloadKey, setPopularReloadKey] = useState(0);
+
+  const [trendingEmptyData, setTrendingEmptyData] = useState<TmdbPagedMoviesResponse | null>(null);
+  const [trendingEmptyLoading, setTrendingEmptyLoading] = useState(false);
+  const [trendingEmptyError, setTrendingEmptyError] = useState<string | null>(null);
+  const [trendingEmptyReloadKey, setTrendingEmptyReloadKey] = useState(0);
 
   const [movieGenres, setMovieGenres] = useState<readonly TmdbGenre[]>([]);
 
@@ -142,7 +147,7 @@ export function useWatchlist(): UseQueryResult<WatchlistSnapshot> {
       setPopularLoading(true);
       setPopularError(null);
       try {
-        const result = await getTrendingMoviesWeek({ page: 1, signal: controller.signal });
+        const result = await getTopRatedMovies({ page: 1, signal: controller.signal });
         if (!cancelled) {
           setPopularData(result);
         }
@@ -169,12 +174,58 @@ export function useWatchlist(): UseQueryResult<WatchlistSnapshot> {
     };
   }, [shouldLoadPopular, popularReloadKey]);
 
+  useEffect(() => {
+    if (!shouldLoadPopular) {
+      setTrendingEmptyData(null);
+      setTrendingEmptyLoading(false);
+      setTrendingEmptyError(null);
+      return;
+    }
+
+    const controller = new AbortController();
+    let cancelled = false;
+
+    async function loadTrendingEmpty() {
+      setTrendingEmptyLoading(true);
+      setTrendingEmptyError(null);
+      try {
+        const result = await getTrendingMoviesWeek({ page: 1, signal: controller.signal });
+        if (!cancelled) {
+          setTrendingEmptyData(result);
+        }
+      } catch (e) {
+        if (cancelled || controller.signal.aborted || isLikelyCanceledRequest(e)) {
+          return;
+        }
+        setTrendingEmptyData(null);
+        setTrendingEmptyError(mapUnknownError(e));
+      } finally {
+        if (!cancelled) {
+          setTrendingEmptyLoading(false);
+        }
+      }
+    }
+
+    loadTrendingEmpty().catch(() => {
+      /* surfaced via setTrendingEmptyError */
+    });
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [shouldLoadPopular, trendingEmptyReloadKey]);
+
   const refetchSimilar = useCallback(() => {
     setSimilarReloadKey((k) => k + 1);
   }, []);
 
   const refetchPopular = useCallback(() => {
     setPopularReloadKey((k) => k + 1);
+  }, []);
+
+  const refetchTrendingEmpty = useCallback(() => {
+    setTrendingEmptyReloadKey((k) => k + 1);
   }, []);
 
   const similar = useMemo(
@@ -197,10 +248,21 @@ export function useWatchlist(): UseQueryResult<WatchlistSnapshot> {
     [popularData, popularError, popularLoading, refetchPopular],
   );
 
+  const trendingContents = useMemo(
+    () => ({
+      data: trendingEmptyData,
+      loading: trendingEmptyLoading,
+      error: trendingEmptyError,
+      refetch: refetchTrendingEmpty,
+    }),
+    [refetchTrendingEmpty, trendingEmptyData, trendingEmptyError, trendingEmptyLoading],
+  );
+
   const refetch = useCallback(() => {
     refetchSimilar();
     refetchPopular();
-  }, [refetchSimilar, refetchPopular]);
+    refetchTrendingEmpty();
+  }, [refetchSimilar, refetchPopular, refetchTrendingEmpty]);
 
   const data = useMemo((): WatchlistSnapshot | null => {
     if (!hydrated) {
@@ -215,6 +277,7 @@ export function useWatchlist(): UseQueryResult<WatchlistSnapshot> {
       filteredItems,
       similar,
       popularRecommendations,
+      trendingContents,
       movieGenres,
     };
   }, [
@@ -226,6 +289,7 @@ export function useWatchlist(): UseQueryResult<WatchlistSnapshot> {
     movieGenres,
     popularRecommendations,
     similar,
+    trendingContents,
   ]);
 
   return {

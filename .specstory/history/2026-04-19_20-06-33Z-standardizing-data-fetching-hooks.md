@@ -8166,4 +8166,2970 @@ I'm wrapping the body view with Pressable to dismiss keyboard on outside tap, en
 
 I'm implementing Keyboard.dismiss() in Pressable's onPress to handle touch outside correctly. I'm switching to `TouchableWithoutFeedback` and `Keyboard.dismiss()` for cleaner touch outside handling. I'm wrapping ScrollView with Pressable to ensure Keyboard.dismiss works properly when tapping inside the scrollable area. I'm adding Pressable with flex:1 minHeight as ListFooter to handle taps on static areas inside ScrollView. 
 
-I'll avoid adding new dependencies and implement tap-to-dismiss using ScrollView</details></think>
+I'll avoid adding new dependencies and implement tap-to-dismiss using ScrollView props instead. I'm wrapping the SearchAppBar in Pressable with Keyboard.dismiss to handle tap-to-dismiss. 
+
+I'm implementing touchOutside handling using Pressable with Keyboard.dismiss for the SearchAppBar. I'm simplifying touch outside handling by using `keyboardDismissMode="on-drag"` and `onScrollBeginDrag={Keyboard.dismiss}` instead of flex-based Pressable. I'm wrapping the root View with Pressable to handle touch outside, but Pressable's onPress doesn't fire when tapping children like TextInput or chips. 
+
+I need to adjust the Pressable structure so nested Touchables like TextInput and Pressable children properly receive touch events instead of the parent Pressable. The touch event likely bubbles up to the root Pressable since View doesn't stop propagation. I'm wrapping the search views' body in Pressable with onPress={Keyboard.dismiss} and calling onBlurInput to sync inputFocused state. The inputFocused state may not update correctly if onBlur doesn't fire after Keyboard.dismiss(), causing recents to stay hidden. The inputFocused state may be stale if onBlur doesn't fire after Keyboard.dismiss(), so I'll ensure onBlurInput is called explicitly to avoid edge cases. I'll ensure Keyboard.dismiss() is called before onBlurInput() to properly blur the TextInput. 
+
+I'm ensuring Keyboard.dismiss() and onBlurInput() are both called on backdrop press to maintain state sync. I'm implementing the touch-outside handler by wrapping SearchDefaultView with Pressable and passing onBlurInput down. I'm wrapping SearchDefaultView with Pressable and importing Keyboard to handle touch outside detection. I'm using Pressable with style binding for Android ripple control and disabling opacity feedback. I'm refactoring the touch handler to use Pressable with flex:1 and dismissing keyboard on press. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Checking layout structure and applying `Keyboard.dismiss` + blur sync when tapping outside the search field.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx",
+  "pattern": "styles\\.body"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx",
+  "pattern": "styles\\.body",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/components/search/SearchDefaultView.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing keyboard dismissal**
+
+I'm adding keyboard dismissal when tapping outside the TextInput in SearchScreen using keyboardDismissMode and onScrollBeginDrag. I'm wrapping the ScrollView in SearchScreen with Pressable and using keyboardShouldPersistTaps='handled' to ensure proper touch handling for dismissing the keyboard. I'm checking if Pressable's onPress will fire when tapping on empty ScrollView space. 
+
+I'm testing if using `ScrollView` with `keyboardDismissMode` and `onScrollBeginDrag` can properly dismiss the keyboard when tapping empty space. I'm adding `keyboardDismissMode="on-drag"` to the ScrollView in SearchScreen to dismiss the keyboard on scroll begin drag. 
+
+**Adding keyboard dismissal**
+
+I'm implementing keyboard dismissal using Pressable with `Keyboard.dismiss()` on tap. 
+
+**Handling touch targets**
+
+TextInput receives touch first in React Native, so Pressable won't trigger onPress when tapping input. The ScrollView in SearchScreen may prevent Pressable from receiving taps because ScrollView intercepts touch events before they reach nested components. Pressable should handle taps on padding/margin areas and fire onPress even when tapping ScrollView empty areas. I'm adding a pressable container at SearchScreen level to handle taps on ScrollView padding and dismiss keyboard. I'm using `keyboardShouldPersistTaps="handled"` and `Keyboard.dismiss()` to properly handle touch targets in ScrollView on iOS. 
+
+I'm implementing `keyboardDismissMode="on-drag"` with `onScrollBeginDrag` on SearchScreen ScrollView for simpler touch handling. 
+
+**Wrapping with pressable**
+
+I'm adding a Pressable wrapper around the ScrollView to handle taps outside the TextInput. I'm implementing a Pressable wrapper around ScrollView with style={{flex:1}} and onPress={Keyboard.dismiss} to handle outside taps. I'm adding Pressable wrappers to SearchDefaultView and SearchResultsStateView with onPress handlers for keyboard dismissal. I'm implementing Pressable wrappers around SearchDefaultView and SearchResultsStateView to handle touch events properly. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing search screen**
+
+I'm adding keyboard dismissal to the search screen components. I'm handling keyboard dismissal logic for Pressable components, ensuring taps on TextInput don't trigger dismissal. 
+
+**Handling keyboard dismissal**
+
+I'm addressing the order of onPress events between Pressable and genre chip to prevent double execution. 
+
+**Checking pressable bubbling**
+
+I'm investigating React Native event bubbling to understand if Pressable parent onPress fires before or after chip onPress during tap interactions. I found that nested Pressable components follow a specific bubbling order where inner Pressable handlers win, and parent Pressable may or may not receive the event depending on RN version. I'll use `Keyboard.dismiss()` in a Pressable wrapper to handle tap-outside dismissal in RN 0.71+. The Pressable wraps the ScrollView and should receive onPress events even when tapping on the ScrollView itself. ScrollView intercepts touch events, so Pressable wrapping it won't receive onPress; using TouchableOpacity on ScrollView's contentContainerStyle with Keyboard.dismiss in onLayout is a workaround. 
+
+**Trying touch handling**
+
+I'm testing View with collapsable={false} and onTouchStart to handle touches without breaking TextInput. 
+
+**Splitting search views**
+
+I'm splitting SearchDefaultView and SearchResultsStateView to properly handle touch events. 
+
+**Handling touch dismissal**
+
+I'm implementing dismiss-on-tap outside the search input by restructuring the view hierarchy with a Pressable below the search row. I'm adding minHeight to the Pressable to ensure proper tap target sizing. I'm implementing a split Pressable for SearchDefaultView to handle empty area taps. 
+
+**Moving view structure**
+
+I'm moving the View structure so that everything from chips downward is wrapped inside Pressable. I'm restructuring the view to wrap chips and below in a Pressable with stretch styles. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Wrapping content in pressable**
+
+I'm wrapping the search section content in a Pressable component to handle outside touches. 
+
+**Adding pressable styles**
+
+I'm adding tapOutsideSearch style with alignSelf: 'stretch' and flexGrow: 1 to make empty space tappable. I'm adjusting the Pressable styles to handle horizontal scrolling gestures properly and avoid nested pressable warnings. I'm addressing potential pointerEvents issues on Android by using Pressable with android_ripple=null and adding delayPressIn for proper gesture handling. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Wrapping content below the search row in a `Pressable` that dismisses the keyboard and calls `onBlurInput`. Adding scroll-based dismiss on `SearchScreen`'s `ScrollView`.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling scroll dismissal**
+
+I need to ensure inputFocused state syncs with keyboard dismissal in SearchScreen. I'm adding inline callback to sync inputFocused state on scroll begin drag. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Testing pressable conflicts**
+
+I'm investigating potential onPress conflicts between parent and child Pressables in React Native. I'm investigating onPress event handling in nested Pressable components on Android with cancelable prop. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 33 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 9 passed, 9 total
+Tests:       47 passed, 47 total
+Snapshots:   0 total
+Time:        1.935 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Here’s what was implemented:
+
+### 1. `SearchDefaultView.tsx` & `SearchResultsStateView.tsx`
+- Imported **`Keyboard`**.
+- Wrapped everything **below** the search row (genre chips, recents, trending / results / empty states) in a **`Pressable`** with `style={styles.tapOutsideSearch}` (`flexGrow: 1`, full width).
+- **`onPress`** calls **`Keyboard.dismiss()`** and **`onBlurInput()`** so the field loses focus and `inputFocused` stays correct for the Recent Searches rule.
+
+Taps on the **search `TextInput` row** stay outside this `Pressable`, so focusing the field is unchanged. Taps on chips, cards, recents, etc. still go to those controls first; taps on “empty” areas (section titles, padding, flexible space) hit the wrapper and dismiss the keyboard.
+
+### 2. `SearchScreen.tsx`
+- **`keyboardDismissMode="on-drag"`** — keyboard dismisses when the user drags the main scroll (iOS/Android behavior per RN).
+- **`onScrollBeginDrag`** — **`Keyboard.dismiss()`** and **`setInputFocused(false)`** so scrolling the tab also clears focus if the blur event is late.
+
+`npm test`, `tsc`, and `eslint` all pass.
+
+---
+
+_**User**_
+
+Align font dependencies with the course wording “Manrope + Inter via react-native-google-fonts”:
+
+1. Open `package.json` and remove the **`npm:` alias** pattern (e.g. `"@react-native-google-fonts/inter": "npm:@expo-google-fonts/inter@^0.2.3"`). Either:
+   - **Preferred if it matches published packages:** depend on **`@expo-google-fonts/manrope`** and **`@expo-google-fonts/inter`** directly with normal semver ranges (no aliasing), **or**
+   - If you find an official **`react-native-google-fonts`** (or scoped) package on npm that actually ships these families for bare React Native, use that per its docs.
+
+2. Search the repo for imports/usages of the old package names or alias and update **`fontFamilies.ts`**, **`typography.ts`**, **`App.tsx`** (or wherever fonts load), **`react-native.config.js` / asset linking**, **iOS/Android** font entries, and **Babel/Metro** config so the app still loads Manrope + Inter correctly.
+
+3. Run **`npm install`**, then **`npx pod-install`** for iOS if needed. Fix any TypeScript or runtime errors.
+
+4. Add **one short sentence** in `README.md` under env/setup: we use **`@expo-google-fonts/*`** packages to load the same Google Font files the spec names; dependency names on npm differ from the phrase “react-native-google-fonts” in the brief.
+
+Keep changes limited to font packaging, loading, and README — no unrelated refactors.
+
+---
+
+_**Agent (composer-2)**_
+
+
+Aligning font dependencies with `@expo-google-fonts/*` and updating the repo. Exploring current configuration.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/package.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/fontFamilies.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts,js,cjs,mjs}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "google-fonts|manrope|inter|useFonts|Font\\.load"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "google-fonts|manrope|inter|useFonts|Font\\.load",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/components/detail/DetailWatchlistButton.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/ShimmerBox.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/navigation/TabBarGlassBackground.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/home/HomeHero.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/hooks/useSeeAll.ts"
+    },
+    {
+      "matchCount": 27,
+      "uri": "src/api/types.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/search/SearchResultsStateView.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/api/client.ts"
+    },
+    {
+      "matchCount": 8,
+      "uri": "react-native.config.js"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/RadialGlowBackdrop.tsx"
+    },
+    {
+      "matchCount": 22,
+      "uri": "src/theme/typography.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/detail/DetailHero.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/api/movies.ts"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/detail/DetailNavBar.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/store/watchlistStore.ts"
+    },
+    {
+      "matchCount": 8,
+      "uri": "src/theme/fontFamilies.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/screens/HomeScreen.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/watchlist/WatchlistSimilarLandscapeCard.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistEmptyState.tsx"
+    }
+  ],
+  "totalFiles": 20,
+  "totalMatches": 92
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/react-native.config.js</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **1** result in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList** (1 file)
+
+| File |
+|------|
+| `App.tsx` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "@react-native-google-fonts|@expo-google-fonts|useFonts"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "@react-native-google-fonts|@expo-google-fonts|useFonts",
+  "topFiles": [
+    {
+      "matchCount": 7,
+      "uri": "android/link-assets-manifest.json"
+    },
+    {
+      "matchCount": 8,
+      "uri": "package-lock.json"
+    },
+    {
+      "matchCount": 8,
+      "uri": "react-native.config.js"
+    },
+    {
+      "matchCount": 2,
+      "uri": "package.json"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/theme/typography.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/theme/fontFamilies.ts"
+    },
+    {
+      "matchCount": 7,
+      "uri": "ios/link-assets-manifest.json"
+    },
+    {
+      "matchCount": 100,
+      "uri": ".specstory/history/2026-04-17_06-22-26Z-specification-deviations-in-project-implementation.md"
+    },
+    {
+      "matchCount": 7,
+      "uri": "ios/MovieList.xcodeproj/project.pbxproj"
+    }
+  ],
+  "totalFiles": 9,
+  "totalMatches": 141
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/README.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/App.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts,js,json}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "google-fonts|expo-google"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "google-fonts|expo-google",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "package.json"
+    },
+    {
+      "matchCount": 8,
+      "uri": "package-lock.json"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/theme/fontFamilies.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/theme/typography.ts"
+    },
+    {
+      "matchCount": 7,
+      "uri": "android/link-assets-manifest.json"
+    },
+    {
+      "matchCount": 7,
+      "uri": "ios/link-assets-manifest.json"
+    },
+    {
+      "matchCount": 8,
+      "uri": "react-native.config.js"
+    }
+  ],
+  "totalFiles": 7,
+  "totalMatches": 34
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating font configuration**
+
+I'm updating the font configuration to use Expo Google Fonts instead of JS loading. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "react-native-asset"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "react-native-asset",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/theme/fontFamilies.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/theme/typography.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "react-native.config.js"
+    },
+    {
+      "matchCount": 15,
+      "uri": ".specstory/history/2026-04-17_06-22-26Z-specification-deviations-in-project-implementation.md"
+    }
+  ],
+  "totalFiles": 4,
+  "totalMatches": 18
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/.cursor",
+  "pattern": "google-fonts|expo-google"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/.cursor",
+  "pattern": "google-fonts|expo-google",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": ".cursor/rules/movielist-project.mdc"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating font rule**
+
+I'm updating the movielist-project rule to use @expo-google-fonts for accuracy while keeping README clarification. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Updating `package.json`, `react-native.config.js`, font comments, and `README.md`, then running `npm install`, `npx react-native-asset`, and `pod install`.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/package.json</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/react-native.config.js</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/fontFamilies.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/README.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm install && npx react-native-asset 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm install && npx react-native-asset 2>&1
+```
+
+```
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'MovieList@0.0.1',
+npm warn EBADENGINE   required: { node: '&gt;= 22.11.0' },
+npm warn EBADENGINE   current: { node: 'v20.19.5', npm: '10.8.2' }
+npm warn EBADENGINE }
+
+added 3 packages, removed 2 packages, and audited 917 packages in 3s
+
+178 packages are looking for funding
+  run &#96;npm fund&#96; for details
+
+found 0 vulnerabilities
+npm warn exec The following package was not found and will be installed: react-native-asset@2.2.15
+Linking assets in /Users/aryansingh/Desktop/Task2/MovieList
+Cleaning previously linked ttf assets from Android project, prevRelativeAssetsWithExt: node_modules/@react-native-google-fonts/inter/Inter_400Regular.ttf,node_modules/@react-native-google-fonts/inter/Inter_500Medium.ttf,node_modules/@react-native-google-fonts/inter/Inter_600SemiBold.ttf,node_modules/@react-native-google-fonts/inter/Inter_700Bold.ttf,node_modules/@react-native-google-fonts/manrope/Manrope_600SemiBold.ttf,node_modules/@react-native-google-fonts/manrope/Manrope_700Bold.ttf,node_modules/@react-native-google-fonts/manrope/Manrope_800ExtraBold.ttf
+options path in cleanAssetsAndroid: /Users/aryansingh/Desktop/Task2/MovieList/android/app/src/main/assets/fonts
+Cleaning previously linked ttf assets from iOS project, prevRelativeAssetsWithExt: node_modules/@react-native-google-fonts/inter/Inter_400Regular.ttf,node_modules/@react-native-google-fonts/inter/Inter_500Medium.ttf,node_modules/@react-native-google-fonts/inter/Inter_600SemiBold.ttf,node_modules/@react-native-google-fonts/inter/Inter_700Bold.ttf,node_modules/@react-native-google-fonts/manrope/Manrope_600SemiBold.ttf,node_modules/@react-native-google-fonts/manrope/Manrope_700Bold.ttf,node_modules/@react-native-google-fonts/manrope/Manrope_800ExtraBold.ttf
+Linking ttf assets to Android project
+Linking ttf assets to iOS project
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx pod-install 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx pod-install 2>&1
+```
+
+```
+npm warn exec The following package was not found and will be installed: pod-install@1.0.15
+🔍️ Scanning for pods...
+    [33mWARNING: CocoaPods requires your terminal to be using UTF-8 encoding.
+    Consider adding the following to ~/.profile:
+
+    export LANG=en_US.UTF-8
+    [0m
+1.16.2
+&gt; pod install
+Couldn't install Pods. Updating the Pods project and trying again...
+&gt; pod install --repo-update
+Couldn't install Pods. Updating the Pods project and trying again...
+Command &#96;pod install&#96; failed.
+└─ Cause: pod install --repo-update --ansi exited with non-zero code: 1
+[33mWARNING: CocoaPods requires your terminal to be using UTF-8 encoding.
+    Consider adding the following to ~/.profile:
+
+    export LANG=en_US.UTF-8
+    [0m
+/opt/homebrew/Cellar/ruby/3.4.4/lib/ruby/3.4.0/unicode_normalize/normalize.rb:141:in 'UnicodeNormalize.normalize': Unicode Normalization not appropriate for ASCII-8BIT (Encoding::CompatibilityError)
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/config.rb:167:in 'String#unicode_normalize'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/config.rb:167:in 'Pod::Config#installation_root'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/config.rb:227:in 'Pod::Config#podfile_path'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/user_interface/error_report.rb:105:in 'Pod::UserInterface::ErrorReport.markdown_podfile'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/user_interface/error_report.rb:30:in 'Pod::UserInterface::ErrorReport.report'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/command.rb:66:in 'Pod::Command.report_error'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/claide-1.1.0/lib/claide/command.rb:396:in 'CLAide::Command.handle_exception'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/claide-1.1.0/lib/claide/command.rb:337:in 'CLAide::Command.run'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/command.rb:52:in 'Pod::Command.run'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/bin/pod:55:in '&lt;top (required)&gt;'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/bin/pod:25:in 'Kernel#load'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/bin/pod:25:in '&lt;main&gt;'
+/opt/homebrew/Cellar/ruby/3.4.4/lib/ruby/3.4.0/unicode_normalize/normalize.rb:141:in 'UnicodeNormalize.normalize': Unicode Normalization not appropriate for ASCII-8BIT (Encoding::CompatibilityError)
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/config.rb:167:in 'String#unicode_normalize'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/config.rb:167:in 'Pod::Config#installation_root'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/config.rb:227:in 'Pod::Config#podfile_path'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/config.rb:206:in 'Pod::Config#podfile'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/command.rb:160:in 'Pod::Command#verify_podfile_exists!'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/command/install.rb:46:in 'Pod::Command::Install#run'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/claide-1.1.0/lib/claide/command.rb:334:in 'CLAide::Command.run'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/lib/cocoapods/command.rb:52:in 'Pod::Command.run'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/gems/cocoapods-1.16.2/bin/pod:55:in '&lt;top (required)&gt;'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/bin/pod:25:in 'Kernel#load'
+	from /opt/homebrew/Cellar/cocoapods/1.16.2_1/libexec/bin/pod:25:in '&lt;main&gt;'
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/ios/link-assets-manifest.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/android/link-assets-manifest.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList/ios && LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 pod install 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList/ios && LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 pod install 2>&1
+```
+
+```
+Found 7 modules for target &#96;MovieList&#96;
+link_native_modules! {ios_packages: [{configurations: [], name: "@react-native-async-storage/async-storage", root: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/@react-native-async-storage/async-storage", path: "../node_modules/@react-native-async-storage/async-storage", podspec_path: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/@react-native-async-storage/async-storage/AsyncStorage.podspec", script_phases: []}, {configurations: [], name: "@react-native-community/blur", root: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/@react-native-community/blur", path: "../node_modules/@react-native-community/blur", podspec_path: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/@react-native-community/blur/react-native-blur.podspec", script_phases: []}, {configurations: [], name: "react-native-gesture-handler", root: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native-gesture-handler", path: "../node_modules/react-native-gesture-handler", podspec_path: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native-gesture-handler/RNGestureHandler.podspec", script_phases: []}, {configurations: [], name: "react-native-linear-gradient", root: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native-linear-gradient", path: "../node_modules/react-native-linear-gradient", podspec_path: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native-linear-gradient/BVLinearGradient.podspec", script_phases: []}, {configurations: [], name: "react-native-safe-area-context", root: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native-safe-area-context", path: "../node_modules/react-native-safe-area-context", podspec_path: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec", script_phases: []}, {configurations: [], name: "react-native-screens", root: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native-screens", path: "../node_modules/react-native-screens", podspec_path: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native-screens/RNScreens.podspec", script_phases: []}, {configurations: [], name: "react-native-svg", root: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native-svg", path: "../node_modules/react-native-svg", podspec_path: "/Users/aryansingh/Desktop/Task2/MovieList/node_modules/react-native-svg/RNSVG.podspec", script_phases: []}], ios_project_root_path: "/Users/aryansingh/Desktop/Task2/MovieList/ios", react_native_path: "../node_modules/react-native"}
+Auto-linking React Native modules for target &#96;MovieList&#96;: AsyncStorage, BVLinearGradient, RNGestureHandler, RNSVG, RNScreens, react-native-blur, and react-native-safe-area-context
+Framework build type is static library
+[ReactNativeDependencies] Setting up ReactNativeDependencies...
+[ReactNativeDependencies] Building from source: false
+[ReactNativeDependencies] Using tarball from URL: https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.85.1/react-native-artifacts-0.85.1-reactnative-dependencies-debug.tar.gz
+[ReactNativeDependencies] Source: {http: "file:///Users/aryansingh/Desktop/Task2/MovieList/ios/Pods/ReactNativeDependencies-artifacts/reactnative-dependencies-0.85.1-debug.tar.gz"}
+[ReactNativeCore] Setting up ReactNativeCore...
+[ReactNativeCore] Building from source: false
+Configuring the target with the New Architecture
+[ReactNativeCore] Using React Native Core and React Native Dependencies prebuilt versions.
+[36m[1m[Codegen][0m Analyzing /Users/aryansingh/Desktop/Task2/MovieList/package.json[0m
+[36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in the app.[0m
+[36m[1m[Codegen][0m [33mThe "codegenConfig" field is not defined in package.json. Assuming there is nothing to generate at the app level.[0m
+[36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in react-native.config.js[0m
+[36m[1m[Codegen][0m Found @react-native-async-storage/async-storage[0m
+[36m[1m[Codegen][0m Found @react-native-community/blur[0m
+[36m[1m[Codegen][0m Found react-native-gesture-handler[0m
+[36m[1m[Codegen][0m Found react-native-safe-area-context[0m
+[36m[1m[Codegen][0m Found react-native-screens[0m
+[36m[1m[Codegen][0m Found react-native-svg[0m
+[36m[1m[Codegen][0m Processing AsyncStorageSpec[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: ios, macos, visionos for AsyncStorageSpec[0m
+[36m[1m[Codegen][0m Processing rnblurview[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: ios, tvos, visionos for rnblurview[0m
+[36m[1m[Codegen][0m Processing rngesturehandler_codegen[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for rngesturehandler_codegen[0m
+[36m[1m[Codegen][0m Processing safeareacontext[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for safeareacontext[0m
+[36m[1m[Codegen][0m Processing rnscreens[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: ios, tvos, visionos for rnscreens[0m
+[36m[1m[Codegen][0m Processing rnsvg[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for rnsvg[0m
+[36m[1m[Codegen][0m Generating Native Code for AsyncStorageSpec - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for rnblurview - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for rngesturehandler_codegen - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for safeareacontext - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for rnscreens - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for rnsvg - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating RCTThirdPartyComponentsProvider.h[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactCodegen/RCTThirdPartyComponentsProvider.h[0m
+[36m[1m[Codegen][0m Generating RCTThirdPartyComponentsProvider.mm[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactCodegen/RCTThirdPartyComponentsProvider.mm[0m
+[36m[1m[Codegen][0m Generating RCTModulesProvider.h[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactCodegen/RCTModuleProviders.h[0m
+[36m[1m[Codegen][0m Generating RCTModuleProviders.mm[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactCodegen/RCTModuleProviders.mm[0m
+[36m[1m[Codegen][0m Generating RCTAppDependencyProvider[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactAppDependencyProvider/RCTAppDependencyProvider.h[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactAppDependencyProvider/RCTAppDependencyProvider.mm[0m
+[36m[1m[Codegen][0m Generated podspec: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactAppDependencyProvider/ReactAppDependencyProvider.podspec[0m
+[36m[1m[Codegen][0m Generated podspec: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/ReactCodegen/ReactCodegen.podspec[0m
+[36m[1m[Codegen][0m Generating Package.swift[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/aryansingh/Desktop/Task2/MovieList/ios/build/generated/ios/Package.swift[0m
+[36m[1m[Codegen][0m [33mDone.[0m
+[ReactNativeDependencies] Using tarball from URL: https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.85.1/react-native-artifacts-0.85.1-reactnative-dependencies-debug.tar.gz
+Analyzing dependencies
+Downloading dependencies
+Generating Pods project
+Setting USE_HERMES build settings
+Setting REACT_NATIVE_PATH build settings
+Setting SWIFT_ACTIVE_COMPILATION_CONDITIONS build settings
+[Ccache]: Removing Ccache from CC, LD, CXX &amp; LDPLUSPLUS build settings
+Setting SWIFT_ENABLE_EXPLICIT_MODULES build settings
+[ReactNativeCore] Processing VFS overlay file...
+[ReactNativeCore]   Created VFS overlay at /Users/aryansingh/Desktop/Task2/MovieList/ios/Pods/React-Core-prebuilt/React-VFS.yaml
+[ReactNativeCore] VFS overlay setup complete
+[ReactNativeCore] Configuring xcconfig for prebuilt React Native Core...
+[ReactNativeCore] Prebuilt xcconfig configuration complete
+[SPM] Cleaning old SPM dependencies from Pods project
+[SPM] Adding SPM dependencies to Pods project
+[Privacy Manifest Aggregation] Appending aggregated reasons to existing PrivacyInfo.xcprivacy file.
+[Privacy Manifest Aggregation] Reading .xcprivacy files to aggregate all used Required Reason APIs.
+Setting CLANG_CXX_LANGUAGE_STANDARD to c++20 on /Users/aryansingh/Desktop/Task2/MovieList/ios/MovieList.xcodeproj
+
+==================== DEPRECATION NOTICE =====================
+Calling &#96;pod install&#96; directly is deprecated in React Native
+because we are moving away from Cocoapods toward alternative
+solutions to build the project.
+* If you are using Expo, please run:
+&#96;npx expo run:ios&#96;
+* If you are using the Community CLI, please run:
+&#96;yarn ios&#96;
+=============================================================
+
+Pod install took 16 [s] to run
+Integrating client project
+Pod installation complete! There are 81 dependencies from the Podfile and 80 total pods installed.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{json,js,ts,tsx,md}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "@react-native-google-fonts"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "@react-native-google-fonts",
+  "topFiles": [
+    {
+      "matchCount": 60,
+      "uri": ".specstory/history/2026-04-17_06-22-26Z-specification-deviations-in-project-implementation.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".specstory/history/2026-04-19_20-06-33Z-standardizing-data-fetching-hooks.md"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 63
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 33 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 9 passed, 9 total
+Tests:       47 passed, 47 total
+Snapshots:   0 total
+Time:        2.803 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/ios",
+  "pattern": "expo-google-fonts|react-native-google-fonts"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/ios",
+  "pattern": "expo-google-fonts|react-native-google-fonts",
+  "topFiles": [
+    {
+      "matchCount": 7,
+      "uri": "ios/MovieList.xcodeproj/project.pbxproj"
+    },
+    {
+      "matchCount": 7,
+      "uri": "ios/link-assets-manifest.json"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 14
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/android",
+  "pattern": "expo-google-fonts|react-native-google-fonts"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/android",
+  "pattern": "expo-google-fonts|react-native-google-fonts",
+  "topFiles": [
+    {
+      "matchCount": 7,
+      "uri": "android/link-assets-manifest.json"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 7
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/package-lock.json",
+  "pattern": "\"@expo-google-fonts"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/package-lock.json",
+  "pattern": "\"@expo-google-fonts",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "package-lock.json"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "jest*.{js,ts,cjs}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "expo-google|google-fonts"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "expo-google|google-fonts",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+### What changed
+
+1. **`package.json`**  
+   Replaced aliased deps with direct packages:  
+   `@expo-google-fonts/inter` and `@expo-google-fonts/manrope` at `^0.2.3` (no `npm:` alias).
+
+2. **`react-native.config.js`**  
+   Asset paths now point at `node_modules/@expo-google-fonts/{manrope,inter}/…`.
+
+3. **`src/theme/fontFamilies.ts`** & **`src/theme/typography.ts`**  
+   Comments updated to refer to `@expo-google-fonts/*` (same PostScript names; no code changes).
+
+4. **`App.tsx`**  
+   Unchanged — fonts are still loaded only via native asset linking, not `useFonts`.
+
+5. **`README.md`**  
+   Under **Environment variables (TMDB)**, added one sentence explaining we use `@expo-google-fonts/*` for the same Manrope + Inter files the brief names, and that npm names differ from “react-native-google-fonts” in course text.
+
+6. **Regenerated native wiring**  
+   - `npm install`  
+   - `npx react-native-asset` (updates `ios/` + `android/` manifests and Xcode font refs to `@expo-google-fonts/...`)  
+   - `pod install` in `ios/` (with `LANG=en_US.UTF-8` so CocoaPods runs; first `npx pod-install` failed on encoding in this environment).
+
+### Verification
+
+- `npx tsc --noEmit`, `npm run lint`, and `npm test` all pass.
+
+If `pod install` fails on your machine with the UTF-8 warning, run:  
+`cd ios && LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 pod install`.
+
+---
+
+_**User**_
+
+no why are we still using @expo-google-font not react-native-google-fonts
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Explaining font package naming**
+
+I'm explaining why @expo-google-fonts/* is used instead of react-native-google-fonts, noting that the latter doesn't exist on npm. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Here’s the distinction:
+
+### “react-native-google-fonts” vs what’s on npm
+
+- There is **no official, published npm scope** like `@react-native-google-fonts/manrope` or `@react-native-google-fonts/inter` that you can install the way you install other RN libraries. Those names **don’t resolve** on the public registry (they were only ever mimicked in your project with an **`npm:` alias** that pointed at the Expo packages).
+
+- **`@expo-google-fonts/*`** **are** the real packages on npm. They’re maintained by **Expo** as part of [expo/google-fonts](https://github.com/expo/google-fonts). They only **ship font files** (and optional helpers like `useFonts` if you use them). They are **not** “Expo-only” in the sense that you must run the full Expo app toolchain: in a **bare** React Native app you can depend on them **only** as a source of `.ttf` files and link them with **`react-native.config.js` + `react-native-asset`** (which is what your project does).
+
+### Why the course says “react-native-google-fonts”
+
+Course copy often uses **“react-native-google-fonts”** as a **generic label** (“use Google Fonts in React Native”). The **concrete packages** people actually install for that are very often **`@expo-google-fonts/<family>`**, because that’s what exists and is maintained.
+
+### Summary
+
+You’re “still using” **`@expo-google-fonts/*`** because that’s the **real dependency name on npm** for those Manrope/Inter bundles. **`react-native-google-fonts`** in the brief is naming/terminology; **`@expo-google-fonts/*`** is the **implementation** that matches what’s published. Your README line is there to spell that mismatch out for reviewers.
+
+If you wanted a dependency literally named `react-native-google-fonts` in `package.json`, you’d only get it via an **alias** to the same underlying package—which is exactly what you removed to align with “no npm alias.”
+
+---
+
+_**User**_
+
+POPULAR RECOMMENDATIONS" section: label-sm uppercase heading in on_surface_variant, followed by trending content (optional to load — skeleton cards are acceptable) rows in Empty (Zero Items in Watchlist) case not 2x2 grid single rows for each popular RECOMMENDATIONS and Trending Contents i want it like home rails not like this grid single row like trending now don't show the cell in vertical they should be horizontally scrollable 
+
+---
+
+_**Agent (composer-2)**_
+
+
+Refactoring the empty watchlist "Popular recommendations" section into a horizontal rail like Home's "Trending Now". Exploring the current implementation and home rail pattern.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/GhostPosterPlaceholderGrid.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeRowSkeleton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/ContentCard.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing empty state**
+
+I'm adding ScrollView and homeRowCardWidth to WatchlistEmptyState.tsx. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating watchlist empty state**
+
+I'm adjusting the WatchlistEmptyState to use full screen width for horizontal rail layout. I'm standardizing padding on the watchlist empty state to match home rails spacing using `spacing.xxl` for consistency. I'm using `spacing.xl` for the empty state padding to match WatchlistScreen's horizontalPad and align with home rails spacing. 
+
+I'm using `spacing.xxl` for horizontal scroll content padding and `spacing.xl` for the empty state padding to match HomeContentRow and WatchlistScreen spacing. I'm implementing horizontal scroll for watchlist items using slice(0, 10) from trending API data with ContentCard components matching HomeContentRow styling. 
+
+I'm replacing GhostPosterPlaceholderGrid with HomeRowSkeleton for the watchlist empty state. I'm adjusting the scroll view margins to extend edge-to-edge with negative margin. I'm adding `paddingHorizontal: spacing.xxl` to the watchlist empty state to match the home screen padding inside the already padded area. I'm adjusting the watchlist empty state padding to use `spacing.xl` for consistency with the home screen card rows. 
+
+I'm changing the watchlist empty state horizontal padding to `spacing.xxl` to match the home rails visual style. I'm restructuring the watchlist layout with specific padding and alignment rules for sections and scroll views. I'm adjusting the scroll view padding to match Home's layout with `paddingHorizontal: spacing.xxl`. I'm adjusting the scroll view content padding to match the watchlist layout with `paddingHorizontal: spacing.xxl`. I'm setting the content container style to full width with `paddingHorizontal: spacing.xxl` for the row. I'm adjusting the HomeRowSkeleton padding to avoid double padding with the section. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Refactoring `WatchlistEmptyState` to use a home-style horizontal rail: `label-sm` uppercase heading (`on_surface_variant`), `ScrollView` + `ContentCard` with `homeRowCardWidth`, and `HomeRowSkeleton` while loading.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx",
+  "pattern": "layout"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx",
+  "pattern": "layout",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "src/components/watchlist/WatchlistEmptyState.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "GhostPosterPlaceholderGrid|WatchlistEmptyState"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "GhostPosterPlaceholderGrid|WatchlistEmptyState",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "src/components/watchlist/WatchlistEmptyState.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/common/GhostPosterPlaceholderGrid.tsx"
+    },
+    {
+      "matchCount": 29,
+      "uri": ".specstory/history/2026-04-17_06-22-26Z-specification-deviations-in-project-implementation.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    },
+    {
+      "matchCount": 12,
+      "uri": ".specstory/history/2026-04-19_20-06-33Z-standardizing-data-fetching-hooks.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-16_04-50-40Z-tmdb-api-genre-fetching-code.md"
+    },
+    {
+      "matchCount": 25,
+      "uri": ".specstory/history/2026-04-15_07-36-48Z-movie-grid-layout.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-15_06-45-45Z-home-ui-parity-adjustments.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-15_08-57-49Z-watchlist-ui-development.md"
+    },
+    {
+      "matchCount": 9,
+      "uri": ".specstory/history/2026-04-14_09-19-54Z-usewatchlist-implementation-details.md"
+    },
+    {
+      "matchCount": 33,
+      "uri": ".specstory/history/2026-04-14_11-03-42Z-watchlist-empty-state-ui.md"
+    },
+    {
+      "matchCount": 23,
+      "uri": ".specstory/history/2026-04-15_08-57-49Z-watchlist-empty-ui-screen.md"
+    },
+    {
+      "matchCount": 30,
+      "uri": ".specstory/history/2026-04-15_08-13-59Z-watchlist-ui-adjustments.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-15_08-57-49Z-watchlist-ui-implementation.md"
+    }
+  ],
+  "totalFiles": 14,
+  "totalMatches": 177
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 39 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 9 passed, 9 total
+Tests:       47 passed, 47 total
+Snapshots:   0 total
+Time:        1.951 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "GhostPosterPlaceholderGrid"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "GhostPosterPlaceholderGrid",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "src/components/common/GhostPosterPlaceholderGrid.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Here’s what was updated.
+
+### `src/components/watchlist/WatchlistEmptyState.tsx`
+
+1. **Section title** — Uses **`typography['label-sm']`**, **`colors.on_surface_variant`**, **`textTransform: 'uppercase'`**, and **`tracking.caps`** (no Manrope headline font). Copy is still “popular recommendations” so it renders as **POPULAR RECOMMENDATIONS**.
+
+2. **Layout** — Replaced the **2×2 grid** with a **horizontal `ScrollView`** aligned with Home rails:
+   - **`homeRowCardWidth`** (160) and **`marginRight: spacing.xxl`** on each **`ContentCard`**
+   - **`showRating={false}`** like **`HomeContentRow`** rails
+   - **`paddingHorizontal: spacing.xxl`** on the scroll content (same idea as Home row padding)
+
+3. **Loading** — Swapped **`GhostPosterPlaceholderGrid`** for **`HomeRowSkeleton`** (horizontal shimmer strip, same shape as Home).
+
+4. **Data** — Up to **20** items from the first trending page (`POPULAR_RAIL_MAX`) so the rail can scroll; no more 4-tile cap.
+
+`GhostPosterPlaceholderGrid` is unused now but left in the repo (minimal scope). You can delete it later if you want to drop dead code.
+
+`npx tsc --noEmit`, `npm run lint`, and `npm test` all pass.
+
+---
+
+_**User**_
+
+fix the alignment 
+
+---
+
+_**Agent (composer-2)**_
+
+
+Checking the watchlist empty state and screen layout to fix rail layout and heading alignment.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing padding layout**
+
+I'm adjusting the horizontal padding in WatchlistScreen to prevent double application of spacing.xl and spacing.xxl. 
+
+**Adjusting layout alignment**
+
+The label's left inset (56) matches ScrollView content, but the Text component's intrinsic alignment causes it to appear further left than cards. The ScrollView content starts at 32px from the left edge, while the label starts at 56px, causing misalignment. 
+
+**Analyzing layout behavior**
+
+The narrow screen with two visible cards side-by-side creates a 2-column appearance that mimics a grid layout. 
+
+**Adjusting card layout**
+
+I'm reducing card width to prevent the grid-like appearance and improve horizontal scrolling behavior. I'm adjusting padding to align heading with movie cards. I'm removing duplicate padding and using a single railInset constant for consistent alignment. I'm standardizing horizontal padding by using a single `horizontalPad` value for both section labels and rail content. 
+
+**Standardizing padding**
+
+I'm aligning the horizontal padding values between section labels and rail content to prevent misalignment. 
+
+**Checking scrollview behavior**
+
+I'm investigating ScrollView's default content inset on iOS and how it affects layout alignment. 
+
+**Implementing rail layout**
+
+I'm implementing the rail layout with horizontal padding on the wrapper and no duplicate padding on scroll content. I removed redundant padding from scroll content since the parent already provides horizontal padding. 
+
+**Adjusting padding structure**
+
+I'm removing nested horizontal padding by applying `paddingHorizontal: xxl` directly to the heading text instead of the parent container. I confirmed the padding calculations match mathematically between the heading and scroll view. 
+
+I'll refactor the padding by applying `paddingHorizontal: spacing.xxl` to one container and removing padding from child elements. I'm adding `paddingHorizontal: spacing.xxl` to `sectionLabel` and removing padding from child elements to align the layout properly. 
+
+I'm adjusting `sectionLabel`'s `letterSpacing` to prevent visual weight shifts on certain platforms. I'm implementing a single container approach with consistent horizontal inset for rail chrome alignment. 
+
+I'm adjusting the ScrollView contentContainerStyle to align cards properly with the wrapper's horizontal padding. The emptyScrollInner already applies xl padding, so recommendationsSection wrapper needs xxl padding to align correctly with the screen edge. 
+
+I'm setting ScrollView contentContainerStyle paddingLeft to 0 and paddingRight to xxl for proper alignment. I'm fixing double padding issue by removing xl padding from parent and adjusting railOuter to xxl only. 
+
+I'm aligning title and cards by removing horizontal padding from sectionLabel and adding it only to railScrollContent. I'm refactoring the layout by wrapping sectionLabel and children in a container with horizontal padding instead of adjusting individual elements. I'm adjusting the rail inset wrap to use horizontal padding instead of individual element adjustments. I'm using horizontal padding on railInsetWrap and setting ScrollView content padding to 0 on left and right to align cards properly. I'm double-padding the skeleton by wrapping it in `railInsetWrap` which conflicts with its internal `paddingHorizontal`. I'm removing the extra padding wrapper from HomeRowSkeleton to prevent double-padding conflict. 
+
+I'm adjusting HomeRowSkeleton to accept an `omitPadding` prop for better padding control. I'm simplifying the padding approach by removing `railInsetWrap` and using only `spacing.xl` for alignment. 
+
+**Aligning rail edges**
+
+I'm aligning the rail edges with the CTA's left edge by adjusting the inner area's width to match the CTA width. I'm adjusting the rail's left edge to match the CTA's left edge by accounting for the section label's padding. The heading is further left than cards, meaning it has less inset padding than the CTA. The heading has less inset padding than cards, making it appear further left as described. The section label padding was unexpectedly removed, causing it to appear further left than cards. 
+
+The heading text's intrinsic width causes it to appear further left than cards despite ScrollView's padding. I'm removing ScrollView's padding to align heading and cards. 
+
+**Checking padding alignment**
+
+The padding mismatch might be in HomeRowSkeleton's loading state, not the sectionLabel. 
+
+**Adjusting layout constraints**
+
+I'm adding a wrapper view to fix the padding alignment issue in recommendationsSection. I'm applying `paddingRight` only to the trailing space in the scrollable rail section. I'm adjusting the scroll host margins to align with the parent's padding and remove the negative horizontal margin. I'm aligning the rail layout with the CTA padding by setting paddingLeft to 0 and paddingHorizontal to 0 for the rail section. I'm removing `paddingHorizontal: spacing.xxl` from the label and scroll to match the parent's `paddingHorizontal: horizontalPad`. 
+
+**Aligning edges**
+
+I'm removing extra paddingHorizontal to align left edges of label, scroll, and header at 24px from screen. I'm using a single wrapper with `paddingHorizontal: 0` to ensure consistent left alignment between label and ScrollView. I'm adjusting padding styles to align the left edges of Text, ScrollView, and CTA within emptyScrollInner. I'm fixing misalignment in HomeRowSkeleton by either wrapping it in a View with negative margin or using inline minimal skeleton with no extra padding. I'm using a View with negative margin to fix HomeRowSkeleton's padding alignment. 
+
+I'm adjusting padding and margins to fix the skeleton alignment issue. 
+
+**Adjusting spacing**
+
+I'm removing padding from watchlist to rely on parent xl spacing and adjusting HomeRowSkeleton to prevent extra inset. I'm replacing HomeRowSkeleton with a local horizontal skeleton using ShimmerBox components to match RailScrollView structure without extra padding. I'm removing horizontal padding from the parent container and applying negative margins to HomeRowSkeleton to align its content properly. 
+
+I'm adjusting the layout by using negative margins to align HomeRowSkeleton's content with the parent's padding. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Aligning the section title with the first card: parent `emptyScrollInner` already applies `horizontalPad` (xl); extra `paddingHorizontal: spacing.xxl` on the label and scroll can misalign. Checking `HomeRowSkeleton` and applying a consistent inset.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeRowSkeleton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing alignment**
+
+I'm aligning the view elements by setting alignSelf to stretch and removing horizontal padding from sectionLabel. 
+
+**Aligning view elements**
+
+I'm adjusting scroll content padding to only include trailing padding and adding a wrapper with negative horizontal margin for skeleton alignment. I'm fixing the skeleton alignment by using a local skeleton row in WatchlistEmptyState with adjusted padding. I'm removing left padding from the skeleton by duplicating the minimal ScrollView+Shimmer structure with adjusted padding values. I'm using negative margins to extend the skeleton view beyond its parent, but the inner ScrollView padding still applies. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Removing double horizontal insets: parent `emptyScrollInner` already applies `horizontalPad` (xl); extra `paddingHorizontal: spacing.xxl` on the label and scroll offset the title from the cards. Aligning the title with the first card's leading edge and matching the loading skeleton to the same inset.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing railSkeletonHost minHeight**
+
+I confirmed `railPosterHeight` is in scope for StyleSheet.create and will resolve to a numeric value. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 39 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 9 passed, 9 total
+Tests:       47 passed, 47 total
+Snapshots:   0 total
+Time:        2.473 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+### Cause
+`WatchlistScreen` already wraps the empty state in `paddingHorizontal: horizontalPad` (`spacing.xl`). The rail also used **`paddingHorizontal: spacing.xxl`** on both the **label** and the **scroll content**, so the first poster was **32px further in** than the “POPULAR RECOMMENDATIONS” line. That’s why the heading looked shifted left compared to the cards.
+
+`HomeRowSkeleton` adds **another** `paddingHorizontal: xxl`, so the loading row didn’t match the title either.
+
+### Changes (`src/components/watchlist/WatchlistEmptyState.tsx`)
+1. **Removed** extra horizontal padding on the section title (no `paddingHorizontal` on the label).
+2. **Rail scroll** — `contentContainerStyle` is only **`paddingRight: spacing.xxl`** (end-of-row spacing when scrolling). **No left padding** so the first card lines up with the label under the same parent inset.
+3. **Loading** — Replaced `HomeRowSkeleton` with a **local** horizontal skeleton that uses the **same** `railScrollContent` / card width as the real rail (no double inset).
+4. **`recommendationsSection`** — `width: '100%'` and label **`alignSelf: 'stretch'`** + **`textAlign: 'left'`** so the heading tracks the content width.
+
+After a refresh, the uppercase label and the first poster column should share one vertical alignment edge (modulo letter-spacing on the label). `tsc`, lint, and tests all pass.
+
+---
+
+_**User**_
+
+add trending contents after popular recommendation same as UI as popular Recommendations
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Adding trending section**
+
+I'm using the same `getTrendingMoviesWeek` data source for the trending section as the popular recommendations. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Checking how the watchlist hook loads data and what we can use for a second rail.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useWatchlist.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/movies.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Splitting API endpoints**
+
+I'm splitting the API calls to avoid duplicate data by using separate endpoints for Popular and Trending sections. 
+
+**Evaluating API strategies**
+
+I'm weighing two API approaches: combining data slices in one request or making separate fetches for Popular and Trending sections. 
+
+**Comparing API approaches**
+
+I'll use separate APIs for Popular and Trending to avoid redundancy and maintain clean product splits. 
+
+**Updating API calls**
+
+I'm updating the API calls to separate popular and trending content, renaming `popularRecommendations` to `getTopRatedMovies` and adding `trendingMovies` for the watchlist empty state. I'm adding `trendingRail` to WatchlistSnapshot for the empty state trend data. 
+
+I'm changing `popularRecommendations` to fetch `topRatedMovies` instead of `trendingMoviesWeek` to fix semantic mismatch. I'm adding a new `trendingMovies` query and keeping `popularRecommendations` as `getTopRatedMovies` to support both views. I'm correcting the API labels to use `getTrendingMoviesWeek` for trending content and `getTopRatedMovies` for popular recommendations. I'm adjusting the API calls to match the user's preference for ordering: popular recommendations (top rated) first, then trending content (trending week). 
+
+I'm swapping rail 2 to use `trending/week` and renaming it to 'Trending' only when data is actually trending. I'm refactoring the trending and popular fetches into a single effect with `Promise.all` for minimal network requests. 
+
+I'm consolidating popular and trending fetches into a single effect with `Promise.all` for minimal network requests. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/index.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing watchlist hooks**
+
+I'm implementing useWatchlist with parallel loading of popular recommendations and trending contents using Promise.all. I'm refactoring the watchlist hook to use Promise.allSettled for concurrent loading of popular and trending content. I'm using two separate useEffects for concurrent loading of popular and trending content, mirroring the existing pattern. </details></think>

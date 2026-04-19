@@ -1,19 +1,20 @@
 /**
  * Watchlist zero-items body — `resources/watchlist-empty.html` / `watchlist_empty.png`:
- * glow, disc + bookmark, copy, solid CTA, then Popular Recommendations (trending API + `ContentCard` grid).
+ * glow, disc + bookmark, copy, solid CTA, then Popular Recommendations + Trending contents (horizontal rails).
  */
 
 import type { JSX } from 'react';
 import { useMemo } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import type { StyleProp, ViewStyle } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { TmdbMovieListItem, TmdbPagedMoviesResponse, UseQueryResult } from '../../api/types';
+import { ShimmerBox } from '../common/ShimmerBox';
 import { BrandSolidCtaButton } from '../common/BrandSolidCtaButton';
 import { ContentCard } from '../common/ContentCard';
-import { GhostPosterPlaceholderGrid } from '../common/GhostPosterPlaceholderGrid';
 import { RadialGlowBackdrop } from '../common/RadialGlowBackdrop';
 import { IconBookmark } from '../common/SimpleIcons';
-import { colors } from '../../theme/colors';
-import { fill, layout, opacity, radiusFullPill, spacing } from '../../theme/spacing';
+import { colors, contentCard } from '../../theme/colors';
+import { fill, homeRowCardWidth, layout, opacity, radiusCardOuter, radiusFullPill, spacing, tracking } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { formatListMovieSubtitle } from '../../utils/formatMovieListItem';
 
@@ -21,18 +22,96 @@ import { formatListMovieSubtitle } from '../../utils/formatMovieListItem';
 const EMPTY_ICON_SIZE = spacing.xxxxl + spacing.xxl + spacing.sm;
 /** Glow canvas behind the bookmark only — keeps highlight off the headline (`watchlist-empty.html`). */
 const ICON_RADIAL_GLOW_SIZE = spacing.xxxxl * 4;
-const POPULAR_GRID_MAX = 4;
-/** ~0.2em letter-spacing on 12px label — `watchlist-empty.html` “Popular Recommendations”. */
-const POPULAR_SECTION_TRACKING = 2.4;
+const RAIL_MAX_ITEMS = 20;
+const RAIL_SKELETON_COUNT = 5;
+const railPosterHeight = homeRowCardWidth / contentCard.aspectRatio;
 
 function listItemTitle(item: TmdbMovieListItem): string {
   const t = item.title?.trim() ?? '';
   return t.length > 0 ? t : '—';
 }
 
+type WatchlistEmptyRailProps = {
+  sectionLabel: string;
+  query: UseQueryResult<TmdbPagedMoviesResponse>;
+  onPressMovie: (movieId: number) => void;
+  /** Extra top margin for the first rail below the hero cluster. */
+  marginTopStyle?: StyleProp<ViewStyle>;
+};
+
+function WatchlistEmptyRail({
+  sectionLabel,
+  query,
+  onPressMovie,
+  marginTopStyle,
+}: WatchlistEmptyRailProps): JSX.Element {
+  const { data, loading, error, refetch } = query;
+  const movies = useMemo(() => (data?.results ?? []).slice(0, RAIL_MAX_ITEMS), [data?.results]);
+
+  return (
+    <View style={[styles.railSection, marginTopStyle, loading ? styles.recommendationsGhost : null]}>
+      <Text style={styles.sectionLabel}>{sectionLabel}</Text>
+      {error != null && !loading ? (
+        <View style={styles.railErrorBlock}>
+          <Text style={styles.errorText}>{error}</Text>
+          <Pressable
+            accessibilityLabel={`Retry ${sectionLabel}`}
+            accessibilityRole="button"
+            onPress={refetch}
+            style={({ pressed }) => [styles.retryBtn, pressed && styles.retryBtnPressed]}
+          >
+            <Text style={styles.retryLabel}>Try again</Text>
+          </Pressable>
+        </View>
+      ) : null}
+      {loading ? (
+        <View style={styles.railSkeletonHost} accessibilityLabel={`Loading ${sectionLabel}`}>
+          <ScrollView
+            contentContainerStyle={styles.railScrollContent}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.railScrollHost}
+          >
+            {Array.from({ length: RAIL_SKELETON_COUNT }, (_, i) => (
+              <View key={i} style={styles.railSkeletonCard}>
+                <ShimmerBox style={styles.railSkeletonPoster} />
+                <ShimmerBox style={styles.railSkeletonTitleLine} />
+                <ShimmerBox style={styles.railSkeletonSubLine} />
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+      ) : movies.length > 0 ? (
+        <ScrollView
+          contentContainerStyle={styles.railScrollContent}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.railScrollHost}
+        >
+          {movies.map((movie) => (
+            <ContentCard
+              key={movie.id}
+              onPress={() => {
+                onPressMovie(movie.id);
+              }}
+              posterPath={movie.poster_path}
+              rating={movie.vote_average}
+              showRating={false}
+              style={styles.railCard}
+              subtitle={formatListMovieSubtitle(movie)}
+              title={listItemTitle(movie)}
+            />
+          ))}
+        </ScrollView>
+      ) : null}
+    </View>
+  );
+}
+
 export type WatchlistEmptyStateProps = {
   ctaWidth: number;
   popularRecommendations: UseQueryResult<TmdbPagedMoviesResponse>;
+  trendingContents: UseQueryResult<TmdbPagedMoviesResponse>;
   onBrowseTrending: () => void;
   onPressRecommendation: (movieId: number) => void;
 };
@@ -40,18 +119,10 @@ export type WatchlistEmptyStateProps = {
 export function WatchlistEmptyState({
   ctaWidth,
   popularRecommendations,
+  trendingContents,
   onBrowseTrending,
   onPressRecommendation,
 }: WatchlistEmptyStateProps): JSX.Element {
-  const { data, loading, error, refetch } = popularRecommendations;
-  const gridRowGap = spacing.xl;
-  const gridColWidth = Math.max(1, (ctaWidth - gridRowGap) / 2);
-
-  const popularMovies = useMemo(
-    () => (data?.results ?? []).slice(0, POPULAR_GRID_MAX),
-    [data?.results],
-  );
-
   return (
     <View style={styles.block}>
       <View style={styles.centerSlot}>
@@ -78,43 +149,18 @@ export function WatchlistEmptyState({
         </View>
       </View>
 
-      {error != null && !loading ? (
-        <View style={styles.errorBlock}>
-          <Text style={styles.errorText}>{error}</Text>
-          <Pressable
-            accessibilityLabel="Retry loading recommendations"
-            accessibilityRole="button"
-            onPress={refetch}
-            style={({ pressed }) => [styles.retryBtn, pressed && styles.retryBtnPressed]}
-          >
-            <Text style={styles.retryLabel}>Try again</Text>
-          </Pressable>
-        </View>
-      ) : null}
-
-      <View style={[styles.recommendationsSection, loading ? styles.recommendationsGhost : null]}>
-        <Text style={styles.sectionLabel}>Popular Recommendations</Text>
-        {loading ? (
-          <GhostPosterPlaceholderGrid count={POPULAR_GRID_MAX} gap={gridRowGap} posterWidth={gridColWidth} />
-        ) : popularMovies.length > 0 ? (
-          <View style={[styles.recGrid, { gap: gridRowGap, width: ctaWidth }]}>
-            {popularMovies.map((movie) => (
-              <View key={movie.id} style={{ width: gridColWidth }}>
-                <ContentCard
-                  onPress={() => {
-                    onPressRecommendation(movie.id);
-                  }}
-                  posterPath={movie.poster_path}
-                  rating={movie.vote_average}
-                  style={{ width: gridColWidth }}
-                  subtitle={formatListMovieSubtitle(movie)}
-                  title={listItemTitle(movie)}
-                />
-              </View>
-            ))}
-          </View>
-        ) : null}
-      </View>
+      <WatchlistEmptyRail
+        marginTopStyle={styles.railFirstMargin}
+        onPressMovie={onPressRecommendation}
+        query={popularRecommendations}
+        sectionLabel="Popular recommendations"
+      />
+      <WatchlistEmptyRail
+        marginTopStyle={styles.railFollowMargin}
+        onPressMovie={onPressRecommendation}
+        query={trendingContents}
+        sectionLabel="Trending contents"
+      />
     </View>
   );
 }
@@ -157,11 +203,6 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.lg,
     paddingTop: spacing.md,
   },
-  errorBlock: {
-    alignSelf: 'stretch',
-    gap: spacing.md,
-    marginBottom: spacing.lg,
-  },
   errorText: {
     ...typography['body-md'],
     color: colors.primary_container,
@@ -181,19 +222,60 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: ICON_RADIAL_GLOW_SIZE,
   },
+  railCard: {
+    marginRight: spacing.xxl,
+    width: homeRowCardWidth,
+  },
+  railErrorBlock: {
+    alignSelf: 'stretch',
+    gap: spacing.md,
+    marginBottom: spacing.lg,
+  },
+  railFirstMargin: {
+    marginTop: spacing.xxxl * 2,
+  },
+  railFollowMargin: {
+    marginTop: spacing.xxxl * 2,
+  },
+  railScrollContent: {
+    paddingRight: spacing.xxl,
+  },
+  railScrollHost: {
+    alignSelf: 'stretch',
+    backgroundColor: colors.surface,
+  },
+  railSection: {
+    alignSelf: 'stretch',
+    width: '100%',
+  },
+  railSkeletonCard: {
+    marginRight: spacing.xxl,
+    width: homeRowCardWidth,
+  },
+  railSkeletonHost: {
+    minHeight: railPosterHeight + spacing.sm + layout.skeletonLineSm + spacing.xs + layout.skeletonLineXs,
+  },
+  railSkeletonPoster: {
+    backgroundColor: colors.surface_container_low,
+    borderRadius: radiusCardOuter,
+    height: railPosterHeight,
+    width: '100%',
+  },
+  railSkeletonSubLine: {
+    borderRadius: spacing.xs,
+    height: layout.skeletonLineXs,
+    marginTop: spacing.xs,
+    width: '70%',
+  },
+  railSkeletonTitleLine: {
+    borderRadius: spacing.xs,
+    height: layout.skeletonLineSm,
+    marginTop: spacing.sm,
+    width: '85%',
+  },
   recommendationsGhost: {
     opacity: opacity.ghost,
     pointerEvents: 'none',
-  },
-  recGrid: {
-    alignSelf: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-  },
-  recommendationsSection: {
-    alignSelf: 'stretch',
-    marginTop: spacing.xxxl * 2,
   },
   retryBtn: {
     alignSelf: 'flex-start',
@@ -212,11 +294,11 @@ const styles = StyleSheet.create({
   },
   sectionLabel: {
     ...typography['label-sm'],
+    alignSelf: 'stretch',
     color: colors.on_surface_variant,
-    fontFamily: typography['headline-md'].fontFamily,
-    fontWeight: '500',
-    letterSpacing: POPULAR_SECTION_TRACKING,
-    marginBottom: spacing.lg,
+    letterSpacing: tracking.caps,
+    marginBottom: spacing.xl,
+    textAlign: 'left',
     textTransform: 'uppercase',
   },
 });

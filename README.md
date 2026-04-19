@@ -8,6 +8,8 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 Copy `.env.example` to `.env` at the project root and replace the placeholder values with your real TMDB settings. **`.env` is gitignored** and must not be committed; **`.env.example`** stays in the repo as a safe template.
 
+We use **`@expo-google-fonts/manrope`** and **`@expo-google-fonts/inter`** to ship the same Google Font files the product brief names (Manrope + Inter); the npm package names differ from the phrase “react-native-google-fonts” sometimes used in course copy.
+
 Use `import { TMDB_BASE_URL, TMDB_IMAGE_BASE_URL, TMDB_ACCESS_TOKEN } from '@env'` in application code. TypeScript declarations for `@env` are in `dotenv.d.ts`. After changing Babel or env files, restart Metro with cache reset if needed: `npm start -- --reset-cache`.
 
 ## Step 1: Start Metro

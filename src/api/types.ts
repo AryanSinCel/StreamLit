@@ -280,7 +280,7 @@ export type WatchlistMediaFilter = 'all' | 'movie' | 'tv';
 
 /**
  * Payload for **`useWatchlist` → `UseQueryResult<WatchlistSnapshot>.data`** (PSD-Watchlist §7 W1).
- * Remote failures surface on **`similar`** / **`popularRecommendations`**; **`movieGenres`** fails silently (empty list).
+ * Remote failures surface on **`similar`** / **`popularRecommendations`** / **`trendingContents`**; **`movieGenres`** fails silently (empty list).
  */
 export interface WatchlistSnapshot {
   hydrated: boolean;
@@ -293,10 +293,15 @@ export interface WatchlistSnapshot {
   /** `GET /movie/{id}/similar` for the anchor id; idle when no anchor. */
   similar: UseQueryResult<TmdbPagedMoviesResponse>;
   /**
-   * `GET /trending/movie/week` page 1 for empty-state “Popular recommendations” (PSD-Watchlist §5).
+   * `GET /movie/top_rated` page 1 for empty-state “Popular recommendations” rail.
    * No request while the watchlist has items or before hydration.
    */
   popularRecommendations: UseQueryResult<TmdbPagedMoviesResponse>;
+  /**
+   * `GET /trending/movie/week` page 1 for empty-state “Trending contents” rail (below popular).
+   * No request while the watchlist has items or before hydration.
+   */
+  trendingContents: UseQueryResult<TmdbPagedMoviesResponse>;
   /**
    * `GET /genre/movie/list` — resolves **`WatchlistItem.genreIds`** on the populated grid
    * (`resources/watchlist.html`). Empty until a successful fetch while the list has items.

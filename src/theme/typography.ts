@@ -1,5 +1,5 @@
 /**
- * Typography tokens — Manrope + Inter loaded via `@react-native-google-fonts/*` + `react-native-asset` (PSD §3 / §6.2).
+ * Typography tokens — Manrope + Inter loaded via `@expo-google-fonts/*` TTFs + `react-native-asset` (PSD §3 / §6.2).
  * `fontFamily` values match linked TTF PostScript names.
  */
 import type { TextStyle } from 'react-native';
