@@ -1873,3 +1873,285 @@ Re-run:
 (or `cd android && ./gradlew app:installDebug`).
 
 If anything still fails, paste the new Gradle error. A long first build after this change is normal while dependencies download.
+
+---
+
+_**User**_
+
+# dependencies
+node_modules/
+
+# iOS
+ios/Pods/
+ios/build/
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+
+# local
+.env
+*.log
+android/local.properties add this git egnore that should not be tracked 
+
+---
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/.gitignore</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Organizing dependencies**
+
+I'm restructuring the file layout to match the specified hierarchy with dedicated sections for dependencies, iOS, Android, and local files. I'm adding explicit section headers and user-specified paths while preserving existing RN-friendly ignores. I'm merging dependency blocks intelligently, keeping generic `build/` for root-level builds while adding explicit Android and iOS paths. I'm adding a new '## Project (do not track)' section at the top with user's exact groups and trimming duplicates below. I'm reordering the dependency list to prioritize user-specific paths like `ios/Pods/` and `android/local.properties` while removing redundant entries. 
+
+**Building .gitignore**
+
+I'm constructing the .gitignore file by merging OS-specific and IDE sections while removing duplicates. I'm refining the .gitignore rules, keeping android/.gradle/ and npm-debug.log patterns as requested. 
+
+**Updating gitignore**
+
+I'm updating the .gitignore file to include detailed OS and IDE-specific patterns while consolidating Android local properties. I'm removing duplicate `.env` entry and merging `build/` patterns from Xcode and Android sections. I'm keeping the generic `build/` pattern but adding explicit paths for iOS and Android builds with comments to clarify the intent. I'm keeping the generic `build/` pattern since it already covers ios/build and android/build, though user prefers explicit entries for clarity. 
+
+I'm adding user's block and removing obvious duplicates like standalone `.env` and redundant `**/Pods/` entries. I'm adjusting gitignore entries to avoid duplicate Pods paths, keeping **/Pods/ for non-iOS projects and adding ios/Pods/ specifically for iOS. I'm simplifying the gitignore to remove duplicates and streamline the entries for iOS and Android. I'm removing duplicate entries and streamlining the gitignore for iOS and Android platforms. I'm removing generic `build/` patterns from Xcode and Android sections to avoid unintended unignoring of nested build folders. </details></think>
+
+_**Agent (composer-2)**_
+
+Updating `.gitignore` to add your sections, remove duplicates, and preserve essential React Native ignores.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/.gitignore</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating gitignore rules**
+
+I updated the gitignore rules to be more precise with build directories and removed generic entries. </details></think>
+
+_**Agent (composer-2)**_
+
+Here is what changed in **`.gitignore`**:
+
+### Added (as you asked)
+- **`# dependencies`** — `node_modules/`
+- **`# iOS`** — `ios/Pods/`, `ios/build/`
+- **`# Android`** — `android/.gradle/`, `android/build/`, `android/app/build/`
+- **`# local`** — `.env`, `*.log`, `android/local.properties`
+
+### Kept from the old file
+- OSX, Xcode (without the old generic `build/` line — `ios/build/` covers the iOS app build tree)
+- Android/IntelliJ extras (`.idea`, `*.iml`, `.cxx/`, keystores, `.kotlin/`, etc.)
+- Fastlane, Metro health check, coverage, Yarn 2, `*.jsbundle`
+- **`**/Pods/`** under Ruby/CocoaPods (still ignores any Pods tree; complements `ios/Pods/`)
+
+### Removed / folded
+- Duplicate **`build/`** lines (replaced by your explicit `ios/` and `android/` paths)
+- Standalone **`local.properties`** (replaced by **`android/local.properties`**)
+- Duplicate **`.env`** block (only under **`# local`** now)
+- **`npm-debug.log` / `yarn-error.log`** stay under **`# node.js`** (they are also matched by **`*.log`** if you prefer to delete those two lines)
+
+If any of these files were already committed, untrack them once, for example:
+
+`git rm -r --cached ios/build android/build android/app/build android/.gradle 2>/dev/null; git rm --cached android/local.properties .env 2>/dev/null`
+
+(only run the parts that apply to paths you actually had tracked.)
+
+---
+
+_**User**_
+
+@/Users/aryansingh/.cursor/projects/Users-aryansingh-Desktop-Task2-MovieList/terminals/2.txt:148-152  Remove committed junk
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Removing junk from git**
+
+I'm removing tracked junk files from git index using git rm with --cached flag. I'll use `git rm -r --cached --ignore-unmatch` to safely remove junk files that may not be in the index. 
+
+I'm running `git rm -r --cached --ignore-unmatch` for directories and `git rm --cached --ignore-unmatch` for single files to remove junk while ignoring missing entries. I'm consolidating multiple git rm commands into one with --ignore-unmatch flag to handle non-existent paths gracefully. </details></think>
+
+_**Agent (composer-2)**_
+
+Removing those paths from Git's index (stops tracking; files stay on disk). Using `--ignore-unmatch` so missing paths won't fail.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && git rm -r --cached --ignore-unmatch node_modules ios/Pods android/build android/.gradle android/app/build ios/build && git rm --cached --ignore-unmatch android/local.properties .env 2>/dev/null; git status -sb</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && git rm -r --cached --ignore-unmatch node_modules ios/Pods android/build android/.gradle android/app/build ios/build && git rm --cached --ignore-unmatch android/local.properties .env 2>/dev/null; git status -sb
+```
+
+```
+## main...origin/main [ahead 1]
+ M .gitignore
+ M .specstory/history/2026-04-20_07-15-30Z-metadata-chips-and-hero-gradient-discrepancies.md
+ M .specstory/statistics.json
+?? .gradle-user-home/caches/9.3.1/transforms/0d2ca404bb577caad35157cacb47263e/transformed/lifecycle-runtime-2.6.2/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/0e826281fce75db6356adb2170709c15/transformed/lifecycle-process-2.6.2/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/1760c1e62758dde7baa62f5a33495132/transformed/soloader-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/1c81cf6ce4518f3291714fd2c64780c5/transformed/lifecycle-runtime-ktx-2.6.2/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/22f33482664186cfccb9aeed31b73069/transformed/appcompat-1.7.1/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/28ad82e9b6dc6cc1b8ba0dcb674a13cc/transformed/activity-ktx-1.8.1/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/2cc5f542eb61a69e6d103a927fb1b71e/transformed/core-1.17.0/META-INF/com/
+?? .gradle-user-home/caches/9.3.1/transforms/2d30e0d699c574a6743fc1958d0d60ee/transformed/middleware-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/2f2cb5e46e4395b5abc59d2376708d49/transformed/nativeimagefilters-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/34387a19ca9f87f0431fda8d5d5da9b8/transformed/imagepipeline-base-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/391f0cdff11d23b80f11f7fa3af8170b/transformed/react-android-0.85.1-debug/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/3c01aea05d2737e987399f1309ae090e/transformed/fbjni-0.7.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/3ca120d55f5f5ef02d1fdb622e57ae6c/transformed/nativeimagetranscoder-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/43f3c10d7bf65809e8f4490f9d43d99a/transformed/appcompat-resources-1.7.1/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/4a33af964411d2e6518fc2df8d277e59/transformed/lifecycle-livedata-core-ktx-2.6.2/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/4ab3190ebc1f44658547a8a578c6539b/transformed/profileinstaller-1.3.1/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/4b36f58e977d40fd009aee2a5506b9f9/transformed/imagepipeline-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/543ca12a584d760481a406de771aef4b/transformed/sqlite-framework/META-INF/com/
+?? .gradle-user-home/caches/9.3.1/transforms/55cceb3711c2552699bf71ebc60be80c/transformed/BlurView-version-2.0.4/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/55e7b3744940fd44c4d99414481e69ae/transformed/core-viewtree-1.0.0/META-INF/com/
+?? .gradle-user-home/caches/9.3.1/transforms/58eb903e9fc8ab6b3ef7070888908b22/transformed/fresco-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/5c190e32aea19dd836118fe1ddadb421/transformed/transition-1.7.0/META-INF/com/
+?? .gradle-user-home/caches/9.3.1/transforms/60924d3a49b0a69dc9f3dbd231e3f396/transformed/annotation-experimental-1.5.0/META-INF/com/
+?? .gradle-user-home/caches/9.3.1/transforms/65c88ab4030bab511a46735d4d49b4bf/transformed/fragment-ktx-1.8.9/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/683177bcf0de320a6ddc918b1a48c449/transformed/transition-ktx-1.7.0/META-INF/com/
+?? .gradle-user-home/caches/9.3.1/transforms/6bff91da6c5ee1b4050927b3160449a7/transformed/lifecycle-viewmodel-ktx-2.6.2/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/741d53260f374dd5c1be539c780cbaaf/transformed/shared-storage/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/74b5eb72f90b5747fa2af0ba6978d03a/transformed/room-runtime/META-INF/com/
+?? .gradle-user-home/caches/9.3.1/transforms/7d5765180e955f72804cc81925f59a68/transformed/core-runtime-2.2.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/8146c6bea9839c6cafe0ace04aac4718/transformed/drawee-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/8150b64b5c28a7bc22aadd3700d4445a/transformed/room-ktx-2.8.0/META-INF/com/
+?? .gradle-user-home/caches/9.3.1/transforms/8c548b8b98364e57f59d5d04daf5f6f9/transformed/lifecycle-viewmodel-savedstate-2.6.2/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/947d2beff23f7eb200417eddaca05b74/transformed/vito-source-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/990acb285097a9eda75d946e7ebc0dbd/transformed/memory-type-native-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/99e378379f083a9b9eb40ae15dd6d44d/transformed/constraintlayout-2.1.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/9c9d86cc258a25ca6cb5af5cb4045468/transformed/imagepipeline-okhttp3-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/a21def761d9b7392683e362b36fad3dc/transformed/savedstate-ktx-1.2.1/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/a3e35b743d55f68f2e8f1a1f11a1158b/transformed/recyclerview-1.2.1/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/a40189a7a885b50038c5ceeb53b4dc81/transformed/emoji2-1.3.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/a751801b472ccdb4341f8008da16bcf5/transformed/ui-core-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/aa34993de4f925c40460a3d495b9a88b/transformed/fbcore-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/aab5de8f87afed3094b490a792b07848/transformed/material-1.13.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/b03e62aa5c30f736a5e4705d8a37c360/transformed/sqlite/META-INF/com/
+?? .gradle-user-home/caches/9.3.1/transforms/b9154e7229c628095ab4ab9fa991fc9d/transformed/emoji2-views-helper-1.3.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/baaba61227f4ab782eebbe8b891ec2fc/transformed/lifecycle-livedata-2.6.2/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/bb561870f0f0dc2624e535da6b9f802e/transformed/dynamicanimation-1.1.0/META-INF/com/
+?? .gradle-user-home/caches/9.3.1/transforms/bdb8ad8ca749b56eac0d7f2d9c1beed0/transformed/graphics-shapes-release/META-INF/com/
+?? .gradle-user-home/caches/9.3.1/transforms/bdfe5be4852dc10627d055adda9b046d/transformed/startup-runtime-1.1.1/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/c540773645b96af38d109be5d4bb9b08/transformed/lifecycle-viewmodel-2.6.2/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/c8c59b76a014d53e34c846a988e3f31e/transformed/core-ktx-1.17.0/META-INF/com/
+?? .gradle-user-home/caches/9.3.1/transforms/cceee2c74635bdbdd54ef97c01c25196/transformed/fragment-1.8.9/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/cd51c00f5529eb545445290c3eb1d1b6/transformed/hermes-android-250829098.0.10-debug/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/cd729da15a001140a0c32be5bcc39049/transformed/tracing-1.2.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/cdede767acdb73db90ffa8e8a028ffb7/transformed/ui-common-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/d58276369c0b7d0b9d0b08f0623adbb3/transformed/imagepipeline-native-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/d8c664c6acb2390b7abc086d30b36ea2/transformed/memory-type-java-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/d99b163db8b42c2e58a2ca519ca7eb8e/transformed/savedstate-1.2.1/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/daa5abb26fcd7a4b0c2fb66aa0ec366b/transformed/memory-type-ashmem-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/dc8e312d3d67d0b01180ee496fcfd2a1/transformed/kermit-debug/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/e036fc5a51947b99aa48e042df0637cb/transformed/lifecycle-livedata-core-2.6.2/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/e93da78e43a8cb1f67cd26854faecb18/transformed/activity-1.8.1/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/ef1484e3dd903cb75528b74a40094d44/transformed/kermit-core-debug/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/f392f16ccf196197a3de63c2d9ac3a80/transformed/urimod-3.6.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/f780580821dbd5a191b05bff85157e85/transformed/coordinatorlayout-1.2.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/f903d83cc7c9fd915817953d343afe5f/transformed/autofill-1.1.0/META-INF/
+?? .gradle-user-home/caches/9.3.1/transforms/fa4439a9556f9d27b3164710bf42c98e/transformed/sqlite-bundled/META-INF/com/
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Checking git status**
+
+I'm adding .gradle-user-home/ to .gitignore to prevent tracking junk files. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && git diff --cached --stat && git ls-files node_modules android/build 2>/dev/null | head -5</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && git diff --cached --stat && git ls-files node_modules android/build 2>/dev/null | head -5
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && git ls-files | rg -e '^node_modules/|^ios/Pods/|^android/build/|^android/\.gradle/|^android/app/build/|^android/local\.properties$|^\.env$' | head -50</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && git ls-files | rg -e '^node_modules/|^ios/Pods/|^android/build/|^android/\.gradle/|^android/app/build/|^android/local\.properties$|^\.env$' | head -50
+```
+
+```
+(eval):1: command not found: rg
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && git ls-files | grep -E '^node_modules/|^ios/Pods/|^android/build/|^android/\.gradle/|^android/app/build/|^android/local\.properties$|^\.env$' | head -50</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && git ls-files | grep -E '^node_modules/|^ios/Pods/|^android/build/|^android/\.gradle/|^android/app/build/|^android/local\.properties$|^\.env$' | head -50
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
