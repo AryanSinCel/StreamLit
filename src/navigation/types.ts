@@ -12,6 +12,8 @@ export type SeeAllParams = {
   genreId?: number;
   /** Required when `mode === 'similar'` — `GET /movie/{id}/similar` anchor. */
   similarSourceMovieId?: number;
+  /** When `mode === 'discover'` — optional TMDB `sort_by` (e.g. Home “newest in genre” row). */
+  discoverSortBy?: string;
 };
 
 /**

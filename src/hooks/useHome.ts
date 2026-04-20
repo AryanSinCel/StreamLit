@@ -1,10 +1,14 @@
 /**
  * Home tab — **`UseQueryResult<HomeTabSnapshot>`**: `data` holds feeds, chips, and row actions;
- * top-level `loading` is bootstrap; `error` is genre-list failure; `refetch` reloads genres + row 1.
+ * top-level `loading` is bootstrap; `error` is genre-list failure; `refetch` reloads genres + feeds.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  DISCOVER_MIN_VOTE_COUNT,
+  DISCOVER_SORT_NEWEST,
+  DISCOVER_SORT_POPULARITY,
+  DISCOVER_SORT_VOTE_AVERAGE,
   getDiscoverMovies,
   getMovieGenres,
   getTopRatedMovies,
@@ -77,6 +81,23 @@ function applyPageResponse(
   };
 }
 
+function feedStateFromSettled(
+  result: PromiseSettledResult<TmdbPagedMoviesResponse>,
+): HomeFeedRowState {
+  if (result.status === 'fulfilled') {
+    return applyPageResponse(
+      { ...createInitialHomeFeedRowState(), loading: true, loadingMore: false },
+      result.value,
+      false,
+    );
+  }
+  return {
+    ...createInitialHomeFeedRowState(),
+    loading: false,
+    error: mapUnknownError(result.reason),
+  };
+}
+
 function idleGenreRailsRecord(ids: readonly number[]): Record<number, HomeFeedRowState> {
   return Object.fromEntries(ids.map((id) => [id, createInitialHomeFeedRowState()]));
 }
@@ -138,7 +159,7 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
     railAbortControllersRef.current.clear();
   }, []);
 
-  /** Full refetch: genres + page 1 for all three rows (discover uses current chip via ref). */
+  /** Full refetch: genres + page 1 for trending & top rated (global or genre-scoped discover per chip). */
   useEffect(() => {
     const controller = new AbortController();
     let cancelled = false;
@@ -154,11 +175,10 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
     const chipAtBootstrap = chipKeyRef.current;
     if (chipAtBootstrap === 'all') {
       setGenre({ ...createInitialHomeFeedRowState(), loading: false });
-      setGenreRails({});
     } else {
       setGenre({ ...createInitialHomeFeedRowState(), loading: true });
-      setGenreRails({});
     }
+    setGenreRails({});
 
     (async () => {
       try {
@@ -178,54 +198,27 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
         setGenresError(mapUnknownError(e));
       }
 
-      const settled = await Promise.allSettled([
-        getTrendingMoviesWeek({ page: 1, signal: controller.signal }),
-        getTopRatedMovies({ page: 1, signal: controller.signal }),
-      ]);
-
-      if (cancelled || generation !== dataGenerationRef.current) {
-        return;
-      }
-
-      const [trendingRes, topRatedRes] = settled;
-
-      if (trendingRes.status === 'fulfilled') {
-        setTrending((prev) =>
-          applyPageResponse(
-            { ...prev, loading: true, loadingMore: false },
-            trendingRes.value,
-            false,
-          ),
-        );
-      } else {
-        setTrending({
-          ...createInitialHomeFeedRowState(),
-          loading: false,
-          error: mapUnknownError(trendingRes.reason),
-        });
-      }
-
-      if (topRatedRes.status === 'fulfilled') {
-        setTopRated((prev) =>
-          applyPageResponse(
-            { ...prev, loading: true, loadingMore: false },
-            topRatedRes.value,
-            false,
-          ),
-        );
-      } else {
-        setTopRated({
-          ...createInitialHomeFeedRowState(),
-          loading: false,
-          error: mapUnknownError(topRatedRes.reason),
-        });
-      }
-
       const chip = chipKeyRef.current;
 
       if (discoverGenAtBootstrapStart !== genreDiscoverGenRef.current) {
-        /* Chip-driven discover took over; do not overwrite row 3 / rails. */
+        /* Chip-driven fetch took over; do not overwrite rows / rails. */
       } else if (chip === 'all') {
+        const settled = await Promise.allSettled([
+          getTrendingMoviesWeek({ page: 1, signal: controller.signal }),
+          getTopRatedMovies({ page: 1, signal: controller.signal }),
+        ]);
+
+        if (cancelled || generation !== dataGenerationRef.current) {
+          return;
+        }
+        if (discoverGenAtBootstrapStart !== genreDiscoverGenRef.current) {
+          return;
+        }
+
+        const [trendingRes, topRatedRes] = settled;
+        setTrending(feedStateFromSettled(trendingRes));
+        setTopRated(feedStateFromSettled(topRatedRes));
+
         const sortedIds = genreIdsSorted(loadedGenres);
         if (cancelled || generation !== dataGenerationRef.current) {
           return;
@@ -238,45 +231,55 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
       } else {
         const discoverInput = discoverParamsForChip(chip, loadedGenres);
         if ('error' in discoverInput) {
+          setTrending({
+            ...createInitialHomeFeedRowState(),
+            loading: false,
+            error: discoverInput.error,
+          });
+          setTopRated({
+            ...createInitialHomeFeedRowState(),
+            loading: false,
+            error: discoverInput.error,
+          });
           setGenre({
             ...createInitialHomeFeedRowState(),
             loading: false,
             error: discoverInput.error,
           });
+          setGenreRails({});
         } else {
-          try {
-            const data = await getDiscoverMovies({
+          const settled = await Promise.allSettled([
+            getDiscoverMovies({
               ...discoverInput,
+              sort_by: DISCOVER_SORT_POPULARITY,
               signal: controller.signal,
-            });
-            if (cancelled || generation !== dataGenerationRef.current) {
-              return;
-            }
-            if (discoverGenAtBootstrapStart !== genreDiscoverGenRef.current) {
-              return;
-            }
-            setGenre((prev) =>
-              applyPageResponse(
-                { ...prev, loading: true, loadingMore: false },
-                data,
-                false,
-              ),
-            );
-          } catch (e) {
-            if (cancelled || generation !== dataGenerationRef.current) {
-              return;
-            }
-            if (discoverGenAtBootstrapStart !== genreDiscoverGenRef.current) {
-              return;
-            }
-            setGenre({
-              ...createInitialHomeFeedRowState(),
-              loading: false,
-              error: mapUnknownError(e),
-            });
+            }),
+            getDiscoverMovies({
+              ...discoverInput,
+              sort_by: DISCOVER_SORT_VOTE_AVERAGE,
+              vote_count_gte: DISCOVER_MIN_VOTE_COUNT,
+              signal: controller.signal,
+            }),
+            getDiscoverMovies({
+              ...discoverInput,
+              sort_by: DISCOVER_SORT_NEWEST,
+              signal: controller.signal,
+            }),
+          ]);
+
+          if (cancelled || generation !== dataGenerationRef.current) {
+            return;
           }
+          if (discoverGenAtBootstrapStart !== genreDiscoverGenRef.current) {
+            return;
+          }
+
+          const [trendRes, topRes, genreRes] = settled;
+          setTrending(feedStateFromSettled(trendRes));
+          setTopRated(feedStateFromSettled(topRes));
+          setGenre(feedStateFromSettled(genreRes));
+          setGenreRails({});
         }
-        setGenreRails({});
       }
       } finally {
         if (!cancelled && generation === dataGenerationRef.current) {
@@ -294,7 +297,10 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
     };
   }, [reloadToken, abortAllRailFetches]);
 
-  /** Chip change: `all` → one discover rail per TMDB genre; specific chip → single discover row (skipped on first mount). */
+  /**
+   * Chip change (skipped on first mount): **`all`** → global trending + top rated + per-genre rails;
+   * **genre chip** → discover for hero, Trending, Top Rated, and a third row (newest in genre) after Top Rated.
+   */
   useEffect(() => {
     if (skipChipDiscoverOnMount.current) {
       skipChipDiscoverOnMount.current = false;
@@ -312,6 +318,24 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
       setGenre({ ...createInitialHomeFeedRowState(), loading: false });
       const ids = genreIdsSorted(genresRef.current);
       setGenreRails(idleGenreRailsRecord(ids));
+      setTrending({ ...createInitialHomeFeedRowState(), loading: true });
+      setTopRated({ ...createInitialHomeFeedRowState(), loading: true });
+
+      (async () => {
+        const settled = await Promise.allSettled([
+          getTrendingMoviesWeek({ page: 1, signal: controller.signal }),
+          getTopRatedMovies({ page: 1, signal: controller.signal }),
+        ]);
+        if (cancelled || discoverGen !== genreDiscoverGenRef.current) {
+          return;
+        }
+        const [trendingRes, topRatedRes] = settled;
+        setTrending(feedStateFromSettled(trendingRes));
+        setTopRated(feedStateFromSettled(topRatedRes));
+      })().catch(() => {
+        /* surfaced via trending / topRated.error */
+      });
+
       return () => {
         cancelled = true;
         controller.abort();
@@ -319,6 +343,8 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
       };
     }
 
+    setTrending({ ...createInitialHomeFeedRowState(), loading: true });
+    setTopRated({ ...createInitialHomeFeedRowState(), loading: true });
     setGenre({ ...createInitialHomeFeedRowState(), loading: true });
     setGenreRails({});
 
@@ -327,36 +353,51 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
       const chipNow = chipKeyRef.current;
 
       const discoverInput = discoverParamsForChip(chipNow, g);
-      try {
-        if ('error' in discoverInput) {
-          throw new Error(discoverInput.error);
-        }
-        const data = await getDiscoverMovies({
-          ...discoverInput,
-          signal: controller.signal,
+      if ('error' in discoverInput) {
+        setTrending({
+          ...createInitialHomeFeedRowState(),
+          loading: false,
+          error: discoverInput.error,
         });
-        if (cancelled || discoverGen !== genreDiscoverGenRef.current) {
-          return;
-        }
-        setGenre((prev) =>
-          applyPageResponse(
-            { ...prev, loading: true, loadingMore: false },
-            data,
-            false,
-          ),
-        );
-      } catch (e) {
-        if (cancelled || discoverGen !== genreDiscoverGenRef.current) {
-          return;
-        }
+        setTopRated({
+          ...createInitialHomeFeedRowState(),
+          loading: false,
+          error: discoverInput.error,
+        });
         setGenre({
           ...createInitialHomeFeedRowState(),
           loading: false,
-          error: mapUnknownError(e),
+          error: discoverInput.error,
         });
+        return;
       }
+      const settled = await Promise.allSettled([
+        getDiscoverMovies({
+          ...discoverInput,
+          sort_by: DISCOVER_SORT_POPULARITY,
+          signal: controller.signal,
+        }),
+        getDiscoverMovies({
+          ...discoverInput,
+          sort_by: DISCOVER_SORT_VOTE_AVERAGE,
+          vote_count_gte: DISCOVER_MIN_VOTE_COUNT,
+          signal: controller.signal,
+        }),
+        getDiscoverMovies({
+          ...discoverInput,
+          sort_by: DISCOVER_SORT_NEWEST,
+          signal: controller.signal,
+        }),
+      ]);
+      if (cancelled || discoverGen !== genreDiscoverGenRef.current) {
+        return;
+      }
+      const [trendRes, topRes, genreRes] = settled;
+      setTrending(feedStateFromSettled(trendRes));
+      setTopRated(feedStateFromSettled(topRes));
+      setGenre(feedStateFromSettled(genreRes));
     })().catch(() => {
-      /* surfaced via genre / genreRails.error */
+      /* surfaced via trending / topRated.error */
     });
 
     return () => {
@@ -369,6 +410,8 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
   const loadMoreTrending = useCallback(() => {
     const prev = trendingRef.current;
     const genAtStart = dataGenerationRef.current;
+    const discoverGenAtStart = genreDiscoverGenRef.current;
+    const chip = chipKeyRef.current;
     if (prev.loading || prev.loadingMore || !prev.hasMore || prev.error) {
       return;
     }
@@ -379,8 +422,24 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
 
     (async () => {
       try {
-        const data = await getTrendingMoviesWeek({ page: nextPage });
-        if (genAtStart !== dataGenerationRef.current) {
+        const data =
+          chip === 'all'
+            ? await getTrendingMoviesWeek({ page: nextPage })
+            : await (async () => {
+                const discoverInput = discoverParamsForChip(chip, genresRef.current);
+                if ('error' in discoverInput) {
+                  throw new Error(discoverInput.error);
+                }
+                return getDiscoverMovies({
+                  ...discoverInput,
+                  page: nextPage,
+                  sort_by: DISCOVER_SORT_POPULARITY,
+                });
+              })();
+        if (
+          genAtStart !== dataGenerationRef.current ||
+          discoverGenAtStart !== genreDiscoverGenRef.current
+        ) {
           setTrending((curr) =>
             curr.loadingMore ? { ...curr, loadingMore: false } : curr,
           );
@@ -393,7 +452,10 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
           return applyPageResponse(curr, data, true);
         });
       } catch (e) {
-        if (genAtStart !== dataGenerationRef.current) {
+        if (
+          genAtStart !== dataGenerationRef.current ||
+          discoverGenAtStart !== genreDiscoverGenRef.current
+        ) {
           setTrending((curr) =>
             curr.loadingMore ? { ...curr, loadingMore: false } : curr,
           );
@@ -413,6 +475,8 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
   const loadMoreTopRated = useCallback(() => {
     const prev = topRatedRef.current;
     const genAtStart = dataGenerationRef.current;
+    const discoverGenAtStart = genreDiscoverGenRef.current;
+    const chip = chipKeyRef.current;
     if (prev.loading || prev.loadingMore || !prev.hasMore || prev.error) {
       return;
     }
@@ -423,8 +487,25 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
 
     (async () => {
       try {
-        const data = await getTopRatedMovies({ page: nextPage });
-        if (genAtStart !== dataGenerationRef.current) {
+        const data =
+          chip === 'all'
+            ? await getTopRatedMovies({ page: nextPage })
+            : await (async () => {
+                const discoverInput = discoverParamsForChip(chip, genresRef.current);
+                if ('error' in discoverInput) {
+                  throw new Error(discoverInput.error);
+                }
+                return getDiscoverMovies({
+                  ...discoverInput,
+                  page: nextPage,
+                  sort_by: DISCOVER_SORT_VOTE_AVERAGE,
+                  vote_count_gte: DISCOVER_MIN_VOTE_COUNT,
+                });
+              })();
+        if (
+          genAtStart !== dataGenerationRef.current ||
+          discoverGenAtStart !== genreDiscoverGenRef.current
+        ) {
           setTopRated((curr) =>
             curr.loadingMore ? { ...curr, loadingMore: false } : curr,
           );
@@ -437,7 +518,10 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
           return applyPageResponse(curr, data, true);
         });
       } catch (e) {
-        if (genAtStart !== dataGenerationRef.current) {
+        if (
+          genAtStart !== dataGenerationRef.current ||
+          discoverGenAtStart !== genreDiscoverGenRef.current
+        ) {
           setTopRated((curr) =>
             curr.loadingMore ? { ...curr, loadingMore: false } : curr,
           );
@@ -479,6 +563,7 @@ export function useHome(): UseQueryResult<HomeTabSnapshot> {
         const data = await getDiscoverMovies({
           ...discoverInput,
           page: nextPage,
+          sort_by: DISCOVER_SORT_NEWEST,
         });
         if (
           genAtStart !== dataGenerationRef.current ||

@@ -15,6 +15,14 @@ import type {
   TmdbPagedSearchMoviesResponse,
 } from './types';
 
+/** Genre-scoped Home “Trending Now” — `GET /discover/movie` + `with_genres`. */
+export const DISCOVER_SORT_POPULARITY = 'popularity.desc';
+/** Genre-scoped Home “Top Rated” — paired with `vote_count.gte` in discover. */
+export const DISCOVER_SORT_VOTE_AVERAGE = 'vote_average.desc';
+export const DISCOVER_MIN_VOTE_COUNT = 200;
+/** Selected-genre rail under Trending / Top Rated — newest wide releases in that genre. */
+export const DISCOVER_SORT_NEWEST = 'primary_release_date.desc';
+
 /** Single smoke GET — proves Bearer auth + interceptors; not a feature endpoint. */
 export async function getConfigurationSmoke(): Promise<TmdbConfigurationResponse> {
   const { data } = await client.get<TmdbConfigurationResponse>('/configuration');
@@ -61,10 +69,15 @@ export async function getDiscoverMovies(
   params?: DiscoverMoviesParams & RequestOpts,
 ): Promise<TmdbPagedMoviesResponse> {
   const page = params?.page ?? 1;
-  const withGenres = params?.with_genres;
-  const queryParams: { page: number; with_genres?: number } = { page };
-  if (withGenres !== undefined) {
-    queryParams.with_genres = withGenres;
+  const queryParams: Record<string, string | number> = { page };
+  if (params?.with_genres !== undefined) {
+    queryParams.with_genres = params.with_genres;
+  }
+  if (params?.sort_by !== undefined) {
+    queryParams.sort_by = params.sort_by;
+  }
+  if (params?.vote_count_gte !== undefined) {
+    queryParams['vote_count.gte'] = params.vote_count_gte;
   }
   const { data } = await client.get<TmdbPagedMoviesResponse>('/discover/movie', {
     params: queryParams,

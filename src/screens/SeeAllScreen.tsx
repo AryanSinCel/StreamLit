@@ -22,13 +22,14 @@ type Props = NativeStackScreenProps<RootStackParamList, 'SeeAll'>;
  * Full list “See All” — root stack (no tab bar), native header + **`route.params.title`**; 2-column **`ContentCard`** grid.
  */
 export function SeeAllScreen({ navigation, route }: Props): JSX.Element {
-  const { mode, genreId, similarSourceMovieId } = route.params;
+  const { mode, genreId, similarSourceMovieId, discoverSortBy } = route.params;
   const insets = useSafeAreaInsets();
   const { width: windowWidth } = useWindowDimensions();
   const { items, hasMore, loading, loadingMore, error, refetch, loadMore } = useSeeAll({
     mode,
     genreId,
     similarSourceMovieId,
+    discoverSortBy,
   });
 
   const horizontalPad = spacing.xl;

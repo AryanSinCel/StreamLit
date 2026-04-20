@@ -15,6 +15,7 @@ import { HomeGenreStrip } from '../components/home/HomeGenreStrip';
 import { HomeHeader } from '../components/home/HomeHeader';
 import { HomeHero } from '../components/home/HomeHero';
 import { useHome } from '../hooks/useHome';
+import { DISCOVER_SORT_NEWEST } from '../api/movies';
 import { navigateToDetail, navigateToSeeAll } from '../navigation/helpers';
 import type {
   HomeStackParamList,
@@ -25,6 +26,10 @@ import { colors } from '../theme/colors';
 import { opacity, spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
 
+function row3SectionTitle(selectedChipKey: HomeChipKey, chips: readonly HomeChipResolved[]): string {
+  return chips.find((c) => c.key === selectedChipKey)?.label ?? 'Discover';
+}
+
 type Props = CompositeScreenProps<
   NativeStackScreenProps<HomeStackParamList, 'HomeMain'>,
   CompositeScreenProps<
@@ -32,10 +37,6 @@ type Props = CompositeScreenProps<
     NativeStackScreenProps<RootStackParamList>
   >
 >;
-
-function row3SectionTitle(selectedChipKey: HomeChipKey, chips: readonly HomeChipResolved[]): string {
-  return chips.find((c) => c.key === selectedChipKey)?.label ?? 'Discover';
-}
 
 /** Preload genre rails slightly before they scroll into view (`resources/home.html` pacing). */
 const GENRE_RAIL_VISIBILITY_BUFFER_PX = spacing.xxl + spacing.xxxl;
@@ -189,31 +190,46 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
     [runGenreRailVisibilityPass],
   );
 
-  const row3Title = row3SectionTitle(selectedChipKey, chips);
-
   const openDetail = (movieId: number): void => {
     navigateToDetail(navigation, movieId);
   };
 
   const seeAllTrending = (): void => {
-    navigateToSeeAll(navigation, { title: 'Trending Now', mode: 'trending' });
+    const gid =
+      selectedChipKey !== 'all' && typeof selectedChipKey === 'number'
+        ? selectedChipKey
+        : undefined;
+    navigateToSeeAll(navigation, {
+      title: 'Trending Now',
+      mode: 'trending',
+      ...(gid != null ? { genreId: gid } : {}),
+    });
   };
 
   const seeAllTopRated = (): void => {
-    navigateToSeeAll(navigation, { title: 'Top Rated', mode: 'top_rated' });
+    const gid =
+      selectedChipKey !== 'all' && typeof selectedChipKey === 'number'
+        ? selectedChipKey
+        : undefined;
+    navigateToSeeAll(navigation, {
+      title: 'Top Rated',
+      mode: 'top_rated',
+      ...(gid != null ? { genreId: gid } : {}),
+    });
   };
 
-  const seeAllDiscover = (title: string, chipKey: HomeChipKey): void => {
+  const seeAllDiscover = (
+    title: string,
+    chipKey: HomeChipKey,
+    opts?: { discoverSortBy?: string },
+  ): void => {
     const gid = chips.find((c) => c.key === chipKey)?.genreId;
     navigateToSeeAll(navigation, {
       title,
       mode: 'discover',
       ...(gid != null ? { genreId: gid } : {}),
+      ...(opts?.discoverSortBy != null ? { discoverSortBy: opts.discoverSortBy } : {}),
     });
-  };
-
-  const seeAllRow3 = (): void => {
-    seeAllDiscover(row3Title, selectedChipKey);
   };
 
   if (snap == null) {
@@ -233,6 +249,12 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
     loadMoreGenreRail,
     setSelectedChipKey,
   } = snap;
+
+  const row3Title = row3SectionTitle(selectedChipKey, chips);
+
+  const seeAllRow3 = (): void => {
+    seeAllDiscover(row3Title, selectedChipKey, { discoverSortBy: DISCOVER_SORT_NEWEST });
+  };
 
   const heroMovieId = hero?.id;
 
@@ -303,6 +325,22 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
           onSeeAll={seeAllTopRated}
           sectionTitle="Top Rated"
         />
+        {selectedChipKey !== 'all' ? (
+          <HomeContentRow
+            error={genre.error}
+            genres={genres}
+            hasMore={genre.hasMore}
+            items={genre.items}
+            loading={genre.loading}
+            loadingMore={genre.loadingMore}
+            onNearEnd={loadMoreGenre}
+            onOpenDetail={openDetail}
+            onRetry={refetch}
+            onSeeAll={seeAllRow3}
+            rowContent="genre"
+            sectionTitle={row3Title}
+          />
+        ) : null}
         {selectedChipKey === 'all'
           ? visibleGenreRailIds.map((railGenreId, railIndex) => {
               const title = chips.find((c) => c.key === railGenreId)?.label ?? 'Genre';
@@ -356,22 +394,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
                 </View>
               );
             })
-          : (
-              <HomeContentRow
-                error={genre.error}
-                genres={genres}
-                hasMore={genre.hasMore}
-                items={genre.items}
-                loading={genre.loading}
-                loadingMore={genre.loadingMore}
-                onNearEnd={loadMoreGenre}
-                onOpenDetail={openDetail}
-                onRetry={refetch}
-                onSeeAll={seeAllRow3}
-                rowContent="genre"
-                sectionTitle={row3Title}
-              />
-            )}
+          : null}
         </ScrollView>
       </ScreenErrorBoundary>
     </TabScreenShell>

@@ -197,7 +197,7 @@ export interface HomeTabSnapshot {
   setSelectedChipKey: (key: HomeChipKey) => void;
   trending: HomeFeedRowState;
   topRated: HomeFeedRowState;
-  /** Single discover row when a specific genre chip is selected (not `all`). */
+  /** When a genre chip is selected: third row after Top Rated (newest-in-genre discover); idle on **All**. */
   genre: HomeFeedRowState;
   /**
    * When chip is `all`, Home shows one horizontal rail per genre from TMDB’s movie list.
@@ -336,6 +336,10 @@ export interface PaginationParams {
 /** Query params for `GET /discover/movie`. Omit `with_genres` for no genre filter (e.g. “All” chip). */
 export interface DiscoverMoviesParams extends PaginationParams {
   with_genres?: number;
+  /** TMDB `sort_by` (e.g. `popularity.desc`, `vote_average.desc`). */
+  sort_by?: string;
+  /** Maps to TMDB query `vote_count.gte` — use with `vote_average.desc` to avoid one‑vote outliers. */
+  vote_count_gte?: number;
 }
 
 export interface PageMeta {

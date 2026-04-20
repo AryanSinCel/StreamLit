@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  DISCOVER_MIN_VOTE_COUNT,
+  DISCOVER_SORT_POPULARITY,
+  DISCOVER_SORT_VOTE_AVERAGE,
   getDiscoverMovies,
   getSimilarMovies,
   getTopRatedMovies,
   getTrendingMoviesWeek,
 } from '../api/movies';
+import type { DiscoverMoviesParams } from '../api/types';
 import type { TmdbMovieListItem, TmdbPagedMoviesResponse } from '../api/types';
 import type { SeeAllMode } from '../navigation/types';
 import { mapUnknownError } from '../utils/mapUnknownError';
@@ -14,6 +18,8 @@ export interface UseSeeAllInput {
   genreId?: number;
   /** When `mode === 'similar'`, anchor movie id for paginated similar. */
   similarSourceMovieId?: number;
+  /** When `mode === 'discover'`, optional `sort_by` for `GET /discover/movie`. */
+  discoverSortBy?: string;
 }
 
 /** Paginated list for See All — page 1 on mount / refetch; `loadMore` appends. */
@@ -32,19 +38,42 @@ async function fetchSeeAllPage(
   mode: SeeAllMode,
   genreId: number | undefined,
   similarSourceMovieId: number | undefined,
+  discoverSortBy: string | undefined,
   page: number,
   signal: AbortSignal,
 ): Promise<TmdbPagedMoviesResponse> {
   switch (mode) {
     case 'trending':
+      if (genreId !== undefined) {
+        return getDiscoverMovies({
+          page,
+          with_genres: genreId,
+          sort_by: DISCOVER_SORT_POPULARITY,
+          signal,
+        });
+      }
       return getTrendingMoviesWeek({ page, signal });
     case 'top_rated':
-      return getTopRatedMovies({ page, signal });
-    case 'discover':
       if (genreId !== undefined) {
-        return getDiscoverMovies({ page, with_genres: genreId, signal });
+        return getDiscoverMovies({
+          page,
+          with_genres: genreId,
+          sort_by: DISCOVER_SORT_VOTE_AVERAGE,
+          vote_count_gte: DISCOVER_MIN_VOTE_COUNT,
+          signal,
+        });
       }
-      return getDiscoverMovies({ page, signal });
+      return getTopRatedMovies({ page, signal });
+    case 'discover': {
+      const params: DiscoverMoviesParams & { signal: AbortSignal } = { page, signal };
+      if (genreId !== undefined) {
+        params.with_genres = genreId;
+      }
+      if (discoverSortBy !== undefined) {
+        params.sort_by = discoverSortBy;
+      }
+      return getDiscoverMovies(params);
+    }
     case 'similar': {
       if (similarSourceMovieId === undefined || !Number.isFinite(similarSourceMovieId)) {
         throw new Error('similarSourceMovieId is required when mode is similar');
@@ -59,7 +88,7 @@ async function fetchSeeAllPage(
 }
 
 export function useSeeAll(input: UseSeeAllInput): UseSeeAllResult {
-  const { mode, genreId, similarSourceMovieId } = input;
+  const { mode, genreId, similarSourceMovieId, discoverSortBy } = input;
   const [items, setItems] = useState<TmdbMovieListItem[]>([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(false);
@@ -81,7 +110,14 @@ export function useSeeAll(input: UseSeeAllInput): UseSeeAllResult {
 
     (async () => {
       try {
-        const data = await fetchSeeAllPage(mode, genreId, similarSourceMovieId, 1, controller.signal);
+        const data = await fetchSeeAllPage(
+          mode,
+          genreId,
+          similarSourceMovieId,
+          discoverSortBy,
+          1,
+          controller.signal,
+        );
         if (cancelled || generation !== fetchGenerationRef.current) {
           return;
         }
@@ -109,7 +145,7 @@ export function useSeeAll(input: UseSeeAllInput): UseSeeAllResult {
       cancelled = true;
       controller.abort();
     };
-  }, [mode, genreId, similarSourceMovieId, reloadKey]);
+  }, [mode, genreId, similarSourceMovieId, discoverSortBy, reloadKey]);
 
   const refetch = useCallback(() => {
     setReloadKey((k) => k + 1);
@@ -129,6 +165,7 @@ export function useSeeAll(input: UseSeeAllInput): UseSeeAllResult {
           mode,
           genreId,
           similarSourceMovieId,
+          discoverSortBy,
           nextPage,
           controller.signal,
         );
@@ -154,7 +191,7 @@ export function useSeeAll(input: UseSeeAllInput): UseSeeAllResult {
         setLoadingMore(false);
       }
     });
-  }, [genreId, hasMore, loading, loadingMore, mode, page, similarSourceMovieId]);
+  }, [discoverSortBy, genreId, hasMore, loading, loadingMore, mode, page, similarSourceMovieId]);
 
   return {
     items,
