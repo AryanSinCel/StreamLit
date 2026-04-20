@@ -207,9 +207,8 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
   },
   detailsLabel: {
-    ...typography['title-sm'],
+    ...typography['home-hero-cta'],
     color: colors.on_surface,
-    fontWeight: '700',
   },
   pressedDisabled: {
     opacity: opacity.scrim,
@@ -265,9 +264,8 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
   },
   watchLabel: {
-    ...typography['title-sm'],
+    ...typography['home-hero-cta'],
     color: colors.on_primary_container,
-    fontWeight: '700',
   },
   wrap: {
     alignItems: 'center',

@@ -3359,6 +3359,309 @@ i want this button to not have right margin it should be like how the synopsis i
 
 _**Agent (composer-2)**_
 
+<think><details><summary>Thought Process</summary>
+**Aligning button row**
+
+I'm adjusting the button row alignment to match the synopsis text's maxWidth constraint. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Adjusting layout constraints**
+
+I'm adding `maxWidth: layout.contentMaxMd` to the actions row to align the Details button with the synopsis text. I'm constraining the actions row to match the synopsis width using `maxWidth: layout.contentMaxMd`. The synopsis max width is 320px, but buttons extend beyond it, causing misalignment. In React Native, Text with maxWidth takes min of content width and maxWidth, so synopsis container shrinks to text width, not 320px. I'm adjusting the synopsis width to be the minimum of the longest line and 320px, and ensuring the button row respects the same width constraint. I'm aligning the Details button's right edge with the synopsis block's right edge by wrapping them in a shared container with max width. 
+
+The Details button's margin is caused by its position within a column that has a max width, leaving space to the right edge. I'm constraining the actions row to match the synopsis' max width to prevent buttons from extending past the content area. The title's `alignSelf: 'stretch'` causes it to span the full content width, which affects how the actions row aligns within the 320px constraint. I'm adding `maxWidth: layout.contentMaxMd` to the actions container to align buttons with the synopsis width. The row width is capped at 320px, but buttons will shrink to fit if narrower. The right margin issue stems from asymmetric spacing: content uses `right: spacing.md` (16px) while left uses `spacing.xxxl` (40px). 
+
+I'll add a container with `maxWidth: contentMaxMd` to prevent the Details button from extending beyond the synopsis text. I'll wrap badge, title, synopsis, and actions in a single column View with maxWidth: layout.contentMaxMd to contain the layout properly. I'm adjusting the layout constraints to match the HTML structure where title uses `max-w-xl` and synopsis uses `max-w-md`. I'm aligning the actions row width with the synopsis text column to match the right edge alignment. 
+
+I'm wrapping actions in a View with width 100% and maxWidth 320px, aligning the row layout to match synopsis alignment. I'm repositioning Details to fill the row with space-between, matching the synopsis column width. I'm setting `justifyContent: 'space-between'` on actions with `alignSelf: 'stretch'` and `maxWidth` to match synopsis column width. I'm removing `width: '100%'` from `styles.actions` since parent content has implicit width. I'm removing `gap` from `styles.actions` to prevent conflicts with `justifyContent: 'space-between'`. I'm setting the actions container width to match the synopsis width using `min(320, contentWidth)` and removing the gap to align with `justifyContent: 'space-between'`. 
+
+I'm implementing the responsive width logic for the synopsis and actions containers. I'm setting explicit width and maxWidth on actions container to match synopsis block width. I'm adjusting the flex direction and alignment to ensure consistent cross-axis behavior between synopsis and actions containers. 
+
+I'm wrapping synopsis and actions in a container to match their widths using maxWidth and alignSelf stretch. I'm capping the copy block width with maxWidth 320 to prevent it from expanding to full width. I'm removing maxWidth from synopsis and wrapping synopsis + actions in a container with max-width 320. I'm wrapping synopsis and actions in a container with max-width 320. I'm checking if synopsisActionsColumn with width 100% and alignItems flex-start on parent will cause the child to take full parent width. I'm adding `maxWidth: layout.contentMaxMd` and `width: '100%'` to synopsisActionsColumn to ensure it respects the max width while taking full parent width. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Constraining the synopsis and actions to the same column (`max-w-md` in the reference) and using `justifyContent: 'space-between'` so the Details button aligns to the synopsis column's right edge.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating home hero layout**
+
+I'm adding a `synopsisColumn` wrapper with specific width and alignment styles to the HomeHero component. I'm adjusting the skeleton layout to use space-between for actions and flex 1 for shimmers. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Wrapping the synopsis and actions in a shared column (`maxWidth: layout.contentMaxMd`) and using `justifyContent: 'space-between'` so the Details button aligns with the synopsis column’s right edge.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating skeleton**
+
+I'm wrapping synopsis shimmers and actions in synopsisColumn for better layout control. I'm removing maxWidth from synopsis lines inside columns since the column handles constraining. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Here’s what was going on and what we changed.
+
+### What was wrong
+The synopsis used **`maxWidth: layout.contentMaxMd`** (same idea as `max-w-md` in `home.html`), so the text only used that width on the left. The buttons sat in a **separate row** that was only as wide as “Watch Now + gap + Details”, so that row could be **narrower** than the synopsis block. That left **empty space to the right of Details**, which looked like an extra right margin compared to the synopsis.
+
+### What we did
+1. **`synopsisColumn`** — New wrapper around the synopsis **and** the actions, with **`maxWidth: layout.contentMaxMd`** and **`width: '100%'`**, so that block matches the synopsis width cap from the reference.
+2. **`actions`** — Set **`width: '100%'`** and **`justifyContent: 'space-between'`** so **Watch Now** stays on the left and **Details** lines up with the **right edge of that column** (same as the synopsis text block). Removed the old **`gap`** so spacing comes from `space-between` only.
+3. **`synopsis`** — Dropped **`maxWidth`** here because the column now controls width.
+4. **`HomeHeroSkeleton`** — Same **`synopsisColumn`** + **`actions`** behavior so loading matches.
+
+So **Details** should now sit flush with the synopsis column’s right edge instead of floating with a gap inside a narrower row.
+
+---
+
+_**User**_
+
+remove the glow from watchlist empty icon 
+
+---
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Status: **loading**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **0** directories</summary>
+
+No results found
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
 <tool-use data-tool-type="read" data-tool-name="read_file_v2">
 <details><summary>Tool use: **read_file_v2** • Read file: </summary>
 
@@ -3367,5 +3670,141 @@ _**Agent (composer-2)**_
 
 <tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
 <summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Status: **loading**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Status: **loading**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+Status: **loading**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+Status: **loading**
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+Status: **loading**
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+Status: **loading**
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+Status: **loading**
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistEmptyState.tsx</summary>
+
+Status: **loading**
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
 
 </details></tool-use>

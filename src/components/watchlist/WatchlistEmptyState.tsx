@@ -1,6 +1,6 @@
 /**
  * Watchlist zero-items body — `resources/watchlist-empty.html` / `watchlist_empty.png`:
- * glow, disc + bookmark, copy, solid CTA, then Popular Recommendations + Trending contents (horizontal rails).
+ * disc + bookmark, copy, solid CTA, then Popular Recommendations + Trending contents (horizontal rails).
  */
 
 import type { JSX } from 'react';
@@ -11,7 +11,6 @@ import type { TmdbMovieListItem, TmdbPagedMoviesResponse, UseQueryResult } from 
 import { ShimmerBox } from '../common/ShimmerBox';
 import { BrandSolidCtaButton } from '../common/BrandSolidCtaButton';
 import { ContentCard } from '../common/ContentCard';
-import { RadialGlowBackdrop } from '../common/RadialGlowBackdrop';
 import { IconBookmark } from '../common/SimpleIcons';
 import { colors, contentCard } from '../../theme/colors';
 import { fill, homeRowCardWidth, layout, opacity, radiusCardOuter, radiusFullPill, spacing, tracking } from '../../theme/spacing';
@@ -20,8 +19,6 @@ import { formatListMovieSubtitle } from '../../utils/formatMovieListItem';
 
 /** `watchlist-empty.html` `text-8xl` bookmark (~96px). */
 const EMPTY_ICON_SIZE = spacing.xxxxl + spacing.xxl + spacing.sm;
-/** Glow canvas behind the bookmark only — keeps highlight off the headline (`watchlist-empty.html`). */
-const ICON_RADIAL_GLOW_SIZE = spacing.xxxxl * 4;
 const RAIL_MAX_ITEMS = 20;
 const RAIL_SKELETON_COUNT = 5;
 const railPosterHeight = homeRowCardWidth / contentCard.aspectRatio;
@@ -127,12 +124,9 @@ export function WatchlistEmptyState({
     <View style={styles.block}>
       <View style={styles.centerSlot}>
         <View style={[styles.emptyCluster, { width: ctaWidth }]}>
-          <View style={styles.iconGlowCluster}>
-            <RadialGlowBackdrop height={ICON_RADIAL_GLOW_SIZE} width={ICON_RADIAL_GLOW_SIZE} />
-            <View style={styles.disc} accessibilityRole="image" accessibilityLabel="Empty watchlist">
-              <View style={styles.discIconDim}>
-                <IconBookmark color={colors.secondary_container} size={EMPTY_ICON_SIZE} />
-              </View>
+          <View style={styles.disc} accessibilityRole="image" accessibilityLabel="Empty watchlist">
+            <View style={styles.discIconDim}>
+              <IconBookmark color={colors.secondary_container} size={EMPTY_ICON_SIZE} />
             </View>
           </View>
           <Text style={styles.headline}>Your watchlist is empty</Text>
@@ -187,11 +181,13 @@ const styles = StyleSheet.create({
   },
   disc: {
     alignItems: 'center',
+    alignSelf: 'center',
     backgroundColor: colors.watchlist_empty_icon_disc,
     borderColor: colors.outline_variant_ring,
     borderRadius: radiusFullPill,
     borderWidth: layout.hairline,
     justifyContent: 'center',
+    marginBottom: spacing.xxl,
     padding: spacing.xxl,
   },
   discIconDim: {
@@ -212,15 +208,6 @@ const styles = StyleSheet.create({
     color: colors.on_surface,
     marginBottom: spacing.md,
     textAlign: 'center',
-  },
-  iconGlowCluster: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    height: ICON_RADIAL_GLOW_SIZE,
-    justifyContent: 'center',
-    marginBottom: spacing.xxl,
-    position: 'relative',
-    width: ICON_RADIAL_GLOW_SIZE,
   },
   railCard: {
     marginRight: spacing.xxl,

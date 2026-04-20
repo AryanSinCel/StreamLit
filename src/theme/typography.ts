@@ -115,6 +115,15 @@ export const typography = {
     fontWeight: '600' as const,
     letterSpacing: tracking.none,
   },
+  /**
+   * Home hero “Watch Now” / “Details” only — Figma ~16px (global `title-sm` stays 14px for other screens).
+   */
+  'home-hero-cta': {
+    fontFamily: fontFamilies.interSemiBold,
+    fontSize: 16,
+    fontWeight: '600' as const,
+    letterSpacing: tracking.none,
+  },
   'body-md': {
     fontFamily: fontFamilies.interRegular,
     fontSize: 14,
