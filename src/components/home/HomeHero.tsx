@@ -3,13 +3,21 @@
  */
 
 import type { JSX } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import type { TmdbMovieListItem } from '../../api/types';
 import { IconPlay } from '../common/SimpleIcons';
 import { HomeHeroSkeleton } from './HomeHeroSkeleton';
 import { colors, surfaceRgba } from '../../theme/colors';
-import { fill, homeHeroHeight, layout, opacity, radiusCardInner, spacing } from '../../theme/spacing';
+import {
+  fill,
+  homeHeroHeight,
+  homeHeroWidthRatio,
+  layout,
+  opacity,
+  radiusCardOuter,
+  spacing,
+} from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
 
@@ -52,6 +60,9 @@ function heroBackdropUri(movie: TmdbMovieListItem | null): string | null {
 }
 
 export function HomeHero({ movie, loading, onWatchNow, onDetails }: HomeHeroProps): JSX.Element {
+  const { width: windowWidth } = useWindowDimensions();
+  const heroWidth = Math.max(1, Math.round(windowWidth * homeHeroWidthRatio));
+
   if (loading && movie == null) {
     return <HomeHeroSkeleton />;
   }
@@ -61,7 +72,7 @@ export function HomeHero({ movie, loading, onWatchNow, onDetails }: HomeHeroProp
 
   return (
     <View style={styles.wrap}>
-      <View style={styles.shell}>
+      <View style={[styles.shell, { width: heroWidth }]}>
         {backdropUri != null ? (
           <Image
             accessibilityIgnoresInvertColors
@@ -86,35 +97,48 @@ export function HomeHero({ movie, loading, onWatchNow, onDetails }: HomeHeroProp
             <Text style={styles.badgeText}>New Release</Text>
           </View>
           <Text style={styles.title}>{movie?.title ?? 'Featured'}</Text>
-          <Text numberOfLines={2} style={styles.synopsis}>
-            {synopsisForHero(movie)}
-          </Text>
-          <View style={styles.actions}>
-            <Pressable
-              accessibilityLabel="Watch now"
-              accessibilityRole="button"
-              disabled={!canAct}
-              onPress={onWatchNow}
-              style={({ pressed }) => [
-                styles.watchBtn,
-                (!canAct || pressed) && styles.pressedDisabled,
-              ]}
-            >
-              <IconPlay color={colors.on_primary} size={20} />
-              <Text style={styles.watchLabel}>Watch Now</Text>
-            </Pressable>
-            <Pressable
-              accessibilityLabel="Details"
-              accessibilityRole="button"
-              disabled={!canAct}
-              onPress={onDetails}
-              style={({ pressed }) => [
-                styles.detailsBtn,
-                (!canAct || pressed) && styles.pressedDisabled,
-              ]}
-            >
-              <Text style={styles.detailsLabel}>Details</Text>
-            </Pressable>
+          <View style={styles.synopsisColumn}>
+            <Text numberOfLines={2} style={styles.synopsis}>
+              {synopsisForHero(movie)}
+            </Text>
+            <View style={styles.actions}>
+              <Pressable
+                accessibilityLabel="Watch now"
+                accessibilityRole="button"
+                disabled={!canAct}
+                onPress={onWatchNow}
+                style={({ pressed }) => [
+                  styles.watchBtn,
+                  (!canAct || pressed) && styles.pressedDisabled,
+                ]}
+              >
+                <LinearGradient
+                  accessibilityElementsHidden
+                  colors={[colors.primary, colors.primary_container]}
+                  end={{ x: 1, y: 1 }}
+                  importantForAccessibility="no-hide-descendants"
+                  pointerEvents="none"
+                  start={{ x: 1, y: 1 }}
+                  style={StyleSheet.absoluteFill}
+                />
+                <View style={styles.watchBtnInner}>
+                  <IconPlay color={colors.on_primary_container} size={20} />
+                  <Text style={styles.watchLabel}>Watch Now</Text>
+                </View>
+              </Pressable>
+              <Pressable
+                accessibilityLabel="Details"
+                accessibilityRole="button"
+                disabled={!canAct}
+                onPress={onDetails}
+                style={({ pressed }) => [
+                  styles.detailsBtn,
+                  (!canAct || pressed) && styles.pressedDisabled,
+                ]}
+              >
+                <Text style={styles.detailsLabel}>Details</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
       </View>
@@ -123,11 +147,17 @@ export function HomeHero({ movie, loading, onWatchNow, onDetails }: HomeHeroProp
 }
 
 const styles = StyleSheet.create({
+  /**
+   * Same width as synopsis (`max-w-md`); `space-between` pins **Details** to the column’s
+   * right edge — no extra gap past synopsis like a left-packed row.
+   */
   actions: {
+    alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'nowrap',
-    gap: spacing.md,
+    justifyContent: 'space-between',
     marginTop: fill.none,
+    width: '100%',
   },
   backdrop: {
     ...StyleSheet.absoluteFill,
@@ -149,24 +179,31 @@ const styles = StyleSheet.create({
     ...typography['hero-badge'],
     color: colors.on_primary_container,
   },
+  /**
+   * Fill the card vertically so `justifyContent: 'flex-end'` actually pins the stack to the
+   * bottom (`home.html` / `home.png`). Inset matches `bottom-10 left-10` (40px).
+   */
   content: {
+    alignItems: 'flex-start',
     bottom: fill.none,
+    flexDirection: 'column',
     justifyContent: 'flex-end',
-    left: fill.none,
+    left: spacing.xxxl,
     paddingBottom: spacing.xxxl,
-    paddingHorizontal: spacing.xxxl,
     position: 'absolute',
-    right: fill.none,
+    right: spacing.md,
+    top: fill.none,
   },
   detailsBtn: {
     alignItems: 'center',
+    alignSelf: 'flex-start',
     backgroundColor: colors.surface_container_highest,
     borderRadius: spacing.md,
-    flex: 1,
     flexDirection: 'row',
+    flexGrow: fill.none,
+    flexShrink: fill.none,
     justifyContent: 'center',
-    minWidth: fill.none,
-    paddingHorizontal: spacing.xl,
+    paddingHorizontal: spacing.xxl,
     paddingVertical: spacing.md,
   },
   detailsLabel: {
@@ -181,49 +218,60 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill,
   },
   shell: {
-    borderRadius: radiusCardInner,
+    alignSelf: 'center',
+    borderRadius: radiusCardOuter,
     height: homeHeroHeight,
     overflow: 'hidden',
-    width: '100%',
   },
   synopsis: {
     ...typography['body-md'],
     color: colors.on_surface_variant,
     marginBottom: spacing.xxl,
-    maxWidth: layout.contentMaxMd,
-    minHeight: spacing.xxxl,
+    textAlign: 'left',
     textShadowColor: colors.hero_text_shadow,
     textShadowOffset: { height: spacing.xs, width: fill.none },
     textShadowRadius: spacing.md,
   },
+  /** `home.html` `max-w-md` — synopsis + CTAs share this column width. */
+  synopsisColumn: {
+    alignSelf: 'flex-start',
+    maxWidth: layout.contentMaxMd,
+    width: '100%',
+  },
   title: {
     ...typography['display-md'],
+    alignSelf: 'stretch',
     color: colors.on_surface,
     marginBottom: spacing.lg,
+    textAlign: 'left',
     textShadowColor: colors.hero_text_shadow,
     textShadowOffset: { height: spacing.xs, width: fill.none },
     textShadowRadius: spacing.md,
     textTransform: 'uppercase',
   },
   watchBtn: {
-    alignItems: 'center',
-    backgroundColor: colors.primary,
+    alignSelf: 'flex-start',
     borderRadius: spacing.md,
-    flex: 1,
+    flexGrow: fill.none,
+    flexShrink: fill.none,
+    overflow: 'hidden',
+  },
+  watchBtnInner: {
+    alignItems: 'center',
     flexDirection: 'row',
     gap: spacing.xs,
     justifyContent: 'center',
-    minWidth: fill.none,
     paddingHorizontal: spacing.xxl,
     paddingVertical: spacing.md,
   },
   watchLabel: {
     ...typography['title-sm'],
-    color: colors.on_primary,
+    color: colors.on_primary_container,
     fontWeight: '700',
   },
   wrap: {
+    alignItems: 'center',
+    alignSelf: 'stretch',
     marginBottom: spacing.xxxxl,
-    paddingHorizontal: spacing.xxl,
   },
 });

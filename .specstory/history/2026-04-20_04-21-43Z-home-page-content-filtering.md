@@ -1501,7 +1501,109 @@ _**Agent (composer-2)**_
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
 
-Status: **loading**
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+The model provided an ambiguous search string to replace
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.ts",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts",
+  "pattern": "getDiscoverMovies\\(\\{"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts",
+  "pattern": "getDiscoverMovies\\(\\{",
+  "topFiles": [
+    {
+      "matchCount": 11,
+      "uri": "src/hooks/useHome.ts"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 11
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useHome.ts</summary>
 
 </details>
 
@@ -1509,5 +1611,1761 @@ Status: **loading**
 
 <tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
 <summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating homescreen**
+
+I'm adding a genre row after top rated on HomeScreen and implementing seeAllDiscover for genre navigation. I'm adjusting SeeAll component to pass sort parameter for Newest row to ensure consistent ordering with the discover mode. I'm refactoring SeeAllParams to support optional discover sort by, using existing discover see all with genre filtering for consistency. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Updating HomeScreen and See All so the third row's "See all" uses the same newest sort. Checking navigation types and `useSeeAll`.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating discover params**
+
+I'm adding optional `discoverSortBy` param for the discover endpoint, passing it to `getDiscoverMovies` when `genreId` is present. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating discover sort**
+
+I'm adding discoverSortBy to SeeAllParams and threading it through useSeeAll, passing DISCOVER_SORT_NEWEST for HomeScreen's third row. I'm adding discoverSortBy parameter to fetchSeeAllPage and using DISCOVER_SORT_NEWEST for HomeScreen's third row. I'm updating SeeAllParams type to include discoverSortBy and discoverVoteCountGte. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Adding optional `discoverSortBy` to See All for the newest-genre row, then updating HomeScreen.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SeeAllScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing fetchSeeAllPage**
+
+I'm updating fetchSeeAllPage to consistently pass discoverSortBy across all switch cases. 
+
+**Updating fetchSeeAllPage**
+
+I'm adding optional options param with discoverSortBy to make it consistent across all switch cases. I'm fetching `row3Title` from `row3SectionTitle(selectedChipKey, chips)` to populate the section title. I'm computing `row3Title` only when `selectedChipKey !== 'all'` and `snap` exists. I'm moving `row3Title` computation to occur right after confirming `snap` is non-null, before destructuring. I'm adding `genre` and `loadMoreGenre` to the destructuring pattern. I'm importing DISCOVER_SORT_NEWEST and adjusting layout order for genre rows. 
+
+I'm adjusting layout order for genre rows. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Enforcing project rules**
+
+I'm moving DISCOVER_SORT_NEWEST to a constants file to comply with the rule that screens must not call TMDB directly. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Reorganizing variables**
+
+I'm reordering variable definitions to ensure proper dependency resolution before the snap null check. I'm moving `seeAllRow3` definition to align with the snap null check pattern. I found a dependency issue where `seeAllDiscover` is used in `seeAllRow3` but defined before `snap` destructuring. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test -- --passWithNoTests 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test -- --passWithNoTests 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest --passWithNoTests
+
+watchman warning:  Recrawled this watch 41 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 9 passed, 9 total
+Tests:       47 passed, 47 total
+Snapshots:   0 total
+Time:        2.734 s, estimated 3 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSeeAll.ts"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Here’s what was added.
+
+### Behavior
+When a **genre chip** is selected (not **All**), a **fourth** block is rendered **directly under Top Rated**: same chip label as the filter (e.g. **Action**), backed by **`GET /discover/movie`** with `with_genres` and **`primary_release_date.desc`** (`DISCOVER_SORT_NEWEST` in `src/api/movies.ts`) so it’s **not** the same ordering as **Trending Now** (popularity) or **Top Rated** (vote average + min votes).
+
+### Data hook (`src/hooks/useHome.ts`)
+- Bootstrap and chip-change flows for a genre chip now run **three** parallel discover requests: trending-style, top-rated-style, and **newest**.
+- `loadMoreGenre` paginates with the same **`DISCOVER_SORT_NEWEST`** sort.
+
+### Home UI (`src/screens/HomeScreen.tsx`)
+- Renders that **`HomeContentRow`** when `selectedChipKey !== 'all'`, **after** the Top Rated row and **before** the per-genre rails (which still only show for **All**).
+
+### See all (`src/navigation/types.ts`, `src/hooks/useSeeAll.ts`, `src/screens/SeeAllScreen.tsx`)
+- Optional **`discoverSortBy`** on **`SeeAllParams`** so the full list matches the third row.
+- The third row’s **See all** passes **`discoverSortBy: DISCOVER_SORT_NEWEST`**.
+
+### Types (`src/api/types.ts`)
+- **`HomeTabSnapshot.genre`** comment updated to describe this third row.
+
+`npx tsc --noEmit` and `npm test` both succeed.
+
+---
+
+_**User**_
+
+currently we have this UI for home hero section , i want hero section card to be like @resources/home.png  exactly same the only alignement is wrong 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Aligning home hero**
+
+I'm adjusting the HomeHero component to center-align content as shown in home.png. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Comparing the design reference with the current `HomeHero` implementation to fix alignment.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/colors.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/resources/home.png</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Resolving image description conflict**
+
+The image description says text is horizontally centered, but user context suggests left-alignment is preferred. The user wants to align content left, matching home.png's layout, despite the auto-description saying centered. I'm aligning the content to the left to match home.png's layout, adjusting the actions row to flexDirection column for better spacing. 
+
+**Aligning content center**
+
+I'm adding `alignItems: 'center'` to the content View to center children horizontally like in home.png. I'm adding `textAlign: 'center'` and removing maxWidth to properly center the text content. I'm restructuring the layout to center content with a max width using alignItems: 'center' and justifyContent: 'flex-end'. 
+
+**Adjusting layout properties**
+
+I'm adjusting layout properties to center content with textAlign and alignSelf. I'm using alignSelf: 'stretch' on title and synopsis to ensure they take full width for centered text alignment. I'm centering the synopsis text block with alignSelf: 'center' and maxWidth, matching the user's 'exactly same' requirement. I'm aligning all text elements to center and setting textAlign: 'center' for consistent alignment. I'm setting alignSelf: 'stretch' for actions container to match mockup horizontal centering with edge-aligned buttons. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **2** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/resources** (2 files)
+
+| File |
+|------|
+| `home.png` |
+| `home.html` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/resources/home.html</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Analyzing hero alignment**
+
+The hero content is left-aligned, not centered as the comment suggests. 
+
+**Confirming hero alignment**
+
+The hero is left-aligned per the authoritative HTML structure, not center-aligned as suggested by the image description. The hero alignment issue stems from symmetric horizontal padding and absolute positioning, not center alignment. 
+
+**Adjusting hero alignment**
+
+The hero element is left-aligned within the card using `left: 10` and `alignSelf: 'flex-start'` for the badge, but title/synopsis may have double padding causing misalignment. I'm removing the duplicate horizontal padding on the hero element to fix alignment issues. I'm adjusting the overlay positioning in React Native to match the Tailwind max-width constraint. 
+
+I'm removing duplicate paddingHorizontal from the wrap component to fix the hero card alignment in React Native. I'm aligning the hero content using `left: spacing.xxxl` and `right: spacing.xxxl` for proper spacing. 
+
+I'm insetting the hero content equally on both sides using `left: spacing.xxxl` and `right: spacing.xxxl` for consistent spacing. I'm replacing `paddingHorizontal` with explicit `left`/`right`/`bottom` values for clearer spacing control. 
+
+**Investigating alignment**
+
+The bug likely stems from default `alignItems: stretch` on `content` causing unexpected centering; I'll check for `alignItems: center` in the current code. The HTML source shows left alignment, so I'll follow `left-10` as the correct positioning. 
+
+**Implementing layout**
+
+I'm setting `left` and `bottom` with `spacing.xxxl` values for positioning. 
+
+**Adjusting overlay layout**
+
+I'm adjusting the overlay container to use `left` + `right` instead of just `left` to prevent shrinking to content width. I'm using `alignSelf: 'stretch'` with `maxWidth` on inner container to control overlay width. I'm setting left and bottom positions for RN overlay container to avoid stretching. 
+
+I'm setting the overlay container's width to prevent stretching and ensure proper alignment of children elements. I'm implementing the overlay layout with bottom and left insets using spacing tokens and setting a max width of 576. I'm switching to absolute positioning to fix the overlay layout in RN, since flexbox constraints don't behave as expected with left/right/width properties. I'm removing duplicate padding from wrap since the section already accounts for it, aligning with Tailwind's px-8 (32px) standard. I'm changing wrap padding to `spacing.xxl` to match section's px-8 and avoid misalignment with genre chips. I'm changing wrap padding to `spacing.xxxl` to match section's px-8 and avoid misalignment with genre chips. 
+
+I'm setting wrap padding to `spacing.xxl` (32) to match `px-8` and adding `heroOverlayMaxWidth: 576` to layout tokens. I'm adding `layout.heroContentMaxWidth` = 576 in spacing.ts layout. I'm adjusting the overlay layout to prevent conflicts between maxWidth, width, and position absolute by setting width to '100%' instead of maxWidth alone. I'm using width: '100%' with maxWidth to control the overlay layout, aligning the block to the left with alignItems: 'flex-start' on the parent shell. 
+
+I'm simplifying the overlay layout by using alignItems: 'center' for center alignment instead of complex positioning. I'm implementing left alignment per home.html spec with bottom-10 left-10 positioning and adjusting wrap padding to spacing.xxl. I'm updating the overlay layout to use `left: xxxl`, `bottom: xxxl`, and `maxWidth: 576` for RN, keeping the HTML spec of left-10 alignment. I'm setting `heroContentMaxWidth: 576` in layout constants and using `width: '90%'` as a fallback for responsive design. I'm setting `width: '100%'` for content layout and removing `right` property to prevent conflicts with `left` and `maxWidth`. I'm setting width to '100%' with explicit left/right spacing and alignItems to align content to the left. 
+
+I'm adjusting the synopsis style to use alignSelf stretch with maxWidth layout.contentMaxMd to maintain left-aligned text alignment. I'm adding `alignItems: 'flex-start'` to content and fixing wrap spacing to `spacing.xxl`. 
+
+I'm removing `maxWidth` from synopsis to prevent ragged left edge and aligning HTML structure where title is wider than synopsis. I'm implementing spacing adjustments with xxl horizontal wrap and xxxl bottom/left/right padding. I'm removing the left alignment override and adjusting hero content max width for mobile-first RN layout. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Checking `typography` for the hero and verifying alignment. `resources/home.html` positions the hero overlay with `absolute bottom-10 left-10 max-w-xl` (left-anchored, not centered). Applying that layout and matching horizontal spacing to the reference.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating padding values**
+
+I'm changing wrap.paddingHorizontal to spacing.xxl (32px) to match px-8 on the section in home.html. I'm adjusting the absolute positioning in React Native to match the HTML layout with bottom-10 left-10 and max-w-xl constraints. I'm adjusting React Native padding to match HTML layout with symmetric xxxl spacing and removing right alignment since HTML overlay sizes to content. 
+
+**Adjusting padding values**
+
+I'm using left: xxxl, right: xxxl, bottom: xxxl for balanced mobile layout matching typical hero, addressing double padding issue. I'm removing `paddingHorizontal` from content and using `left` and `right` instead to achieve consistent 72px spacing. I'm updating the synopsis styles to include `textAlign: 'left'` and `alignSelf: 'flex-start'`. I'm adding `maxWidth` to the content wrapper to match `max-w-xl` (576px) and adjusting layout alignment. 
+
+I'm adjusting the hero overlay layout to use `maxWidth` of 576px with `width: 100%`, but realizing this conflicts with parent container sizing on narrow screens. I'm simplifying the layout by using left/right/bottom positioning with alignItems: 'flex-start' instead of calculating complex widths. I'm removing the right inset to match the asymmetric left-10 padding in home.html, aligning with mobile design patterns. I'm removing the right padding and using `useWindowDimensions` to calculate the correct block width. I'm implementing symmetric padding using `spacing.xxl` for left, right, and bottom to match design alignment expectations. I'm applying `spacing.xxxl` for bottom, left, and right padding, removing `paddingHorizontal`, and adding explicit `textAlign: 'left'` on title and synopsis. 
+
+I'm setting `flexDirection: 'column'` and `justifyContent: 'flex-end'` on the content view to align children from top to bottom and anchor the content to the bottom of the card. I'm removing `justifyContent` since absolute positioning with `bottom` sets the bottom edge and height is determined by children. I'm removing `justifyContent: 'flex-end'` from the content styles. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Aligning the hero with `resources/home.html`: overlay uses `absolute bottom-10 left-10` (left-anchored), section uses `px-8`. Fixing outer padding and overlay insets — `wrap` used `spacing.xxxl` (40px) while the section uses `px-8` (32px), doubling inset with the inner padding.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Incorrect tool arguments
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "contextAfter": 5,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx",
+  "pattern": "wrap:"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx",
+  "pattern": "wrap:",
+  "topFiles": [
+    {
+      "matchCount": 5,
+      "uri": "src/components/home/HomeHero.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Calculating column widths**
+
+I'm implementing automatic width calculation for absolutely positioned views using parent width minus margins. I'm adjusting width calculation logic to handle maxWidth capping and alignItems behavior. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Incorrect tool arguments
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Adding alignSelf stretch**
+
+I'm adding alignSelf: 'stretch' to the actions in the skeleton component to match HomeHero's styling. 
+
+**Analyzing layout constraints**
+
+In React Native, left: 40 and right: 40 compute to width = parentWidth - 80, and maxWidth: 576 caps the inner width while maintaining stretch behavior. I'm removing maxWidth from content and relying on left+right only for mobile layouts. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Adjusting layout constraints**
+
+I'm removing maxWidth from HomeHero content for consistency with the skeleton layout. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/spacing.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+
+```
+npm notice
+npm notice New major version of npm available! 10.8.2 -&gt; 11.12.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.1
+npm notice To update run: npm install -g npm@11.12.1
+npm notice
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test -- --passWithNoTests 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test -- --passWithNoTests 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest --passWithNoTests
+
+watchman warning:  Recrawled this watch 41 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 9 passed, 9 total
+Tests:       47 passed, 47 total
+Snapshots:   0 total
+Time:        2.585 s, estimated 3 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Here’s what was off and what we changed.
+
+### Reference (`resources/home.html`)
+The featured block is **`absolute bottom-10 left-10`** with a **`max-w-xl`** wrapper — content is **left-aligned** on the card, not centered. The screen uses **`px-8`** (32px) outside the card.
+
+### What we fixed
+1. **`HomeHero` `content` container** — Stopped using full width + large horizontal padding only. It now uses **`left` / `right` / `bottom` = `spacing.xxxl` (40px)** so it matches **`bottom-10`** and a consistent inset from the card edges, with **`alignItems: 'flex-start'`** so the stack stays **left-aligned** like the HTML.
+2. **Typography** — **`textAlign: 'left'`** on the title and synopsis; **`alignSelf: 'stretch'`** on the title and action row so the two CTAs span the full width of that column (same as the reference).
+3. **Synopsis** — Still **`maxWidth: layout.contentMaxMd`** with **`alignSelf: 'flex-start'`**, matching the **`max-w-md`** copy block under the title in `home.html`.
+4. **`HomeHeroSkeleton`** — Uses the same **`content`** positioning and **`alignSelf: 'stretch'`** on the action row so loading matches the real hero.
+
+### Files touched
+- `src/components/home/HomeHero.tsx`
+- `src/components/home/HomeHeroSkeleton.tsx`
+- `src/theme/spacing.ts` (comment on `contentMaxMd` only)
+
+`wrap` already used **`paddingHorizontal: spacing.xxl` (32px)**, aligned with **`px-8`**. If anything still feels a pixel off on a specific device, say which screen width and we can tune the insets.
+
+---
+
+_**User**_
+
+its still not the same the title , description , watch now and detail should be aligned at the end of hero card like in image
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Reviewing hero layout**
+
+I'm examining the HomeHero.tsx component to understand the current layout and identify how to align the hero content at the bottom of the card. I need to adjust the layout in HomeHero.tsx to bottom-align the content block using flexbox and proper positioning. I'm switching from absolute positioning to flexbox for bottom-aligned content in HomeHero.tsx. 
+
+I'm adjusting the hero layout to use flexbox instead of absolute positioning for better bottom alignment. I'm considering switching from absolute positioning to flexbox for better bottom alignment of hero content. 
+
+**Adjusting hero layout**
+
+I'm implementing absolute positioning with `top: 0` and `justifyContent: 'flex-end'` on the overlay to push content to the bottom of the hero. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Inspecting the hero layout to anchor the overlay stack to the bottom of the card.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing layout issue**
+
+The absolutely positioned content view collapses vertically when only bottom is set, making justifyContent ineffective. The content view's height is only as tall as its content, not extending to the bottom edge as expected. 
+
+**Analyzing layout positioning**
+
+The content view's bottom edge position is correct, but minHeight on synopsis might be causing unexpected spacing. The synopsis minHeight might be pushing content upward, making it appear too high rather than flush with the bottom. 
+
+**Adjusting layout constraints**
+
+I'm implementing a full-bleed overlay approach with top: 0, left: 0, right: 0, bottom: 0 to fix the positioning issue. I'm using paddingBottom on the flex container to align the stack to the bottom with proper spacing. I'm aligning the stack to the bottom using paddingBottom and removing redundant bottom positioning. I'm removing `minHeight` from the reference to prevent awkward empty space and keeping it for 2-line consistency. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Using only `bottom` on an absolutely positioned view makes its height shrink to its children, so `justifyContent: 'flex-end'` has no effect. Filling the card with `top: 0` and `bottom: 0`, then using `justifyContent: 'flex-end'` and `paddingBottom` to pin the stack to the bottom edge.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Here’s what was going wrong and what we changed.
+
+### Cause
+The overlay used **`position: 'absolute'`** with only **`bottom`** set (no **`top`**). In that case the box’s **height is just the height of its children**, so there’s **no extra vertical space** inside it. **`justifyContent: 'flex-end'`** only does something when the container is **taller** than its content, so it had **no effect** and the block didn’t behave like a true “bottom of card” layout.
+
+### Fix
+Make the overlay **fill the card** and push the stack to the bottom:
+
+- **`top: 0`** and **`bottom: 0`** (with **`left` / `right`** insets)
+- **`justifyContent: 'flex-end'`** so the column sits on the **bottom** of that full height
+- **`paddingBottom: spacing.xxxl`** (~`bottom-10` / 40px) so the copy and buttons sit **above** the card’s bottom edge like `home.html` / your reference
+
+Applied the same **`content`** rules in **`HomeHero.tsx`** and **`HomeHeroSkeleton.tsx`**.
+
+You should now see the badge, title, synopsis, and both buttons grouped at the **lower end** of the hero card, left-aligned, with consistent bottom inset.
+
+---
+
+_**User**_
+
+why watch now and details are in center it should be exactly at place like @resources/home.png @resources/home.html same for hero section title and synopsis too 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Aligning buttons**
+
+I'm removing `flex: 1` from the Watch Now and Details buttons to prevent them from stretching across the row. I'm checking if the buttons themselves are centered in the card or if their content is centered. Buttons are left-aligned because they size to content and don't fill the container. I'm removing `flex: 1` from the buttons and using `justifyContent: 'flex-start'` on the container to align them properly. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Checking the hero component: `home.html` uses a flex row with intrinsic-width buttons (`flex gap-4`), not equal-width `flex: 1` buttons.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/resources/home.html</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Adjusting layout constraints**
+
+I'm changing `alignSelf` from `'stretch'` to `'flex-start'` and removing `flex: 1` from buttons to prevent unwanted stretching. I'm changing `alignSelf` from `'stretch'` to `'flex-start'` to prevent the title block from spanning the full width between left and right edges. 
+
+I'm removing `flex: 1` from buttons to prevent them from taking equal space and instead using `alignSelf: 'stretch'` for the title Text component. I'm adjusting the button layout to remove flex: 1 and instead use alignSelf: 'stretch' for proper alignment. 
+
+I'm updating the gap spacing from `spacing.md` to `spacing.lg` to match the HTML `gap-4`. I'm adjusting horizontal spacing to `spacing.xxl` to match the design system. I'm setting maxWidth and alignSelf flex-start for the title to align it with the badge on the left edge. 
+
+**Updating skeleton**
+
+I'm updating the HomeHeroSkeleton to use fixed widths instead of flex: 1 for shimmer buttons. I'm setting fixed widths for skeleton buttons based on layout tokens and content dimensions. I'm simplifying skeleton button widths by using minWidth instead of complex calculations. 
+
+I'm implementing minimal button widths using layout values and spacing tokens. I'm removing flex 1 from Pressable and using alignSelf: 'flex-start' to size buttons by padding. 
+
+I'm switching to flexGrow: 0, flexShrink: 0 with explicit widths using spacing tokens. 
+
+**Updating layout tokens**
+
+I'm adding `heroWatchBtnWidth` to the layout object using spacing tokens. I'm replacing new skeleton width tokens with existing spacing combinations in StyleSheet for React Native compatibility. I'm implementing the new skeleton width calculation using `spacing.xxxl * 2 + spacing.xl` to get 104px width. I'm removing flex: 1 and adding flexGrow: 0 flexShrink: 0 to tailsBtn and watchBtn. I'm adjusting Text component behavior for multiline titles by reading React Native documentation on Text layout. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Removing `flex: 1` from the CTAs — they forced equal full-width columns so the pair filled the row and looked centered. Matching `home.html`: `flex gap-4` with content-sized buttons (`px-8`), left-aligned. Updating the skeleton to match.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Fixing text wrapping**
+
+I'm adjusting Text component styling to ensure fullWidth wrapping with alignSelf flex-start in React Native. 
+
+**Adjusting text styles**
+
+I'm reverting the title style to use alignSelf: 'stretch' and addressing the real issue with buttons instead. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Reverting the title to `alignSelf: 'stretch'` so multi-line titles wrap across the content column (RN Text wrapping). The button fix was the main issue.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHero.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeroSkeleton.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Here’s what was going wrong and what we changed.
+
+### Cause
+In `home.html` the CTAs are a normal row: **`flex gap-4`** with **`px-8 py-3`** on each control — each button is only as wide as its content.
+
+In the app, **`flex: 1`** on **Watch Now** and **Details** made them **split the full row width** (two equal columns). That reads as “centered” in the row and doesn’t match the reference.
+
+### Changes (`HomeHero.tsx`)
+- **`actions`**: `alignSelf: 'flex-start'` (no full-width row), **`gap: spacing.lg`** to match Tailwind **`gap-4`** (16px), **`justifyContent: 'flex-start'`**.
+- **`watchBtn` / `detailsBtn`**: Removed **`flex: 1`**, set **`flexGrow` / `flexShrink`** to **`0`**, **`alignSelf: 'flex-start'`** so they stay **content-sized and left-aligned** in the row.
+- **`detailsBtn`**: **`paddingHorizontal: spacing.xxl`** so both buttons match **`px-8`** like the HTML (was `spacing.xl`).
+- **`synopsis`**: Removed **`minHeight`** so the block doesn’t get extra empty space under short copy.
+
+### Skeleton (`HomeHeroSkeleton.tsx`)
+- Same **`actions`** alignment and **`gap`**.
+- Replaced **`flex: 1`** shimmers with **fixed widths** built from **`layout.skeletonPosterWide`** + spacing so the loading state matches the real layout.
+
+Title + synopsis were already **`textAlign: 'left'`** with the overlay **`alignItems: 'flex-start'`**; the main mismatch was the **full-width equal buttons**. After this, the badge, title, synopsis, and both buttons should line up on the **left** like **`resources/home.html`** / **`home.png`**.
+
+---
+
+_**User**_
+
+i want this button to not have right margin it should be like how the synopsis is 
+
+---
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: </summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
 
 </details></tool-use>

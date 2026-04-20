@@ -13,7 +13,7 @@ export function HomeHeader(): JSX.Element {
   return (
     <View style={styles.bar}>
       <View style={styles.brand}>
-        <IconMovie color={colors.brand_coral} size={26} />
+        <IconMovie color={colors.primary_container} size={26} />
         <Text style={styles.wordmark}>StreamList</Text>
       </View>
       <Pressable
@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
   },
   wordmark: {
     ...typography['brand-wordmark'],
-    color: colors.brand_coral,
+    color: colors.primary_container,
   },
 });

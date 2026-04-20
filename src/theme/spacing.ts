@@ -20,6 +20,8 @@ export const radiusCardInner = 12 as const;
 
 /** Home layout — reference `resources/home.html` / PSD-Home. */
 export const homeHeroHeight = 450 as const;
+/** PSD §7.1 hero — ~90% screen width (centred). */
+export const homeHeroWidthRatio = 0.9 as const;
 export const homeRowCardWidth = 160 as const;
 
 /** Detail hero backdrop strip — `docs/PSD-Detail.md` §4 (~220px). */
@@ -82,7 +84,7 @@ export const layout = {
   tabBadgeLineHeight: 16,
   /** `FlatList` `onEndReachedThreshold` for grid pagination. */
   flatListEndThreshold: 0.35,
-  /** Hero synopsis shimmer max width (`HomeHeroSkeleton`). */
+  /** Hero synopsis — `home.html` `max-w-md`; keeps copy narrower than the title line. */
   contentMaxMd: 320,
   contentMaxNarrow: 260,
   /** Home row header title shimmer max width. */

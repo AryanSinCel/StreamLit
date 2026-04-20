@@ -3,24 +3,36 @@
  */
 
 import type { JSX } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { ShimmerBox } from '../common/ShimmerBox';
-import { fill, homeHeroHeight, layout, radiusCardInner, spacing } from '../../theme/spacing';
+import {
+  fill,
+  homeHeroHeight,
+  homeHeroWidthRatio,
+  layout,
+  radiusCardOuter,
+  spacing,
+} from '../../theme/spacing';
 
 export function HomeHeroSkeleton(): JSX.Element {
+  const { width: windowWidth } = useWindowDimensions();
+  const heroWidth = Math.max(1, Math.round(windowWidth * homeHeroWidthRatio));
+
   return (
     <View style={styles.wrap} accessibilityLabel="Loading featured title">
-      <View style={styles.shell}>
+      <View style={[styles.shell, { width: heroWidth }]}>
         <ShimmerBox style={styles.backdrop} />
         <View style={styles.content}>
           <ShimmerBox style={styles.badge} />
           <ShimmerBox style={styles.titleLine} />
           <ShimmerBox style={styles.titleLineShort} />
-          <ShimmerBox style={styles.synopsisLine} />
-          <ShimmerBox style={styles.synopsisLineShort} />
-          <View style={styles.actions}>
-            <ShimmerBox style={styles.watchBtn} />
-            <ShimmerBox style={styles.detailsBtn} />
+          <View style={styles.synopsisColumn}>
+            <ShimmerBox style={styles.synopsisLine} />
+            <ShimmerBox style={styles.synopsisLineShort} />
+            <View style={styles.actions}>
+              <ShimmerBox style={styles.watchBtn} />
+              <ShimmerBox style={styles.detailsBtn} />
+            </View>
           </View>
         </View>
       </View>
@@ -30,14 +42,16 @@ export function HomeHeroSkeleton(): JSX.Element {
 
 const styles = StyleSheet.create({
   actions: {
+    alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'nowrap',
-    gap: spacing.md,
+    justifyContent: 'space-between',
     marginTop: fill.none,
+    width: '100%',
   },
   backdrop: {
     ...StyleSheet.absoluteFill,
-    borderRadius: radiusCardInner,
+    borderRadius: radiusCardOuter,
   },
   badge: {
     alignSelf: 'flex-start',
@@ -47,31 +61,36 @@ const styles = StyleSheet.create({
     width: layout.skeletonPosterWide,
   },
   content: {
+    alignItems: 'flex-start',
     bottom: fill.none,
+    flexDirection: 'column',
     justifyContent: 'flex-end',
-    left: fill.none,
+    left: spacing.xxxl,
     paddingBottom: spacing.xxxl,
-    paddingHorizontal: spacing.xxxl,
     position: 'absolute',
-    right: fill.none,
+    right: spacing.xxxl,
+    top: fill.none,
   },
   detailsBtn: {
     borderRadius: spacing.md,
-    flex: 1,
     height: layout.skeletonTitle,
-    minWidth: fill.none,
+    width: layout.skeletonPosterWide + spacing.xxl,
   },
   shell: {
-    borderRadius: radiusCardInner,
+    alignSelf: 'center',
+    borderRadius: radiusCardOuter,
     height: homeHeroHeight,
     overflow: 'hidden',
+  },
+  synopsisColumn: {
+    alignSelf: 'flex-start',
+    maxWidth: layout.contentMaxMd,
     width: '100%',
   },
   synopsisLine: {
     borderRadius: spacing.xs,
     height: layout.skeletonLineSm,
     marginTop: spacing.sm,
-    maxWidth: layout.contentMaxMd,
     width: '100%',
   },
   synopsisLineShort: {
@@ -96,12 +115,12 @@ const styles = StyleSheet.create({
   },
   watchBtn: {
     borderRadius: spacing.md,
-    flex: 1,
     height: layout.skeletonTitle,
-    minWidth: fill.none,
+    width: layout.skeletonPosterWide + spacing.xxxl + spacing.lg,
   },
   wrap: {
+    alignItems: 'center',
+    alignSelf: 'stretch',
     marginBottom: spacing.xxxxl,
-    paddingHorizontal: spacing.xxl,
   },
 });
