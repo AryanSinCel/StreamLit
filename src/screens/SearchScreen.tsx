@@ -7,8 +7,8 @@ import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Keyboard, ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
+import { TabAppBar } from '../components/common/TabAppBar';
 import { TabScreenShell } from '../components/common/TabScreenShell';
-import { SearchAppBar } from '../components/search/SearchAppBar';
 import { SearchDefaultView } from '../components/search/SearchDefaultView';
 import { SearchResultsStateView } from '../components/search/SearchResultsStateView';
 import { useSearch } from '../hooks/useSearch';
@@ -95,13 +95,13 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
   );
 
   if (snap == null) {
-    return <TabScreenShell topBar={<SearchAppBar />} />;
+    return <TabScreenShell topBar={<TabAppBar />} />;
   }
 
   const d = snap;
 
   return (
-    <TabScreenShell topBar={<SearchAppBar />}>
+    <TabScreenShell topBar={<TabAppBar />}>
       <ScreenErrorBoundary onRetry={search.refetch} screenLabel="Search" style={styles.scroll}>
         <ScrollView
           contentContainerStyle={[

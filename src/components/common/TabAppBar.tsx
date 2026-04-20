@@ -1,35 +1,55 @@
 /**
- * StreamList top app bar — `resources/search.html` (Search tab) and `resources/watchlist-empty.html` (Watchlist).
+ * Shared tab top app bar — brand row + optional end slot (`resources/home.html` TopAppBar,
+ * `search.html`, `watchlist-empty.html`). Single implementation for all main tabs.
  */
 
 import type { JSX, ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { IconMovie, IconPerson } from '../common/SimpleIcons';
+import { IconMovie, IconPerson } from './SimpleIcons';
 import { colors } from '../../theme/colors';
 import { layout, opacity, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
-export type SearchAppBarProps = {
-  /** Extra control before the profile affordance — e.g. Search icon on Watchlist (`watchlist-empty.html`). */
+const LOGO_ICON_COLOR = colors.on_surface_variant;
+
+export type TabAppBarProps = {
+  /**
+   * Full right-side region. When set, **`beforeProfile`** / **`onPressProfile`** are ignored
+   * (e.g. Home **Notifications** only).
+   */
+  trailing?: ReactNode;
+  /** Extra control before the profile affordance — e.g. Search icon on Watchlist / Profile. */
   beforeProfile?: ReactNode;
-  /** When set, the avatar is tappable (Watchlist / future tabs). */
+  /** When set, profile avatar is tappable (Watchlist / Profile). */
   onPressProfile?: () => void;
   /**
-   * `true` — coral wordmark matching the clapperboard (`search.html`, `search-result.html`, Home).
-   * `false` — `on_surface` wordmark (rare alternate layouts).
+   * `true` — coral wordmark (`search.html`).\
+   * `false` — `on_surface` wordmark.
    */
   brandWordmark?: boolean;
-  /** Profile / marketing screens — all-caps wordmark (e.g. **STREAMLIST**). */
+  /** Profile / marketing — all-caps wordmark. */
   uppercaseWordmark?: boolean;
+  /**
+   * **`home`** — wordmark `primary_container` (Home tab PSD).\
+   * **`tab`** — wordmark follows **`brandWordmark`** (coral vs on-surface).
+   */
+  brandVariant?: 'home' | 'tab';
 };
 
-export function SearchAppBar({
+export function TabAppBar({
+  trailing,
   beforeProfile,
   onPressProfile,
   brandWordmark = true,
   uppercaseWordmark = false,
-}: SearchAppBarProps): JSX.Element {
-  const wordmarkStyle = brandWordmark ? styles.wordmarkBrand : styles.wordmarkOnSurface;
+  brandVariant = 'tab',
+}: TabAppBarProps): JSX.Element {
+  const wordmarkStyle =
+    brandVariant === 'home'
+      ? styles.wordmarkHome
+      : brandWordmark
+        ? styles.wordmarkBrand
+        : styles.wordmarkOnSurface;
 
   const avatarShell = (
     <View style={styles.avatar}>
@@ -37,14 +57,10 @@ export function SearchAppBar({
     </View>
   );
 
-  return (
-    <View style={styles.bar}>
-      <View style={styles.brand}>
-        <IconMovie color={colors.brand_coral} size={26} />
-        <Text style={[styles.wordmarkBase, wordmarkStyle, uppercaseWordmark && styles.wordmarkUpper]}>
-          StreamList
-        </Text>
-      </View>
+  const end =
+    trailing != null ? (
+      trailing
+    ) : (
       <View style={styles.end}>
         {beforeProfile != null ? <View style={styles.beforeProfile}>{beforeProfile}</View> : null}
         {onPressProfile != null ? (
@@ -63,6 +79,17 @@ export function SearchAppBar({
           </View>
         )}
       </View>
+    );
+
+  return (
+    <View style={styles.bar}>
+      <View style={styles.brand}>
+        <IconMovie color={LOGO_ICON_COLOR} size={26} />
+        <Text style={[styles.wordmarkBase, wordmarkStyle, uppercaseWordmark && styles.wordmarkUpper]}>
+          StreamList
+        </Text>
+      </View>
+      {end}
     </View>
   );
 }
@@ -112,6 +139,9 @@ const styles = StyleSheet.create({
   },
   wordmarkBrand: {
     color: colors.brand_coral,
+  },
+  wordmarkHome: {
+    color: colors.primary_container,
   },
   wordmarkOnSurface: {
     color: colors.on_surface,

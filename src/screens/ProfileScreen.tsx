@@ -9,7 +9,7 @@ import type { WatchlistMediaFilter } from '../api/types';
 import { IconPerson, IconSearch } from '../components/common/SimpleIcons';
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
 import { TabScreenShell } from '../components/common/TabScreenShell';
-import { SearchAppBar } from '../components/search/SearchAppBar';
+import { TabAppBar } from '../components/common/TabAppBar';
 import { WatchlistScreenHeader } from '../components/watchlist/WatchlistScreenHeader';
 import type { ProfileStackParamList, RootStackParamList, RootTabParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
@@ -53,7 +53,7 @@ const PROFILE_MENU_GROUPS = [
 const APP_VERSION_LABEL = 'MovieList 0.0.1';
 
 /**
- * Profile tab — same **`SearchAppBar`** dock as Watchlist; **`WatchlistScreenHeader`** title block (custom labels); placeholder account UI.
+ * Profile tab — same **`TabAppBar`** dock as Watchlist; **`WatchlistScreenHeader`** title block (custom labels); placeholder account UI.
  */
 export function ProfileScreen({ navigation }: Props): JSX.Element {
   const insets = useSafeAreaInsets();
@@ -89,7 +89,7 @@ export function ProfileScreen({ navigation }: Props): JSX.Element {
 
   return (
     <TabScreenShell
-      topBar={<SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={showComingSoon} />}
+      topBar={<TabAppBar beforeProfile={searchAppBarTrailing} onPressProfile={showComingSoon} />}
     >
       <ScreenErrorBoundary onRetry={retryProfileShell} screenLabel="Profile" style={styles.scroll}>
         <ScrollView

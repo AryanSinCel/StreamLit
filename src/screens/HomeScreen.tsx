@@ -9,10 +9,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { HomeChipKey, HomeChipResolved } from '../api/types';
 import { LoadMoreContentIndicator } from '../components/common/LoadMoreContentIndicator';
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
+import { TabAppBar } from '../components/common/TabAppBar';
+import { IconNotifications } from '../components/common/SimpleIcons';
 import { TabScreenShell } from '../components/common/TabScreenShell';
 import { HomeContentRow } from '../components/home/HomeContentRow';
 import { HomeGenreStrip } from '../components/home/HomeGenreStrip';
-import { HomeHeader } from '../components/home/HomeHeader';
 import { HomeHero } from '../components/home/HomeHero';
 import { useHome } from '../hooks/useHome';
 import { DISCOVER_SORT_NEWEST } from '../api/movies';
@@ -28,6 +29,25 @@ import { typography } from '../theme/typography';
 
 function row3SectionTitle(selectedChipKey: HomeChipKey, chips: readonly HomeChipResolved[]): string {
   return chips.find((c) => c.key === selectedChipKey)?.label ?? 'Discover';
+}
+
+function HomeTabBar(): JSX.Element {
+  return (
+    <TabAppBar
+      brandVariant="home"
+      trailing={
+        <Pressable
+          accessibilityLabel="Notifications"
+          accessibilityRole="button"
+          hitSlop={spacing.md}
+          onPress={() => {}}
+          style={({ pressed }) => [styles.headerBellHit, pressed && styles.headerBellPressed]}
+        >
+          <IconNotifications color={colors.on_surface_variant} size={24} />
+        </Pressable>
+      }
+    />
+  );
 }
 
 type Props = CompositeScreenProps<
@@ -233,7 +253,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
   };
 
   if (snap == null) {
-    return <TabScreenShell topBar={<HomeHeader />} />;
+    return <TabScreenShell topBar={<HomeTabBar />} />;
   }
 
   const {
@@ -259,7 +279,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
   const heroMovieId = hero?.id;
 
   return (
-    <TabScreenShell topBar={<HomeHeader />}>
+    <TabScreenShell topBar={<HomeTabBar />}>
       <ScreenErrorBoundary onRetry={refetch} screenLabel="Home" style={styles.scroll}>
         <ScrollView
           contentContainerStyle={{
@@ -402,6 +422,15 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  headerBellHit: {
+    alignItems: 'center',
+    borderRadius: spacing.xxxxl,
+    justifyContent: 'center',
+    padding: spacing.sm,
+  },
+  headerBellPressed: {
+    opacity: opacity.pressed,
+  },
   banner: {
     marginBottom: spacing.md,
     marginHorizontal: spacing.xxl,

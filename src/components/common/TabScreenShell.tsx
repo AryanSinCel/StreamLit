@@ -10,7 +10,7 @@ import { colors } from '../../theme/colors';
 import { elevation, spacing } from '../../theme/spacing';
 
 export type TabScreenShellProps = {
-  /** Top bar row only (e.g. `HomeHeader`, `SearchAppBar`). */
+  /** Top bar row only — typically **`TabAppBar`**. */
   topBar: ReactNode;
   children?: ReactNode;
   /** Optional override on the outer screen root (default: flex 1 + surface). */

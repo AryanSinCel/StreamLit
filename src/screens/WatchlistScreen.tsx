@@ -15,7 +15,7 @@ import { WatchlistScreenSkeleton } from '../components/watchlist/WatchlistScreen
 import { IconSearch } from '../components/common/SimpleIcons';
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
 import { TabScreenShell } from '../components/common/TabScreenShell';
-import { SearchAppBar } from '../components/search/SearchAppBar';
+import { TabAppBar } from '../components/common/TabAppBar';
 import { WatchlistScreenHeader } from '../components/watchlist/WatchlistScreenHeader';
 import { useWatchlist } from '../hooks/useWatchlist';
 import { useWatchlistStore } from '../store/watchlistStore';
@@ -126,7 +126,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
   if (watchlistLoading || watchlistData == null) {
     return (
       <TabScreenShell
-        topBar={<SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />}
+        topBar={<TabAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />}
       >
         <ScrollView
           contentContainerStyle={[
@@ -172,7 +172,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
   if (count === 0) {
     return (
       <TabScreenShell
-        topBar={<SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />}
+        topBar={<TabAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />}
       >
         <ScreenErrorBoundary onRetry={refetchWatchlistRemote} screenLabel="Watchlist" style={styles.scroll}>
           <ScrollView
@@ -213,7 +213,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
 
   return (
     <TabScreenShell
-      topBar={<SearchAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />}
+      topBar={<TabAppBar beforeProfile={searchAppBarTrailing} onPressProfile={onPressProfile} />}
     >
       <ScreenErrorBoundary onRetry={refetchWatchlistRemote} screenLabel="Watchlist" style={styles.scroll}>
         <FlatList

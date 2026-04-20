@@ -24,7 +24,7 @@ export type WatchlistScreenHeaderProps = {
   /** Default **My Watchlist** — override for other screens (e.g. **Profile**). */
   mainTitle?: string;
   /**
-   * When `false`, hides inline search/profile — use with `SearchAppBar` (`watchlist-empty.html` / Search tab).
+   * When `false`, hides inline search/profile — use with `TabAppBar` (`watchlist-empty.html` / Search tab).
    * @default true
    */
   showTopActions?: boolean;
