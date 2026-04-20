@@ -1,5 +1,6 @@
 /**
- * Year · rating · genres · runtime — PSD-Detail §7.3 (uniform chips: `surface_container_highest`, `label-sm`).
+ * Year · rating · genres · runtime — `movie-showDetail.html`: plain chips (`surface_container_high` + muted);
+ * rating chip (`secondary_container`/30 + `text-secondary` / bold + filled star).
  */
 
 import type { JSX, ReactNode } from 'react';
@@ -12,7 +13,7 @@ import {
 } from '../../utils/tmdbDisplayGuards';
 import { IconStar } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
-import { fill, spacing } from '../../theme/spacing';
+import { fill, layout, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 
 export type DetailChipsRowProps = {
@@ -46,13 +47,14 @@ function formatRuntimeLabel(minutes: number): string {
 }
 
 export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
-  const chips: { key: string; node: ReactNode }[] = [];
+  const chips: { key: string; kind: 'plain' | 'rating'; node: ReactNode }[] = [];
 
   const year = yearFromRelease(movie.release_date);
   if (year != null) {
     chips.push({
       key: 'year',
-      node: <Text style={styles.chipText}>{year}</Text>,
+      kind: 'plain',
+      node: <Text style={styles.chipTextPlain}>{year}</Text>,
     });
   }
 
@@ -61,10 +63,11 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
     const label = formatTmdbVoteAverageLabel(rating);
     chips.push({
       key: 'rating',
+      kind: 'rating',
       node: (
         <View style={styles.chipRowInner}>
-          <IconStar color={colors.on_surface_variant} size={14} />
-          <Text style={styles.chipText}>
+          <IconStar color={colors.primary} size={14} />
+          <Text style={styles.chipTextRating}>
             {label}
             {' Rating'}
           </Text>
@@ -77,8 +80,9 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
   if (genres != null && genres.length > 0) {
     chips.push({
       key: 'genre',
+      kind: 'plain',
       node: (
-        <Text numberOfLines={2} style={styles.chipText}>
+        <Text numberOfLines={2} style={styles.chipTextPlain}>
           {genres}
         </Text>
       ),
@@ -89,7 +93,8 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
   if (showTmdbRuntimeChip(runtime) && typeof runtime === 'number') {
     chips.push({
       key: 'runtime',
-      node: <Text style={styles.chipText}>{formatRuntimeLabel(runtime)}</Text>,
+      kind: 'plain',
+      node: <Text style={styles.chipTextPlain}>{formatRuntimeLabel(runtime)}</Text>,
     });
   }
 
@@ -100,7 +105,10 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
   return (
     <View style={styles.row}>
       {chips.map((c) => (
-        <View key={c.key} style={styles.chipWrap}>
+        <View
+          key={c.key}
+          style={c.kind === 'rating' ? styles.chipWrapRating : styles.chipWrapPlain}
+        >
           {c.node}
         </View>
       ))}
@@ -114,13 +122,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: spacing.xs,
   },
-  chipText: {
-    ...typography['label-sm'],
+  chipTextPlain: {
+    ...typography['detail-metadata-chip'],
     color: colors.on_surface_variant,
   },
-  chipWrap: {
-    backgroundColor: colors.surface_container_highest,
-    borderRadius: spacing.sm,
+  chipTextRating: {
+    ...typography['detail-rating-chip'],
+    color: colors.primary,
+  },
+  chipWrapPlain: {
+    backgroundColor: colors.surface_container_high,
+    borderRadius: layout.detailMetadataChipRadius,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+  },
+  chipWrapRating: {
+    backgroundColor: colors.detail_rating_chip_background,
+    borderRadius: layout.detailMetadataChipRadius,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
   },

@@ -136,6 +136,20 @@ export const typography = {
     fontWeight: '400' as const,
     letterSpacing: tracking.none,
   },
+  /** Detail plain metadata chips — `movie-showDetail.html` (`text-xs font-medium text-on-surface-variant`). */
+  'detail-metadata-chip': {
+    fontFamily: fontFamilies.interMedium,
+    fontSize: 12,
+    fontWeight: '500' as const,
+    letterSpacing: tracking.none,
+  },
+  /** Detail rating chip — `movie-showDetail.html` (`text-xs font-bold text-secondary`). */
+  'detail-rating-chip': {
+    fontFamily: fontFamilies.interBold,
+    fontSize: 12,
+    fontWeight: '700' as const,
+    letterSpacing: tracking.none,
+  },
   /** Hero “New Release” pill — `resources/home.html` (10px, wide tracking, uppercase). */
   'hero-badge': {
     fontFamily: fontFamilies.interBold,

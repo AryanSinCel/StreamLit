@@ -91,6 +91,8 @@ export const layout = {
   sectionTitleShimmerMax: 220,
   /** Watchlist filter chip corner — `watchlist.html` pill-adjacent control. */
   chipRadiusSm: 5,
+  /** Detail metadata chips (year, genre, runtime) — `movie-showDetail.html` (`rounded-md`). */
+  detailMetadataChipRadius: 6,
   /** `transform` scale on primary CTA press — avoid raw decimals in StyleSheet. */
   pressScale: 0.98,
   /** `shadowOpacity` on elevated solid buttons. */

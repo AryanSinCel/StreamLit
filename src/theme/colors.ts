@@ -70,6 +70,11 @@ export const colors = {
   /** Cast avatar ring — `ring-outline-variant/20` in `movie-showDetail.html`. */
   detail_cast_avatar_ring: 'rgba(255, 255, 255, 0.08)',
   /**
+   * Detail metadata **rating** chip fill — `movie-showDetail.html` (`bg-secondary-container/30`).
+   * RGB matches `secondary_container` (`#822625`).
+   */
+  detail_rating_chip_background: 'rgba(130, 38, 37, 0.3)',
+  /**
    * Detail top nav tint — `movie-showDetail.html` (`bg-neutral-900/70` over `backdrop-blur-xl`).
    * Tailwind `neutral-900` #171717 @ 70%.
    */

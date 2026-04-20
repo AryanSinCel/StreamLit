@@ -1,5 +1,5 @@
 /**
- * Detail hero — full-bleed backdrop, bottom scrim (`movie-showDetail.html` `.hero-gradient`).
+ * Detail hero — full-bleed backdrop, full-frame scrim (`movie-showDetail.html` `.hero-gradient`: inset-0).
  */
 
 import type { JSX } from 'react';
@@ -8,10 +8,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import type { TmdbMovieDetail } from '../../api/types';
 import { IconMovie } from '../common/SimpleIcons';
 import { colors, surfaceRgba } from '../../theme/colors';
-import { detailHeroHeight, fill } from '../../theme/spacing';
+import { detailHeroHeight } from '../../theme/spacing';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
-
-const HERO_GRADIENT_HEIGHT_RATIO = 0.4;
 
 export type DetailHeroProps = {
   width: number;
@@ -23,7 +21,6 @@ export function DetailHero({ width, movie }: DetailHeroProps): JSX.Element {
   const backdropUri =
     buildImageUrl(movie?.backdrop_path, TMDB_IMAGE_SIZE_W780) ??
     buildImageUrl(movie?.poster_path, TMDB_IMAGE_SIZE_W780);
-  const gradientH = Math.round(detailHeroHeight * HERO_GRADIENT_HEIGHT_RATIO);
 
   return (
     <View style={[styles.shell, { height: detailHeroHeight, width: w }]}>
@@ -40,15 +37,13 @@ export function DetailHero({ width, movie }: DetailHeroProps): JSX.Element {
           <IconMovie color={colors.on_surface_variant} size={48} />
         </View>
       )}
-      <View style={[styles.scrimWrap, { height: gradientH, width: w }]} pointerEvents="none">
-        <LinearGradient
-          colors={[surfaceRgba(0), surfaceRgba(1)]}
-          end={{ x: 0.5, y: 1 }}
-          pointerEvents="none"
-          start={{ x: 0.5, y: 0 }}
-          style={{ height: gradientH, width: w }}
-        />
-      </View>
+      <LinearGradient
+        colors={[surfaceRgba(0), surfaceRgba(1)]}
+        end={{ x: 0.5, y: 1 }}
+        pointerEvents="none"
+        start={{ x: 0.5, y: 0 }}
+        style={[styles.heroGradient, { width: w }]}
+      />
     </View>
   );
 }
@@ -57,16 +52,14 @@ const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFill,
   },
+  heroGradient: {
+    ...StyleSheet.absoluteFill,
+  },
   placeholder: {
     ...StyleSheet.absoluteFill,
     alignItems: 'center',
     backgroundColor: colors.surface_container_high,
     justifyContent: 'center',
-  },
-  scrimWrap: {
-    bottom: fill.none,
-    left: fill.none,
-    position: 'absolute',
   },
   shell: {
     alignSelf: 'stretch',
