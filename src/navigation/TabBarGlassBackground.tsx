@@ -11,6 +11,7 @@ import { BlurView } from '@react-native-community/blur';
 import type { JSX } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { tabBarGlass } from '../theme/colors';
+import { radiusCardInner } from '../theme/spacing';
 
 export function TabBarGlassBackground(): JSX.Element {
   if (Platform.OS === 'android') {
@@ -26,7 +27,7 @@ export function TabBarGlassBackground(): JSX.Element {
   } as const;
 
   return (
-    <View style={StyleSheet.absoluteFill} pointerEvents="none">
+    <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.iosBlurRoot]}>
       <BlurView {...blurProps} style={StyleSheet.absoluteFill} />
       <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.tint]} />
     </View>
@@ -36,6 +37,13 @@ export function TabBarGlassBackground(): JSX.Element {
 const styles = StyleSheet.create({
   androidTint: {
     backgroundColor: tabBarGlass.backgroundColor,
+    borderTopLeftRadius: radiusCardInner,
+    borderTopRightRadius: radiusCardInner,
+  },
+  iosBlurRoot: {
+    borderTopLeftRadius: radiusCardInner,
+    borderTopRightRadius: radiusCardInner,
+    overflow: 'hidden',
   },
   tint: {
     backgroundColor: tabBarGlass.backgroundColor,

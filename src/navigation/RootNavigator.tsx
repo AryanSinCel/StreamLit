@@ -1,7 +1,9 @@
 import type { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet } from 'react-native';
+import { useMemo } from 'react';
+import { Platform, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useShallow } from 'zustand/react/shallow';
 import {
   IconBookmark,
@@ -17,7 +19,7 @@ import { SearchScreen } from '../screens/SearchScreen';
 import { WatchlistScreen } from '../screens/WatchlistScreen';
 import { TabBarGlassBackground } from './TabBarGlassBackground';
 import { colors } from '../theme/colors';
-import { fill, layout, spacing } from '../theme/spacing';
+import { elevation, fill, layout, opacity, radiusCardInner, spacing } from '../theme/spacing';
 import { useWatchlistStore } from '../store/watchlistStore';
 import { typography } from '../theme/typography';
 import type {
@@ -122,6 +124,17 @@ const mainTabBarIconPerson: NonNullable<BottomTabNavigationOptions['tabBarIcon']
   size,
 }) => <IconPerson color={tabBarIconColor(focused)} size={size} />;
 
+/**
+ * Bottom tab labels — `Inter_500Medium` + numeric `fontWeight` can render **blank** on some Android
+ * devices; keep the Medium face via `fontFamily` and use `fontWeight: 'normal'`.
+ */
+const mainTabBarLabelStyle: NonNullable<BottomTabNavigationOptions['tabBarLabelStyle']> = {
+  ...typography['tab-label'],
+  fontWeight: 'normal',
+  lineHeight: layout.tabBadgeLineHeight,
+  marginTop: spacing.xs,
+};
+
 /** Watchlist tab count badge — PSD-Watchlist §6 / §7 W3 (`primary_container` fill). */
 const watchlistTabBadgeStyles = StyleSheet.create({
   badge: {
@@ -138,6 +151,7 @@ const watchlistTabBadgeStyles = StyleSheet.create({
 });
 
 function MainTabNavigator() {
+  const insets = useSafeAreaInsets();
   const { count, hydrated } = useWatchlistStore(
     useShallow((s) => ({ count: s.count, hydrated: s.hydrated })),
   );
@@ -145,25 +159,65 @@ function MainTabNavigator() {
   const watchlistBadge =
     hydrated && count > 0 ? (count > 99 ? '99+' : String(count)) : undefined;
 
+  /**
+   * `resources/home.html` BottomNavBar: `rounded-t-lg`, `px-6`, top pad tightened vs `pt-4`, `pb-8`; upward shadow.
+   * Bottom padding is **`max(safe-area, pb-8)`** — not safe-area **plus** `pb-8` (that doubled height).
+   */
+  const mainTabScreenOptions = useMemo((): BottomTabNavigationOptions => {
+    /**
+     * Same baseline as `@react-navigation/bottom-tabs` `getPaddingBottom` (used only for the max
+     * with design padding). Explicit **`height`** must equal content row + vertical paddings.
+     */
+    const libraryInsetBottom = Math.max(
+      insets.bottom - (Platform.OS === 'ios' ? spacing.xs : fill.none),
+      fill.none,
+    );
+    /** ~½ of `home.html` `pt-4` (16px → 8px) — tighter icon row under the bar’s top edge. */
+    const designTopPad = spacing.sm;
+    /** `home.html` `pb-8` (32px) — single bottom rhythm vs home indicator, whichever is larger. */
+    const designBottomMin = spacing.xxl;
+    const paddingBottom = Math.max(libraryInsetBottom, designBottomMin);
+    const tabBarInnerHeight = layout.bottomTabContentHeight + designTopPad + paddingBottom;
+
+    return {
+      headerShown: false,
+      tabBarActiveTintColor,
+      tabBarInactiveTintColor,
+      tabBarBackground: renderTabBarGlassBackground,
+      tabBarIconStyle: {
+        marginBottom: fill.none,
+      },
+      tabBarItemStyle: {
+        paddingVertical: fill.none,
+      },
+      tabBarLabelStyle: mainTabBarLabelStyle,
+      tabBarShowLabel: true,
+      tabBarStyle: {
+        backgroundColor: 'transparent',
+        borderTopLeftRadius: radiusCardInner,
+        borderTopRightRadius: radiusCardInner,
+        borderTopWidth: fill.none,
+        height: tabBarInnerHeight,
+        overflow: 'hidden',
+        paddingBottom,
+        paddingHorizontal: Math.max(spacing.xl, insets.left, insets.right),
+        paddingTop: designTopPad,
+        ...(Platform.OS === 'ios'
+          ? {
+              shadowColor: colors.surface_container_lowest,
+              shadowOffset: { height: -spacing.xs, width: fill.none },
+              shadowOpacity: opacity.muted,
+              shadowRadius: layout.tabBarShadowRadius,
+            }
+          : {
+              elevation: elevation.screen,
+            }),
+      },
+    };
+  }, [insets.bottom, insets.left, insets.right]);
+
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor,
-        tabBarInactiveTintColor,
-        tabBarLabelStyle: {
-          ...typography['tab-label'],
-          marginTop: spacing.xs,
-        },
-        tabBarBackground: renderTabBarGlassBackground,
-        tabBarStyle: {
-          backgroundColor: 'transparent',
-          borderTopWidth: fill.none,
-          paddingBottom: spacing.xxl,
-          paddingTop: spacing.md,
-        },
-      }}
-    >
+    <Tab.Navigator screenOptions={mainTabScreenOptions}>
       <Tab.Screen
         name="Home"
         component={HomeStackNavigator}

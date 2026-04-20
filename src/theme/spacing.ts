@@ -82,6 +82,13 @@ export const layout = {
   skeletonPosterMd: 160,
   skeletonTextLine: 22,
   tabBadgeLineHeight: 16,
+  /**
+   * Bottom tab icon + label row — matches `@react-navigation/bottom-tabs` `DEFAULT_TABBAR_HEIGHT` (49).
+   * When customizing `tabBarStyle` vertical padding, total **`height`** must include this plus paddings.
+   */
+  bottomTabContentHeight: 49,
+  /** Bottom tab upward shadow — `home.html` `shadow-[0_-4px_20px_…]`. */
+  tabBarShadowRadius: 20,
   /** `FlatList` `onEndReachedThreshold` for grid pagination. */
   flatListEndThreshold: 0.35,
   /** Hero synopsis — `home.html` `max-w-md`; keeps copy narrower than the title line. */
