@@ -4719,4 +4719,1022 @@ I'm standardizing the header components to use consistent icon colors and props 
 
 **Unifying header components**
 
-I'm creating a unified `TabAppBar` component to replace separate `HomeHeader` and `SearchAppBar` implementations. </details></think>
+I'm creating a unified `TabAppBar` component to replace separate `HomeHeader` and `SearchAppBar` implementations. I'm analyzing the differences between `HomeHeader` and `SearchAppBar` to design a unified `TabAppBar` component. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchAppBar.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeHeader.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Consolidating app bar components**
+
+I'm merging SearchAppBar and Home into a single TabAppBar component with shared brand elements. I'm preserving distinct brand colors for Home and Search tabs while unifying icon style to on_surface_variant. 
+
+I'm refactoring the app bar to unify icon styles while preserving distinct brand colors for navigation tabs. I'm adjusting TabAppBar props to preserve distinct brand colors for Home and Search tabs after refactoring. 
+
+**Adjusting app bar colors**
+
+I'm updating the app bar colors so the Search tab uses on_surface_variant for icons and brand_coral for wordmarks when brandWordmark is true. I'm implementing a unified API for the app bar's right side with a `trailing` prop for full control. I'm extracting the profile block into a shared internal component to unify the trailing prop implementation across tabs. 
+
+**Refactoring app bar**
+
+I'm simplifying TabAppBar to accept only `trailing: ReactNode` and passing exact props from each screen. I'm moving the Profile avatar and beforeProfile layout into TabAppBar as optional props. I'm consolidating profile-related props into optional TabAppBar props to eliminate duplicate markup. 
+
+**Merging app bar components**
+
+I'm implementing TabAppBar to merge SearchAppBar and HomeHeader with consolidated props. I'm standardizing the AppBar color scheme with unified icon (`on_surface_variant`) and wordmark (`primary_container`) across all tabs. I'm standardizing AppBar color scheme with unified icon (`on_surface_variant`) and wordmark (`primary_container`) across all tabs. 
+
+**Updating app bar props**
+
+I'm defining the new TabAppBarProps API with leadingBrandVariant and brandWordmark options. I'm adding support for conditional brand wordmark rendering based on the `isHomeBrand` flag. I'm implementing conditional rendering for the home app bar using the `isHomeBrand` flag and `end` prop logic. I'm refactoring app bar components to use TabAppBar consistently and removing HomeHeader.tsx. I'm creating `TabAppBar.tsx` in common/ for backwards compatibility and will delete `HomeHeader.tsx` and `SearchAppBar.tsx` after updating imports. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Creating tab app bar**
+
+I'm creating `TabAppBar.tsx` with brand row and conditional trailing element. I'm implementing conditional trailing element with bell icon and profile avatar in `TabAppBar.tsx`. 
+
+**Updating tab app bar**
+
+I'm updating TabScreenShell to reference TabAppBar and preparing to replace SearchAppBar with TabAppBar. I'm updating HomeScreen.tsx to use TabAppBar with home variant and trailing bell icon. I'm adding brandVariant prop to TabAppBar with default 'tab' for backward compatibility. I'm implementing trailing as internal for Home in TabAppBar with brandVariant defaulting to 'tab'. I'm implementing the wordmark styling logic for TabAppBar with brandVariant defaults and icon color consistency. 
+
+I'm integrating the bell component from HomeHeader into TabAppBar with consistent hitSlop spacing. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Creating a shared `TabAppBar` in `components/common/`, merging `HomeHeader` and `SearchAppBar`, using `on_surface_variant` for the logo icon on all tabs, and preserving Home vs tab wordmark colors.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/TabAppBar.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating homescreen**
+
+I'm adding the notifications block to HomeScreen with TabAppBar and importing required styles. I'm inlining the bell styles directly in HomeScreen instead of exporting them separately. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating home screen**
+
+I'm replacing HomeHeader with TabAppBar and adding notification styles to HomeScreen. I'm memoizing the top bar element in HomeScreen to optimize rendering performance. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/common/TabScreenShell.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/ProfileScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "SearchAppBar|HomeHeader"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "SearchAppBar|HomeHeader",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "resources/watchlist.html"
+    },
+    {
+      "matchCount": 20,
+      "uri": ".specstory/history/2026-04-19_20-06-33Z-standardizing-data-fetching-hooks.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".specstory/history/2026-04-15_08-57-49Z-watchlist-ui-implementation.md"
+    },
+    {
+      "matchCount": 15,
+      "uri": ".specstory/history/2026-04-20_04-21-43Z-home-page-content-filtering.md"
+    },
+    {
+      "matchCount": 33,
+      "uri": ".specstory/history/2026-04-15_06-45-45Z-home-ui-parity-adjustments.md"
+    },
+    {
+      "matchCount": 16,
+      "uri": ".specstory/history/2026-04-14_04-58-10Z-movie-search-api-implementation.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/search/SearchAppBar.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".specstory/history/2026-04-16_04-50-40Z-tmdb-api-genre-fetching-code.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-15_07-36-48Z-movie-grid-layout.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-15_08-57-49Z-watchlist-ui-development.md"
+    },
+    {
+      "matchCount": 19,
+      "uri": ".specstory/history/2026-04-14_01-32-43Z-home-ui-content-card-implementation.md"
+    },
+    {
+      "matchCount": 21,
+      "uri": ".specstory/history/2026-04-15_06-18-19Z-watchlist-control-implementation-details.md"
+    },
+    {
+      "matchCount": 32,
+      "uri": ".specstory/history/2026-04-14_11-03-42Z-watchlist-empty-state-ui.md"
+    },
+    {
+      "matchCount": 19,
+      "uri": ".specstory/history/2026-04-17_06-22-26Z-specification-deviations-in-project-implementation.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistScreenHeader.tsx"
+    },
+    {
+      "matchCount": 5,
+      "uri": ".specstory/history/2026-04-14_02-38-48Z-notification-icon-fill-issue.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/home/HomeHeader.tsx"
+    }
+  ],
+  "totalFiles": 17,
+  "totalMatches": 194
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="delete_file">
+<details><summary>Tool use: **delete_file**</summary>
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="delete_file"><details>
+<summary>Tool use: **delete_file**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="delete_file">
+<details><summary>Tool use: **delete_file**</summary>
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="delete_file"><details>
+<summary>Tool use: **delete_file**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **6** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/src/components/search** (6 files)
+
+| File |
+|------|
+| `SearchResultsGridSkeleton.tsx` |
+| `SearchRecentSearchesSection.tsx` |
+| `searchDefaultMocks.ts` |
+| `SearchResultsStateView.tsx` |
+| `SearchTrendingSkeleton.tsx` |
+| `SearchDefaultView.tsx` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/WatchlistScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "SearchAppBar|HomeHeader"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "SearchAppBar|HomeHeader",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistScreenHeader.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenHeader.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts,md}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "SearchAppBar|HomeHeader"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "SearchAppBar|HomeHeader",
+  "topFiles": [
+    {
+      "matchCount": 19,
+      "uri": ".specstory/history/2026-04-17_06-22-26Z-specification-deviations-in-project-implementation.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".specstory/history/2026-04-15_08-57-49Z-watchlist-ui-implementation.md"
+    },
+    {
+      "matchCount": 33,
+      "uri": ".specstory/history/2026-04-15_06-45-45Z-home-ui-parity-adjustments.md"
+    },
+    {
+      "matchCount": 21,
+      "uri": ".specstory/history/2026-04-15_06-18-19Z-watchlist-control-implementation-details.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistScreenHeader.tsx"
+    },
+    {
+      "matchCount": 20,
+      "uri": ".specstory/history/2026-04-19_20-06-33Z-standardizing-data-fetching-hooks.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-15_08-57-49Z-watchlist-ui-development.md"
+    },
+    {
+      "matchCount": 15,
+      "uri": ".specstory/history/2026-04-20_04-21-43Z-home-page-content-filtering.md"
+    },
+    {
+      "matchCount": 32,
+      "uri": ".specstory/history/2026-04-14_11-03-42Z-watchlist-empty-state-ui.md"
+    },
+    {
+      "matchCount": 16,
+      "uri": ".specstory/history/2026-04-14_04-58-10Z-movie-search-api-implementation.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-15_07-36-48Z-movie-grid-layout.md"
+    },
+    {
+      "matchCount": 5,
+      "uri": ".specstory/history/2026-04-14_02-38-48Z-notification-icon-fill-issue.md"
+    },
+    {
+      "matchCount": 19,
+      "uri": ".specstory/history/2026-04-14_01-32-43Z-home-ui-content-card-implementation.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".specstory/history/2026-04-16_04-50-40Z-tmdb-api-genre-fetching-code.md"
+    }
+  ],
+  "totalFiles": 14,
+  "totalMatches": 189
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/watchlist/WatchlistScreenHeader.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test -- --passWithNoTests 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test -- --passWithNoTests 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 test
+&gt; jest --passWithNoTests
+
+watchman warning:  Recrawled this watch 41 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 9 passed, 9 total
+Tests:       47 passed, 47 total
+Snapshots:   0 total
+Time:        1.872 s, estimated 3 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/common/TabAppBar.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/common/TabAppBar.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "SearchAppBar|HomeHeader"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "SearchAppBar|HomeHeader",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{tsx,ts,json}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "SearchAppBar"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "SearchAppBar",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Here’s what was implemented.
+
+### Unified `TabAppBar` (`src/components/common/TabAppBar.tsx`)
+- Single bar for **Home, Search, Watchlist, Profile**.
+- **Clapper** `IconMovie` uses **`colors.on_surface_variant`** on every tab (aligned with bell, search, and profile icons).
+- **`brandVariant`**:
+  - **`home`** — wordmark **`primary_container`** (same as the old Home header).
+  - **`tab`** (default) — same as before: **`brand_coral`** when `brandWordmark` is true, else **`on_surface`**.
+- **Right side**:
+  - **`trailing`** — custom node (Home: notifications only). When set, **`beforeProfile`** / **`onPressProfile`** are not used.
+  - Otherwise — same as old `SearchAppBar`: optional **`beforeProfile`** + profile avatar.
+
+### Screens
+- **`HomeScreen`** — `HomeTabBar()` uses `<TabAppBar brandVariant="home" trailing={…bell…} />` (bell styles unchanged).
+- **`SearchScreen`**, **`WatchlistScreen`**, **`ProfileScreen`** — `<TabAppBar … />` with the same props as before (`beforeProfile`, `onPressProfile`, etc.).
+
+### Removed
+- **`src/components/home/HomeHeader.tsx`**
+- **`src/components/search/SearchAppBar.tsx`**
+
+### Other
+- **`TabScreenShell`** comment now refers to **`TabAppBar`**.
+- **`WatchlistScreenHeader`** doc comment updated to **`TabAppBar`**.
+
+Layout, spacing, and colors for each tab match the previous behavior except the shared **logo icon** color (**`on_surface_variant`** everywhere), as intended. `tsc` and tests are green.

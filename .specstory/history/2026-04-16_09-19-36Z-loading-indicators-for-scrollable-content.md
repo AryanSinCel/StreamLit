@@ -4339,3 +4339,246 @@ Status: **completed**
 <summary>Tool use: **ripgrep_raw_search**</summary>
 
 </details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating title display**
+
+I'm changing label to title only for display and adding year to accessibility label for context. </details></think>
+
+_**Agent (composer-2)**_
+
+Updating `DetailSimilarSection` to show only the title under each poster (removing the year and ` · `).
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "DetailSimilar|yearFromListItem|More Like This"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "DetailSimilar|yearFromListItem|More Like This",
+  "topFiles": [
+    {
+      "matchCount": 17,
+      "uri": ".specstory/history/2026-04-15_08-57-49Z-watchlist-ui-implementation.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/api/movies.ts"
+    },
+    {
+      "matchCount": 8,
+      "uri": ".specstory/history/2026-04-15_06-45-45Z-home-ui-parity-adjustments.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".specstory/history/2026-04-16_04-50-40Z-tmdb-api-genre-fetching-code.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-15_10-01-40Z-navigation-issue-for-search-default-items.md"
+    },
+    {
+      "matchCount": 11,
+      "uri": ".specstory/history/2026-04-15_06-18-19Z-watchlist-control-implementation-details.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".specstory/history/2026-04-16_09-19-36Z-loading-indicators-for-scrollable-content.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/screens/DetailScreen.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "resources/movie-showDetail.html"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-04-15_08-13-59Z-watchlist-ui-adjustments.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": "docs/PSD-Detail.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".specstory/history/2026-04-14_11-03-42Z-watchlist-empty-state-ui.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".specstory/history/2026-04-15_07-36-48Z-movie-grid-layout.md"
+    },
+    {
+      "matchCount": 6,
+      "uri": "src/components/detail/DetailSimilarSection.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/theme/typography.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/theme/spacing.ts"
+    }
+  ],
+  "totalFiles": 16,
+  "totalMatches": 63
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailSimilarSection.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+### Update
+**“More Like This”** on the detail screen no longer appends **` · YYYY`** under the poster. It now shows **only the movie title**, matching your request.
+
+### Code
+In **`src/components/detail/DetailSimilarSection.tsx`**:
+- Removed **`yearFromListItem`** and the combined **`title · year`** string.
+- **`Text`** under the poster uses **`title`** only.
+- **`accessibilityLabel`** on the tile uses the title only (aligned with what’s on screen).
+
+See All’s **“More Like This”** full list still uses **`formatListMovieSubtitle`** in **`SeeAllScreen`** — unchanged unless you want that list title-only too.

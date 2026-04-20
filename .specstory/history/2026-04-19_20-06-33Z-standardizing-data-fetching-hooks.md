@@ -18258,4 +18258,320 @@ I'm extending `hideRailChromeForVerticalChainLoad` to include the Music genre ro
 
 **Fixing auth middleware**
 
-I'm adjusting the logic for hiding rail chrome to account for cases where items are temporarily empty during loading. I'm updating the header visibility logic to show it only when items exist or when an error/empty state requires it. </details></think>
+I'm adjusting the logic for hiding rail chrome to account for cases where items are temporarily empty during loading. I'm updating the header visibility logic to show it only when items exist or when an error/empty state requires it. 
+
+**Updating header logic**
+
+I'm implementing a simplified header visibility rule: show header and cards only when items exist, or when there's an error, or when showing empty state. I'm refining the header visibility logic to show it for empty genre panels when needed. 
+
+I'm implementing a stricter rule for header visibility in genre panels to prevent incorrect hiding when items are empty but loading is false. I'm simplifying the header hide logic to only suppress chrome for genre rows with empty items and no error. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Inspecting `hideRailChromeForVerticalChainLoad` and how genre rails receive loading state:
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Analyzing rail loading conditions**
+
+The `omitBodySkeletonForVerticalChainLoad` logic only omits skeleton for one footer rail, potentially causing loading issues when Music rail is loading but not at the last started index. The `lastStartedGenreRailIndex` tracks the last non-idle rail, ensuring proper footer rendering for the final loading rail in the chain. I'm adjusting the omit logic to properly handle cases where Music is loading but Crime above is also active. I'm determining the last non-idle rail index by checking each rail's idleAwaitingViewport state. I'm reviewing the logic for determining the last started rail to prevent empty headers from appearing. I'm investigating why Music rail shows loading state even when it's not actively loading. 
+
+I found that `lastStarted` is computed globally and may point to a different rail than the one currently loading, causing incorrect loading state detection. The `lastStarted` index calculation may exclude idle rails like Documentary, causing incorrect loading state detection. The `lastStarted` index correctly stays at 4 because `idleAwaitingViewport` is true for Doc, preventing incorrect update from index 5. 
+
+I'm implementing conditional logic to hide rail chrome based on genre rail content state and showEmpty prop. I'm refining the logic to hide rail chrome based on empty items, error states, and showEmpty prop. 
+
+**Refining rail chrome logic**
+
+I'm implementing the refined logic for hiding rail chrome based on genre, suppress flags, empty items, and error states. I'm adjusting the header visibility logic to also hide when `showLazyPlaceholder` is true, since that indicates a lazy-loaded item is pending. I'm adjusting the header visibility logic to also hide when `showLazyPlaceholder` is true. I'm adding `loadingMore` to the header visibility condition to prevent showing rail chrome during loading more content. I'm identifying the bug where Music rail shows header without content, likely due to incorrect loading state handling. I'm fixing the bug where Music rail hides chrome due to incorrect lastStartedGenreRailIndex logic. 
+
+I'm fixing the rail chrome visibility logic to hide rails when items are empty, regardless of loading states. I'm simplifying the rail chrome visibility logic to hide rails when items are empty and there's no error. I've identified a circular dependency in `hideRailChrome` and `showEmpty` logic, where `hideRailChrome` depends on `showEmpty` but also needs explicit conditions like `items===0` and `error==null`. I've updated `hideRailChrome` conditions to include `showLazyPlaceholder` and `omitBodySkeletonForVerticalChainLo` while maintaining existing checks. I'm adding `loadingMore` to the `hideRailChrome` conditions and refining the logic to handle `showEmpty` state correctly. I'm reordering the rail chrome conditions to properly handle showEmpty state and its dependencies. 
+
+I'm adjusting the rail chrome visibility logic to correctly handle error states and ensure proper display conditions. I'm ensuring error messages render correctly by keeping the header visible when errors occur, even if rail chrome is hidden. I'm adjusting the rail chrome visibility logic to ensure headers show correctly during errors while maintaining proper section titles. 
+
+**Reordering logic**
+
+I'm reordering the rail chrome logic to calculate showEmpty before hideRailChrome. I'm adjusting the rail chrome logic to handle lazy loading states properly, ensuring headers remain visible during lazy loads for music-specific rails. I'm adjusting the rail chrome logic to hide headers during lazy loads for music-specific rails. 
+
+I'm verifying the `showEmpty` definition and its impact on rail chrome visibility during genre loading states. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Replacing the `(omit || loading)` check: `omit` is only true for one rail index, so other loading rails (e.g. Music) can show a header while `loading` is briefly false. Hiding the genre rail header until we're in a terminal state: show content, show empty, or show error — using `!showEmpty` while `items.length === 0` and no error.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx",
+  "pattern": "omitBodySkeletonForVerticalChainLoad"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx",
+  "pattern": "omitBodySkeletonForVerticalChainLoad",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "src/components/home/HomeContentRow.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Removing unused prop**
+
+I'm removing the unused prop from destructuring and prefixing with underscore for API stability. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Removing the unused `omitBodySkeletonForVerticalChainLoad` prop from the component and `HomeScreen`.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/HomeScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/home/HomeContentRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Verifying loading states**
+
+I confirmed the showEmpty and hideRailChrome logic works correctly for loading states. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "omitBodySkeleton"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "omitBodySkeleton",
+  "topFiles": [
+    {
+      "matchCount": 8,
+      "uri": ".specstory/history/2026-04-16_09-19-36Z-loading-indicators-for-scrollable-content.md"
+    },
+    {
+      "matchCount": 10,
+      "uri": ".specstory/history/2026-04-19_20-06-33Z-standardizing-data-fetching-hooks.md"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 18
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit && npm run lint
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+### What was wrong
+`hideRailChromeForVerticalChainLoad` used **`omitBodySkeletonForVerticalChainLoad || loading`**. The footer flag is only true for **one** rail index (`lastStartedGenreRailIndex`), so rails like **Music** could still show **title + See All** whenever **`loading` briefly read false** while **`items`** was still empty.
+
+### What we did (`src/components/home/HomeContentRow.tsx`)
+1. **Compute `showEmpty` first** (same rules as before).
+2. **Hide genre “All” rail chrome** when  
+   `rowContent === 'genre'` && `suppressInitialHorizontalSkeleton` && `items.length === 0` && `error == null` && **`!showEmpty`**.  
+   So **Music + See All** only appear when there is something real to show: **posters**, **empty-state copy**, or you’re past the error path. While the feed is still loading (`showEmpty` is false), the header stays **off**, matching the vertical **“Loading more content”** phase.
+
+3. **Removed `omitBodySkeletonForVerticalChainLoad`** — it’s redundant with this rule and is no longer passed from **`HomeScreen.tsx`**.
+
+Horizontal rails (Trending / Top Rated) are unchanged. `npx tsc --noEmit` and `npm run lint` both pass.

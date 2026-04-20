@@ -19,3 +19,16 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+/**
+ * Async Storage v3 resolves `org.asyncstorage.shared_storage:storage-android` from a **local** Maven
+ * repo inside the package (not Maven Central). Without this, `:app:compileDebugJavaWithJavac` fails.
+ * @see https://github.com/react-native-async-storage/async-storage/issues/1280
+ */
+allprojects {
+    repositories {
+        maven {
+            url("${rootDir}/../node_modules/@react-native-async-storage/async-storage/android/local_repo")
+        }
+    }
+}

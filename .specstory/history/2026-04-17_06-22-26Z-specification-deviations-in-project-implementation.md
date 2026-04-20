@@ -14303,8 +14303,15 @@ are we using Manrope + Inter (via react-native-google-fonts) this for fonts are 
 
 _**Agent (composer-2)**_
 
+
+Tracing how typography and font families are applied across the app.
+
+
+
+_**Agent (composer-2)**_
+
 <tool-use data-tool-type="read" data-tool-name="read_file_v2">
-<details><summary>Tool use: **read_file_v2** • Read file: </summary>
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
 
 </details>
 </tool-use>
@@ -14320,7 +14327,189 @@ _**Agent (composer-2)**_
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
 
-Status: **loading**
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.tsx",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "fontFamily|typography\\["
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "fontFamily|typography\\[",
+  "topFiles": [
+    {
+      "matchCount": 6,
+      "uri": "src/components/watchlist/WatchlistEmptyState.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/common/ScreenErrorBoundary.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/detail/DetailWatchlistButton.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/detail/DetailSynopsisSection.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/LoadMoreContentIndicator.tsx"
+    },
+    {
+      "matchCount": 10,
+      "uri": "src/screens/ProfileScreen.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/navigation/RootNavigator.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/screens/SeeAllScreen.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/watchlist/WatchlistSimilarLandscapeCard.tsx"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/components/detail/DetailCastSection.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/watchlist/WatchlistGridCard.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/watchlist/WatchlistFilterEmpty.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/common/PosterRatingBadge.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/detail/DetailChipsRow.tsx"
+    },
+    {
+      "matchCount": 10,
+      "uri": "src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistBecauseYouSavedSection.tsx"
+    }
+  ],
+  "totalFiles": 17,
+  "totalMatches": 103
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.tsx",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "\u003cText[^\u003e]*style=\\{[^}]*\\}"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "\u003cText[^\u003e]*style=\\{[^}]*\\}",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "src/components/watchlist/WatchlistBecauseYouSavedSection.tsx"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/components/home/HomeHero.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/common/ScreenErrorBoundary.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/common/ContentCard.tsx"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/components/watchlist/WatchlistEmptyState.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/detail/DetailSynopsisSection.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/search/SearchRecentSearchesSection.tsx"
+    },
+    {
+      "matchCount": 4,
+      "uri": "src/components/detail/DetailChipsRow.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/watchlist/WatchlistFilterEmpty.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/detail/DetailWatchlistButton.tsx"
+    }
+  ],
+  "totalFiles": 10,
+  "totalMatches": 106
+}
+```
+Status: **completed**
 
 
 </details>
@@ -14337,7 +14526,40 @@ _**Agent (composer-2)**_
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
 
-Status: **loading**
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.tsx",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "fontFamily:"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "fontFamily:",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/PosterRatingBadge.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/watchlist/WatchlistEmptyState.tsx"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 2
+}
+```
+Status: **completed**
 
 
 </details>
@@ -14350,11 +14572,124 @@ Status: **loading**
 
 _**Agent (composer-2)**_
 
+
+
+
+
+
+_**Agent (composer-2)**_
+
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
 
-Status: **loading**
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.tsx",
+  "outputMode": "count",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "\\.\\.\\.typography"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "count",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "\\.\\.\\.typography",
+  "topFiles": [
+    {
+      "matchCount": 4,
+      "uri": "src/components/watchlist/WatchlistScreenHeader.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/watchlist/WatchlistGridCard.tsx"
+    },
+    {
+      "matchCount": 7,
+      "uri": "src/components/home/HomeContentRow.tsx"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/components/watchlist/WatchlistEmptyState.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/detail/DetailWatchlistButton.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/common/ContentCard.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/home/HomeHeader.tsx"
+    },
+    {
+      "matchCount": 5,
+      "uri": "src/components/detail/DetailCastSection.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/watchlist/WatchlistBecauseYouSavedSection.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/screens/WatchlistScreen.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/common/ScreenErrorBoundary.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/home/HomeGenreStrip.tsx"
+    },
+    {
+      "matchCount": 10,
+      "uri": "src/screens/ProfileScreen.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/navigation/RootNavigator.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/search/SearchRecentSearchesSection.tsx"
+    },
+    {
+      "matchCount": 9,
+      "uri": "src/components/search/SearchResultsStateView.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "src/components/detail/DetailSimilarSection.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/common/PosterRatingBadge.tsx"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/components/detail/DetailSectionError.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/LoadMoreContentIndicator.tsx"
+    }
+  ],
+  "totalFiles": 31,
+  "totalMatches": 101
+}
+```
+Status: **completed**
 
 
 </details>
@@ -14364,3 +14699,149 @@ Status: **loading**
 <summary>Tool use: **ripgrep_raw_search**</summary>
 
 </details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Reviewing typography**
+
+I'm identifying exceptions to the typography token usage for system UI, navigation headers, and text inputs. I'm checking for missing typography usage in Text components and verifying system font application. </details></think>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/navigation",
+  "pattern": "headerShown|headerTitleStyle"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/navigation",
+  "pattern": "headerShown|headerTitleStyle",
+  "topFiles": [
+    {
+      "matchCount": 9,
+      "uri": "src/navigation/RootNavigator.tsx"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 9
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/navigation/RootNavigator.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Reviewing font usage**
+
+I'm confirming that Manrope and Inter are properly applied across typography components and headers. </details></think>
+
+_**Agent (composer-2)**_
+
+
+Here’s how it works in your project.
+
+### Intended behavior: Manrope + Inter everywhere in the UI
+
+Fonts are not applied “to the app” in one global switch. In React Native, **each `Text` / `TextInput` needs a `style` that sets `fontFamily`** (or inherits it from a parent that does). Your app centralizes that in **`src/theme/typography.ts`**, where every token sets **`fontFamily`** from **`fontFamilies`** — those are the linked Manrope / Inter PostScript names (`Manrope_700Bold`, `Inter_400Regular`, etc.).
+
+So **for any screen whose copy uses `...typography['some-token']` (or equivalent)**, that text is meant to use Manrope or Inter, not the system UI font.
+
+From a quick pass, **most UI text goes through typography** (Home, Search, Watchlist, Detail, Profile, See All, errors, tab badge, etc.). **`TextInput`** on Search is also wired with **`...typography['search-input-value']`**, so typed text uses Inter as well.
+
+### Where it might *not* be Manrope/Inter
+
+1. **Anything that never gets a typography-based style** — e.g. a stray `<Text>` with only `color` / `margin` and no `fontFamily` would fall back to the **system default** (San Francisco / Roboto). Your codebase is built to avoid that by spreading typography; it’s a **convention**, not enforced by the framework.
+
+2. **Native / system UI** — e.g. **`Alert.alert`**, action sheets, and similar use **system** typography, not your linked fonts.
+
+3. **If a font fails to load** on device (wrong name, not linked), React Native will **silently fall back** to the system font for that `fontFamily` string — so it can *look* like the custom fonts aren’t used on some screens even though the code says Manrope/Inter.
+
+4. **Stack headers** — Most screens use **`headerShown: false`**; **See All** is the notable case that uses the stack header, and it sets **`headerTitleStyle`** with **`...typography['title-lg']`**, so that title is on-spec. Detail uses your custom **`DetailNavBar`**, not the default header.
+
+### Short answer
+
+You **are** set up to use **Manrope + Inter (via your linked fonts / typography)** for **essentially all in-app screen text**, as long as each piece of text uses the typography tokens. It is **not** a single automatic “theme font for all screens” flag — it’s **per-style**, and the project is structured so those styles usually come from **`typography`**. Anything outside that path (or failed font loading) will **not** show Manrope/Inter.
