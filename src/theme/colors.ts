@@ -89,12 +89,9 @@ export const tabBarGlass = {
   blurAmount: 20,
 } as const;
 
-/** Detail top bar — `movie-showDetail.html` `backdrop-blur-xl` (Tailwind ≈ 24px). */
+/** Detail top bar — `movie-showDetail.html` `backdrop-blur-xl` (Tailwind ≈ 24px); iOS `BlurView` only. */
 export const detailNavBarBlur = {
-  /** iOS `BlurView` `blurAmount` */
   blurAmountIos: 24,
-  /** Android `BlurView` `blurAmount` (scale differs per platform). */
-  blurAmountAndroid: 18,
 } as const;
 
 /** Poster / content cards — portrait ratio and corner radii. */

@@ -267,7 +267,15 @@ export function RootNavigator() {
       <RootStack.Screen
         name="Detail"
         component={DetailScreen}
-        options={{ headerShown: false, title: 'Detail' }}
+        options={{
+          headerShown: false,
+          title: 'Detail',
+          /**
+           * Android default stack transition can briefly show the tab (Home) under the incoming
+           * card. `slide_from_right` is Android-specific in react-native-screens; iOS keeps default.
+           */
+          animation: 'slide_from_right',
+        }}
       />
       <RootStack.Screen
         name="SeeAll"

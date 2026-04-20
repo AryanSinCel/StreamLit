@@ -20,18 +20,16 @@ const ICON_SIZE = 24;
 export function DetailNavBar({ onBack }: DetailNavBarProps): JSX.Element {
   const insets = useSafeAreaInsets();
 
-  const blurProps =
-    Platform.OS === 'android'
-      ? ({
-          blurAmount: detailNavBarBlur.blurAmountAndroid,
-          blurType: 'dark' as const,
-          overlayColor: colors.detail_nav_bar_tint,
-        } as const)
-      : ({
-          blurAmount: detailNavBarBlur.blurAmountIos,
-          blurType: 'dark' as const,
-          reducedTransparencyFallbackColor: colors.surface,
-        } as const);
+  /**
+   * Android: `@react-native-community/blur` + `overlayColor` stacks a heavy tint on top of blur and
+   * can compositor-weird with absolute overlays (see `TabBarGlassBackground` — solid tint only).
+   * iOS: blur + separate tint matches `movie-showDetail.html`.
+   */
+  const iosBlurProps = {
+    blurAmount: detailNavBarBlur.blurAmountIos,
+    blurType: 'dark' as const,
+    reducedTransparencyFallbackColor: colors.surface,
+  } as const;
 
   return (
     <View
@@ -45,10 +43,14 @@ export function DetailNavBar({ onBack }: DetailNavBarProps): JSX.Element {
       ]}
       pointerEvents="box-none"
     >
-      <BlurView {...blurProps} style={StyleSheet.absoluteFill} />
-      {Platform.OS === 'ios' ? (
+      {Platform.OS === 'android' ? (
         <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.tintOverlay]} />
-      ) : null}
+      ) : (
+        <>
+          <BlurView {...iosBlurProps} style={StyleSheet.absoluteFill} />
+          <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.tintOverlay]} />
+        </>
+      )}
       <View style={styles.row} pointerEvents="box-none">
         <Pressable
           accessibilityLabel="Go back"

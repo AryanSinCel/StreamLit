@@ -4,7 +4,7 @@
 
 import type { JSX } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
-import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { WatchlistMediaFilter } from '../../api/types';
 import { IconPerson, IconSearch } from '../common/SimpleIcons';
 import { colors } from '../../theme/colors';
@@ -148,9 +148,17 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
     textTransform: 'uppercase',
   },
+  /**
+   * Main title — Stitch `watchlist-empty.html` `h2` (`font-headline` / Manrope `font-extrabold`,
+   * ~`text-4xl`–`text-5xl`): **`typography['display-md']`** (same token as Home hero + Detail title).
+   * Android: named Expo font + numeric `fontWeight` can map wrong; rely on the ExtraBold face + `normal`.
+   */
   screenTitle: {
     ...typography['display-md'],
     color: colors.on_surface,
+    ...(Platform.OS === 'android'
+      ? { fontWeight: 'normal' as const, includeFontPadding: false }
+      : {}),
   },
   countLine: {
     ...typography['watchlist-count-line'],
