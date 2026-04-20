@@ -112,17 +112,8 @@ export function HomeHero({ movie, loading, onWatchNow, onDetails }: HomeHeroProp
                   (!canAct || pressed) && styles.pressedDisabled,
                 ]}
               >
-                <LinearGradient
-                  accessibilityElementsHidden
-                  colors={[colors.primary, colors.primary_container]}
-                  end={{ x: 1, y: 1 }}
-                  importantForAccessibility="no-hide-descendants"
-                  pointerEvents="none"
-                  start={{ x: 1, y: 1 }}
-                  style={StyleSheet.absoluteFill}
-                />
                 <View style={styles.watchBtnInner}>
-                  <IconPlay color={colors.on_primary_container} size={20} />
+                  <IconPlay color={colors.on_primary} size={20} />
                   <Text style={styles.watchLabel}>Watch Now</Text>
                 </View>
               </Pressable>
@@ -250,6 +241,7 @@ const styles = StyleSheet.create({
   },
   watchBtn: {
     alignSelf: 'flex-start',
+    backgroundColor: colors.primary,
     borderRadius: spacing.md,
     flexGrow: fill.none,
     flexShrink: fill.none,
@@ -265,7 +257,7 @@ const styles = StyleSheet.create({
   },
   watchLabel: {
     ...typography['home-hero-cta'],
-    color: colors.on_primary_container,
+    color: colors.on_primary,
   },
   wrap: {
     alignItems: 'center',

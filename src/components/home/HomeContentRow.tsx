@@ -13,7 +13,7 @@ import { colors } from '../../theme/colors';
 import { fill, homeRowCardWidth, layout, opacity, radiusCardInner, spacing } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { formatHomeRailSubtitle } from '../../utils/formatMovieListItem';
-import { HomeRowSkeleton } from './HomeRowSkeleton';
+import { HomeRowSkeleton, homeRowSkeletonHostMinHeight } from './HomeRowSkeleton';
 
 /** PSD H5: trigger next page when viewport is within this many cards of the row end. */
 const NEAR_END_CARD_COUNT = 3;
@@ -43,7 +43,9 @@ export type HomeContentRowProps = {
   /** Discover / genre rows use dedicated empty UI (PSD-Home H6). */
   rowContent?: HomeRowContentKind;
   /**
-   * Genre rail under **All**: not yet in viewport — show horizontal skeleton instead of empty-state copy.
+   * Genre rail under **All**: not yet in viewport / not activated — no row body until fetch;
+   * with **`suppressInitialHorizontalSkeleton`**, reserve height only (no poster shimmer — footer
+   * spinner in `HomeScreen` covers chain progress).
    */
   awaitingLazyLoad?: boolean;
   /**
@@ -78,6 +80,8 @@ export function HomeContentRow({
     !loading &&
     error == null &&
     items.length === 0;
+  /** Same footprint as `HomeRowSkeleton` for `onLayout` / visibility pass — no shimmer on **All** genre chain. */
+  const showLazyPlaceholderHeightOnly = showLazyPlaceholder && suppressInitialHorizontalSkeleton;
   /** Never overlap empty copy with skeleton / lazy placeholder / pagination fetch. */
   const showEmpty =
     !loading &&
@@ -192,9 +196,15 @@ export function HomeContentRow({
         </View>
       ) : null}
 
-      {showSkeleton || showLazyPlaceholder ? (
-        <HomeRowSkeleton />
+      {showSkeleton ? <HomeRowSkeleton /> : null}
+      {showLazyPlaceholderHeightOnly ? (
+        <View
+          accessibilityElementsHidden
+          importantForAccessibility="no-hide-descendants"
+          style={styles.lazyGenreRailHeightReserve}
+        />
       ) : null}
+      {showLazyPlaceholder && !showLazyPlaceholderHeightOnly ? <HomeRowSkeleton /> : null}
 
       {showEmpty ? (
         rowContent === 'genre' ? (
@@ -258,6 +268,11 @@ const styles = StyleSheet.create({
   },
   blockRailChromeHidden: {
     marginBottom: fill.none,
+  },
+  /** Invisible reserve — matches `HomeRowSkeleton` min height for layout + visibility pass (no shimmer). */
+  lazyGenreRailHeightReserve: {
+    alignSelf: 'stretch',
+    minHeight: homeRowSkeletonHostMinHeight,
   },
   card: {
     marginRight: spacing.xxl,

@@ -1,5 +1,6 @@
 /**
- * Detail hero — full-bleed backdrop, full-frame scrim (`movie-showDetail.html` `.hero-gradient`: inset-0).
+ * Detail hero — full-bleed backdrop (same still dim as `HomeHero`), full-frame scrim
+ * (`movie-showDetail.html` `.hero-gradient`: inset-0).
  */
 
 import type { JSX } from 'react';
@@ -8,7 +9,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import type { TmdbMovieDetail } from '../../api/types';
 import { IconMovie } from '../common/SimpleIcons';
 import { colors, surfaceRgba } from '../../theme/colors';
-import { detailHeroHeight } from '../../theme/spacing';
+import { detailHeroHeight, opacity } from '../../theme/spacing';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
 
 export type DetailHeroProps = {
@@ -51,6 +52,7 @@ export function DetailHero({ width, movie }: DetailHeroProps): JSX.Element {
 const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFill,
+    opacity: opacity.muted,
   },
   heroGradient: {
     ...StyleSheet.absoluteFill,
