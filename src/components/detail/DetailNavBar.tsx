@@ -22,7 +22,7 @@ export function DetailNavBar({ onBack }: DetailNavBarProps): JSX.Element {
 
   /**
    * Android: `@react-native-community/blur` + `overlayColor` stacks a heavy tint on top of blur and
-   * can compositor-weird with absolute overlays (see `TabBarGlassBackground` — solid tint only).
+   * can compositor-weird with absolute overlays; this bar uses solid tint only on Android.
    * iOS: blur + separate tint matches `movie-showDetail.html`.
    */
   const iosBlurProps = {

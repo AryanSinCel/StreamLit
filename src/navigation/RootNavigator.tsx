@@ -193,15 +193,25 @@ function MainTabNavigator() {
       tabBarLabelStyle: mainTabBarLabelStyle,
       tabBarShowLabel: true,
       tabBarStyle: {
+        /**
+         * Float above scene content so **`tabBarBackground`** `BlurView` blurs rails/posters, not
+         * empty navigator chrome (`useTabScreenScrollBottomPadding` on tab scroll surfaces).
+         */
         backgroundColor: 'transparent',
         borderTopLeftRadius: radiusCardInner,
         borderTopRightRadius: radiusCardInner,
         borderTopWidth: fill.none,
+        bottom: fill.none,
+        elevation: elevation.screen,
         height: tabBarInnerHeight,
+        left: fill.none,
         overflow: 'hidden',
         paddingBottom,
         paddingHorizontal: Math.max(spacing.xl, insets.left, insets.right),
         paddingTop: designTopPad,
+        position: 'absolute',
+        right: fill.none,
+        zIndex: elevation.nav,
         ...(Platform.OS === 'ios'
           ? {
               shadowColor: colors.surface_container_lowest,
@@ -209,9 +219,7 @@ function MainTabNavigator() {
               shadowOpacity: opacity.muted,
               shadowRadius: layout.tabBarShadowRadius,
             }
-          : {
-              elevation: elevation.screen,
-            }),
+          : {}),
       },
     };
   }, [insets.bottom, insets.left, insets.right]);

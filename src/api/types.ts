@@ -285,7 +285,7 @@ export type WatchlistMediaFilter = 'all' | 'movie' | 'tv';
 export interface WatchlistSnapshot {
   hydrated: boolean;
   count: number;
-  /** Full persisted list (same order as the store). */
+  /** Full persisted list (**newest first** — same order as the store). */
   items: WatchlistItem[];
   filter: WatchlistMediaFilter;
   setFilter: (filter: WatchlistMediaFilter) => void;

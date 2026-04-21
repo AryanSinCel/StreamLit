@@ -83,7 +83,10 @@ export const colors = {
   detail_nav_icon_pressed: 'rgba(255, 255, 255, 0.1)',
 } as const;
 
-/** Tab bar “glass” — PSD §6.4: `BlurView` + tint (`MainTabs` `tabBarBackground`). */
+/**
+ * Tab bar “glass” — `BlurView` + a **very light** `surface_container` tint (`MainTabs` `tabBarBackground`).
+ * Blur carries the treatment; tint stays low so rails/posters stay visible (not PSD’s heavy ~0.7 scrim).
+ */
 export const tabBarGlass = {
   backgroundColor: surfaceContainerRgba(0.7),
   blurAmount: 20,
@@ -91,7 +94,7 @@ export const tabBarGlass = {
 
 /** Detail top bar — `movie-showDetail.html` `backdrop-blur-xl` (Tailwind ≈ 24px); iOS `BlurView` only. */
 export const detailNavBarBlur = {
-  blurAmountIos: 24,
+  blurAmountIos: 2,
 } as const;
 
 /** Poster / content cards — portrait ratio and corner radii. */

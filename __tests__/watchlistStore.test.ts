@@ -47,6 +47,14 @@ describe('watchlistStore', () => {
     expect(useWatchlistStore.getState().count).toBe(1);
   });
 
+  it('prepends new items so the latest add is first', () => {
+    const first = { ...sampleItem, id: 1, title: 'First' };
+    const second = { ...sampleItem, id: 2, title: 'Second' };
+    useWatchlistStore.getState().addItem(first);
+    useWatchlistStore.getState().addItem(second);
+    expect(useWatchlistStore.getState().items.map((i) => i.id)).toEqual([2, 1]);
+  });
+
   it('ignores duplicate id on addItem', () => {
     useWatchlistStore.getState().addItem(sampleItem);
     useWatchlistStore.getState().addItem(sampleItem);
@@ -77,4 +85,17 @@ describe('watchlistStore', () => {
     expect(useWatchlistStore.getState().hydrated).toBe(true);
   });
 
+  it('migrates persisted v0 append order to newest-first on rehydrate', async () => {
+    await AsyncStorage.clear();
+    useWatchlistStore.setState({ items: [], count: 0, hydrated: false, persistWriteError: null });
+    const older = { ...sampleItem, id: 1, title: 'Older' };
+    const newer = { ...sampleItem, id: 2, title: 'Newer' };
+    /** Seed after `setState` — persist `setItem` would otherwise overwrite the v0 payload. */
+    await AsyncStorage.setItem(
+      'movielist-watchlist',
+      JSON.stringify({ state: { items: [older, newer] }, version: 0 }),
+    );
+    await useWatchlistStore.persist.rehydrate();
+    expect(useWatchlistStore.getState().items.map((i) => i.id)).toEqual([2, 1]);
+  });
 });

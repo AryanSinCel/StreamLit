@@ -47,13 +47,18 @@ describe('getWatchlistSimilarMovieAnchorId', () => {
     expect(getWatchlistSimilarMovieAnchorId([])).toBeNull();
   });
 
-  it('uses the last item when it is a movie', () => {
-    const items = [movie(1), tv(2), movie(99)];
+  it('uses the first movie in newest-first store order', () => {
+    const items = [movie(99), tv(2), movie(1)];
     expect(getWatchlistSimilarMovieAnchorId(items)).toBe(99);
   });
 
-  it('returns null when the last item is tv (movie similar endpoint)', () => {
-    const items = [movie(1), tv(2)];
+  it('skips leading TV rows until a movie anchor', () => {
+    const items = [tv(2), movie(1)];
+    expect(getWatchlistSimilarMovieAnchorId(items)).toBe(1);
+  });
+
+  it('returns null when the list has no movies', () => {
+    const items = [tv(1), tv(2)];
     expect(getWatchlistSimilarMovieAnchorId(items)).toBeNull();
   });
 });

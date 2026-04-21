@@ -5,7 +5,6 @@ import type { JSX } from 'react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Keyboard, ScrollView, StyleSheet } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
 import { TabAppBar } from '../components/common/TabAppBar';
 import { TabScreenShell } from '../components/common/TabScreenShell';
@@ -20,6 +19,7 @@ import type {
 } from '../navigation/types';
 import { spacing } from '../theme/spacing';
 import { normalizeSearchTerm } from '../utils/recentSearches';
+import { useTabScreenScrollBottomPadding } from '../utils/tabBarScrollInset';
 
 type Props = CompositeScreenProps<
   NativeStackScreenProps<SearchStackParamList, 'SearchMain'>,
@@ -31,7 +31,7 @@ type Props = CompositeScreenProps<
 
 /** Search tab: default (`useSearch` + S4) vs results State 2 (S5b); Detail opens on root stack (no tab bar). */
 export function SearchScreen({ navigation }: Props): JSX.Element {
-  const insets = useSafeAreaInsets();
+  const scrollBottomPadding = useTabScreenScrollBottomPadding();
   const [query, setQuery] = useState('');
   const [inputFocused, setInputFocused] = useState(false);
 
@@ -107,7 +107,7 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
           contentContainerStyle={[
             styles.scrollContent,
             {
-              paddingBottom: insets.bottom + spacing.xxxxl,
+              paddingBottom: scrollBottomPadding,
             },
           ]}
           keyboardDismissMode="on-drag"

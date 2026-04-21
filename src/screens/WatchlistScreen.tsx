@@ -5,7 +5,6 @@ import type { JSX } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
 import { Alert, FlatList, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useWindowDimensions } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { WatchlistItem } from '../api/types';
 import { WatchlistBecauseYouSavedSection } from '../components/watchlist/WatchlistBecauseYouSavedSection';
 import { WatchlistEmptyState } from '../components/watchlist/WatchlistEmptyState';
@@ -19,6 +18,7 @@ import { TabAppBar } from '../components/common/TabAppBar';
 import { WatchlistScreenHeader } from '../components/watchlist/WatchlistScreenHeader';
 import { useWatchlist } from '../hooks/useWatchlist';
 import { useWatchlistStore } from '../store/watchlistStore';
+import { useTabScreenScrollBottomPadding } from '../utils/tabBarScrollInset';
 import { getWatchlistSimilarMovieAnchorId } from '../utils/watchlistFilters';
 import { navigateToDetail, navigateToSeeAll } from '../navigation/helpers';
 import type {
@@ -43,7 +43,7 @@ function watchlistItemKey(item: WatchlistItem): string {
 
 /** Watchlist tab main — populated grid + empty state; data from `useWatchlist` / store only. */
 export function WatchlistScreen({ navigation }: Props): JSX.Element {
-  const insets = useSafeAreaInsets();
+  const scrollBottomPadding = useTabScreenScrollBottomPadding();
   const { width: windowWidth } = useWindowDimensions();
   const { data: watchlistData, loading: watchlistLoading, refetch: refetchWatchlistRemote } =
     useWatchlist();
@@ -132,7 +132,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
           contentContainerStyle={[
             styles.scrollContent,
             {
-              paddingBottom: insets.bottom + spacing.xxl,
+              paddingBottom: scrollBottomPadding,
               paddingTop: spacing.lg,
             },
           ]}
@@ -157,9 +157,12 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
     movieGenres,
   } = watchlistData;
 
-  const tailItem = items.length > 0 ? items[items.length - 1] : undefined;
+  /** Newest-first store order — first cell is the latest add. */
+  const newestItem = items.length > 0 ? items[0] : undefined;
   const savedTitle =
-    tailItem != null && tailItem.title.trim().length > 0 ? tailItem.title.trim() : 'this title';
+    newestItem != null && newestItem.title.trim().length > 0
+      ? newestItem.title.trim()
+      : 'this title';
   const similarMovies = similar.data?.results ?? [];
   const similarAnchorMovieId = getWatchlistSimilarMovieAnchorId(items);
   const showBecauseYouSavedRow =
@@ -178,13 +181,13 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
           <ScrollView
             contentContainerStyle={[
               styles.scrollContent,
-              {
-                paddingBottom: insets.bottom + spacing.xxl,
-                paddingTop: spacing.lg,
-              },
-            ]}
-            keyboardShouldPersistTaps="handled"
-            style={styles.scrollFill}
+            {
+              paddingBottom: scrollBottomPadding,
+              paddingTop: spacing.lg,
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
+          style={styles.scrollFill}
           >
           <View style={[styles.emptyScrollInner, { paddingHorizontal: horizontalPad }]}>
             <WatchlistScreenHeader
@@ -221,7 +224,7 @@ export function WatchlistScreen({ navigation }: Props): JSX.Element {
           contentContainerStyle={[
             styles.listContent,
             {
-              paddingBottom: insets.bottom + spacing.xxl,
+              paddingBottom: scrollBottomPadding,
               paddingTop: spacing.lg,
             },
           ]}

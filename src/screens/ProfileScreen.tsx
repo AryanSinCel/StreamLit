@@ -4,7 +4,6 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { JSX } from 'react';
 import { useCallback, useMemo } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { WatchlistMediaFilter } from '../api/types';
 import { IconPerson, IconSearch } from '../components/common/SimpleIcons';
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
@@ -14,6 +13,7 @@ import { WatchlistScreenHeader } from '../components/watchlist/WatchlistScreenHe
 import type { ProfileStackParamList, RootStackParamList, RootTabParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
 import { layout, opacity, radiusCardInner, spacing, tracking } from '../theme/spacing';
+import { useTabScreenScrollBottomPadding } from '../utils/tabBarScrollInset';
 import { typography } from '../theme/typography';
 
 type Props = CompositeScreenProps<
@@ -56,7 +56,7 @@ const APP_VERSION_LABEL = 'MovieList 0.0.1';
  * Profile tab — same **`TabAppBar`** dock as Watchlist; **`WatchlistScreenHeader`** title block (custom labels); placeholder account UI.
  */
 export function ProfileScreen({ navigation }: Props): JSX.Element {
-  const insets = useSafeAreaInsets();
+  const scrollBottomPadding = useTabScreenScrollBottomPadding();
 
   const showComingSoon = useCallback(() => {
     Alert.alert('Profile', 'Coming soon', [{ text: 'OK' }]);
@@ -96,7 +96,7 @@ export function ProfileScreen({ navigation }: Props): JSX.Element {
           contentContainerStyle={[
             styles.scrollContent,
             {
-              paddingBottom: insets.bottom + spacing.xxxxl,
+              paddingBottom: scrollBottomPadding,
               paddingTop: spacing.lg,
             },
           ]}

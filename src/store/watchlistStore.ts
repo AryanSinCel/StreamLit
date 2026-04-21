@@ -85,7 +85,8 @@ const useWatchlistStore = create<WatchlistStore>()(
           if (state.items.some((i) => i.id === item.id)) {
             return state;
           }
-          const items = [...state.items, item];
+          /** Newest first — grid row 1 shows the latest add (legacy v0 order was append). */
+          const items = [item, ...state.items];
           return { items, count: items.length };
         });
       },
@@ -104,6 +105,16 @@ const useWatchlistStore = create<WatchlistStore>()(
       name: 'movielist-watchlist',
       storage: watchlistPersistStorage,
       partialize: (state) => ({ items: state.items }),
+      /** v0: append order (oldest→newest). v1: reverse once on migrate, then `addItem` prepends. */
+      version: 1,
+      migrate: (persistedState, fromVersion) => {
+        const s = persistedState as { items?: WatchlistItem[] };
+        const raw = Array.isArray(s?.items) ? s.items : [];
+        if (fromVersion === 0) {
+          return { items: [...raw].reverse() };
+        }
+        return { items: raw };
+      },
       onRehydrateStorage: () => (state, error) => {
         if (error) {
           // Rehydration failed — empty list and lift gate so UI is not stuck.

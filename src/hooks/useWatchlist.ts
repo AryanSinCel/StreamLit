@@ -13,7 +13,7 @@ import { filterWatchlistItems, getWatchlistSimilarMovieAnchorId } from '../utils
 import { isLikelyCanceledRequest, mapUnknownError } from '../utils/mapUnknownError';
 
 /**
- * Watchlist orchestration: filtered local items + similar movies for the tail anchor (PSD-Watchlist §7 W1).
+ * Watchlist orchestration: filtered local items + similar movies for the newest-first movie anchor (PSD-Watchlist §7 W1).
  *
  * Top-level **`UseQueryResult`** semantics:
  * - **`loading`**: `true` only while the persisted watchlist (**AsyncStorage**) is not yet rehydrated.

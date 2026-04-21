@@ -5,7 +5,6 @@ import type { JSX } from 'react';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { HomeChipKey, HomeChipResolved } from '../api/types';
 import { LoadMoreContentIndicator } from '../components/common/LoadMoreContentIndicator';
 import { ScreenErrorBoundary } from '../components/common/ScreenErrorBoundary';
@@ -26,6 +25,7 @@ import type {
 import { colors } from '../theme/colors';
 import { opacity, spacing } from '../theme/spacing';
 import { typography } from '../theme/typography';
+import { useTabScreenScrollBottomPadding } from '../utils/tabBarScrollInset';
 
 function row3SectionTitle(selectedChipKey: HomeChipKey, chips: readonly HomeChipResolved[]): string {
   return chips.find((c) => c.key === selectedChipKey)?.label ?? 'Discover';
@@ -62,7 +62,7 @@ type Props = CompositeScreenProps<
 const GENRE_RAIL_VISIBILITY_BUFFER_PX = spacing.xxl + spacing.xxxl;
 
 export function HomeScreen({ navigation }: Props): JSX.Element {
-  const insets = useSafeAreaInsets();
+  const scrollBottomPadding = useTabScreenScrollBottomPadding();
   const { height: windowHeight } = useWindowDimensions();
   const { data: snap, error: genresError, refetch } = useHome();
 
@@ -283,7 +283,7 @@ export function HomeScreen({ navigation }: Props): JSX.Element {
       <ScreenErrorBoundary onRetry={refetch} screenLabel="Home" style={styles.scroll}>
         <ScrollView
           contentContainerStyle={{
-            paddingBottom: insets.bottom + spacing.xxxxl,
+            paddingBottom: scrollBottomPadding,
           }}
           nestedScrollEnabled
           onContentSizeChange={runGenreRailVisibilityPass}

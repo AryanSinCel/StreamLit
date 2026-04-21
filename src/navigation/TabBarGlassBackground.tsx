@@ -1,10 +1,10 @@
 /**
- * Bottom tab bar — PSD §6.4: `BlurView` + `rgba(35, 35, 35, 0.70)` tint (`tabBarGlass`).
+ * Bottom tab bar — frosted **`BlurView`** + a thin **`surface_container`** tint (`tabBarGlass`).
  *
- * Android: skip `BlurView` for this slot. `@react-native-community/blur` on Android often dims or
- * blurs the whole activity when used as `tabBarBackground`, while root-stack screens (Detail, See
- * All) painted above the tab navigator look normal. A solid tint matches the PSD color without
- * that compositing bug.
+ * - **iOS:** `ultraThinMaterialDark` (not `dark`) so the material stays legible without crushing
+ *   backdrop contrast; tint is a light veil only.
+ * - **Android:** explicit transparent `overlayColor` removes the library’s default dim layer on top
+ *   of blur; tint is still the separate `View` under our control.
  */
 
 import { BlurView } from '@react-native-community/blur';
@@ -14,33 +14,32 @@ import { tabBarGlass } from '../theme/colors';
 import { radiusCardInner } from '../theme/spacing';
 
 export function TabBarGlassBackground(): JSX.Element {
-  if (Platform.OS === 'android') {
-    return (
-      <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.androidTint]} />
-    );
-  }
-
-  const blurProps = {
+  const iosBlurProps = {
     blurAmount: tabBarGlass.blurAmount,
-    blurType: 'dark' as const,
+    blurType: 'ultraThinMaterialDark' as const,
     reducedTransparencyFallbackColor: tabBarGlass.backgroundColor,
   } as const;
 
+  const androidBlurProps = {
+    blurAmount: 32,
+    blurType: 'dark' as const,
+    overlayColor: 'transparent',
+  } as const;
+
   return (
-    <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.iosBlurRoot]}>
-      <BlurView {...blurProps} style={StyleSheet.absoluteFill} />
+    <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.blurRoot]}>
+      {Platform.OS === 'android' ? (
+        <BlurView {...androidBlurProps} style={StyleSheet.absoluteFill} />
+      ) : (
+        <BlurView {...iosBlurProps} style={StyleSheet.absoluteFill} />
+      )}
       <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.tint]} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  androidTint: {
-    backgroundColor: tabBarGlass.backgroundColor,
-    borderTopLeftRadius: radiusCardInner,
-    borderTopRightRadius: radiusCardInner,
-  },
-  iosBlurRoot: {
+  blurRoot: {
     borderTopLeftRadius: radiusCardInner,
     borderTopRightRadius: radiusCardInner,
     overflow: 'hidden',

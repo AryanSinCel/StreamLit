@@ -11,17 +11,18 @@ export function filterWatchlistItems(
 }
 
 /**
- * Anchor for `GET /movie/{id}/similar` (PSD-Watchlist §2): the **last** element of
- * `items` — same order as `addItem` appends in `watchlistStore`. Returns that
- * item’s `id` only when `mediaType === 'movie'` so the movie similar endpoint is
- * not called with a TV id.
+ * Anchor for `GET /movie/{id}/similar` (PSD-Watchlist §2): the **first** movie in
+ * store order (**newest-first** after `watchlistStore` prepend + v0→v1 migrate). Skips
+ * leading TV ids so the movie similar endpoint is never called with a TV id.
  */
 export function getWatchlistSimilarMovieAnchorId(
   items: readonly WatchlistItem[],
 ): number | null {
-  if (items.length === 0) {
-    return null;
+  for (let i = 0; i < items.length; i += 1) {
+    const item = items[i];
+    if (item != null && item.mediaType === 'movie') {
+      return item.id;
+    }
   }
-  const tail = items[items.length - 1];
-  return tail.mediaType === 'movie' ? tail.id : null;
+  return null;
 }
