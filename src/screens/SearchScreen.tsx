@@ -47,9 +47,11 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
   const selectedGenreIndex = useMemo(() => {
     const n = normalizeSearchTerm(query);
     if (n.length === 0) {
-      return 0;
+      return null;
     }
-    const i = genreChipLabels.findIndex((l) => normalizeSearchTerm(l) === n);
+    const i = genreChipLabels.findIndex(
+      (l) => normalizeSearchTerm(l).toLowerCase() === n.toLowerCase(),
+    );
     return i >= 0 ? i : null;
   }, [query, genreChipLabels]);
 
@@ -125,7 +127,6 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
           <SearchResultsStateView
             debouncedQuery={d.debouncedQuery}
             error={search.error}
-            genreChipLabels={genreChipLabels}
             hasMore={d.hasMore}
             inputFocused={inputFocused}
             loading={d.searchLoading}
@@ -138,14 +139,12 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
               });
             }}
             onFocusInput={() => setInputFocused(true)}
-            onGenreChipPress={d.applyGenreChip}
             onOpenResult={openSearchDetail}
             onRecentTermPress={(term) => setQuery(term)}
             onRetrySearch={search.refetch}
             query={query}
             recentSearches={d.recentSearches}
             results={d.results}
-            selectedGenreIndex={selectedGenreIndex}
             showRecentsBlock={showRecentsBlock}
             totalResults={totalResults}
           />

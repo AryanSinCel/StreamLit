@@ -1,11 +1,11 @@
 /**
  * PSD Search §4 State 2 (results) — count line, 2-column poster grid, zero-results, loading/error.
  * Loading uses shape-matched skeleton (§7 S6). Presentational: parent supplies `useSearch` + navigation.
+ * Genre filter chips live on the default (`SearchDefaultView`) state only — not repeated here.
  */
 
 import type { JSX } from 'react';
-import { Image, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { useWindowDimensions } from 'react-native';
+import { Image, Keyboard, Pressable, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
 import type { TmdbSearchMovieListItem } from '../../api/types';
 import { LoadMoreContentIndicator } from '../common/LoadMoreContentIndicator';
 import { IconMovie, IconSearch } from '../common/SimpleIcons';
@@ -18,7 +18,6 @@ import {
   opacity,
   radiusCardInner,
   radiusCardOuter,
-  radiusFullPill,
   spacing,
   tracking,
 } from '../../theme/spacing';
@@ -34,9 +33,6 @@ export type SearchResultsStateViewProps = {
   inputFocused: boolean;
   onFocusInput: () => void;
   onBlurInput: () => void;
-  genreChipLabels: readonly string[];
-  selectedGenreIndex: number | null;
-  onGenreChipPress: (label: string) => void;
   showRecentsBlock: boolean;
   recentSearches: readonly string[];
   onClearRecents: () => void;
@@ -78,9 +74,6 @@ export function SearchResultsStateView({
   inputFocused,
   onFocusInput,
   onBlurInput,
-  genreChipLabels,
-  selectedGenreIndex,
-  onGenreChipPress,
   showRecentsBlock,
   recentSearches,
   onClearRecents,
@@ -138,35 +131,6 @@ export function SearchResultsStateView({
         }}
         style={styles.tapOutsideSearch}
       >
-        <View style={styles.section}>
-          <ScrollView
-            contentContainerStyle={styles.chipsScrollContent}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          >
-            {genreChipLabels.map((label, index) => {
-              const selected = selectedGenreIndex !== null && index === selectedGenreIndex;
-              return (
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityState={{ selected }}
-                  key={label}
-                  onPress={() => onGenreChipPress(label)}
-                  style={({ pressed }) => [
-                    styles.chip,
-                    selected ? styles.chipSelected : styles.chipIdle,
-                    pressed && styles.chipPressed,
-                  ]}
-                >
-                  <Text style={[styles.chipLabel, selected ? styles.chipLabelSelected : styles.chipLabelIdle]}>
-                    {label}
-                  </Text>
-                </Pressable>
-              );
-            })}
-          </ScrollView>
-        </View>
-
         <SearchRecentSearchesSection
           onClearRecents={onClearRecents}
           onRecentTermPress={onRecentTermPress}
@@ -302,37 +266,8 @@ const styles = StyleSheet.create({
     ...typography['label-sm'],
     color: colors.on_surface_variant,
   },
-  chip: {
-    borderRadius: radiusFullPill,
-    marginRight: spacing.md,
-    paddingHorizontal: spacing.xl,
-    paddingVertical: spacing.sm + spacing.xs,
-  },
-  chipIdle: {
-    backgroundColor: colors.surface_container_highest,
-  },
-  chipLabel: {
-    ...typography['title-sm'],
-    fontWeight: '600',
-  },
-  chipLabelIdle: {
-    color: colors.on_surface_variant,
-  },
-  chipLabelSelected: {
-    color: colors.on_surface,
-    fontWeight: '600',
-  },
   chipPressed: {
     opacity: opacity.control,
-  },
-  chipSelected: {
-    backgroundColor: colors.secondary_container,
-  },
-  chipsScrollContent: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingBottom: spacing.sm,
-    paddingRight: spacing.xl,
   },
   countLine: {
     ...typography['body-md'],
@@ -454,8 +389,5 @@ const styles = StyleSheet.create({
   searchRow: {
     marginBottom: spacing.xxl,
     position: 'relative',
-  },
-  section: {
-    marginBottom: spacing.xxxl,
   },
 });

@@ -234,7 +234,7 @@ export interface SearchTabSnapshot {
   mode: SearchScreenMode;
   /** Query string driving TMDB search after the 400ms debounce (trim + collapsed whitespace). */
   debouncedQuery: string;
-  /** Last successful `GET /search/movie` payload for the current debounced query, or null. */
+  /** Last successful search payload (`GET /search/movie` or genre-scoped `GET /discover/movie`), or null. */
   searchPage: TmdbPagedSearchMoviesResponse | null;
   results: TmdbSearchMovieListItem[];
   totalResults: number;
@@ -245,7 +245,7 @@ export interface SearchTabSnapshot {
   /** More TMDB pages exist for the current debounced query. */
   hasMore: boolean;
   searchError: string | null;
-  /** Fetches the next `GET /search/movie` page and appends unique rows. */
+  /** Fetches the next page (search or discover) and appends unique rows. */
   loadMore: () => void;
   /** `GET /trending/movie/week` page 1 for the default-state trending block. */
   trending: TmdbPagedMoviesResponse | null;
@@ -258,7 +258,8 @@ export interface SearchTabSnapshot {
   lastSuccessfulQuery: string | null;
   /**
    * Genre chip path: updates controlled `query` when `setQuery` is provided, skips debounce,
-   * and runs `GET /search/movie` immediately for the label text.
+   * and commits the label immediately. When the label matches a TMDB genre name, results use
+   * **`GET /discover/movie`** (`with_genres`); otherwise **`GET /search/movie`**.
    */
   applyGenreChip: (label: string) => void;
   /** `/genre/movie/list` — resolves `genre_ids` on default trending / featured copy (Search tab). */

@@ -4,16 +4,25 @@
  *
  * §6 quality bar (hook-owned): **400ms** debounce (`SEARCH_DEBOUNCE_MS`); **AbortController** per search;
  * recents via `addRecentSearch` only after a **completed** search; **genre chip** path bypasses debounce
- * (`genreBypassDebounceRef` + immediate `debouncedQuery` update).
+ * (`genreBypassDebounceRef` + immediate `debouncedQuery` update). When the debounced string matches a
+ * TMDB genre name, **`GET /discover/movie`** (`with_genres`) replaces title **`GET /search/movie`**.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { getMovieGenres, getTrendingMoviesWeek, searchMovies } from '../api/movies';
+import {
+  DISCOVER_SORT_POPULARITY,
+  getDiscoverMovies,
+  getMovieGenres,
+  getTrendingMoviesWeek,
+  searchMovies,
+} from '../api/movies';
 import type {
   SearchTabSnapshot,
   TmdbGenre,
+  TmdbMovieListItem,
   TmdbPagedMoviesResponse,
   TmdbPagedSearchMoviesResponse,
+  TmdbSearchMovieListItem,
   UseQueryResult,
   UseSearchInput,
 } from '../api/types';
@@ -23,10 +32,33 @@ import {
   getRecentSearches,
   normalizeSearchTerm,
 } from '../utils/recentSearches';
+import { genreIdForDebouncedQuery } from '../utils/genreSearchMatch';
 import { mergeUniqueSearchMovieListById } from '../utils/mergeUniqueMovieListById';
 import { isLikelyCanceledRequest, mapUnknownError } from '../utils/mapUnknownError';
 
 const SEARCH_DEBOUNCE_MS = 400;
+
+function mapDiscoverRowToSearchRow(row: TmdbMovieListItem): TmdbSearchMovieListItem {
+  return {
+    id: row.id,
+    title: row.title,
+    original_title: row.title,
+    poster_path: row.poster_path,
+    backdrop_path: row.backdrop_path,
+    vote_average: row.vote_average,
+    release_date: row.release_date.length > 0 ? row.release_date : null,
+    genre_ids: row.genre_ids,
+  };
+}
+
+function discoverPageToSearchPage(res: TmdbPagedMoviesResponse): TmdbPagedSearchMoviesResponse {
+  return {
+    page: res.page,
+    total_pages: res.total_pages,
+    total_results: res.total_results,
+    results: res.results.map(mapDiscoverRowToSearchRow),
+  };
+}
 
 export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult<SearchTabSnapshot> {
   const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -54,9 +86,11 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult<S
 
   const [recentSearches, setRecentSearches] = useState<readonly string[]>([]);
   const [movieGenres, setMovieGenres] = useState<readonly TmdbGenre[]>([]);
+  const movieGenresRef = useRef<readonly TmdbGenre[]>([]);
   const hasSearchTrendingSettledRef = useRef(false);
 
   debouncedQueryRef.current = debouncedQuery;
+  movieGenresRef.current = movieGenres;
 
   /** Genre list for Search default trending (`genre_ids` → labels). */
   useEffect(() => {
@@ -178,19 +212,30 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult<S
       setHasMore(false);
       searchPageRef.current = 0;
       try {
-        const result = await searchMovies(termAtStart, {
-          page: 1,
-          signal: controller.signal,
-        });
+        const genreId = genreIdForDebouncedQuery(termAtStart, movieGenres);
+        const resultPage =
+          genreId != null
+            ? discoverPageToSearchPage(
+                await getDiscoverMovies({
+                  page: 1,
+                  signal: controller.signal,
+                  sort_by: DISCOVER_SORT_POPULARITY,
+                  with_genres: genreId,
+                }),
+              )
+            : await searchMovies(termAtStart, {
+                page: 1,
+                signal: controller.signal,
+              });
         if (cancelled || controller.signal.aborted) {
           return;
         }
         if (debouncedQueryRef.current !== termAtStart) {
           return;
         }
-        setData(result);
-        searchPageRef.current = result.page;
-        setHasMore(result.page < result.total_pages);
+        setData(resultPage);
+        searchPageRef.current = resultPage.page;
+        setHasMore(resultPage.page < resultPage.total_pages);
         setLastSuccessfulQuery(termAtStart);
         await addRecentSearch(termAtStart);
         const nextRecents = await getRecentSearches();
@@ -221,7 +266,7 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult<S
       cancelled = true;
       controller.abort();
     };
-  }, [debouncedQuery, searchRetryKey]);
+  }, [debouncedQuery, movieGenres, searchRetryKey]);
 
   useEffect(() => {
     let cancelled = false;
@@ -245,9 +290,19 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult<S
     setLoadingMore(true);
     (async () => {
       try {
-        const result = await searchMovies(term, {
-          page: nextPage,
-        });
+        const genreId = genreIdForDebouncedQuery(term, movieGenresRef.current);
+        const result =
+          genreId != null
+            ? discoverPageToSearchPage(
+                await getDiscoverMovies({
+                  page: nextPage,
+                  sort_by: DISCOVER_SORT_POPULARITY,
+                  with_genres: genreId,
+                }),
+              )
+            : await searchMovies(term, {
+                page: nextPage,
+              });
         if (sessionAtStart !== searchSessionGenRef.current || debouncedQueryRef.current !== term) {
           return;
         }
