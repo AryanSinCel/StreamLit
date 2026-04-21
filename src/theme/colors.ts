@@ -46,8 +46,6 @@ export const colors = {
   on_surface_variant: '#E4BDBA',
   /** TextInput placeholder — `search.html` on-surface-variant ~50% (not in body text). */
   search_placeholder: 'rgba(229, 226, 225, 0.5)',
-  /** Search field focus ring (`search.html` / `search-result.html` `ring-primary-container/30`). */
-  search_input_focus_ring: 'rgba(255, 83, 81, 0.35)',
   /** Rating pill on posters — `search.html` (`bg-black/40` over stills). */
   poster_rating_scrim: 'rgba(0, 0, 0, 0.4)',
   /** Bottom tab icons when inactive (`home.html` ~60% opacity on variant). */

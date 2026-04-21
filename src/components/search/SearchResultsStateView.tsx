@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.lg,
   },
   searchInputFocused: {
-    borderColor: colors.search_input_focus_ring,
+    borderColor: colors.outline_variant,
   },
   searchRow: {
     marginBottom: spacing.xxl,
