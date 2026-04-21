@@ -12,6 +12,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   DISCOVER_SORT_POPULARITY,
   getDiscoverMovies,
+  getMovieDetail,
   getMovieGenres,
   getTrendingMoviesWeek,
   searchMovies,
@@ -83,6 +84,8 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult<S
   const [trendingLoading, setTrendingLoading] = useState(true);
   const [trendingError, setTrendingError] = useState<string | null>(null);
   const [trendingReloadKey, setTrendingReloadKey] = useState(0);
+  const [featuredRuntimeMinutes, setFeaturedRuntimeMinutes] = useState<number | null>(null);
+  const featuredRuntimeFetchSeqRef = useRef(0);
 
   const [recentSearches, setRecentSearches] = useState<readonly string[]>([]);
   const [movieGenres, setMovieGenres] = useState<readonly TmdbGenre[]>([]);
@@ -179,6 +182,44 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult<S
       controller.abort();
     };
   }, [trendingReloadKey]);
+
+  /** First trending row has no `runtime`; fetch detail for featured meta (`Genre • Year • 2h 15m`). */
+  useEffect(() => {
+    const first = trending?.results[0];
+    if (first == null) {
+      setFeaturedRuntimeMinutes(null);
+      return;
+    }
+    const movieId = first.id;
+    featuredRuntimeFetchSeqRef.current += 1;
+    const seq = featuredRuntimeFetchSeqRef.current;
+    const controller = new AbortController();
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const detail = await getMovieDetail(movieId, { signal: controller.signal });
+        if (cancelled || controller.signal.aborted || seq !== featuredRuntimeFetchSeqRef.current) {
+          return;
+        }
+        setFeaturedRuntimeMinutes(detail.runtime);
+      } catch {
+        if (cancelled || seq !== featuredRuntimeFetchSeqRef.current) {
+          return;
+        }
+        setFeaturedRuntimeMinutes(null);
+      }
+    })().catch(() => {
+      if (!cancelled && seq === featuredRuntimeFetchSeqRef.current) {
+        setFeaturedRuntimeMinutes(null);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [trending, trendingReloadKey]);
 
   /** Debounced / retried movie search + completed-search recents. */
   useEffect(() => {
@@ -392,6 +433,7 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult<S
       lastSuccessfulQuery,
       applyGenreChip,
       movieGenres,
+      featuredRuntimeMinutes,
     };
   }, [
     mode,
@@ -411,6 +453,7 @@ export function useSearch({ query, setQuery }: UseSearchInput): UseQueryResult<S
     lastSuccessfulQuery,
     applyGenreChip,
     movieGenres,
+    featuredRuntimeMinutes,
   ]);
 
   const envelopeLoading = mode === 'results' ? loading : trendingLoading;

@@ -23786,4 +23786,2470 @@ _**Agent (composer-2)**_
 <think><details><summary>Thought Process</summary>
 **Resolving search terms**
 
-I'm matching normalized search terms against movie genres to determine whether to use genre-based discovery API. </details></think>
+I'm matching normalized search terms against movie genres to determine whether to use genre-based discovery API. 
+
+**Mapping search results**
+
+I'm mapping TMDB search results to match the expected search item type, handling nullable title fields. I'm mapping discover results to `TmdbSearchMovieListItem[]` with a simple transformation function. I'm adjusting the search result mapping to handle nullable release dates in TMDB items. I'm prioritizing TMDB genre matches over movie titles when there's an exact name conflict, since the genre list is authoritative. I'm handling the race condition where `movieGenres` loads before search query executes. 
+
+**Handling search race**
+
+I'm refactoring the genre chip flow to pass genre ID directly instead of inferring from string match. I'm updating `applyGenreChip` to accept a genre ID directly and setting `genreSearchId` ref when applying from chip. 
+
+I'm simplifying genre lookup to use exact name matching when genres are loaded, and avoiding automatic re-fetching on genre load. I'm adding `movieGenres` to the search effect dependencies to properly handle genre-based queries. 
+
+I'm implementing genre-based search by adding helper function and updating search effect to handle genre filters. I'm handling the search race condition by ensuring data is set only after successful API call. I'm applying the same race condition fix to loadMore. 
+
+I'm adding movieGenres to the useEffect dependency array to re-run search fetch when genres load. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/recentSearches.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Matching genre names**
+
+I'm fixing genre matching by ensuring case-insensitive comparison between normalized chips and queries. I'm implementing case-insensitive genre matching using normalized terms for better accuracy. 
+
+I'm switching to exact normalized lowercase matching for genre names to avoid issues with special characters and variations like 'Sci-Fi' vs 'Science Fiction'. 
+
+**Using refs for genre ID**
+
+I'm implementing refs to track the active genre ID during fetch operations to ensure proper search mode handling. I'm using refs to track the active genre ID during fetch operations to ensure proper search mode handling. 
+
+**Updating genre refs**
+
+I'm ensuring activeGenreDiscoverIdRef updates consistently on fetch resolution to maintain genre ID integrity during search transitions. I'm implementing `resolveGenreId(term, movieGenres)` to correctly handle genre ID resolution during loadMore operations. I'm handling edge cases where `movieGenres` is empty on page 1 but populated later during loadMore. </details></think>
+
+_**Agent (composer-2)**_
+
+Routing exact TMDB genre-name matches to `GET /discover/movie` with `with_genres` instead of `GET /search/movie`. Implementing helper, mapping discover rows to search list items, and updating fetch + `loadMore` (including when `movieGenres` loads after the query).
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/mergeUniqueMovieListById.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating search hook**
+
+I'm importing required TMDB types and functions into useSearch.ts to support the discover movies feature. I'm mapping discover row types to search row types for consistent data handling. I'm implementing debounced genre ID matching for search terms. I'm replacing the single searchMovies call with a conditional branch based on whether movieGenres is available. I'm adding movieGenres to loadMore's useCallback dependencies to fix scope issues with genre-based loading. 
+
+I'm syncing movieGenres ref to ensure debounce query uses latest genres. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing genre resolution and discover fetch in `useSearch.ts`, syncing `movieGenres` into a ref for `loadMore`, and updating the `SearchTabSnapshot` JSDoc in `types.ts`.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Implementing useSearch**
+
+I'm adding imports and helpers for useSearch.ts and syncing movieGenresRef with movieGenres state. I'm implementing the main effect with movieGenres in dependencies and handling loadMore functionality. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating hook file**
+
+I'm updating the hook file header comment on lines 6-7 to mention genre chip. 
+
+**Refactoring search utils**
+
+I'm moving `genreIdForDebouncedQuery` to `src/utils/searchGenreDiscover.ts` and normalizing its usage. I'm creating `src/utils/genreSearchMatch.ts` with `genreIdForDebouncedQuery` and updating `useSearch` to import from there. 
+
+**Creating genre search util**
+
+I'm creating `src/utils/genreSearchMatch.ts` with `genreIdForDebouncedQuery` helper function. </details></think>
+
+_**Agent (composer-2)**_
+
+Extracting genre matching into a testable util and adding a short unit test.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/genreSearchMatch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating search screen**
+
+I'm updating SearchScreen to handle chip selection case insensitivity by comparing toLowerCase values. I'm fixing chip selection to handle case-insensitive matching by normalizing search terms. 
+
+**Writing tests**
+
+I'm adding test cases for the genre search matching utility. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/__tests__/genreSearchMatch.test.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint && npm test -- --watchman=false 2>&1 | tail -20</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint && npm test -- --watchman=false 2>&1 | tail -20
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+    &gt; 1 | import AsyncStorage from '@react-native-async-storage/async-storage';
+        | ^
+      2 |
+      3 | /**
+      4 |  * Stable persistence key for Search recent terms (PSD-Search §2.2).
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1505:14)
+      at Object.require (src/utils/recentSearches.ts:1:1)
+      at Object.require (src/utils/genreSearchMatch.ts:2:1)
+      at Object.&lt;anonymous&gt; (__tests__/genreSearchMatch.test.ts:1:1)
+
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 1 failed, 9 passed, 10 total
+Tests:       50 passed, 50 total
+Snapshots:   0 total
+Time:        1.727 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Refactoring search logic**
+
+I'm refactoring genreSearchMatch to avoid importing normalizeSearchTerm from recentSearches, instead duplicating the trim logic directly. I'm duplicating the trim and collapse whitespace logic in genreSearchMatch.ts to avoid importing normalizeSearchTerm, keeping the test path consistent. </details></think>
+
+_**Agent (composer-2)**_
+
+Avoiding `genreSearchMatch` importing `recentSearches` (pulls in AsyncStorage and breaks Jest). Inlining the same normalization used for comparison:
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/genreSearchMatch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint && npm test -- --watchman=false 2>&1 | tail -18</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint && npm test -- --watchman=false 2>&1 | tail -18
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+&gt; jest --watchman=false
+
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/genreSearchMatch.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 10 passed, 10 total
+Tests:       53 passed, 53 total
+Snapshots:   0 total
+Time:        1.391 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Here is what was going wrong and what we changed.
+
+**Cause**  
+Genre chips only put the label (e.g. `"Action"`) in the search field. The hook always called **`GET /search/movie`**, which matches **titles** — so you got movies named “Action”, not the Action **genre**.
+
+**Approach**  
+If the debounced query matches a name from **`GET /genre/movie/list`** (case-insensitive, same trimming as your search normalization), the hook uses **`GET /discover/movie`** with **`with_genres`** and **`sort_by: popularity.desc`**. Otherwise it still uses **`search/movie`**. Pagination (`loadMore`) uses the same rule.
+
+**Files**
+
+- **`src/utils/genreSearchMatch.ts`** (new) — `genreIdForDebouncedQuery(term, genres)` with local whitespace collapse aligned with `normalizeSearchTerm`.
+- **`src/hooks/useSearch.ts`** — discover vs search branch on first load and on `loadMore`; effect also depends on **`movieGenres`** so when the list arrives after you’ve already typed “Action”, it switches to discover.
+- **`src/screens/SearchScreen.tsx`** — chip highlight uses **case-insensitive** label vs query so “action” still highlights Action when relevant.
+- **`src/api/types.ts`** — comments for `searchPage` / `loadMore` / `applyGenreChip` updated to mention discover.
+- **`__tests__/genreSearchMatch.test.ts`** — tests for the matcher.
+
+Lint and all tests pass. After a reload, choosing **Action** (or typing **Action** / **action** with a loaded genre list) should show popular **Action-genre** discover results, not title search for “Action”.
+
+---
+
+_**User**_
+
+import { Platform } from 'react-native';
+
+export const fontFamilies = {
+  manropeExtraBold: Platform.select({
+    ios: 'Manrope-ExtraBold',
+    android: 'Manrope_800ExtraBold',
+  }),
+  manropeBold: Platform.select({
+    ios: 'Manrope-Bold',
+    android: 'Manrope_700Bold',
+  }),
+  manropeSemiBold: Platform.select({
+    ios: 'Manrope-SemiBold',
+    android: 'Manrope_600SemiBold',
+  }),
+  interRegular: Platform.select({
+    ios: 'Inter-Regular',
+    android: 'Inter_400Regular',
+  }),
+  interMedium: Platform.select({
+    ios: 'Inter-Medium',
+    android: 'Inter_500Medium',
+  }),
+  interSemiBold: Platform.select({
+    ios: 'Inter-SemiBold',
+    android: 'Inter_600SemiBold',
+  }),
+  interBold: Platform.select({
+    ios: 'Inter-Bold',
+    android: 'Inter_700Bold',
+  }),
+} as const; use this instead and don't use in font families 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Replacing font families**
+
+I'm replacing the fontFamilies.ts implementation with the new version using Platform.select for iOS vs Android font names. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/fontFamilies.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts",
+  "pattern": "Platform|manropeExtraBold"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts",
+  "pattern": "Platform|manropeExtraBold",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "src/theme/typography.ts"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Analyzing platform select types**
+
+I'm investigating how Platform.select types work in React Native CLI projects and whether `as const` causes issues with undefined values on web. I'm adding a default value to Platform.select to handle web platform cases where it would otherwise return undefined. 
+
+**Adding default values**
+
+I'm adding default values to Platform.select calls to prevent undefined issues on web platform. 
+
+**Handling platform select**
+
+I'm addressing Platform.select return types by adding defaults for web platform to match Android/iOS behavior. I'm adding default values to Platform.select calls to ensure consistent behavior across platforms. I'm implementing Platform.select with default values matching Android PostScript names for consistency. 
+
+I'm improving the Platform.select implementation by adding a clearer default value instead of using the non-null assertion operator. I'm replacing the Platform.select implementation with a clearer default value using the ?? operator pattern. I'm implementing Platform.select with explicit default values to maintain strictness while preserving platform-specific behavior. 
+
+I'm adding explicit defaults to Platform.select calls to prevent undefined fontFamily values from causing bugs. I'm defining a FontFamilies interface and removing `as const` from Platform.select to resolve union type issues. I'm updating the font family definitions to remove weight properties and ensure Platform.select returns strings with proper defaults for TypeScript and web compatibility. 
+
+**Updating platform select**
+
+I'm adding `default` keys to Platform.select calls to prevent undefined values on unsupported platforms. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{ts,tsx}",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "fontFamilies"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "fontFamilies",
+  "topFiles": [
+    {
+      "matchCount": 23,
+      "uri": "./src/theme/typography.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./src/theme/fontFamilies.ts"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 24
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Narrowing platform select**
+
+I'm using `as const satisfies` to narrow the return type of `Platform.select`. I'm removing `as const` from Platform.select to avoid potential readonly deep issues, keeping the return types as `string` which is sufficient for TextStyle. I'm writing the file with exact content from user query, matching their 38 lines including no default in Platform.select. 
+
+**Adding default safety**
+
+I'm adding a default value for safety in Platform.select, checking if tsc passes without it. I'm removing the `as string` cast and using exact code without default in Platform.select. </details></think>
+
+_**Agent (composer-2)**_
+
+Updating `fontFamilies.ts` to use your `Platform.select` mapping. Adding a `default` branch (Android names) so the value is never `undefined` on other platforms and TypeScript stays satisfied.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/fontFamilies.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint 2>&1
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/package.json",
+  "pattern": "\"tsc\"|typescript"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/package.json",
+  "pattern": "\"tsc\"|typescript",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "package.json"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit 2>&1
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm test -- --watchman=false 2>&1 | tail -8</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm test -- --watchman=false 2>&1 | tail -8
+```
+
+```
+PASS __tests__/genreSearchMatch.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 10 passed, 10 total
+Tests:       53 passed, 53 total
+Snapshots:   0 total
+Time:        2.05 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Here’s what was updated.
+
+### `src/theme/fontFamilies.ts`
+- Switched to your **`Platform.select`** map: hyphenated names on **iOS** (`Manrope-ExtraBold`, `Inter-Regular`, …) and **`Manrope_800ExtraBold`-style** names on **Android**.
+- **`Platform` stays only in this file** — `typography.ts` does not import `Platform`; it only uses `fontFamilies.*` and weights/sizes as before.
+- Added a **`default`** branch on each `Platform.select` (same string as Android) so the family is never `undefined` on other platforms and types stay sound. Your snippet didn’t include `default`; say if you want those removed.
+
+### `src/theme/typography.ts`
+- Adjusted the file comment so it points at **`fontFamilies`** for platform-specific names instead of claiming all PostScript names inline.
+
+`eslint`, `tsc --noEmit`, and tests all pass.
+
+**Check on device:** iOS must actually expose those hyphenated family names (depends on how the TTFs are linked). If something falls back to system font, compare with **Font Book** / Xcode for the exact PostScript name and we can tweak the iOS strings.
+
+---
+
+_**User**_
+
+fontWeight remove from typography.ts
+
+---
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Removing font weight**
+
+I'm removing all fontWeight lines from the file using search_replace with replace_all. </details></think>
+
+_**Agent (composer-2)**_
+
+Removing all `fontWeight` entries from `typography.ts`.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts",
+  "pattern": "fontWeight"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts",
+  "pattern": "fontWeight",
+  "topFiles": [
+    {
+      "matchCount": 17,
+      "uri": "src/theme/typography.ts"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 17
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Removing font weights**
+
+I'm replacing fontWeight patterns in the CSS file with regex matches. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts",
+  "pattern": "fontWeight"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/theme/typography.ts",
+  "pattern": "fontWeight",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/theme/typography.ts"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "fontWeight.*typography|typography\\[.*\\].*fontWeight"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "fontWeight.*typography|typography\\[.*\\].*fontWeight",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint && npx tsc --noEmit && npm test -- --watchman=false 2>&1 | tail -15</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint && npx tsc --noEmit && npm test -- --watchman=false 2>&1 | tail -15
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/genreSearchMatch.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 10 passed, 10 total
+Tests:       53 passed, 53 total
+Snapshots:   0 total
+Time:        1.987 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+### Updates (`src/theme/typography.ts`)
+
+- Removed every **`fontWeight`** field from all typography tokens (`display-lg` through `tab-label`).
+- Refreshed the top comment: weight comes from the **`fontFamilies`** face only; **`fontWeight`** is left unset so React Native doesn’t stack synthetic weight on the linked TTFs.
+
+Lint, `tsc --noEmit`, and tests all pass.
+
+**Note:** Any screen that still sets **`fontWeight`** when spreading these tokens (e.g. `WatchlistScreenHeader` `collectionLabel: { ...typography['label-sm'], fontWeight: '700', ... }`) is unchanged—those overrides stay in their own `StyleSheet` entries, not in `typography.ts`.
+
+---
+
+_**User**_
+
+create agent.md file for my project and add it into root folder where it can be picked by agent 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Creating agent file**
+
+I'm creating an AGENTS.md file for repository context as requested. I'm using AGENTS.md as it's the standard Cursor convention, despite user preference for 'agent.md'. I'm creating `agent.md` as explicitly requested by the user, despite Cursor's convention of `AGENTS.md`. </details></think>
+
+_**Agent (composer-2)**_
+
+Gathering project conventions to produce an agent-facing root doc. Checking Cursor's expected filename and existing rules.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **0** results in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList** (0 files)
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/.cursor/rules/movielist-project.mdc</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/package.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Creating agent documentation**
+
+I'm creating `agent.md` as requested and `AGENTS.md` as the symlinked file Cursor expects. I'm creating `agent.md` as requested by the user, since that's the explicit filename they asked for. I'm creating `agent.md` in root as requested, though industry standard is `AGENTS.md`. I'm creating `agent.md` in root as requested, following user's explicit filename choice. I'm creating `AGENTS.md` as the primary file since it follows standard conventions, while also noting that `agent.md` was requested by the user. I'm creating `AGENTS.md` following Cursor's convention, while also creating `agent.md` as requested by the user. 
+
+I'm creating `agent.md` with full content as requested, since symlinks may not work on all Windows setups. </details></think>
+
+_**Agent (composer-2)**_
+
+Creating `agent.md` in the project root with agent-oriented instructions. Adding `AGENTS.md` as a copy — Cursor and many tools recognize `AGENTS.md`; keeping both avoids rename confusion.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/agent.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Creating agent docs**
+
+I'm creating AGENTS.md as a symlink to agent.md to avoid maintenance issues. 
+
+**Updating agent docs**
+
+I'm implementing a symlink strategy for AGENTS.md and agent.md to avoid duplication. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/AGENTS.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Merging agent docs**
+
+I'm consolidating agent documentation by placing full content in AGENTS.md and making agent.md a minimal symlink, though symlinking isn't straightforward across all operating systems. 
+
+**Updating agent docs**
+
+I'm simplifying agent documentation by keeping only agent.md with full content and removing AGENTS.md pointer. I'm adding full content to AGENTS.md as a duplicate and shortening agent.md to point to AGENTS.md as canonical. </details></think>
+
+_**Agent (composer-2)**_
+
+Duplicating the full guide into `AGENTS.md` so tools that only read `AGENTS.md` still receive complete instructions.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/agent.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/AGENTS.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/agent.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Here’s what was added.
+
+### `agent.md` (repo root)
+- Main **agent guide**: product summary, stack (RN CLI, Nav v6, Zustand, Axios via `client.ts`, StyleSheet-only, hooks-only TMDB, fonts/theme notes), prohibitions, folder map, hooks/theme/testing/security, and useful commands.
+
+### `AGENTS.md` (repo root)
+- **Same body** as `agent.md`, with a short note at the top that many agents read `AGENTS.md` by convention so both files stay in sync.
+
+`agent.md` also states that **`AGENTS.md`** is kept in sync and that **`.cursor/rules/`** (e.g. `movielist-project.mdc`) stays the source for detailed Cursor rules—update **both** root agent files when those conventions change.
+
+If you want a **single** file only, we can drop `AGENTS.md` and rely on `agent.md`, or the opposite.
+
+---
+
+_**User**_
+
+in search screen trending now i want to show duration too after year in like 2h 15m
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Updating movie metadata**
+
+I'm adding runtime display to the trending featured card by fetching runtime from movie details API. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts",
+  "pattern": "runtime|TmdbMovieListItem"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts",
+  "pattern": "runtime|TmdbMovieListItem",
+  "topFiles": [
+    {
+      "matchCount": 6,
+      "uri": "src/api/types.ts"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 6
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/formatMovieListItem.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Checking TMDB API**
+
+I'm verifying whether the TMDB trending/movie/week endpoint includes runtime in its response. Trending endpoint doesn't include runtime; I need to verify if it's in the raw API response or fetch from details endpoint. Trending endpoint doesn't include runtime; must fetch detail endpoint for featured movie to get runtime. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/movies.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Formatting runtime**
+
+I'm adding a utility function to format runtime hours and minutes, and updating the search feature to display runtime metadata. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "runtime|2h|formatRuntime"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "runtime|2h|formatRuntime",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "src/api/types.ts"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/components/common/SimpleIcons.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/theme/spacing.ts"
+    },
+    {
+      "matchCount": 6,
+      "uri": "src/components/detail/DetailChipsRow.tsx"
+    },
+    {
+      "matchCount": 1,
+      "uri": "src/utils/formatMovieListItem.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "src/utils/tmdbDisplayGuards.ts"
+    }
+  ],
+  "totalFiles": 6,
+  "totalMatches": 13
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailChipsRow.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Refactoring runtime formatting**
+
+I'm extracting runtime formatting logic to a new utility file for consistency. I'm adding `formatTmdbRuntimeCompact` export to `tmdbDisplayGuards.ts` for consistent runtime display logic. I'm adding `formatTmdbRuntimeCompact` function to `tmdbDisplayGuards.ts` for consistent runtime formatting across components. 
+
+**Adding runtime formatter**
+
+I'm implementing `formatTmdbRuntimeCompact` for consistent runtime display across components. I'm implementing the runtime fetching logic with useEffect and abort controller for trending movie details. 
+
+I'm extracting the runtime from the trending movie data using the first result's ID as the source of truth. I'm resetting the featured runtime to null while loading new data. I'm fixing redundant fetches by ensuring the effect only re-runs when trending actually changes, not just when the reference updates. I'm addressing stale closure issues by using refs to capture latest trending ID and comparing with debounced query state. 
+
+I'm using a sequence ref to handle stale fetches by comparing `fetchedForId` with the current sequence. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **1** result in **1** directory</summary>
+
+Directory: **/Users/aryansingh/Desktop/Task2/MovieList/__tests__** (1 file)
+
+| File |
+|------|
+| `formatMovieListItem.test.ts` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/__tests__/formatMovieListItem.test.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/tmdbDisplayGuards.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Adding featured runtime ref**
+
+I'm adding `featuredRuntimeFetchSeqRef` to track sequence of featured runtime fetches. 
+
+**Tracking featured runtime fetches**
+
+I'm updating the featured runtime fetch sequence reference and setting up abort control for concurrent requests. I'm handling cleanup for abort control and ensuring proper sequencing of featured runtime fetches. I'm using dependency on `trending.results[0].id` to avoid redundant fetches. I'm refactoring DetailChipsRow to import formatRuntimeLabel from tmdbDisplayGuards. I'm implementing runtime chip display logic for movie items. I'm handling runtime display logic for movies, showing '2h 15m' format when runtime is 135 minutes. </details></think>
+
+_**Agent (composer-2)**_
+
+Implementing: adding shared runtime formatter, extending featured meta formatting, fetching featured movie detail in `useSearch` for runtime, and wiring props.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/tmdbDisplayGuards.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/formatMovieListItem.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/formatMovieListItem.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailChipsRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailChipsRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/detail/DetailChipsRow.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/api/types.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling unstable deps**
+
+I'm using `trending?.results[0]?.id` as a dependency to avoid instability warnings while keeping the effect responsive. I'm replacing the unstable dependency `trending?.results[0]?.id` with `trending, trendingReloadKey` to avoid edge case issues. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/hooks/useSearch.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/screens/SearchScreen.tsx</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/__tests__/formatMovieListItem.test.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "SearchDefaultView"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "SearchDefaultView",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "./src/screens/SearchScreen.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "./src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "matchCount": 7,
+      "uri": "./.specstory/history/2026-04-20_07-15-30Z-metadata-chips-and-hero-gradient-discrepancies.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./src/components/search/SearchResultsStateView.tsx"
+    },
+    {
+      "matchCount": 51,
+      "uri": "./.specstory/history/2026-04-19_20-06-33Z-standardizing-data-fetching-hooks.md"
+    },
+    {
+      "matchCount": 41,
+      "uri": "./.specstory/history/2026-04-17_06-22-26Z-specification-deviations-in-project-implementation.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./.specstory/history/2026-04-20_04-21-43Z-home-page-content-filtering.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./src/components/search/SearchTrendingSkeleton.tsx"
+    },
+    {
+      "matchCount": 3,
+      "uri": "./.specstory/history/2026-04-16_04-50-40Z-tmdb-api-genre-fetching-code.md"
+    },
+    {
+      "matchCount": 23,
+      "uri": "./.specstory/history/2026-04-15_10-01-40Z-navigation-issue-for-search-default-items.md"
+    },
+    {
+      "matchCount": 19,
+      "uri": "./.specstory/history/2026-04-15_08-13-59Z-watchlist-ui-adjustments.md"
+    },
+    {
+      "matchCount": 25,
+      "uri": "./.specstory/history/2026-04-15_07-36-48Z-movie-grid-layout.md"
+    },
+    {
+      "matchCount": 22,
+      "uri": "./.specstory/history/2026-04-15_06-45-45Z-home-ui-parity-adjustments.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./.specstory/history/2026-04-14_11-03-42Z-watchlist-empty-state-ui.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./.specstory/history/2026-04-14_09-19-54Z-usewatchlist-implementation-details.md"
+    },
+    {
+      "matchCount": 67,
+      "uri": "./.specstory/history/2026-04-14_07-01-41Z-search-screen-state-2-ui.md"
+    },
+    {
+      "matchCount": 24,
+      "uri": "./.specstory/history/2026-04-14_04-58-10Z-movie-search-api-implementation.md"
+    }
+  ],
+  "totalFiles": 17,
+  "totalMatches": 292
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint && npm test -- --watchman=false 2>&1 | tail -22</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint && npm test -- --watchman=false 2>&1 | tail -22
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+&gt; MovieList@0.0.1 test
+&gt; jest --watchman=false
+
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/genreSearchMatch.test.ts
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 10 passed, 10 total
+Tests:       55 passed, 55 total
+Snapshots:   0 total
+Time:        2.016 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Reviewing destructuring**
+
+I verified that `featuredRuntimeMinutes` is properly destructured in `SearchDefaultView` and added it after `onOpenResult` in the props destructuring. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Handling seq guards**
+
+I'm implementing sequence guards to prevent stale runtime updates when featured movie IDs change during fetch. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit
+```
+
+```
+src/utils/formatMovieListItem.ts(48,50): error TS2345: Argument of type 'number | null | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/utils/formatMovieListItem.ts</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npx tsc --noEmit
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+Here’s what was implemented.
+
+### Why a detail request
+Trending (`GET /trending/movie/week`) rows **don’t include `runtime`**. Runtime comes from **`GET /movie/{id}`**, so the hook loads detail for the **first** trending item only.
+
+### Changes
+1. **`src/utils/tmdbDisplayGuards.ts`** — Added **`formatTmdbRuntimeCompact`** (`2h 15m`, `2h` on the hour, `N min` under 60m). **`DetailChipsRow`** now uses this instead of a local helper.
+
+2. **`src/utils/formatMovieListItem.ts`** — **`formatSearchFeaturedMeta(item, genres, runtimeMinutes?)`** appends **` • {runtime}`** when minutes are valid.
+
+3. **`src/hooks/useSearch.ts`** — After trending loads, fetches **`getMovieDetail(firstResult.id)`** (abortable, sequence ref so stale responses are ignored). Exposes **`featuredRuntimeMinutes`** on the snapshot.
+
+4. **`src/api/types.ts`** — **`SearchTabSnapshot.featuredRuntimeMinutes`**.
+
+5. **`src/screens/SearchScreen.tsx`** — Passes **`featuredRuntimeMinutes`** into **`SearchDefaultView`**.
+
+6. **`src/components/search/SearchDefaultView.tsx`** — New prop; featured meta line uses the third argument.
+
+7. **`__tests__/formatMovieListItem.test.ts`** — Cases for runtime present / omitted.
+
+`npm run lint`, `npx tsc --noEmit`, and **`npm test`** all pass.
+
+Until the detail call finishes, the line stays **`Genre • Year`**; then it updates to e.g. **`Animation • 2026 • 2h 15m`**. If detail fails or runtime is missing/0, the extra segment is omitted.
+
+---
+
+_**User**_
+
+why do we have two agent.md remove one 
+
+---
+
+_**Agent (composer-2)**_
+
+<think><details><summary>Thought Process</summary>
+**Removing duplicate docs**
+
+I'm deleting the duplicate AGENTS.md file and keeping the original agent.md as requested. I'm removing the duplicate `AGENTS.md` file and keeping `agent.md` as requested. </details></think>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/agent.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "AGENTS\\.md"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "AGENTS\\.md",
+  "topFiles": [
+    {
+      "matchCount": 14,
+      "uri": "./.specstory/history/2026-04-20_07-15-30Z-metadata-chips-and-hero-gradient-discrepancies.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": "./agent.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./AGENTS.md"
+    }
+  ],
+  "totalFiles": 3,
+  "totalMatches": 17
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="delete_file">
+<details><summary>Tool use: **delete_file**</summary>
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="delete_file"><details>
+<summary>Tool use: **delete_file**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/agent.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>

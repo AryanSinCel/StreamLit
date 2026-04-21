@@ -24,9 +24,10 @@ import {
 import { typography } from '../../theme/typography';
 import { formatSearchFeaturedMeta, formatSearchTrendingGenreOnly } from '../../utils/formatMovieListItem';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W342, TMDB_IMAGE_SIZE_W780 } from '../../utils/image';
-import { SEARCH_INPUT_PLACEHOLDER } from './searchDefaultMocks';
 import { SearchRecentSearchesSection } from './SearchRecentSearchesSection';
 import { SearchTrendingSkeleton } from './SearchTrendingSkeleton';
+
+const SEARCH_INPUT_PLACEHOLDER = 'Search movies, actors, directors...' as const;
 
 export type SearchDefaultViewProps = {
   query: string;
@@ -50,6 +51,8 @@ export type SearchDefaultViewProps = {
   trendingError: string | null;
   onRetryTrending: () => void;
   onOpenResult: (movieId: number) => void;
+  /** From `GET /movie/{id}` for the first trending row — list payloads omit `runtime`. */
+  featuredRuntimeMinutes: number | null;
 };
 
 function featuredBackdropUri(movie: TmdbMovieListItem | null): string | null {
@@ -83,6 +86,7 @@ export function SearchDefaultView({
   trendingError,
   onRetryTrending,
   onOpenResult,
+  featuredRuntimeMinutes,
 }: SearchDefaultViewProps): JSX.Element {
   const { width: windowWidth } = useWindowDimensions();
   const horizontalPad = spacing.xl;
@@ -238,7 +242,9 @@ export function SearchDefaultView({
                         : '—'}
                     </Text>
                     <Text style={styles.featuredMeta}>
-                      {featuredMovie != null ? formatSearchFeaturedMeta(featuredMovie, genres) : ''}
+                      {featuredMovie != null
+                        ? formatSearchFeaturedMeta(featuredMovie, genres, featuredRuntimeMinutes)
+                        : ''}
                     </Text>
                   </View>
                 </Pressable>
@@ -482,7 +488,7 @@ const styles = StyleSheet.create({
     pointerEvents: 'none',
     position: 'absolute',
     top: fill.none,
-    width: spacing.xxxl + spacing.sm,
+    width: spacing.xl + spacing.sm,
     zIndex: elevation.dock,
   },
   searchInput: {

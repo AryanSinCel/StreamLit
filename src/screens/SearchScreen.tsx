@@ -174,6 +174,7 @@ export function SearchScreen({ navigation }: Props): JSX.Element {
             showRecentsBlock={showRecentsBlock}
             trendingError={d.trendingError}
             trendingLoading={d.trendingLoading}
+            featuredRuntimeMinutes={d.featuredRuntimeMinutes}
           />
         )}
         </ScrollView>

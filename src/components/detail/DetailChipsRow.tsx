@@ -7,6 +7,7 @@ import type { JSX, ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import type { TmdbMovieDetail } from '../../api/types';
 import {
+  formatTmdbRuntimeCompact,
   formatTmdbVoteAverageLabel,
   showTmdbRuntimeChip,
   showTmdbVoteAverageBadge,
@@ -32,18 +33,6 @@ function genreLabel(movie: TmdbMovieDetail): string | null {
     return null;
   }
   return movie.genres.map((g) => g.name).join(' · ');
-}
-
-function formatRuntimeLabel(minutes: number): string {
-  if (minutes >= 60) {
-    const h = Math.floor(minutes / 60);
-    const m = minutes % 60;
-    if (m === 0) {
-      return `${String(h)}h`;
-    }
-    return `${String(h)}h ${String(m)}m`;
-  }
-  return `${String(minutes)} min`;
 }
 
 export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
@@ -94,7 +83,7 @@ export function DetailChipsRow({ movie }: DetailChipsRowProps): JSX.Element {
     chips.push({
       key: 'runtime',
       kind: 'plain',
-      node: <Text style={styles.chipTextPlain}>{formatRuntimeLabel(runtime)}</Text>,
+      node: <Text style={styles.chipTextPlain}>{formatTmdbRuntimeCompact(runtime)}</Text>,
     });
   }
 

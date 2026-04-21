@@ -21,3 +21,19 @@ export function formatTmdbVoteAverageLabel(voteAverage: number): string {
 export function showTmdbRuntimeChip(runtime: number | null | undefined): boolean {
   return typeof runtime === 'number' && Number.isFinite(runtime) && !Number.isNaN(runtime) && runtime > 0;
 }
+
+/**
+ * Human-readable length for metadata lines (`2h 15m`, `2h` on the hour; under 60m uses `N min`).
+ * Matches Detail / Search featured copy.
+ */
+export function formatTmdbRuntimeCompact(minutes: number): string {
+  if (minutes >= 60) {
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    if (m === 0) {
+      return `${String(h)}h`;
+    }
+    return `${String(h)}h ${String(m)}m`;
+  }
+  return `${String(minutes)} min`;
+}

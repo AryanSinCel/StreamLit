@@ -58,6 +58,16 @@ describe('formatSearchFeaturedMeta', () => {
   it('orders genre before year with bullet separator', () => {
     expect(formatSearchFeaturedMeta(sampleMovie, sampleGenres)).toBe('Adventure • 2024');
   });
+
+  it('appends compact runtime when minutes are valid', () => {
+    expect(formatSearchFeaturedMeta(sampleMovie, sampleGenres, 135)).toBe('Adventure • 2024 • 2h 15m');
+    expect(formatSearchFeaturedMeta(sampleMovie, sampleGenres, 120)).toBe('Adventure • 2024 • 2h');
+  });
+
+  it('omits runtime when null, zero, or invalid', () => {
+    expect(formatSearchFeaturedMeta(sampleMovie, sampleGenres, null)).toBe('Adventure • 2024');
+    expect(formatSearchFeaturedMeta(sampleMovie, sampleGenres, 0)).toBe('Adventure • 2024');
+  });
 });
 
 describe('formatSearchTrendingGenreOnly', () => {

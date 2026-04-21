@@ -264,6 +264,11 @@ export interface SearchTabSnapshot {
   applyGenreChip: (label: string) => void;
   /** `/genre/movie/list` — resolves `genre_ids` on default trending / featured copy (Search tab). */
   movieGenres: readonly TmdbGenre[];
+  /**
+   * Runtime (minutes) for the first trending title — from **`GET /movie/{id}`** (list endpoints omit runtime).
+   * `null` while loading / on error / when trending is empty.
+   */
+  featuredRuntimeMinutes: number | null;
 }
 
 export interface WatchlistItem {

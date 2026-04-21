@@ -23,9 +23,10 @@ import {
 } from '../../theme/spacing';
 import { typography } from '../../theme/typography';
 import { buildImageUrl, TMDB_IMAGE_SIZE_W342 } from '../../utils/image';
-import { SEARCH_INPUT_PLACEHOLDER } from './searchDefaultMocks';
 import { SearchRecentSearchesSection } from './SearchRecentSearchesSection';
 import { SearchResultsGridSkeleton } from './SearchResultsGridSkeleton';
+
+const SEARCH_INPUT_PLACEHOLDER = 'Search movies, actors, directors...' as const;
 
 export type SearchResultsStateViewProps = {
   query: string;
@@ -367,7 +368,7 @@ const styles = StyleSheet.create({
     pointerEvents: 'none',
     position: 'absolute',
     top: fill.none,
-    width: spacing.xxxl + spacing.sm,
+    width: spacing.xl + spacing.sm,
     zIndex: elevation.dock,
   },
   searchInput: {

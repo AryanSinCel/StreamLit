@@ -1,4 +1,5 @@
 import type { TmdbGenre, TmdbMovieListItem } from '../api/types';
+import { formatTmdbRuntimeCompact, showTmdbRuntimeChip } from './tmdbDisplayGuards';
 
 function firstGenreNameForMovie(
   item: TmdbMovieListItem,
@@ -35,13 +36,18 @@ export function formatHomeRailSubtitle(
 export function formatSearchFeaturedMeta(
   item: TmdbMovieListItem,
   genres: readonly TmdbGenre[],
+  runtimeMinutes?: number | null,
 ): string {
   const genre = firstGenreNameForMovie(item, genres);
   const year =
     item.release_date != null && item.release_date.length >= 4
       ? item.release_date.slice(0, 4)
       : '—';
-  return `${genre} • ${year}`;
+  const base = `${genre} • ${year}`;
+  if (typeof runtimeMinutes === 'number' && showTmdbRuntimeChip(runtimeMinutes)) {
+    return `${base} • ${formatTmdbRuntimeCompact(runtimeMinutes)}`;
+  }
+  return base;
 }
 
 /** Search default trending mini cards — subtitle is primary genre only (`search.html`). */
