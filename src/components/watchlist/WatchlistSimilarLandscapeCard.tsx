@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   genreLine: {
     ...typography['label-sm'],
     color: colors.on_surface_variant,
-    fontWeight: '600',
+    fontWeight: '400',
     letterSpacing: tracking.railUpper,
     marginTop: spacing.xs,
     textTransform: 'uppercase',

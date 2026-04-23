@@ -5,7 +5,7 @@
 
 import type { JSX } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { TmdbGenre, WatchlistItem } from '../../api/types';
 import { IconClose, IconMovie } from '../common/SimpleIcons';
 import { PosterRatingBadge } from '../common/PosterRatingBadge';
@@ -66,7 +66,7 @@ export function WatchlistGridCard({
             onPress={onPressRemove}
             style={({ pressed }) => [styles.closeHit, pressed && styles.closeHitPressed]}
           >
-            <IconClose color={colors.on_surface_variant} size={20} />
+            <IconClose color={colors.on_surface_variant} size={40} />
           </Pressable>
         </View>
         <View style={styles.metaRow}>
@@ -112,9 +112,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   closeHit: {
-    justifyContent: 'flex-start',
+    alignItems: 'center',
+    height: 40,
+    justifyContent: 'center',
     marginLeft: spacing.sm,
-    padding: spacing.xs,
+    width: 40,
   },
   closeHitPressed: {
     opacity: opacity.control,
@@ -194,9 +196,10 @@ const styles = StyleSheet.create({
     ...typography['watchlist-card-title'],
     color: colors.on_surface,
     flex: 1,
+    ...(Platform.OS === 'android' ? { includeFontPadding: false } : {}),
   },
   titleRow: {
-    alignItems: 'flex-start',
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: spacing.xs,
