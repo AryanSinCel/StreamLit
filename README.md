@@ -1,4 +1,44 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# MovieList (StreamList)
+
+A [**React Native**](https://reactnative.dev) client for [TMDB](https://www.themoviedb.org/): home discovery, search, a persisted watchlist, movie detail, and full “see all” lists. Bootstrapped with [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+
+## Screenshots
+
+*iOS Simulator — dark “Cinematic Curator” UI.*
+
+### Home
+
+![Home — hero, genre chips, Trending Now, See All](docs/screenshots/01-home.png)
+
+### Search (default)
+
+![Search — bar, genre chips, recent searches, Trending](docs/screenshots/02-search.png)
+
+### Search results
+
+![Search results — grid with result count (e.g. genre / query)](docs/screenshots/03-search-results.png)
+
+### Watchlist
+
+![Watchlist — saved titles, filters, Details CTA](docs/screenshots/04-watchlist.png)
+
+### Watchlist (empty)
+
+![Watchlist empty state — browse trending CTA](docs/screenshots/05-watchlist-empty.png)
+
+### Profile
+
+![Profile — placeholder account UI](docs/screenshots/06-profile.png)
+
+### Movie detail
+
+![Movie detail — synopsis, cast, More Like This](docs/screenshots/07-movie-detail.png)
+
+### See all (“More Like This”)
+
+![See all — two-column poster grid](docs/screenshots/08-see-all-more-like-this.png)
+
+---
 
 # Getting Started
 
