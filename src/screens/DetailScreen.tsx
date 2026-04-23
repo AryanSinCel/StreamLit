@@ -1,12 +1,12 @@
 import type { NavigationProp, RouteProp } from '@react-navigation/native';
-import { StackActions, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import type { JSX } from 'react';
 import { useCallback, useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useShallow } from 'zustand/react/shallow';
 import { useMovieDetail } from '../hooks/useMovieDetail';
-import { navigateToDetail } from '../navigation/helpers';
+import { navigateToDetail, navigateToSeeAll } from '../navigation/helpers';
 import type { RootStackParamList } from '../navigation/types';
 import { DetailCastSection } from '../components/detail/DetailCastSection';
 import { DetailChipsRow } from '../components/detail/DetailChipsRow';
@@ -90,12 +90,11 @@ export function DetailScreen({ route }: Props): JSX.Element {
   }, [navigation]);
 
   const onPressSeeAllSimilar = useCallback(() => {
-    const params = {
+    navigateToSeeAll(navigation, {
       title: 'More Like This',
-      mode: 'similar' as const,
+      mode: 'similar',
       similarSourceMovieId: movieId,
-    };
-    navigation.dispatch(StackActions.replace('SeeAll', params));
+    });
   }, [navigation, movieId]);
 
   const onPressSimilarMovie = useCallback(
