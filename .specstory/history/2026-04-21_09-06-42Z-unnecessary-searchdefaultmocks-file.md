@@ -12,7 +12,6 @@ remove the unnecessary searchDefaultMocks file
 
 _**Agent (composer-2)**_
 
-
 Searching for imports and references to `searchDefaultMocks` before removing the file.
 
 
@@ -88,13 +87,6 @@ Status: **completed**
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="read" data-tool-name="read_file_v2">
 <details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/searchDefaultMocks.ts</summary>
 
@@ -145,7 +137,6 @@ I'm inlining the search constant string directly in both components to avoid the
 
 _**Agent (composer-2)**_
 
-
 Checking for an existing constants/copy pattern in the search feature:
 
 
@@ -183,7 +174,6 @@ _**Agent (composer-2)**_
 I'm renaming `searchConstants.ts` to clarify it's not mocks, keeping it as a single file. I'm inlining the string literal in both components to avoid creating an unnecessary file. I'm removing the searchConstants.ts file and inlining the string literal directly in both components. I'm renaming `searchConstants.ts` to `searchDefaults.ts` to better reflect its purpose as default values rather than constants. I'm inlining the `SEARCH_INPUT_PLACEHOLDER` constant directly in the JSX components to avoid the separate constants file. </details></think>
 
 _**Agent (composer-2)**_
-
 
 Checking how `SEARCH_INPUT_PLACEHOLDER` is used in both files:
 
@@ -251,7 +241,6 @@ I'm adding shared constants to module files to avoid separate imports. </details
 
 _**Agent (composer-2)**_
 
-
 Removing the file and defining the placeholder locally in both components (only two usages) to avoid a misleading "mocks" module.
 
 
@@ -302,13 +291,6 @@ _**Agent (composer-2)**_
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="write" data-tool-name="edit_file_v2">
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx</summary>
@@ -336,13 +318,6 @@ _**Agent (composer-2)**_
 <summary>Tool use: **edit_file_v2**</summary>
 
 </details></tool-use>
-
-_**Agent (composer-2)**_
-
-
-
-
-
 
 _**Agent (composer-2)**_
 
@@ -388,13 +363,6 @@ Status: **completed**
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
@@ -436,7 +404,6 @@ Status: **completed**
 
 _**Agent (composer-2)**_
 
-
 Here is what changed:
 
 ### What changed
@@ -461,7 +428,6 @@ which unnecessary file can we remove that is not much of use
 ---
 
 _**Agent (composer-2)**_
-
 
 Scanning the project for small, redundant, or low-value files we could remove.
 
@@ -671,13 +637,6 @@ Status: **completed**
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="read" data-tool-name="read_file_v2">
 <details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/env.ts</summary>
 
@@ -754,13 +713,6 @@ Status: **completed**
 <summary>Tool use: **ripgrep_raw_search**</summary>
 
 </details></tool-use>
-
-_**Agent (composer-2)**_
-
-
-
-
-
 
 _**Agent (composer-2)**_
 
@@ -2850,13 +2802,6 @@ Directory: **/Users/aryansingh/Desktop/Task2/MovieList** (10000 files)
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
@@ -2952,13 +2897,6 @@ _**Agent (composer-2)**_
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
@@ -3049,13 +2987,6 @@ Status: **completed**
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
@@ -3118,13 +3049,6 @@ Status: **completed**
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
@@ -3166,13 +3090,6 @@ Status: **completed**
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
@@ -3210,13 +3127,6 @@ Status: **completed**
 <summary>Tool use: **ripgrep_raw_search**</summary>
 
 </details></tool-use>
-
-_**Agent (composer-2)**_
-
-
-
-
-
 
 _**Agent (composer-2)**_
 
@@ -3286,13 +3196,6 @@ Status: **completed**
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
@@ -3334,13 +3237,6 @@ Status: **completed**
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="search" data-tool-name="glob_file_search">
 <details>
 <summary>Tool use: **glob_file_search** • Searched codebase "" • **2** results in **1** directory</summary>
@@ -3375,13 +3271,6 @@ _**Agent (composer-2)**_
 
 _**Agent (composer-2)**_
 
-
-
-
-
-
-_**Agent (composer-2)**_
-
 <tool-use data-tool-type="read" data-tool-name="read_file_v2">
 <details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/jest.setup.js</summary>
 
@@ -3412,13 +3301,6 @@ _**Agent (composer-2)**_
 **Checking env usage**
 
 I'm investigating why the root env.ts file appears unused and may be redundant. </details></think>
-
-_**Agent (composer-2)**_
-
-
-
-
-
 
 _**Agent (composer-2)**_
 
@@ -3498,7 +3380,6 @@ Status: **completed**
 </details></tool-use>
 
 _**Agent (composer-2)**_
-
 
 Here are the best **low-value / redundant** candidates in this repo, based on what’s actually imported:
 
@@ -3714,7 +3595,255 @@ _**Agent (composer-2)**_
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx</summary>
 
-Status: **loading**
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "search_input_focus_ring"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList",
+  "pattern": "search_input_focus_ring",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "./.specstory/history/2026-04-21_09-06-42Z-unnecessary-searchdefaultmocks-file.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./src/theme/colors.ts"
+    },
+    {
+      "matchCount": 2,
+      "uri": "./.specstory/history/2026-04-19_20-06-33Z-standardizing-data-fetching-hooks.md"
+    },
+    {
+      "matchCount": 4,
+      "uri": "./.specstory/history/2026-04-15_06-45-45Z-home-ui-parity-adjustments.md"
+    }
+  ],
+  "totalFiles": 4,
+  "totalMatches": 10
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx",
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchDefaultView.tsx"
+    },
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/components/search/SearchResultsStateView.tsx"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint && npm test</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint && npm test
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 43 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/genreSearchMatch.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 10 passed, 10 total
+Tests:       55 passed, 55 total
+Snapshots:   0 total
+Time:        1.733 s, estimated 2 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "search_input_focus_ring"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/aryansingh/Desktop/Task2/MovieList/src",
+  "pattern": "search_input_focus_ring",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "src/theme/colors.ts"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Checking for references to `search_input_focus_ring` in docs/comments before removing the unused token.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/colors.ts</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+Removing the unused `search_input_focus_ring` token from `colors.ts` now that nothing references it.
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/aryansingh/Desktop/Task2/MovieList/src/theme/colors.ts</summary>
 
 </details>
 
@@ -3724,3 +3853,113 @@ Status: **loading**
 <summary>Tool use: **edit_file_v2**</summary>
 
 </details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+
+
+
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint && npm test</summary>
+
+```bash
+cd /Users/aryansingh/Desktop/Task2/MovieList && npm run lint && npm test
+```
+
+```
+
+&gt; MovieList@0.0.1 lint
+&gt; eslint .
+
+
+&gt; MovieList@0.0.1 test
+&gt; jest
+
+watchman warning:  Recrawled this watch 43 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+&#96;watchman watch-del '/Users/aryansingh/Desktop/Task2/MovieList' ; watchman watch-project '/Users/aryansingh/Desktop/Task2/MovieList'&#96;
+
+PASS __tests__/tmdbDisplayGuards.test.ts
+PASS __tests__/mapMovieDetailToWatchlistItem.test.ts
+PASS __tests__/watchlistFilters.test.ts
+PASS __tests__/mergeUniqueMovieListById.test.ts
+PASS __tests__/recentSearches.test.ts
+PASS __tests__/formatMovieListItem.test.ts
+PASS __tests__/watchlistStore.test.ts
+PASS __tests__/mapUnknownError.test.ts
+PASS __tests__/genreSearchMatch.test.ts
+PASS __tests__/App.test.tsx
+
+Test Suites: 10 passed, 10 total
+Tests:       55 passed, 55 total
+Snapshots:   0 total
+Time:        2.074 s
+Ran all test suites.
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/aryansingh/Desktop/Task2/MovieList/src/theme/colors.ts"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/aryansingh/Desktop/Task2/MovieList/src/theme/colors.ts"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (composer-2)**_
+
+
+### What changed
+
+- **`SearchDefaultView.tsx`** and **`SearchResultsStateView.tsx`**: `searchInputFocused` now sets `borderColor: colors.outline_variant` instead of `colors.search_input_focus_ring`. Base `searchInput` is unchanged with `borderColor: 'transparent'` when not focused.
+- **`colors.ts`**: Removed **`search_input_focus_ring`** because it was no longer referenced anywhere (avoids a dead theme token).
+
+### Verification
+
+- **`npm run lint`** — passed  
+- **`npm test`** — 10 suites, 55 tests passed  
+
+Jest printed a **watchman recrawl** warning; it does not fail the run. Clearing it is optional (`watchman watch-del` / `watch-project` as suggested in the log).
